@@ -1,0 +1,17 @@
+{
+  "name": "aguesseau-website",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "front",
+    "back"
+  ],
+  "scripts": {
+    "dev:front": "cd front && npm run dev",
+    "build:front": "cd front && npm run build",
+    "start:front": "cd front && npm start",
+    "dev": "npm run dev:front",
+    "build": "npm run build:front",
+    "start": "npm run start:front"
+  }
+}
