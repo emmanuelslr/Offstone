@@ -51,24 +51,31 @@ export default function Navbar() {
 
         <ul className="hidden md:flex items-center space-x-12">
           <li>
-            <Link href="#solutions" className={`text-sm font-medium transition-all duration-300 ${
+            <Link href="#strategie" className={`text-sm font-medium transition-all duration-300 ${
               isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
             }`}>
-              Solutions
+              Strategie
             </Link>
           </li>
           <li>
-            <Link href="#about" className={`text-sm font-medium transition-all duration-300 ${
+            <Link href="#nos-solutions" className={`text-sm font-medium transition-all duration-300 ${
               isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
             }`}>
-              About
+              Nos solutions
             </Link>
           </li>
           <li>
-            <Link href="#contact" className={`text-sm font-medium transition-all duration-300 ${
+            <Link href="#le-club" className={`text-sm font-medium transition-all duration-300 ${
               isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
             }`}>
-              Contact
+              Le Club
+            </Link>
+          </li>
+          <li>
+            <Link href="#ressources" className={`text-sm font-medium transition-all duration-300 ${
+              isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            }`}>
+              Ressources
             </Link>
           </li>
           <li>
