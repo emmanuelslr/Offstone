@@ -59,6 +59,13 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
+              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+              }`}>
+                Le Club
+              </Link>
+            </li>
+            <li>
               <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
@@ -66,10 +73,10 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="#notre-histoire" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
-                Le Club
+                Notre Histoire
               </Link>
             </li>
             <li>
