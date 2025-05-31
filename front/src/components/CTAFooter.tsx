@@ -6,8 +6,8 @@ export default function CTAFooter() {
     <section className="bg-gradient-to-br from-[#FFF3EC] via-[#FFE4D3] to-[#FFD4BE]">
       <div className="py-24">
         <div className="container-custom max-w-4xl mx-auto text-center">
-          <h2 className="text-[36px] lg:text-[42px] font-normal leading-[1.15] tracking-[-0.02em] mb-9 text-gray-900">
-            Investir avec nous ?
+          <h2 className="text-[38px] lg:text-[46px] font-normal leading-[1.15] tracking-[-0.02em] mb-9 text-gray-900">
+            Prêt à investir à nos côtés dans l&apos;immobilier ?
           </h2>
           <p className="text-[18px] lg:text-[17px] text-gray-600 mb-10 leading-[1.5]">
             Accédez aux meilleures opérations, habituellement réservées aux professionnels.
