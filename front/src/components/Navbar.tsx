@@ -59,17 +59,17 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
-              }`}>
-                Le Club
-              </Link>
-            </li>
-            <li>
               <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
                 Nos solutions
+              </Link>
+            </li>
+            <li>
+              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+              }`}>
+                Le Club
               </Link>
             </li>
             <li>
