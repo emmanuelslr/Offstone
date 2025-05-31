@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 export default function Navbar() {
   const [isOnWhiteSection, setIsOnWhiteSection] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,7 +106,11 @@ export default function Navbar() {
           </div>
         </div>
 
-        <button className="md:hidden p-2 -mr-2" aria-label="Menu">
+        <button 
+          className="md:hidden p-2 -mr-2" 
+          aria-label="Menu"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
           <svg
             className={`w-6 h-6 transition-all duration-300 ${isOnWhiteSection ? 'text-white' : 'text-black'}`}
             fill="none"
@@ -122,6 +127,84 @@ export default function Navbar() {
           </svg>
         </button>
       </nav>
+
+      {/* Mobile Menu */}
+      <div className={`md:hidden fixed inset-0 bg-black/90 backdrop-blur-lg z-50 transition-all duration-300 ${
+        isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+      }`}>
+        <div className="flex flex-col items-center justify-center min-h-screen space-y-8 px-6">
+          <Link 
+            href="#strategie" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+          >
+            Stratégie
+          </Link>
+          <Link 
+            href="#nos-solutions" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+          >
+            Nos Solutions
+          </Link>
+          <Link 
+            href="#le-club" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+          >
+            Le Club
+          </Link>
+          <Link 
+            href="#notre-histoire" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+          >
+            Notre Histoire
+          </Link>
+          <Link 
+            href="#ressources" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+          >
+            Ressources
+          </Link>
+          <div className="flex flex-col gap-4 w-full max-w-[280px] mt-4">
+            <Link 
+              href="#expert" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full px-5 py-3.5 border border-white text-white rounded-lg text-[15px] font-medium hover:bg-white hover:text-black transition-all text-center"
+            >
+              Parler à un expert
+            </Link>
+            <Link 
+              href="#membre" 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full px-5 py-3.5 bg-white text-black border border-white rounded-lg text-[15px] font-medium hover:bg-[#1E2124] hover:text-white transition-all text-center"
+            >
+              Devenir Membre
+            </Link>
+          </div>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-5 right-4 p-2 text-white"
+            aria-label="Close menu"
+          >
+            <svg 
+              className="w-6 h-6" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </header>
   );
 }
