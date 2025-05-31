@@ -23,8 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body className="bg-[#0a0a0a] text-white antialiased">
-        {children}
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </head>
+      <body className="bg-[#0a0a0a] text-white antialiased overflow-x-hidden min-h-screen w-full">
+        <div className="mx-auto">
+          {children}
+        </div>
       </body>
     </html>
   );

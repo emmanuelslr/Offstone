@@ -2,9 +2,9 @@
 import { motion } from 'framer-motion';
 export default function Hero() {
   return (
-    <div className="Hero relative min-h-screen flex justify-center overflow-hidden">
+    <div className="Hero relative min-h-screen w-full flex justify-center overflow-hidden">
       {/* Video Background with gradient overlay */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
+      <div className="absolute inset-0 z-0 w-full flex items-center justify-center">
         <video
           autoPlay
           muted
@@ -27,10 +27,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="max-w-6xl mx-auto flex flex-col items-center min-h-[calc(100vh-96px)] mt-24"
+          className="w-full max-w-6xl mx-auto flex flex-col items-center min-h-[calc(100vh-96px)] mt-20 sm:mt-24"
         >
           <div className="flex flex-col items-center justify-center flex-1">
-            <h1 className="text-4xl md:text-6xl lg:text-[82px] font-[350] tracking-tighter leading-none text-white text-center mx-auto px-4">
+            <h1 className="text-[36px] sm:text-4xl md:text-6xl lg:text-[82px] font-[350] tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto px-4 sm:px-6">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -53,7 +53,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="text-lg md:text-2xl text-white/90 text-center mt-6 font-light tracking-wide mx-auto px-4 whitespace-nowrap"
+              className="text-base sm:text-lg md:text-2xl text-white/90 text-center mt-6 font-light tracking-wide mx-auto px-4 sm:px-6 whitespace-normal sm:whitespace-nowrap"
             >
               L&apos;investissement stratégique aux côtés de professionnels immobiliers
             </motion.p>
@@ -62,13 +62,13 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-10 px-4"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-10 w-full px-6 sm:px-4 max-w-md sm:max-w-none mx-auto"
             >
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-5 py-3 bg-white text-[#1E2124] rounded-lg text-base font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] rounded-lg text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Nous Contacter
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="ml-1">
@@ -79,7 +79,7 @@ export default function Hero() {
                 href="#expertise"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-5 py-3 border-2 border-white text-white rounded-lg text-base font-medium hover:bg-white/10 transition-all duration-300 text-center"
+                className="w-full sm:w-auto px-5 py-3.5 border-2 border-white text-white rounded-lg text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
               >
                 Notre Expertise
               </motion.a>

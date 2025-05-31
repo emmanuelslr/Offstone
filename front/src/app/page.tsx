@@ -12,44 +12,51 @@ import KeyFigures from '@/components/KeyFigures';
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-white">
+    <main className="relative min-h-screen bg-white w-full overflow-x-hidden">
       {/* Fixed Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <div className="Hero">
+      <section className="Hero w-full">
         <Hero />
-      </div>
+      </section>
 
       {/* Pillar Cards Section */}
-      <div className="dark-section">
+      <section className="dark-section w-full">
         <PillarCards />
-      </div>
+      </section>
 
       {/* Text Reveal Section */}
-      <div className="bg-white">
+      <section className="bg-white w-full">
         <TextReveal />
-      </div>
+      </section>
 
       {/* Image Slider Section */}
-      <div className="dark-section">
+      <section className="dark-section w-full">
         <ImageSlider />
-      </div>
+      </section>
 
       {/* Key Figures Section */}
-      <div className="bg-white">
+      <section className="bg-white w-full">
         <KeyFigures />
-      </div>
+      </section>
 
       {/* Core Investment and Quote Sections */}
-      <div className="bg-white">
-        <CoreInvestment />
-        <QuoteSection />
-        <ExpertiseSection />
-      </div>
+      <section className="bg-white w-full">
+        <div className="w-full max-w-[100vw]">
+          <CoreInvestment />
+          <QuoteSection />
+          <ExpertiseSection />
+        </div>
+      </section>
       
-      <CTAFooter />
-      <Footer />
+      <section className="w-full">
+        <CTAFooter />
+      </section>
+      
+      <section className="w-full">
+        <Footer />
+      </section>
     </main>
   );
 }

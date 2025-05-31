@@ -27,16 +27,16 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-4 inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 rounded-2xl transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 sm:top-4 inset-x-0 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 sm:rounded-2xl transition-all duration-300 ease-in-out ${
         isOnWhiteSection ? 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent' : 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none'
       }`}
     >
-      <nav className="mx-auto max-w-[92rem] px-10 flex items-center justify-between h-20">
-        <Link href="/" className="group -ml-14">
+      <nav className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-10 flex items-center justify-between h-16 sm:h-20">
+        <Link href="/" className="group">
           <svg width="220" height="35" viewBox="0 0 372 110" className="group">
             <path 
               d="M30.3763 85.8259L23.3365 79.4513L40.1321 60.9743C41.144 59.8272 41.9181 58.4908 42.4097 57.0424C42.9014 55.5939 43.1006 54.0624 42.9961 52.5364C42.9293 51.0528 42.5682 49.5972 41.9338 48.2543C41.2994 46.9115 40.4043 45.7082 39.3007 44.7145L22.7452 30.2223L29.009 23.0532L45.5767 37.57C47.625 39.3975 49.2912 41.6125 50.4794 44.0871C51.6675 46.5617 52.3541 49.247 52.4994 51.9883C52.6747 54.7791 52.2946 57.5771 51.3812 60.2201C50.4678 62.8631 49.0392 65.2987 47.178 67.3858L30.3763 85.8259Z M78.8354 85.8258L62.0336 67.3488C60.1728 65.2612 58.744 62.8258 57.8296 60.183C56.9152 57.5402 56.5333 54.7424 56.706 51.9513C56.8549 49.2174 57.542 46.5397 58.7278 44.0719C59.9137 41.604 61.575 39.3945 63.6165 37.57L80.2027 23.0778L86.4664 30.2469L69.8802 44.7144C68.7821 45.7108 67.8928 46.9153 67.2637 48.258C66.6346 49.6007 66.2784 51.055 66.2156 52.5364C66.1102 54.0619 66.3085 55.5933 66.799 57.0416C67.2896 58.49 68.0626 59.8267 69.0733 60.9742L85.8751 79.4513L78.8354 85.8258Z"
-              className={`transition-all duration-300 ${
+              className={`scale-75 sm:scale-100 origin-left transition-all duration-300 ${
                 isOnWhiteSection ? 'fill-white group-hover:fill-[#FEA67F]' : 'fill-black group-hover:fill-[#FEA67F]'
               }`}
             />
@@ -105,7 +105,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <button className="md:hidden p-2" aria-label="Menu">
+        <button className="md:hidden p-2 -mr-2" aria-label="Menu">
           <svg
             className={`w-6 h-6 transition-all duration-300 ${isOnWhiteSection ? 'text-white' : 'text-black'}`}
             fill="none"
