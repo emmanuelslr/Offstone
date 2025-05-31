@@ -142,7 +142,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div 
-        className={`md:hidden fixed inset-0 bg-black/90 backdrop-blur-lg z-50 transition-all duration-300 ${
+        className={`md:hidden fixed inset-0 bg-[#0a0a0a] backdrop-blur-lg z-50 transition-all duration-300 ${
         isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
       }`}
         onClick={() => setIsMobileMenuOpen(false)}
