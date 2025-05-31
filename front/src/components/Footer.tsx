@@ -121,6 +121,28 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Newsletter section */}
+        <div className="flex justify-end mb-16">
+          <div className="w-full max-w-md">
+            <h4 className="text-white text-sm font-medium mb-4">
+              Restez informé des actualités Hectos en temps réel
+            </h4>
+            <div className="flex gap-3">
+              <input
+                type="email"
+                placeholder="Adresse email"
+                className="flex-1 bg-transparent border border-[#333839] rounded-md px-4 py-2.5 text-white text-sm placeholder:text-[#8F9193] focus:outline-none focus:border-white transition-colors"
+              />
+              <button
+                type="button"
+                className="bg-white text-black hover:bg-[#f2f2f2] px-6 py-2.5 rounded-md text-sm font-medium transition-colors"
+              >
+                S&apos;inscrire
+              </button>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-[#333839] border-t">
           <div className="text-[#8F9193] text-sm">© Hectos 2025</div>
