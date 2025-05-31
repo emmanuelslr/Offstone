@@ -4,6 +4,7 @@ import TextReveal from '@/components/TextReveal';
 import ImageSlider from '@/components/ImageSlider';
 import PillarCards from '@/components/PillarCards';
 import Footer from '@/components/Footer';
+import CTAFooter from '@/components/CTAFooter';
 import CoreInvestment from '@/components/CoreInvestment';
 import QuoteSection from '@/components/QuoteSection';
 import ExpertiseSection from '@/components/ExpertiseSection';
@@ -47,6 +48,7 @@ export default function Home() {
         <ExpertiseSection />
       </div>
       
+      <CTAFooter />
       <Footer />
     </main>
   );

@@ -1,4 +1,3 @@
-
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,26 +5,9 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-[#1E2124]">
-      <div className="container-custom pt-24 pb-8">
-          <div className="mb-20">
-          <h2 className="text-[48px] lg:text-[56px] font-normal leading-[1.15] tracking-[-0.02em] mb-9 max-w-[760px]">
-            <span className="whitespace-nowrap">Join the embedded banking</span><br />movement&apos;s.
-          </h2>
-          <p className="text-[18px] lg:text-[17px] text-[#8F9193] max-w-[760px] mb-6 leading-[1.5]">
-            Give your customers an experience so smooth they don&apos;t even notice financial steps. Banking becomes invisible.
-          </p>
-          <div className="flex items-center gap-5">
-            <Link href="#" className="inline-flex items-center justify-center w-[200px] py-3.5 text-[15px] font-normal tracking-[-0.01em] text-black bg-white border border-white rounded hover:bg-[#1E2124] hover:text-white transition-all">
-              Contact us
-            </Link>
-            <Link href="#" className="inline-flex items-center justify-center w-[200px] py-3.5 text-[15px] font-normal tracking-[-0.01em] text-white border border-white rounded hover:bg-white hover:text-[#1E2124] transition-all">
-              Book a demo
-            </Link>
-          </div>
-        </div>
-
+      <div className="container-custom max-w-7xl mx-auto py-24">
         <div className="border-t border-[#333839] mb-16" />
-        <div className="flex mb-1 relative">
+        <div className="flex mb-16 relative">
           {/* Logo section */}
           <div className="mt-[12px] w-[200px]">
             <Link href="/" className="group">
@@ -46,96 +28,112 @@ export default function Footer() {
           <div className="hidden lg:flex pl-[280px]">
             <div className="grid grid-cols-4 gap-x-8 w-[720px]">
               {/* Product */}
-              <div className="footer-section">
-                <h3 className="footer-heading">Product</h3>
-                <Link href="#" className="footer-link">How to launch</Link>
-                <Link href="#" className="footer-link">Why Swan</Link>
-                <Link href="#" className="footer-link">Features</Link>
-                <Link href="#" className="footer-link">Pricing</Link>
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-white">Product</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">How to launch</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Why Swan</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Features</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Pricing</Link>
+                </div>
               </div>
 
               {/* Use cases */}
-              <div className="footer-section">
-                <h3 className="footer-heading">Use cases</h3>
-                <Link href="#" className="footer-link">Financial</Link>
-                <Link href="#" className="footer-link">Proptech</Link>
-                <Link href="#" className="footer-link">HR tech</Link>
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-white">Use cases</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Financial</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Proptech</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">HR tech</Link>
+                </div>
               </div>
 
               {/* Company */}
-              <div className="footer-section">
-                <h3 className="footer-heading">Company</h3>
-                <Link href="#" className="footer-link">About</Link>
-                <Link href="#" className="footer-link">Customers</Link>
-                <Link href="#" className="footer-link">Blog</Link>
-                <Link href="#" className="footer-link">Jobs</Link>
-                <Link href="#" className="footer-link">FAQ</Link>
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-white">Company</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">About</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Customers</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Blog</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Jobs</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">FAQ</Link>
+                </div>
               </div>
 
               {/* For developers */}
-              <div className="footer-section">
-                <h3 className="footer-heading whitespace-nowrap">For developers</ h3>
-                <Link href="#" className="footer-link">Documentation</Link>
-                <Link href="#" className="footer-link">Play in Sandbox</Link>
-                <Link href="#" className="footer-link">System status</Link>
-                <Link href="#" className="footer-link">API Explorer</Link>
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-white whitespace-nowrap">For developers</h3>
+                <div className="flex flex-col gap-3">
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Documentation</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Play in Sandbox</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">System status</Link>
+                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">API Explorer</Link>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Mobile Navigation Grid */}
-          <div className="grid grid-cols-2 gap-x-24 gap-y-24 lg:hidden mt-32">
+          <div className="grid grid-cols-2 gap-x-24 gap-y-12 lg:hidden mt-16">
             {/* Product */}
-            <div className="footer-section">
-              <h3 className="footer-heading">Product</h3>
-              <Link href="#" className="footer-link whitespace-nowrap">How to launch</Link>
-              <Link href="#" className="footer-link whitespace-nowrap">Why Swan</Link>
-              <Link href="#" className="footer-link">Features</Link>
-              <Link href="#" className="footer-link">Pricing</Link>
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-white">Product</h3>
+              <div className="flex flex-col gap-3">
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm whitespace-nowrap">How to launch</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm whitespace-nowrap">Why Swan</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Features</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Pricing</Link>
+              </div>
             </div>
 
             {/* Use cases */}
-            <div className="footer-section">
-              <h3 className="footer-heading">Use cases</h3>
-              <Link href="#" className="footer-link">Financial</Link>
-              <Link href="#" className="footer-link">Proptech</Link>
-              <Link href="#" className="footer-link">HR tech</Link>
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-white">Use cases</h3>
+              <div className="flex flex-col gap-3">
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Financial</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Proptech</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">HR tech</Link>
+              </div>
             </div>
 
             {/* Company */}
-            <div className="footer-section">
-              <h3 className="footer-heading">Company</h3>
-              <Link href="#" className="footer-link">About</Link>
-              <Link href="#" className="footer-link">Customers</Link>
-              <Link href="#" className="footer-link">Blog</Link>
-              <Link href="#" className="footer-link">Jobs</Link>
-              <Link href="#" className="footer-link">FAQ</Link>
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-white">Company</h3>
+              <div className="flex flex-col gap-3">
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">About</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Customers</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Blog</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Jobs</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">FAQ</Link>
+              </div>
             </div>
 
             {/* For developers */}
-            <div className="footer-section">
-              <h3 className="footer-heading whitespace-nowrap">For developers</h3>
-              <Link href="#" className="footer-link">Documentation</Link>
-              <Link href="#" className="footer-link">Play in Sandbox</Link>
-              <Link href="#" className="footer-link">System status</Link>
-              <Link href="#" className="footer-link">API Explorer</Link>
+            <div className="space-y-4">
+              <h3 className="text-sm font-medium text-white">For developers</h3>
+              <div className="flex flex-col gap-3">
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Documentation</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Play in Sandbox</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">System status</Link>
+                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">API Explorer</Link>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom section */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-10 mt-1 border-[#333839] border-t">
-          <div className="text-[#8F9193] text-[14px] font-normal tracking-[-0.01em]">© Hectos 2025</div>
+        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-[#333839] border-t">
+          <div className="text-[#8F9193] text-sm">© Hectos 2025</div>
           
-          <nav className="flex flex-wrap md:flex-row items-center gap-x-10 md:mx-12">
-            <Link href="#" className="footer-bottom-link">Privacy policy</Link>
-            <Link href="#" className="footer-bottom-link">Legal notice</Link>
-            <Link href="#" className="footer-bottom-link">Support</Link>
-            <Link href="#" className="footer-bottom-link">Contact Us</Link>
-            <Link href="#" className="footer-bottom-link">Security</Link>
+          <nav className="flex flex-wrap md:flex-row items-center gap-x-8 md:mx-12">
+            <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Privacy policy</Link>
+            <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Legal notice</Link>
+            <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Support</Link>
+            <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Contact Us</Link>
+            <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Security</Link>
           </nav>
 
-          <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="linkedin-button md:ml-auto">
+          <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-[#8F9193] hover:text-white md:ml-auto">
             <span className="sr-only">LinkedIn</span>
             <Image
               src="/Images/609a39f33751ffdaeec6111f_linkedin.svg"
