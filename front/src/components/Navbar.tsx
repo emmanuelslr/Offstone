@@ -39,7 +39,8 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
+    <>
+      <header
       className={`fixed top-0 sm:top-4 inset-x-0 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 sm:rounded-2xl transition-all duration-300 ease-in-out ${
         isOnWhiteSection ? 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent' : 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none'
       }`}
@@ -139,16 +140,17 @@ export default function Navbar() {
           </svg>
         </button>
       </nav>
+    </header>
 
-      {/* Mobile Menu */}
-      <div 
-        className={`md:hidden fixed inset-0 bg-[#0a0a0a] backdrop-blur-lg z-50 transition-all duration-300 ${
-        isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      }`}
-        onClick={() => setIsMobileMenuOpen(false)}
-      >
+    {/* Mobile Menu */}
+    <div 
+      className={`md:hidden fixed inset-0 bg-[#0a0a0a] z-[100] transition-transform duration-300 ${
+      isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+    }`}
+      onClick={() => setIsMobileMenuOpen(false)}
+    >
         <div 
-          className="flex flex-col items-center justify-center min-h-screen space-y-8 px-6"
+          className="flex flex-col items-center justify-center min-h-screen space-y-8 px-6 bg-[#0a0a0a]"
           onClick={(e) => e.stopPropagation()}
         >
           <Link 
@@ -201,28 +203,28 @@ export default function Navbar() {
             >
               Devenir Membre
             </Link>
-          </div>
-          <button 
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-5 right-4 p-2 text-white"
-            aria-label="Close menu"
-          >
-            <svg 
-              className="w-6 h-6" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-5 right-4 p-2 text-white"
+              aria-label="Close menu"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+              <svg 
+                className="w-6 h-6" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }
