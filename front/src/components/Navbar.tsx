@@ -27,7 +27,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-4 inset-x-4 lg:inset-x-8 mx-auto max-w-[96rem] z-50 rounded-2xl transition-all duration-300 ease-in-out ${
+      className={`fixed top-4 inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 rounded-2xl transition-all duration-300 ease-in-out ${
         isOnWhiteSection ? 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent' : 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none'
       }`}
     >
@@ -52,28 +52,28 @@ export default function Navbar() {
         <div className="hidden md:flex items-center justify-between flex-1 ml-12">
           <ul className="flex items-center space-x-12">
             <li>
-              <Link href="#strategie" className={`text-sm font-medium transition-all duration-300 ${
+              <Link href="#strategie" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
                 Stratégie
               </Link>
             </li>
             <li>
-              <Link href="#nos-solutions" className={`text-sm font-medium transition-all duration-300 ${
+              <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
                 Nos solutions
               </Link>
             </li>
             <li>
-              <Link href="#le-club" className={`text-sm font-medium transition-all duration-300 ${
+              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
                 Le Club
               </Link>
             </li>
             <li>
-              <Link href="#ressources" className={`text-sm font-medium transition-all duration-300 ${
+              <Link href="#ressources" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
               }`}>
                 Ressources
@@ -81,14 +81,14 @@ export default function Navbar() {
             </li>
           </ul>
           <div className="flex items-center space-x-4">
-            <Link href="#expert" className={`inline-flex items-center justify-center px-6 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all ${
+            <Link href="#expert" className={`inline-flex items-center justify-center px-5 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all rounded-md ${
               isOnWhiteSection 
                 ? 'text-white border border-white hover:bg-white hover:text-black' 
                 : 'text-black border border-black hover:bg-black hover:text-white'
             }`}>
               Parler à un expert
             </Link>
-            <Link href="#membre" className={`inline-flex items-center justify-center px-6 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all ${
+            <Link href="#membre" className={`inline-flex items-center justify-center px-5 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all rounded-md ${
               isOnWhiteSection 
                 ? 'text-black bg-white border border-white hover:bg-[#1E2124] hover:text-white' 
                 : 'text-white bg-[#1E2124] border border-[#1E2124] hover:bg-white hover:text-[#1E2124]'
