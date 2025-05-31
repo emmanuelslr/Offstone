@@ -6,6 +6,18 @@ export default function Navbar() {
   const [isOnWhiteSection, setIsOnWhiteSection] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       const heroSection = document.querySelector('.Hero');
@@ -129,10 +141,16 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden fixed inset-0 bg-black/90 backdrop-blur-lg z-50 transition-all duration-300 ${
+      <div 
+        className={`md:hidden fixed inset-0 bg-black/90 backdrop-blur-lg z-50 transition-all duration-300 ${
         isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-      }`}>
-        <div className="flex flex-col items-center justify-center min-h-screen space-y-8 px-6">
+      }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      >
+        <div 
+          className="flex flex-col items-center justify-center min-h-screen space-y-8 px-6"
+          onClick={(e) => e.stopPropagation()}
+        >
           <Link 
             href="#strategie" 
             onClick={() => setIsMobileMenuOpen(false)}
