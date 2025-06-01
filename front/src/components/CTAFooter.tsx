@@ -19,11 +19,11 @@ export default function CTAFooter() {
           <p className="text-[17px] lg:text-[19px] text-gray-600 mb-14 leading-[1.5] max-w-[720px] mx-auto font-light">
             Accédez aux meilleures opportunités immobilières aux côtés de professionnels : saisissez l&apos;occasion d&apos;investir dans des opérations habituellement réservées aux investisseurs institutionnels.
           </p>
-          <div className="flex items-center justify-center gap-6">
-            <Link href="#" className="inline-flex items-center justify-center w-[220px] py-4 text-[15px] font-medium tracking-[-0.01em] text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-all">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            <Link href="#" className="inline-flex items-center justify-center w-full sm:w-[220px] py-4 text-[15px] font-medium tracking-[-0.01em] text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-all">
               Parler à un expert
             </Link>
-            <Link href="#" className="inline-flex items-center justify-center w-[220px] py-4 text-[15px] font-medium tracking-[-0.01em] text-gray-900 border-2 border-gray-900 rounded-lg bg-transparent hover:bg-gray-50 transition-all">
+            <Link href="#" className="inline-flex items-center justify-center w-full sm:w-[220px] py-4 text-[15px] font-medium tracking-[-0.01em] text-gray-900 border-2 border-gray-900 rounded-lg bg-transparent hover:bg-gray-50 transition-all">
               Souscrire
             </Link>
           </div>
