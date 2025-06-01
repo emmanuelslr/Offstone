@@ -62,13 +62,13 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-10 w-full px-6 sm:px-4 max-w-md sm:max-w-none mx-auto"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-10 mx-auto items-center justify-center"
             >
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] rounded-lg text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-[280px] sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] rounded-lg text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 Nous Contacter
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="ml-1">
@@ -79,7 +79,7 @@ export default function Hero() {
                 href="#expertise"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto px-5 py-3.5 border-2 border-white text-white rounded-lg text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
+                className="w-[280px] sm:w-auto px-5 py-3.5 border-2 border-white text-white rounded-lg text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
               >
                 Notre Expertise
               </motion.a>
