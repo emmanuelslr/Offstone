@@ -1,11 +1,10 @@
 'use client';
-import { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 export default function TextReveal() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const mainControls = useAnimation();
   
   const lines = [""];
 

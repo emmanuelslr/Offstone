@@ -1,8 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import SectionTitle from './SectionTitle';
 
 const logos = [
   '/Images/Confiance/BNPPP.svg',

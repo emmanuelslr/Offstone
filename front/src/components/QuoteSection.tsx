@@ -1,23 +1,15 @@
 'use client';
 import { useRef } from 'react';
-import { motion, useInView, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function QuoteSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-10%" });
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 200%", "end 0%"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 30,
-    damping: 15,
-    restDelta: 0.001
   });
 
   // Parallax effect for image

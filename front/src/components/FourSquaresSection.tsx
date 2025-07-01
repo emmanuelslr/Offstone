@@ -9,9 +9,6 @@ const images = [
   '/Images/gepacHmDQ2wBJaynQNnD9Q.jpg'
 ];
 
-// Gris plus marqué, inspiré de Sequoia
-const separator = 'rgba(120, 120, 120, 0.55)';
-
 export default function FourSquaresSection() {
   return (
     <section className="w-full max-w-7xl mx-auto px-4 py-20">
