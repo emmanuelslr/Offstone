@@ -89,7 +89,7 @@ const PeopleDoSection: React.FC = () => {
                 />
               </motion.div>
               <div className="w-full text-xs text-gray-500 text-center mt-3">
-                L'équipe de Kelios
+                L&apos;équipe de Kelios
               </div>
             </div>
             <div className="flex flex-col">

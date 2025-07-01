@@ -42,12 +42,12 @@ const RecentInvestments: React.FC = () => {
         <SectionTitle
           title={
             <>
-              Investissez aujourd'hui
+              Investissez aujourd&apos;hui
               <br />
-              comme nous l’avons fait hier.
+              comme nous l&apos;avons fait hier.
             </>
           }
-          subtitle="Nous sommes une équipe d'investisseurs et d'opérateurs avec plus de 15 ans d'expérience dans la transformation immobilière."
+          subtitle="Nous sommes une équipe d&apos;investisseurs et d&apos;opérateurs avec plus de 15 ans d&apos;expérience dans la transformation immobilière."
           align="center"
           textColor="dark"
         />

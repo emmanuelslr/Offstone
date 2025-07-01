@@ -22,7 +22,7 @@ export default function CTAFooter() {
                   border: 'none',
                 }}
               >
-                Je m'inscris
+                Je m&apos;inscris
               </button>
             </div>
           </div>
