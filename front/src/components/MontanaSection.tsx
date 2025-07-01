@@ -109,21 +109,19 @@ export default function MontanaSection({
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end items-center w-full">
             <button
-              className="px-8 py-3 rounded-md font-semibold text-base border transition min-w-[180px]"
+              className="bg-[#00D481] text-[#1A1A1A] font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm hover:bg-[#00b86b] transition"
               style={{
-                color: "#00D481",
-                borderColor: "#00D481",
-                background: "transparent",
+                boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+                border: 'none',
               }}
             >
               Nos club deals
             </button>
             <button
-              className="px-8 py-3 rounded-md font-semibold text-base border transition min-w-[180px]"
+              className="bg-[#00D481] text-[#1A1A1A] font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm hover:bg-[#00b86b] transition"
               style={{
-                color: "#00D481",
-                borderColor: "#00D481",
-                background: "transparent",
+                boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+                border: 'none',
               }}
             >
               Nos Fonds
