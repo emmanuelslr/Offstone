@@ -95,12 +95,9 @@ const RecentInvestments: React.FC = () => {
               <h3 className="text-3xl font-normal text-black mb-6">{investments[index].company}</h3>
               <p className="text-lg text-gray-700 mb-6">{investments[index].description}</p>
               <button
-                className="px-8 py-2 border rounded transition font-medium"
+                className="bg-transparent text-black font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm border border-[#00D481] transition hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
                 style={{
-                  fontSize: '1rem',
-                  color: "#00A36D",
-                  borderColor: "#00A36D",
-                  background: "transparent"
+                  boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
                 }}
               >
                 Investir

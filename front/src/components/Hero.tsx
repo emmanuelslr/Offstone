@@ -62,8 +62,7 @@ export default function Hero() {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-[280px] sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
-                style={{ borderRadius: '5px' }}
+                className="w-[280px] sm:w-auto px-8 py-3 bg-white text-black text-base md:text-lg font-normal rounded-full border border-[#00D481] shadow-sm transition hover:bg-[#f3f4f6] flex items-center justify-center gap-2"
               >
                 Nous Contacter
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="ml-1">
@@ -74,8 +73,7 @@ export default function Hero() {
                 href="#expertise"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-[280px] sm:w-auto px-5 py-3.5 border-2 border-white text-white text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
-                style={{ borderRadius: '5px' }}
+                className="w-[280px] sm:w-auto px-8 py-3 bg-transparent text-white text-base md:text-lg font-normal rounded-full border border-white shadow-sm transition hover:bg-white/10 text-center"
               >
                 Notre Expertise
               </motion.a>

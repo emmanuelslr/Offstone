@@ -102,16 +102,16 @@ export default function Navbar() {
             </li>
           </ul>
           <div className="flex items-center space-x-4">
-            <Link href="#expert" className={`inline-flex items-center justify-center px-5 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all rounded-md ${
+            <Link href="#expert" className={`inline-flex items-center justify-center px-6 py-2 text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all ${
               isOnWhiteSection 
                 ? 'text-white border border-white hover:bg-white hover:text-black' 
                 : 'text-black border border-black hover:bg-black hover:text-white'
             }`}>
               Parler à un expert
             </Link>
-            <Link href="#membre" className={`inline-flex items-center justify-center px-5 py-3 text-[15px] font-normal tracking-[-0.01em] transition-all rounded-md ${
+            <Link href="#membre" className={`inline-flex items-center justify-center px-6 py-2.5 text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all ${
               isOnWhiteSection 
-                ? 'text-black bg-white border border-white hover:bg-[#1E2124] hover:text-white' 
+                ? 'text-white bg-[#1E2124] border border-[#1E2124] hover:bg-white hover:text-[#1E2124]' 
                 : 'text-white bg-[#1E2124] border border-[#1E2124] hover:bg-white hover:text-[#1E2124]'
             }`}>
               Devenir Membre
@@ -192,16 +192,14 @@ export default function Navbar() {
             <Link 
               href="#expert" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full px-5 py-3.5 border border-white text-white text-[15px] font-medium hover:bg-white hover:text-black transition-all text-center"
-              style={{ borderRadius: '5px' }}
+              className="w-full px-6 py-2 text-[15px] font-medium border border-white text-white shadow-sm rounded-full hover:bg-white hover:text-black transition-all text-center"
             >
               Parler à un expert
             </Link>
             <Link 
               href="#membre" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full px-5 py-3.5 bg-white text-black border border-white text-[15px] font-medium hover:bg-[#1E2124] hover:text-white transition-all text-center"
-              style={{ borderRadius: '5px' }}
+              className="w-full px-6 py-2.5 text-[15px] font-medium bg-[#1E2124] text-white border border-[#1E2124] shadow-sm rounded-full hover:bg-white hover:text-[#1E2124] transition-all text-center"
             >
               Devenir Membre
             </Link>

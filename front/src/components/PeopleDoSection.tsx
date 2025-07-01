@@ -30,9 +30,9 @@ const PeopleDoSection: React.FC = () => {
   };
 
   return (
-    <section className="pt-28 pb-0.5 bg-white">
-      <div className="container mx-auto px-4 pb-0 mb-0">
-        <div className="flex flex-col lg:flex-row items-center mb-0 pb-0">
+    <section className="pt-10 pb-0 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-center -mb-10">
           <motion.div
             className="lg:w-1/2 lg:pl-12 lg:pr-12 lg:mb-0"
             initial="hidden"
@@ -72,7 +72,7 @@ const PeopleDoSection: React.FC = () => {
             </span>
           </motion.div>
           <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col">
+            <div className="flex flex-col -mb-4">
               <motion.div
                 className="w-full h-[600px] relative mt-16"
                 custom={0}
@@ -88,11 +88,11 @@ const PeopleDoSection: React.FC = () => {
                   objectFit="cover"
                 />
               </motion.div>
-              <div className="w-full text-xs text-gray-500 text-center mt-3">
+              <div className="w-full text-xs text-gray-500 text-center -mb-2">
                 L&apos;équipe de Kelios
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col -mb-4">
               <motion.div
                 className="w-full h-[600px] relative"
                 custom={1}
@@ -108,7 +108,7 @@ const PeopleDoSection: React.FC = () => {
                   objectFit="cover"
                 />
               </motion.div>
-              <div className="w-full text-xs text-gray-500 text-center mt-3">
+              <div className="w-full text-xs text-gray-500 text-center -mb-2">
                 Jonathan Anguelov de Kelios
               </div>
             </div>
