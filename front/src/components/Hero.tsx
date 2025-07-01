@@ -13,7 +13,7 @@ export default function Hero() {
           className="absolute w-full h-full object-cover"
           style={{ filter: 'brightness(0.55) contrast(1.1)' }}
         >
-          <source src="/videos/hero-background.mp4" type="video/mp4" />
+          <source src="/Aguesseau Vidéo officielle.mp4" type="video/mp4" />
         </video>
         <div 
           className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70"
@@ -30,22 +30,15 @@ export default function Hero() {
           className="w-full max-w-6xl mx-auto flex flex-col items-center min-h-[calc(100vh-96px)] mt-20 sm:mt-24"
         >
           <div className="flex flex-col items-center justify-center flex-1">
-            <h1 className="text-[36px] sm:text-4xl md:text-6xl lg:text-[82px] font-[350] tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto px-4 sm:px-6">
+            <h1 className="text-[36px] sm:text-4xl md:text-6xl lg:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto px-4 sm:px-6">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="block mb-2"
               >
-                Investissons dans l&apos;Avenir
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.2 }}
-                className="inline-block"
-              >
-                de l&apos;Immobilier Résidentiel
+                Investissez dans l’immobilier,<br />
+                aux côtés de ceux qui l’opèrent.
               </motion.span>
             </h1>
 
@@ -53,9 +46,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="text-base sm:text-lg md:text-2xl text-white/90 text-center mt-6 font-light tracking-wide mx-auto px-4 sm:px-6 whitespace-normal sm:whitespace-nowrap"
+              className="text-base sm:text-lg md:text-2xl text-white/90 text-center mt-6 font-light tracking-wide mx-auto px-4 sm:px-6 whitespace-normal"
             >
-              L&apos;investissement stratégique aux côtés de professionnels immobiliers
+              Nous investissons dans chaque opération que nous structurons.<br/>
+              Accédez-y désormais, à nos côtés.
             </motion.p>
 
             <motion.div 
@@ -68,7 +62,8 @@ export default function Hero() {
                 href="#contact"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-[280px] sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] rounded-lg text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
+                className="w-[280px] sm:w-auto px-5 py-3.5 bg-white text-[#1E2124] text-[15px] font-medium hover:bg-white/90 transition-all duration-300 flex items-center justify-center gap-2"
+                style={{ borderRadius: '5px' }}
               >
                 Nous Contacter
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="ml-1">
@@ -79,7 +74,8 @@ export default function Hero() {
                 href="#expertise"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-[280px] sm:w-auto px-5 py-3.5 border-2 border-white text-white rounded-lg text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
+                className="w-[280px] sm:w-auto px-5 py-3.5 border-2 border-white text-white text-[15px] font-medium hover:bg-white/10 transition-all duration-300 text-center"
+                style={{ borderRadius: '5px' }}
               >
                 Notre Expertise
               </motion.a>

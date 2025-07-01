@@ -37,13 +37,13 @@ export default function ImageSlider() {
   return (
     <motion.section 
       ref={ref}
-      className="relative w-full dark-section overflow-hidden"
+      className="relative w-full dark-section overflow-hidden rounded-none image-slider"
       initial={{ opacity: 0, scale: 0.95, y: 50 }}
       animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: 50 }}
       transition={{ duration: 1.2, ease: [0.25, 0.1, 0, 1] }}
     >
       <div className="max-w-[1400px] mx-auto px-4 py-20">
-        <div className="relative h-[600px] rounded-2xl overflow-hidden">
+        <div className="relative h-[600px] rounded-none overflow-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
@@ -54,7 +54,7 @@ export default function ImageSlider() {
               className="absolute inset-0"
             >
               <motion.div
-                className="absolute inset-0"
+                className="absolute inset-0 rounded-none"
                 initial={{ scale: 1 }}
                 animate={{ scale: 1.05 }}
                 transition={{ duration: 6, ease: "linear" }}
@@ -63,8 +63,8 @@ export default function ImageSlider() {
                   src={slides[currentIndex].image}
                   alt={slides[currentIndex].title}
                   fill
-                  style={{ objectFit: 'cover' }}
-                  className="brightness-75"
+                  style={{ objectFit: 'cover', borderRadius: '0' }}
+                  className="brightness-75 rounded-none"
                   priority
                 />
               </motion.div>

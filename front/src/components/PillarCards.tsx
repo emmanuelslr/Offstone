@@ -6,19 +6,19 @@ import SectionTitle from './SectionTitle';
 
 const pillars = [
   {
-    title: 'Expertise Immobilière',
-    image: '/Immo.jpg',
-    description: 'Excellence et innovation dans l\'investissement immobilier'
+    image: '/Images/Pillars Cards Image/photo 1.gif',
+    label: 'Détecter l’invisible',
+    desc: 'Nous ciblons des actifs mal valorisés, portés par une conviction forte de repositionnement.'
   },
   {
-    title: 'Innovation Technologique',
-    image: '/Tech.avif',
-    description: 'Technologies de pointe pour une gestion optimisée'
+    image: '/Images/Pillars Cards Image/Photo 2.jpg',
+    label: 'Réinventer les usages',
+    desc: 'Nous adaptons chaque actif aux nouveaux besoins : design, destination, exploitation.'
   },
   {
-    title: 'Engagement ESG',
-    image: '/ESG.png',
-    description: 'Investissement responsable et durable'
+    image: '/Images/Pillars Cards Image/Photo 3.png',
+    label: 'Maximiser la valeur',
+    desc: 'Nous mettons notre expertise opérationnelle en oeuvre pour révéler le plein potentiel de chaque actif.'
   }
 ];
 
@@ -54,11 +54,11 @@ export default function PillarCards() {
   };
 
   return (
-    <section ref={ref} className="w-full dark-section overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-4 py-20">
+<section ref={ref} className="w-full dark-section overflow-hidden mb-4 bg-gray-100">
+      <div className="max-w-[1400px] mx-auto px-4 py-0 mt-16 mb-16">
         <SectionTitle 
-          title="Nos Piliers"
-          subtitle="Les fondements de notre approche d'investissement reposent sur trois piliers essentiels qui définissent notre excellence"
+          title="Investissez là où la valeur se construit."
+          subtitle="Nous identifions des actifs sous-exploités, redéfinissons leur usage, et les transformons en opérations à fort potentiel."
           textColor="dark"
         />
         
@@ -70,42 +70,64 @@ export default function PillarCards() {
         >
           {pillars.map((pillar, index) => (
             <motion.div
-              key={pillar.title}
+              key={pillar.label}
               variants={cardVariants}
               whileHover={{
                 scale: 1.03,
                 transition: { duration: 0.3 }
               }}
-              className="relative group"
+              className="relative group rounded-none flex flex-col"
             >
-              <div className="relative h-[400px] rounded-2xl overflow-hidden">
+<div className="relative h-[260px] rounded-none overflow-hidden" style={{ borderRadius: '0' }}>
                 <Image
                   src={pillar.image}
-                  alt={pillar.title}
+                  alt={pillar.label}
                   fill
-                  style={{ objectFit: 'cover' }}
+                  style={{ objectFit: 'cover', borderRadius: '0' }}
                   className="transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                <div className="absolute inset-0 flex flex-col justify-end p-8">
-                  <motion.h3 
-                    className="text-2xl md:text-3xl font-light text-white mb-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 * index, duration: 0.6 }}
-                  >
-                    {pillar.title}
-                  </motion.h3>
-                  <motion.p 
-                    className="text-white/90"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 * index, duration: 0.6 }}
-                  >
-                    {pillar.description}
-                  </motion.p>
-                </div>
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-none pointer-events-none" />
               </div>
+              {/* Titre sous la carte */}
+              <motion.div
+                className="mt-6 text-center max-w-md mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.8,
+                    ease: [0.2, 0.65, 0.3, 0.9],
+                  }
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <span className="flex items-center justify-center gap-2 text-2xl md:text-3xl font-normal text-[#23272f]">
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "1.8em",
+                      height: "1.8em",
+                      borderRadius: "50%",
+                      background: "#23272f",
+                      marginRight: "0.5em",
+                      color: "#fff",
+                      fontSize: "0.6em",
+                      fontWeight: 600,
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    {index + 1}
+                  </span>
+                  <span className={pillar.label === "Réinventer les usages" ? "whitespace-nowrap" : ""}>
+                    {pillar.label}
+                  </span>
+                </span>
+                <span className="block mt-4 text-base md:text-lg text-gray-500">{pillar.desc}</span>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>

@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <>
       <header
-      className={`fixed top-0 sm:top-4 inset-x-0 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 sm:rounded-2xl transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 sm:top-4 inset-x-0 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-50 sm:rounded-lg transition-all duration-300 ease-in-out ${
         isOnWhiteSection ? 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent' : 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none'
       }`}
     >
@@ -66,36 +66,36 @@ export default function Navbar() {
         <div className="hidden md:flex items-center justify-between flex-1 ml-12">
           <ul className="flex items-center space-x-12">
             <li>
-              <Link href="#strategie" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            <Link href="#strategie" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Stratégie
               </Link>
             </li>
             <li>
-              <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Nos Solutions
               </Link>
             </li>
             <li>
-              <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Le Club
               </Link>
             </li>
             <li>
-              <Link href="#notre-histoire" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            <Link href="#notre-histoire" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Notre Histoire
               </Link>
             </li>
             <li>
-              <Link href="#ressources" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#FEA67F]' : 'text-black hover:text-[#FEA67F]'
+            <Link href="#ressources" className={`text-[15px] font-medium transition-all duration-300 ${
+                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Ressources
               </Link>
@@ -156,35 +156,35 @@ export default function Navbar() {
           <Link 
             href="#strategie" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >
             Stratégie
           </Link>
           <Link 
             href="#nos-solutions" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >
             Nos Solutions
           </Link>
           <Link 
             href="#le-club" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >
             Le Club
           </Link>
           <Link 
             href="#notre-histoire" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >
             Notre Histoire
           </Link>
           <Link 
             href="#ressources" 
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#FEA67F] transition-colors"
+            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >
             Ressources
           </Link>
@@ -192,14 +192,16 @@ export default function Navbar() {
             <Link 
               href="#expert" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full px-5 py-3.5 border border-white text-white rounded-lg text-[15px] font-medium hover:bg-white hover:text-black transition-all text-center"
+              className="w-full px-5 py-3.5 border border-white text-white text-[15px] font-medium hover:bg-white hover:text-black transition-all text-center"
+              style={{ borderRadius: '5px' }}
             >
               Parler à un expert
             </Link>
             <Link 
               href="#membre" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full px-5 py-3.5 bg-white text-black border border-white rounded-lg text-[15px] font-medium hover:bg-[#1E2124] hover:text-white transition-all text-center"
+              className="w-full px-5 py-3.5 bg-white text-black border border-white text-[15px] font-medium hover:bg-[#1E2124] hover:text-white transition-all text-center"
+              style={{ borderRadius: '5px' }}
             >
               Devenir Membre
             </Link>

@@ -11,7 +11,7 @@ export default function QuoteSection() {
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 120%", "end 0%"]
+    offset: ["start 200%", "end 0%"]
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -20,101 +20,82 @@ export default function QuoteSection() {
     restDelta: 0.001
   });
 
-  const backgroundColor = useTransform(
-    smoothProgress,
-    [0.1, 0.15, 0.85, 0.9],
-    ['#ffffff', '#1E2124', '#1E2124', '#ffffff']
-  );
+  // Parallax effect for image
+  const parallax = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
 
-  const textColor = useTransform(
-    smoothProgress,
-    [0.1, 0.15, 0.85, 0.9],
-    ['#000000', '#ffffff', '#ffffff', '#000000']
-  );
+  const backgroundColor = "#1E2124";
+  const textColor = "#fff";
 
   return (
-    <motion.div className="w-full">
-      <motion.section 
-        ref={sectionRef}
-        className="relative py-8 transition-all duration-700"
-      >
-        <motion.div 
-          className="absolute inset-0 z-0 transition-colors duration-700"
-          style={{ backgroundColor }}
-        />
-        <motion.div 
-          ref={contentRef}
-          className="relative z-10 max-w-7xl mx-auto px-4 w-full"
-        >
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-2 gap-16">
-              {/* Image left side */}
-              <div className="flex items-center justify-end">
-                <div className="relative w-[550px] h-[750px] flex items-center justify-center">
-                  <div className="relative w-[92%] h-[92%] rounded-2xl overflow-hidden">
-                    <Image
-                      src="/JA.jpg"
-                      alt="Citation de Jonathan Anguelov"
-                      fill
-                      priority
-                      style={{ objectFit: 'cover', objectPosition: '50% 0%' }}
-                      className="!relative !w-full !h-full"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Content right side */}
-              <div className="flex items-center">
-                <div>
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
-                    transition={{ duration: 1, delay: 0.4 }}
-                    className="space-y-6"
+    <section
+      ref={sectionRef}
+      className="relative py-32 md:py-48 transition-all duration-800 overflow-hidden flex items-center justify-center"
+      style={{ backgroundColor }}
+    >
+      <div className="absolute inset-0 z-0 bg-[#1E2124]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-8 w-full flex flex-col items-center justify-center h-full">
+        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-12 h-auto" style={{marginTop: 'auto', marginBottom: 'auto'}}>
+          {/* Image left side */}
+          <div className="w-full md:w-1/2 flex items-center justify-center">
+            <motion.div
+              className="relative w-full max-w-[420px] h-[420px] overflow-visible flex items-center justify-center"
+              style={{ y: parallax }}
+            >
+              <Image
+                src="/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3"
+                alt="Jonathan Anguelov"
+                fill
+                priority
+                style={{ objectFit: 'contain', objectPosition: 'center' }}
+                className="!relative scale-[1.5]"
+              />
+            </motion.div>
+          </div>
+          {/* Content right side */}
+          <div className="w-full md:w-1/2 flex items-center justify-center">
+            <div className="w-full max-w-xl ml-auto mt-[-40px] md:mt-[-80px] md:pl-12">
+              <blockquote>
+                <p
+                  style={{ color: textColor }}
+                  className="text-[1.8rem] leading-[1.3] font-light mb-8 max-w-full text-center md:text-left"
+                >
+                  « Nous ne structurons que<br />
+                  des opérations dans lesquelles<br />
+                  nous investissons nous-mêmes.<br />
+                  C’est une exigence que nous<br />
+                  appliquons à chaque décision. »
+                </p>
+                <footer
+                  style={{ color: textColor }}
+                  className="mb-4"
+                >
+                  <cite className="not-italic">
+                    <span className="block text-xl font-light mb-2">Jonathan Anguelov</span>
+                    <span className="text-base font-light opacity-80">Co-Fondateur de Kelios Capital</span>
+                  </cite>
+                </footer>
+              </blockquote>
+              <div className="flex justify-center md:justify-start">
+                <Link
+                  href="#contact"
+                  className="group"
+                >
+                  <div
+                    className="inline-flex items-center justify-center w-[200px] py-3.5 text-[15px] font-normal tracking-[-0.01em] rounded border transition-all hover:bg-[#1E2124] hover:text-white hover:border-white"
+                    style={{
+                      backgroundColor: textColor,
+                      color: "#00D481",
+                      borderColor: textColor
+                    }}
                   >
-                    <blockquote>
-                      <motion.p 
-                        style={{ color: textColor }}
-                        className="text-[2.5rem] leading-[1.2] font-light mb-8"
-                      >
-                        &quot;Notre équipe est un excellent partenaire à avoir dans son camp. Nous restons concentrés sur la vision globale, même pendant les périodes de distraction. Je les recommande vivement.&quot;
-                      </motion.p>
-                      <motion.footer 
-                        style={{ color: textColor }}
-                        className="mb-4"
-                      >
-                        <cite className="not-italic">
-                          <span className="block text-xl font-light mb-2">Jonathan Anguelov</span>
-                          <span className="text-base font-light opacity-80">Cofondateur & CEO de Aguesseau Capital</span>
-                        </cite>
-                      </motion.footer>
-                    </blockquote>
-
-                    <motion.div>
-                      <Link 
-                        href="#contact"
-                        className="group"
-                      >
-                        <motion.div
-                          className="inline-flex items-center justify-center w-[200px] py-3.5 text-[15px] font-normal tracking-[-0.01em] rounded border transition-all hover:bg-[#1E2124] hover:text-white hover:border-white"
-                          style={{
-                            backgroundColor: textColor,
-                            color: backgroundColor,
-                            borderColor: textColor
-                          }}
-                        >
-                          CONTACTEZ-NOUS
-                        </motion.div>
-                      </Link>
-                    </motion.div>
-                  </motion.div>
-                </div>
+                    CONTACTEZ-NOUS
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
-        </motion.div>
-      </motion.section>
-    </motion.div>
+        </div>
+      </div>
+    </section>
   );
 }

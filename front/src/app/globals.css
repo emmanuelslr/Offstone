@@ -1,3 +1,14 @@
+.palantir-highlight {
+  color: #6B7A90;
+}
+
+@font-face {
+  font-family: 'Alliance No.1';
+  src: url('/fonts/AllianceNo1-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
 @font-face {
   font-family: 'Alliance No.1';
   src: url('/fonts/AllianceNo1-Regular.woff2') format('woff2');
@@ -29,6 +40,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   --background: #0a0a0a;
@@ -64,11 +76,13 @@
   }
   
   .btn-primary {
-    @apply px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition-colors;
+    @apply px-6 py-3 bg-white text-black font-medium hover:bg-gray-100 transition-colors;
+    border-radius: 5px;
   }
   
   .btn-secondary {
-    @apply px-6 py-3 rounded-lg border border-white text-white font-medium hover:bg-white/10 transition-colors;
+    @apply px-6 py-3 border border-white text-white font-medium hover:bg-white/10 transition-colors;
+    border-radius: 5px;
   }
 }
 
@@ -109,4 +123,31 @@
 
 .linkedin-button {
   @apply flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-200 shrink-0;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.33%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 35s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll {
+    animation: none;
+  }
+}
+
+/* Force square corners for PillarCards and Image Slider */
+.dark-section [class*="rounded"],
+.image-slider *,
+.image-slider [class*="rounded"] {
+  border-radius: 0 !important;
 }

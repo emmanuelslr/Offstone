@@ -121,7 +121,7 @@ export default function CoreInvestment() {
           key={`${direction}-${index}`}
           className="w-[260px] flex-shrink-0 group"
         >
-          <div className="bg-white rounded-2xl shadow-lg cursor-pointer overflow-hidden relative transition-all duration-500">
+          <div className="bg-white rounded-sm shadow-lg cursor-pointer overflow-hidden relative transition-all duration-500">
             <div className="relative h-[360px] overflow-hidden">
               <Image
                 src={investment.image}
