@@ -59,7 +59,7 @@ export default function MontanaSection({
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[90vh] md:min-h-[110vh] flex items-center justify-center overflow-hidden pb-8 md:pb-12">
+    <section ref={sectionRef} className="relative w-full min-h-[90vh] md:min-h-[110vh] flex items-center justify-center overflow-hidden pb-4 md:pb-6">
       {/* Background image */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -109,7 +109,7 @@ export default function MontanaSection({
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:justify-end items-center w-full">
             <button
-              className="bg-[#00D481] text-white font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm border border-[#00D481] transition hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
+              className="bg-transparent text-white font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm border border-[#00D481] transition hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
               style={{
                 boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
               }}
@@ -117,7 +117,7 @@ export default function MontanaSection({
               Nos club deals
             </button>
             <button
-              className="bg-[#00D481] text-white font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm border border-[#00D481] transition hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
+              className="bg-transparent text-white font-normal rounded-full px-8 py-3 text-base md:text-lg shadow-sm border border-[#00D481] transition hover:bg-[#1A1A1A] hover:text-white hover:border-[#1A1A1A]"
               style={{
                 boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
               }}
