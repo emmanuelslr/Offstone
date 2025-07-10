@@ -79,13 +79,7 @@ export default function Navbar() {
                 Nos Solutions
               </Link>
             </li>
-            <li>
-            <Link href="#le-club" className={`text-[15px] font-medium transition-all duration-300 ${
-                isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
-              }`}>
-                Le Club
-              </Link>
-            </li>
+            
             <li>
             <Link href="#notre-histoire" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
@@ -167,13 +161,7 @@ export default function Navbar() {
           >
             Nos Solutions
           </Link>
-          <Link 
-            href="#le-club" 
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
-          >
-            Le Club
-          </Link>
+          
           <Link 
             href="#notre-histoire" 
             onClick={() => setIsMobileMenuOpen(false)}

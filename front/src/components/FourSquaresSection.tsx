@@ -18,13 +18,13 @@ const squares = [
   {
     image: '/Images/photo lit.PNG',
     label: 'BUREAUX',
-    description: 'Transformons l\'obsolète en actif stratégique.',
+    description: "Transformons l'obsolète en actif stratégique.",
     alt: 'Bureaux'
   },
   {
     image: '/Images/gepacHmDQ2wBJaynQNnD9Q.jpg',
     label: 'HOTELS',
-    description: 'Donnons du sens à l\'accueil. Réinventons l\'hospitalité.',
+    description: "Donnons du sens à l'accueil. Réinventons l'hospitalité.",
     alt: 'Hotels'
   }
 ];
@@ -69,7 +69,7 @@ export default function FourSquaresSection() {
               {renderDot()}
               <span className="text-white text-xs md:text-sm tracking-wider font-light" style={{fontSize: '0.93rem'}}>{squares[0].label}</span>
             </div>
-<p className="text-white text-xl md:text-2xl font-normal mt-auto leading-tight text-center">{squares[0].description}</p>
+<p className="text-white text-xl md:text-2xl font-normal mt-auto leading-tight text-center">{squares[0].description.replace(/'/g, "'")}</p>
           </div>
         </div>
         {/* Top middle square - Logistique */}
@@ -88,7 +88,7 @@ export default function FourSquaresSection() {
               {renderDot()}
               <span className="text-white text-xs md:text-sm tracking-wider font-light" style={{fontSize: '0.93rem'}}>{squares[1].label}</span>
             </div>
-<p className="text-white text-xl md:text-2xl font-light mt-auto leading-tight text-center">{squares[1].description}</p>
+<p className="text-white text-xl md:text-2xl font-light mt-auto leading-tight text-center">{squares[1].description.replace(/'/g, "'")}</p>
           </div>
         </div>
         {/* Right square (spans 2 rows) - Hotels */}
@@ -107,7 +107,7 @@ export default function FourSquaresSection() {
               {renderDot()}
               <span className="text-white text-xs md:text-sm tracking-wider font-light" style={{fontSize: '0.93rem'}}>{squares[3].label}</span>
             </div>
-            <p className="text-white text-3xl md:text-4xl font-bold mt-auto leading-tight">{squares[3].description}</p>
+<p className="text-white text-3xl md:text-4xl font-bold mt-auto leading-tight">{squares[3].description.replace(/'/g, "'")}</p>
           </div>
         </div>
         {/* Bottom rectangle (spans 2 columns) - Bureaux */}
@@ -126,7 +126,7 @@ export default function FourSquaresSection() {
               {renderDot()}
               <span className="text-white text-xs md:text-sm tracking-wider font-light" style={{fontSize: '0.93rem'}}>{squares[2].label}</span>
             </div>
-            <p className="text-white text-2xl md:text-3xl font-semibold mt-auto leading-tight">{squares[2].description}</p>
+<p className="text-white text-2xl md:text-3xl font-semibold mt-auto leading-tight">{squares[2].description.replace(/'/g, "'")}</p>
           </div>
         </div>
       </div>
