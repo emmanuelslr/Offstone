@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import PeopleDoSection from '@/components/PeopleDoSection';
 import TextReveal from '@/components/TextReveal';
+import WorkProcessSection from '@/components/WorkProcessSection';
 /* import ImageSlider from '@/components/ImageSlider'; */
 import PillarCards from '@/components/PillarCards';
 import Footer from '@/components/Footer';
@@ -35,6 +36,11 @@ export default function Home() {
       <section className="bg-white w-full">
         <TextReveal />
       </section>
+
+      {/* Work Process Section */}
+      {/* <section className="w-full">
+        <WorkProcessSection />
+      </section> */}
 
       {/* Pillar Cards Section */}
       <section className="dark-section w-full bg-[#f3f4f6]">
@@ -79,9 +85,9 @@ export default function Home() {
       {/* Conversation Banner */}
       <ConversationBanner />
       
-      <section className="w-full">
+      {/* <section className="w-full">
         <Footer />
-      </section>
+      </section> */}
     </main>
   );
 }

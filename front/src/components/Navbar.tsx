@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 export default function Navbar() {
-  const [isOnWhiteSection, setIsOnWhiteSection] = useState(true);
+  const [isOnWhiteSection, setIsOnWhiteSection] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Close mobile menu when clicking outside
@@ -27,6 +27,8 @@ export default function Navbar() {
         const navbarHeight = 80;
         const isOnVideo = rect.top <= (navbarHeight + navbarOffset) && rect.bottom >= navbarOffset;
         setIsOnWhiteSection(isOnVideo);
+      } else {
+        setIsOnWhiteSection(false);
       }
     };
 
@@ -73,7 +75,7 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-            <Link href="#nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
+            <Link href="/nos-solutions" className={`text-[15px] font-medium transition-all duration-300 ${
                 isOnWhiteSection ? 'text-white hover:text-[#00D481]' : 'text-black hover:text-[#00D481]'
               }`}>
                 Nos Solutions
@@ -154,8 +156,8 @@ export default function Navbar() {
           >
             Stratégie
           </Link>
-          <Link 
-            href="#nos-solutions" 
+            <Link 
+            href="/nos-solutions" 
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-[17px] font-medium text-white hover:text-[#00D481] transition-colors"
           >

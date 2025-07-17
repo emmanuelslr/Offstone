@@ -39,9 +39,9 @@ export default function SectionTitle({
           }
         }}
         viewport={{ once: true, margin: "-100px" }}
-        className={`text-5xl md:text-6xl ${fontWeightClass[fontWeight]} ${
-          textColor === 'light' ? 'text-white' : 'text-[#383843]'
-        } mb-8`}
+className={`text-4xl md:text-5xl ${fontWeightClass[fontWeight]} ${
+  textColor === 'light' ? 'text-white' : 'text-[#383843]'
+} mb-8`}
       >
         {title}
       </motion.h2>
@@ -92,9 +92,9 @@ export default function SectionTitle({
             }
           }}
           viewport={{ once: true, margin: "-100px" }}
-          className={`text-xl md:text-2xl ${
-            textColor === 'light' ? 'text-gray-400' : 'text-gray-600'
-          } max-w-3xl ${align === 'center' ? 'mx-auto' : ''}`}
+className={`text-lg md:text-xl ${
+  textColor === 'light' ? 'text-gray-400' : 'text-gray-600'
+} max-w-3xl ${align === 'center' ? 'mx-auto' : ''}`}
         >
           {subtitle}
         </motion.p>

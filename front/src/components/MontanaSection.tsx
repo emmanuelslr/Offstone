@@ -59,7 +59,7 @@ export default function MontanaSection({
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-[90vh] md:min-h-[110vh] flex items-center justify-center overflow-hidden pb-4 md:pb-6">
+    <section ref={sectionRef} className="relative w-full min-h-[75vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden pb-4 md:pb-6">
       {/* Background image */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
@@ -75,7 +75,7 @@ export default function MontanaSection({
       {/* Centered text and buttons */}
       <div ref={inViewRef} className="relative z-10 flex flex-col items-center justify-center w-full max-w-[2100px] mx-auto px-4">
         <motion.h2
-          className="text-white text-5xl md:text-6xl font-light tracking-tight drop-shadow-lg mb-2 mt-[-1rem] text-center"
+          className="text-white text-4xl md:text-5xl font-light tracking-tight drop-shadow-lg mb-2 mt-[-0.7rem] text-center"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.1 }}
@@ -84,22 +84,22 @@ export default function MontanaSection({
         </motion.h2>
         {/* Cartes blanches */}
         <motion.div
-          className="flex flex-col gap-6 mb-36 items-end justify-end w-full pr-40 md:pr-56 lg:pr-80 mt-12"
+          className="flex flex-col gap-4 mb-24 items-end justify-end w-full pr-28 md:pr-40 lg:pr-56 mt-10"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <div className="bg-white rounded-none shadow-lg flex flex-col items-center justify-center w-64 h-40 md:w-80 md:h-44">
+          <div className="bg-white rounded-none shadow-lg flex flex-col items-center justify-center w-56 h-32 md:w-72 md:h-36">
             <span className="text-3xl md:text-4xl font-semibold text-[#23272f]">9 à 13%</span>
             <span className="text-gray-500 text-xs mt-2 uppercase tracking-wider font-medium">TRI Cible annuelle</span>
           </div>
-          <div className="bg-white rounded-none shadow-lg flex flex-col items-center justify-center w-64 h-40 md:w-80 md:h-44">
+          <div className="bg-white rounded-none shadow-lg flex flex-col items-center justify-center w-56 h-32 md:w-72 md:h-36">
             <span className="text-3xl md:text-4xl font-semibold text-[#23272f]">2 à 5 ans</span>
             <span className="text-gray-500 text-xs mt-2 uppercase tracking-wider font-medium">Durée cible</span>
           </div>
         </motion.div>
         <motion.div
-          className="w-full flex flex-col items-end pr-40 md:pr-56 lg:pr-80 mt-[-5rem]"
+          className="w-full flex flex-col items-end pr-28 md:pr-40 lg:pr-56 mt-[-3rem]"
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.5 }}

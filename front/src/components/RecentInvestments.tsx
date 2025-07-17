@@ -36,22 +36,24 @@ const RecentInvestments: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-gray-50">
+<section className="pt-16 pb-10 bg-gray-50">
       <div className="container mx-auto px-4">
         {/* New Title and Subtitle */}
-        <SectionTitle
-          title={
-            <>
-              Investissez aujourd&apos;hui
-              <br />
-              comme nous l&apos;avons fait hier.
-            </>
-          }
-          subtitle="Nous sommes une équipe d&apos;investisseurs et d&apos;opérateurs avec plus de 15 ans d&apos;expérience dans la transformation immobilière."
-          align="center"
-          textColor="dark"
-        />
-        <div className="relative flex items-center justify-center">
+<div className="text-sm md:text-base -mb-6">
+          <SectionTitle
+            title={
+              <>
+                Investissez aujourd'hui
+                <br />
+                comme nous l'avons fait hier.
+              </>
+            }
+            subtitle="Nous sommes une équipe d'investisseurs et d'opérateurs avec plus de 15 ans d'expérience dans la transformation immobilière."
+            align="center"
+            textColor="dark"
+          />
+        </div>
+<div className="relative flex items-center justify-start">
           {/* Left Arrow */}
           <button
             onClick={prevInvestment}
@@ -65,9 +67,9 @@ const RecentInvestments: React.FC = () => {
             </svg>
           </button>
           {/* Carousel */}
-          <div className="relative flex w-full max-w-5xl h-[500px] items-stretch justify-center">
+<div className="relative flex w-full max-w-7xl h-[360px] items-stretch justify-center">
             {/* Image */}
-            <div className="w-[75%] h-full relative -ml-80">
+<div className="w-[60%] h-full relative mx-auto">
               <Image
                 src={investments[index].image}
                 alt={investments[index].company}
@@ -80,17 +82,17 @@ const RecentInvestments: React.FC = () => {
             {/* Description Rectangle */}
             <div
               className="absolute bg-[#ECF0F1] flex flex-col justify-center items-start p-10 z-10"
-              style={{
-                width: '38%',
-                height: '88%',
-                right: '0%',
-                bottom: '0',
-                top: 'auto',
-                borderRadius: 0,
-                boxShadow: 'none',
-                minWidth: 320,
-                maxWidth: 420,
-              }}
+style={{
+  width: '40%',
+  height: '80%',
+  right: '0%',
+  bottom: '0',
+  top: 'auto',
+  borderRadius: 0,
+  boxShadow: 'none',
+  minWidth: 260,
+  maxWidth: 340,
+}}
             >
               <h3 className="text-3xl font-normal text-black mb-6">{investments[index].company}</h3>
               <p className="text-lg text-gray-700 mb-6">{investments[index].description}</p>

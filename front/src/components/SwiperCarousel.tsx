@@ -48,7 +48,7 @@ export default function SwiperCarousel() {
       {teamMembers.map((member) => (
         <SwiperSlide key={member.name}>
           <div className="flex flex-col h-full w-full">
-            <div className="relative w-full aspect-square bg-black min-h-[320px] md:min-h-[420px] lg:min-h-[520px]">
+            <div className="relative w-full aspect-square bg-black min-h-0 md:min-h-0 lg:min-h-0" style={{height: '0.1px', maxHeight: '4px'}}>
               <Image
                 src={member.image}
                 alt={member.name}
@@ -58,7 +58,7 @@ export default function SwiperCarousel() {
                 priority
               />
             </div>
-            <div className="text-left px-0 pt-3">
+            <div className="text-left px-0 pt-1">
               <h3 className="text-sm md:text-base font-normal text-gray-800 tracking-wide">{member.name}</h3>
               <p className="text-xs md:text-sm text-gray-500">{member.role}</p>
             </div>
