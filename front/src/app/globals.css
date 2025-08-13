@@ -151,3 +151,9 @@
 .image-slider [class*="rounded"] {
   border-radius: 0 !important;
 }
+
+/* Custom selection color */
+::selection {
+  background: #F7B096;
+  color: #fff;
+}

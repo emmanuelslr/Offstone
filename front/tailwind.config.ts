@@ -30,6 +30,7 @@ const config: Config = {
           300: '#d1d5db',
           400: '#9ca3af',
         },
+        separator: '#e0e0e0',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
