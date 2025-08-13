@@ -7,8 +7,8 @@ import TextReveal from "./home-page/components/TextReveal";
 /* import PillarCards from "./home-page/components/PillarCards"; */
 import PartnerLogosSection from "./home-page/components/PartnerLogosSection";
 /* import KeyFigures from "./home-page/components/KeyFigures"; */
-/* import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection"; */
-// import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
+import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection";
+import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
 // import MontanaSection from '@/components/MontanaSection';
 import InvestSimplement from '@/components/shared/InvestSimplement';
 /* import StackedCards from '@/components/StackedCards'; */
@@ -40,13 +40,13 @@ export default function Home() {
       </section>
 
       {/* Key Figures Lite Section */}
-      {/* <section className="bg-white w-full mt-0">
+      <section className="bg-white w-full mt-0">
         <KeyFiguresLiteSection />
       </section>
 
       <section className="bg-white w-full min-h-screen flex flex-col !text-black">
         <StackedCardDisplay />
-      </section> */}
+      </section>
 
       <div className="mb-32">
 <InvestSimplement />
