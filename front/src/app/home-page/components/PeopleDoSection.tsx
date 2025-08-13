@@ -101,7 +101,7 @@ const PeopleDoSection: React.FC = () => {
                 variants={imageVariants}
               >
                 <Image
-                  src="/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg"
+                  src="/Images/autres/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg"
                   alt="Image 1"
                   layout="fill"
                   objectFit="cover"

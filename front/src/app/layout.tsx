@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   title: "Hectos Capital | Home",
   description: "Transform your operations with cutting-edge data analytics and AI solutions.",
   icons: {
-    icon: '/Logos/X bleu.svg',
-    apple: '/Logos/X bleu.svg',
+    icon: '/logos/x-bleu.svg',
+    apple: '/logos/x-bleu.svg',
   },
   };
 

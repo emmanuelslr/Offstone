@@ -59,7 +59,7 @@ export default function LeMontana2({
     };
   }, []);
 
-  if (image === "/UrQqewjnRWVW1vMmm3dcpF3MF4.svg") {
+  if (image === "/Images/autres/UrQqewjnRWVW1vMmm3dcpF3MF4.svg") {
     return (
       <section ref={sectionRef} className="relative w-full min-h-[68vh] md:min-h-[83vh] flex items-center justify-center overflow-hidden pb-4 md:pb-6">
         <div
@@ -88,7 +88,7 @@ export default function LeMontana2({
           </h1>
           <div className="flex flex-col items-center justify-center mt-20">
             <Image
-              src="/Images/Confiance/NotreHistoireJonathan.avif"
+              src="/Images/Confiance/notre-histoire-jonathan.avif"
               alt="Notre Histoire Jonathan"
               className="rounded-full w-20 h-20 object-cover"
               width={80}

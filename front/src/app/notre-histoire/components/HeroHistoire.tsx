@@ -5,7 +5,7 @@ const HeroHistoire: React.FC = () => {
     <section
       className="relative w-full h-[600px] flex items-center justify-center"
       style={{
-        backgroundImage: "url('/Images/Confiance/ImageHeroNoSolution.jpg')",
+        backgroundImage: "url('/images/confiance/hero-nos-solutions.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "top center",
         backgroundRepeat: "no-repeat",

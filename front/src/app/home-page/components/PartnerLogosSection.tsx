@@ -3,16 +3,16 @@
 import Image from 'next/image';
 
 const logos = [
-  '/Images/Confiance/BNPPP.svg',
-  '/Images/Confiance/CA INDOSUEZ.svg',
-  '/Images/Confiance/CIC.svg',
-  '/Images/Confiance/Groupe BPCE.svg',
-  '/Images/Confiance/BRED Logo.svg',
-  '/Images/Confiance/Neuflize_logo_new.svg',
-  '/Images/Confiance/oddo.svg',
-  '/Images/Confiance/MB Studio.svg',
-  '/Images/Confiance/STUDIO AMV.svg',
-  '/Images/Confiance/CA.svg',
+  '/Images/Confiance/logo-client-bnpparibas.svg',
+  '/Images/Confiance/logo-client-ca-indosuez.svg',
+  '/Images/Confiance/logo-client-cic.svg',
+  '/Images/Confiance/logo-client-bpce.svg',
+  '/Images/Confiance/logo-client-bred.svg',
+  '/Images/Confiance/logo-client-neuflize.svg',
+  '/Images/Confiance/logo-client-oddo.svg',
+  '/Images/Confiance/logo-client-mb-studio.svg',
+  '/Images/Confiance/logo-client-studio-amv.svg',
+  '/Images/Confiance/logo-client-ca.svg',
 ];
 
 export default function PartnerLogosSection() {

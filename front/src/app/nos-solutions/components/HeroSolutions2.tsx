@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 export default function HeroSolutions2({
-  image = "/Images/Confiance/ImageHeroNoSolution.jpg",
+  image = "/images/confiance/hero-nos-solutions.jpg",
   text = "Investissez simplement.",
   subtitle = <>Fonds ou club deals, accédez à nos opérations<br />selon vos objectifs.</>
 }) {

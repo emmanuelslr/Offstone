@@ -1,6 +1,6 @@
 // eslint-disable-next-line react/no-unescaped-entities
 'use client';
-import SectionTitle from './SectionTitle';
+import SectionTitle from '@/components/shared/SectionTitle';
 
 const squares = [
   {

@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import SectionTitle from '@/components/archives/SectionTitle';
+import SectionTitle from '@/components/shared/SectionTitle';
 
 export default function FondResidentielSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
