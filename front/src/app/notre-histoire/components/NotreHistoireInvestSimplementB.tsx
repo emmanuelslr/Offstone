@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from "next/image";
 
 export default function LeMontana2({
   image = "/Images/Confiance/LeMontanaVrai.jpg",
@@ -86,10 +87,12 @@ export default function LeMontana2({
             .
           </h1>
           <div className="flex flex-col items-center justify-center mt-20">
-            <img
+            <Image
               src="/Images/Confiance/NotreHistoireJonathan.avif"
               alt="Notre Histoire Jonathan"
               className="rounded-full w-20 h-20 object-cover"
+              width={80}
+              height={80}
             />
             <span className="mt-2 text-white text-base text-center font-normal" style={{ fontFamily: "'Herr Von Muellerhoff', cursive" }}>
               Jonathan Anguelov
