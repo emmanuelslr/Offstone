@@ -22,7 +22,7 @@ const projects: Project[] = [
     title: "Coastal Harmony Home",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis quam velit eu sem.",
-    src: "/videos/Images immeubles/00000017-PHOTO-2023-12-13-18-35-56.jpg.webp",
+    src: "/videos/images-immeubles/00000017-PHOTO-2023-12-13-18-35-56.jpg.webp",
     link: "https://www.ignant.com/2023/03/25/ad2186-matthias-leidingers-photographic-exploration-of-awe-and-wonder/",
     color: "#BBACAF",
     category: "Logistique",
@@ -31,7 +31,7 @@ const projects: Project[] = [
     title: "Montana Modern",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis quam velit eu sem.",
-    src: "/videos/Images immeubles/58226-rue-la-boetie-13-copie-scaled.jpg.webp",
+    src: "/videos/images-immeubles/58226-rue-la-boetie-13-copie-scaled.jpg.webp",
     link: "https://www.ignant.com/2022/09/30/clement-chapillon-questions-geographical-and-mental-isolation-with-les-rochers-fauves/",
     color: "#977F6D",
     category: "Bureaux",
@@ -40,7 +40,7 @@ const projects: Project[] = [
     title: "Urban Oasis",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, eget facilisis quam velit eu sem.",
-    src: "/videos/Images immeubles/60348-Rue-du-Moulin-Vert-39CB-scaled.jpg.webp",
+    src: "/videos/images-immeubles/60348-Rue-du-Moulin-Vert-39CB-scaled.jpg.webp",
     link: "https://www.ignant.com/2023/10/28/capturing-balis-many-faces-zissou-documents-the-sacred-and-the-mundane-of-a-fragile-island/",
     color: "#C2491D",
     category: "Résidentiel",

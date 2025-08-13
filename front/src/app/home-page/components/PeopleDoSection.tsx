@@ -80,7 +80,7 @@ const PeopleDoSection: React.FC = () => {
                 variants={imageVariants}
               >
                 <Image
-                  src="/videos/Images immeubles/Team_Photo_Cropped.jpg"
+                  src="/videos/images-immeubles/Team_Photo_Cropped.jpg"
                   alt="Team Photo Cropped"
                   layout="fill"
                   objectFit="cover"
@@ -100,7 +100,7 @@ const PeopleDoSection: React.FC = () => {
                 variants={imageVariants}
               >
                 <Image
-                  src="/Images/autres/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg"
+                  src="/images/personnalites/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg"
                   alt="Image 1"
                   layout="fill"
                   objectFit="cover"

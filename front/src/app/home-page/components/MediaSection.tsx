@@ -7,7 +7,7 @@ const articles = [
     title: "Interview croisée : Christophe Barre & Manuel Darcemont",
     description:
       "Retour sur le parcours et la vision des fondateurs d’Hexa dans le monde de la tech.",
-    image: "/Images/686ced71ea751920c418b3d3_Christophe Barre Manuel Darcemont 3.webp",
+    image: "/images/articles/article-christophe-barre.webp",
     link: "#",
     source: "TechCrunch",
     date: "Avril 2024",
@@ -16,7 +16,7 @@ const articles = [
     title: "Hexa lève 20M€ pour accélérer la création de startups",
     description:
       "Hexa annonce une levée de fonds de 20 millions d’euros pour soutenir l’innovation et la croissance des startups.",
-    image: "/Images/6864ee2888dbf34258986194_small_image_1x.webp",
+    image: "/images/shared/photohumain2.webp",
     link: "#",
     source: "Les Echos",
     date: "Juin 2024",
@@ -25,7 +25,7 @@ const articles = [
     title: "Hexa : le startup studio qui révolutionne l’entrepreneuriat",
     description:
       "Découvrez comment Hexa accompagne les entrepreneurs dans la création de startups à succès.",
-    image: "/Images/6864cb24c65eff88ac651064_small_image_1x.webp",
+    image: "/images/shared/photohumain3.webp",
     link: "#",
     source: "Le Figaro",
     date: "Mai 2024",
