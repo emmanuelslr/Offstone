@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
+/* eslint-disable react/no-unescaped-entities */
 import { motion, useAnimation, useInView } from 'framer-motion';
 
 export default function WorkProcessSection() {

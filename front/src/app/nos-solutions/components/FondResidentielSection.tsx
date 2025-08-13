@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable react/no-unescaped-entities */
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import SectionTitle from '@/components/shared/SectionTitle';

@@ -74,7 +74,7 @@ export default function LeMontana2({
         />
         <div className="max-w-6xl mx-auto px-2 flex-1 flex flex-col items-center justify-center relative z-10 h-full">
           <h1 className="text-white text-5xl md:text-7xl font-light text-center leading-tight mt-20">
-            "Nous faisons plus qu'investir pour vous. Nous construisons votre patrimoine{" "}
+            &ldquo;Nous faisons plus qu&rsquo;investir pour vous. Nous construisons votre patrimoine{" "}
             <span
               className="text-white px-1"
               style={{
@@ -82,7 +82,7 @@ export default function LeMontana2({
                 backgroundPosition: "center 0%"
               }}
             >
-              à nos côtés."
+              à nos côtés.&rdquo;
             </span>
             .
           </h1>

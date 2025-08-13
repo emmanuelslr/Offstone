@@ -1,7 +1,6 @@
 // app/test/page.tsx
 
 import Image from "next/image";
-import SectionTitle from "../shared/SectionTitle";
 
 const articles = [
   {

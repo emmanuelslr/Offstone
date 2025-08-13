@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
-import SectionTitle from './shared/SectionTitle';
+import SectionTitle from '@/components/shared/SectionTitle';
 
 interface KeyFigure {
   number: number;

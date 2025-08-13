@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
-import SectionTitle from './shared/SectionTitle';
+import SectionTitle from '@/components/shared/SectionTitle';
 
 const pillars = [
   {
@@ -68,7 +68,7 @@ export default function PillarCards() {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {pillars.map((pillar, index) => (
+          {pillars.map((pillar) => (
             <motion.div
               key={pillar.label}
               variants={cardVariants}

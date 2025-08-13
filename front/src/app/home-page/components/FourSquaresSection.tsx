@@ -1,4 +1,3 @@
-// eslint-disable-next-line react/no-unescaped-entities
 'use client';
 import SectionTitle from '@/components/shared/SectionTitle';
 
@@ -40,7 +39,7 @@ export default function FourSquaresSection() {
             title={
               <>
                 Captons les cycles.<br />
-                Créons l'opportunité.
+                Créons l&rsquo;opportunité.
               </>
             }
             subtitle="Chaque marché a son moment. Nous concevons les stratégies qui les transforment en opportunités."

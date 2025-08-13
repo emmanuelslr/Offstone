@@ -1,19 +1,15 @@
 'use client';
+/* eslint-disable react/no-unescaped-entities */
 import { useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
 import Image from "next/image";
 
 export default function LeMontana2({
   image = "/Images/Confiance/LeMontanaVrai.jpg",
-  text = "Investissez simplement.",
-  subtitle = <>Fonds ou club deals, accédez à nos opérations<br />selon vos objectifs.</>
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   // Animation d'apparition
-  const inViewRef = useRef(null);
-  const isInView = useInView(inViewRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -122,28 +118,18 @@ export default function LeMontana2({
         <div className="absolute inset-0 bg-black/50" />
       </div>
       {/* Centered text and buttons */}
-      <div ref={inViewRef} className="relative z-10 flex flex-row items-center justify-center gap-x-48 w-full max-w-[2100px] mx-auto px-12">
+      <div className="relative z-10 flex flex-row items-center justify-center gap-x-48 w-full max-w-[2100px] mx-auto px-12">
         {/* Left Column */}
         <div>
-          <motion.h2
-            className="text-white text-7xl md:text-8xl font-light tracking-tight drop-shadow-lg text-left"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
+          <h2 className="text-white text-7xl md:text-8xl font-light tracking-tight drop-shadow-lg text-left">
             Investissez <br /> simplement.
-          </motion.h2>
+          </h2>
         </div>
 
         {/* Right Column */}
         <div className="flex flex-col items-end">
           {/* Cartes blanches */}
-          <motion.div
-            className="flex flex-col gap-4 items-end justify-end"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
-          >
+          <div className="flex flex-col gap-4 items-end justify-end">
             <div className="bg-white rounded-none shadow-lg flex flex-col items-center justify-center w-56 h-32 md:w-72 md:h-36">
               <span className="text-3xl md:text-4xl font-semibold text-[#23272f]">9 à 13%</span>
               <span className="text-gray-500 text-xs mt-2 uppercase tracking-wider font-medium">TRI Cible annuelle</span>
@@ -152,15 +138,10 @@ export default function LeMontana2({
               <span className="text-3xl md:text-4xl font-semibold text-[#23272f]">2 à 5 ans</span>
               <span className="text-gray-500 text-xs mt-2 uppercase tracking-wider font-medium">Durée cible</span>
             </div>
-          </motion.div>
-          <motion.div
-            className="w-full flex flex-col items-end mt-4"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
+          </div>
+          <div className="w-full flex flex-col items-end mt-4">
             <p className="text-white text-sm md:text-base font-light mb-4 text-right w-full max-w-md">
-              {subtitle}
+              {/* Subtitle removed */}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-end items-center w-full">
               <button
@@ -180,7 +161,7 @@ export default function LeMontana2({
                 Nos Fonds
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

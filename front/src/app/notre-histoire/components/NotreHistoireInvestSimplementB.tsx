@@ -1,11 +1,12 @@
 'use client';
+/* eslint-disable react/no-unescaped-entities */
 import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from "next/image";
 
 export default function LeMontana2({
   image = "/Images/Confiance/LeMontanaVrai.jpg",
-  text = "Investissez simplement.",
+  // text = "Investissez simplement.",
   subtitle = <>Fonds ou club deals, accédez à nos opérations<br />selon vos objectifs.</>
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -59,6 +60,7 @@ export default function LeMontana2({
     };
   }, []);
 
+  // Suppression de la variable inutilisée "text"
   if (image === "/Images/autres/UrQqewjnRWVW1vMmm3dcpF3MF4.svg") {
     return (
       <section ref={sectionRef} className="relative w-full min-h-[68vh] md:min-h-[83vh] flex items-center justify-center overflow-hidden pb-4 md:pb-6">

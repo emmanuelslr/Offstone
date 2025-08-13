@@ -2,21 +2,18 @@ import Navbar from '@/components/shared/Navbar';
 import Hero from "./home-page/components/Hero";
 import PeopleDoSection from "./home-page/components/PeopleDoSection";
 import TextReveal from "./home-page/components/TextReveal";
-import WorkProcessSection from "./home-page/components/WorkProcessSection";
+/* import WorkProcessSection from "./home-page/components/WorkProcessSection"; */
 /* import ImageSlider from '@/components/ImageSlider'; */
-import PillarCards from "./home-page/components/PillarCards";
-import Footer from '@/components/shared/Footer';
+/* import PillarCards from "./home-page/components/PillarCards"; */
 import PartnerLogosSection from "./home-page/components/PartnerLogosSection";
-import KeyFigures from "./home-page/components/KeyFigures";
-import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection";
-import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
+/* import KeyFigures from "./home-page/components/KeyFigures"; */
+/* import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection"; */
+// import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
 // import MontanaSection from '@/components/MontanaSection';
 import InvestSimplement from '@/components/shared/InvestSimplement';
 /* import StackedCards from '@/components/StackedCards'; */
-import InvestisseursSection from "./home-page/components/InvestisseursSection";
 import ConversationBanner from "./home-page/components/ConversationBanner";
-import FourSquaresSection from "./home-page/components/FourSquaresSection";
-import QASection, { Investisseurs2Section } from "./home-page/components/QASection";
+import QASection from "./home-page/components/QASection";
 import MediaSection from "./home-page/components/MediaSection";
 
 // const showOldSection = false;
@@ -43,40 +40,13 @@ export default function Home() {
       </section>
 
       {/* Key Figures Lite Section */}
-      <section className="bg-white w-full mt-0">
+      {/* <section className="bg-white w-full mt-0">
         <KeyFiguresLiteSection />
       </section>
 
       <section className="bg-white w-full min-h-screen flex flex-col !text-black">
         <StackedCardDisplay />
-      </section>
-
-      {/* Work Process Section */}
-      {/* <section className="w-full">
-        <WorkProcessSection />
       </section> */}
-
-  
-
-      {/* Image Slider Section */}
-      {/*
-      <section className="dark-section w-full">
-        <ImageSlider />
-      </section>
-      */}
-
-      {/* Key Figures Section */}
-      {/* <section className="bg-white w-full">
-        <KeyFigures />
-      </section> */}
-
-      {/* <TeamSection /> */}
-
-{/* Four Squares Section */}
-
-      {/* <StackedCards /> */}
-
-{/* <MontanaSection image="/Images/Confiance/Iena%20Montana.jpg" /> */}
 
       <div className="mb-32">
 <InvestSimplement />
@@ -229,7 +199,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:grid-rows-1">
             <div className="md:col-span-6 flex flex-col">
               <h2 className="text-7xl md:text-8xl font-light tracking-tight text-black">
-                L'essentiel <br /> à savoir.
+                L&rsquo;essentiel <br /> à savoir.
               </h2>
               <div className="mt-12">
                 <a href="#expert" className="inline-flex items-center justify-center px-10 py-4 text-[17px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all text-black bg-[#F7B096] border border-[#F7B096] hover:bg-white hover:text-[#F7B096] gap-2 group">

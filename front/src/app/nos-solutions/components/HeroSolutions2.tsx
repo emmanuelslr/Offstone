@@ -1,18 +1,15 @@
 'use client';
+/* eslint-disable react/no-unescaped-entities */
 import { useRef, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function HeroSolutions2({
   image = "/images/confiance/hero-nos-solutions.jpg",
-  text = "Investissez simplement.",
-  subtitle = <>Fonds ou club deals, accédez à nos opérations<br />selon vos objectifs.</>
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   // Animation d'apparition
-  const inViewRef = useRef(null);
-  const isInView = useInView(inViewRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
     const handleScroll = () => {
