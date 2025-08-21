@@ -128,27 +128,23 @@ export default function AdvantageOffstoneSection() {
           <div className="text-lg md:text-xl text-black font-normal mb-4 text-center">
             Découvrez notre méthode pour construire ce patrimoine
           </div>
-          <a
-            href="#expert"
-            className="inline-flex items-center justify-center px-8 py-3 text-base font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all text-black bg-[#F7B096] border border-[#F7B096] hover:bg-white hover:text-[#F7B096] gap-2 group"
-            style={{ fontWeight: 500 }}
+          <button
+            className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-8 h-8 rounded-[4px] shadow-sm"
+            aria-label="Découvrir la méthode"
+            type="button"
+            onClick={() => { window.location.href = "#expert"; }}
           >
-            Parler à un expert
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 transform transition-transform duration-200 group-hover:-translate-y-1"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              style={{ transform: "rotate(-180deg)" }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 17L17 7M7 7h10v10"
-              />
+              <polyline points="11 4 5 8 11 12" stroke="black" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </a>
+          </button>
         </div>
         <div className="flex justify-center mt-20">
           <div
