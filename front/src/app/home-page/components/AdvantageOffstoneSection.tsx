@@ -129,15 +129,15 @@ export default function AdvantageOffstoneSection() {
             Découvrez notre méthode pour construire ce patrimoine
           </div>
           <button
-            className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-8 h-8 rounded-[4px] shadow-sm"
+            className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-6 h-6 rounded-[4px] shadow-sm"
             aria-label="Découvrir la méthode"
             type="button"
             onClick={() => { window.location.href = "#expert"; }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="12"
+              height="12"
               viewBox="0 0 16 16"
               fill="none"
               style={{ transform: "rotate(-180deg)" }}
