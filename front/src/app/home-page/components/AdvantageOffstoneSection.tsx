@@ -124,8 +124,8 @@ export default function AdvantageOffstoneSection() {
             ));
           })()}
         </div>
-        <div className="flex flex-col items-center mt-4 mb-2">
-          <div className="text-lg md:text-xl text-black font-normal mb-4 text-center">
+        <div className="flex flex-row items-center justify-center gap-4 mt-4 mb-2">
+          <div className="text-lg md:text-xl text-black font-normal text-center">
             Découvrez notre méthode pour construire ce patrimoine
           </div>
           <button
