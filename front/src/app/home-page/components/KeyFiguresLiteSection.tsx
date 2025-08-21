@@ -79,7 +79,7 @@ export default function KeyFiguresLiteSection() {
                 viewport={{ once: true, margin: "-20% 0px" }}
                 className="flex flex-col items-center justify-between basis-1/4 text-center"
               >
-                <h2 className="text-[3.2rem] sm:text-[4rem] md:text-[4.8rem] font-light text-black mb-6 whitespace-nowrap tracking-wider">
+                <h2 className="text-[3.2rem] sm:text-[4rem] md:text-[4.8rem] font-light text-black mb-10 whitespace-nowrap tracking-wider">
                   <CountUp
                     value={figure.number}
                     prefix={figure.prefix}
@@ -97,6 +97,30 @@ export default function KeyFiguresLiteSection() {
           ))}
         </div>
       </div>
-    </section>
+    {/* CTA horizontal : texte + bouton carré */}
+    <div className="w-full flex justify-center mt-24 pb-32">
+      <div className="flex flex-row items-center gap-6">
+        <span className="text-xl md:text-2xl text-gray-600 font-normal">
+          Découvrez notre méthode pour construire ce patrimoine
+        </span>
+        <button
+          className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-8 h-8 rounded-[4px] shadow-sm"
+          aria-label="Découvrir la méthode"
+          type="button"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            style={{ transform: "rotate(-180deg)" }}
+          >
+            <polyline points="11 4 5 8 11 12" stroke="black" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
   );
 }

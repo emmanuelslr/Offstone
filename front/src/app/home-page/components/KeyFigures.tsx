@@ -68,7 +68,7 @@ export default function KeyFigures() {
 <motion.div
       ref={containerRef}
       style={{ y: smoothY }}
-      className="w-full pt-28 pb-36 bg-[#1E2124] relative z-50"
+      className="w-full pt-20 pb-28 bg-[#1E2124] relative z-50"
     >
       <SectionTitle 
         title={
@@ -99,7 +99,7 @@ export default function KeyFigures() {
                 viewport={{ once: true, margin: "-20% 0px" }}
                 className="flex flex-col items-center justify-between basis-1/4 text-center"
               >
-                  <h2 className="text-[3.5rem] sm:text-[4.3rem] md:text-[5.1rem] font-normal text-white mb-6 whitespace-nowrap tracking-wider">
+                  <h2 className="text-[3.5rem] sm:text-[4.3rem] md:text-[5.1rem] font-normal text-white mb-4 whitespace-nowrap tracking-wider">
                   <CountUp 
                     value={figure.number}
                     prefix={figure.prefix}
@@ -130,31 +130,30 @@ export default function KeyFigures() {
           ))}
         </div>
       </div>
-      {/* Call to action centré avec soulignement */}
-      <div className="w-full flex justify-center mt-20">
-        <span
-          className="block text-xl md:text-2xl text-gray-400 pb-1 group"
-          style={{
-            borderBottom: "1px solid #bdbdbd",
-            display: "inline-block",
-            paddingBottom: "0.15em",
-            marginTop: "0.2em",
-            width: "fit-content",
-          }}
-        >
-          <span className="relative z-10" style={{ color: "#00D481" }}>
-            Découvrez notre approche
-            <svg
-              className="inline-block ml-2 w-4 h-4 text-[#00D481] align-baseline transition-transform group-hover:translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
+      {/* CTA horizontal : texte + bouton carré */}
+      <div className="w-full flex justify-center mt-14">
+        <div className="flex flex-row items-center gap-4">
+          <span className="text-xl md:text-2xl text-gray-600 font-normal">
+            Découvrez notre méthode pour construire ce patrimoine
           </span>
-        </span>
+<button
+            className="flex items-center justify-center bg-[#F7B096] hover:bg-[#222222] transition text-white w-12 h-12 rounded-[6px] shadow-sm"
+            aria-label="Découvrir la méthode"
+            type="button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="none"
+            >
+              <rect width="24" height="24" rx="6" fill="none"/>
+              <path d="M8 12h8M14 8l4 4-4 4" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
       </div>
     </motion.div>
   );

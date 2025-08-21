@@ -8,6 +8,7 @@ import TextReveal from "./home-page/components/TextReveal";
 import PartnerLogosSection from "./home-page/components/PartnerLogosSection";
 /* import KeyFigures from "./home-page/components/KeyFigures"; */
 import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection";
+import AdvantageOffstoneSection from "./home-page/components/AdvantageOffstoneSection";
 import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
 // import MontanaSection from '@/components/MontanaSection';
 import InvestSimplement from '@/components/shared/InvestSimplement';
@@ -43,9 +44,13 @@ export default function Home() {
       <section className="bg-white w-full mt-0">
         <KeyFiguresLiteSection />
       </section>
+      {/* Advantage Offstone Section */}
+      <section className="bg-white w-full">
+        <AdvantageOffstoneSection />
+      </section>
 
-      <section className="bg-white w-full min-h-screen flex flex-col !text-black">
-        <StackedCardDisplay />
+      <section className="bg-white w-full min-h-[300px] flex flex-col !text-black">
+        {/* Espace blanc réservé pour un futur composant */}
       </section>
 
       <div className="mb-32">

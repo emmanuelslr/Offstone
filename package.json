@@ -13,5 +13,9 @@
     "dev": "npm run dev:front",
     "build": "npm run build:front",
     "start": "npm run start:front"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.12",
+    "react-xarrows": "^2.0.2"
   }
 }

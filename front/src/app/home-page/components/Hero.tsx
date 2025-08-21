@@ -15,62 +15,29 @@ export default function Hero() {
       const rect = section.getBoundingClientRect();
       const windowH = window.innerHeight;
 
-      // Parallax ratio (0.5 = 2x plus lent que le scroll)
-      const ratio = 0.5;
+      // Parallax ratio (0.8 = effet plus marqué)
+      const ratio = 0.8;
 
-      // Trouver la section PeopleDoSection pour déterminer quand cacher la vidéo
-      const peopleDoSection = document.querySelector('.PeopleDoSection') as HTMLElement;
-      let shouldHideVideo = false;
-
-      if (peopleDoSection) {
-        const peopleDoRect = peopleDoSection.getBoundingClientRect();
-        // Cacher la vidéo dès que PeopleDoSection commence à sortir du viewport (plus restrictif)
-        shouldHideVideo = peopleDoRect.bottom <= windowH * 0.1; // Disparaît quand il reste 10% de PeopleDoSection visible
-      } else {
-        // Fallback: cacher quand Hero sort du viewport
-        shouldHideVideo = rect.bottom <= 0;
-      }
-
-      if (shouldHideVideo || rect.bottom <= windowH * 0.1) {
-        // Cacher complètement la vidéo
-        video.style.opacity = '0';
-        video.style.visibility = 'hidden';
-        return;
-      }
-
-      // Si la section Hero est dans le viewport ou partiellement visible
-      if (rect.top < windowH && rect.bottom > 0) {
-        // Montrer la vidéo
+      // Nouvelle logique : la vidéo reste visible tant que Hero est dans le viewport
+      if (rect.bottom > 0 && rect.top < windowH) {
         video.style.opacity = '1';
         video.style.visibility = 'visible';
 
-        // Distance parcourue dans la section
+        // Parallax effect
         const scrollInSection = Math.min(Math.max(windowH - rect.top, 0), rect.height + windowH);
-        // Parallax effect : translateY négatif pour ralentir la montée de la vidéo
         const parallax = -scrollInSection * ratio;
 
         // Figer la vidéo quand la section atteint le haut du viewport
         let translateY = parallax;
         if (rect.top <= 0 && rect.bottom >= windowH) {
-          // Section occupe tout le viewport : vidéo figée
           translateY = -rect.top * ratio;
         }
-        // Si la section sort par le haut, on ne translate plus
         if (rect.bottom <= windowH) {
           translateY = -(rect.height - windowH) * ratio;
         }
 
         video.style.transform = `translateY(${translateY}px)`;
-      } else if (rect.bottom <= 0) {
-        // Hero est sorti mais PeopleDoSection peut encore être visible
-        // Garder la vidéo visible mais figée
-        video.style.opacity = '1';
-        video.style.visibility = 'visible';
-        // Figer la vidéo à sa dernière position
-        const finalTranslateY = -(rect.height - windowH) * ratio;
-        video.style.transform = `translateY(${finalTranslateY}px)`;
       } else {
-        // Section pas encore visible
         video.style.opacity = '0';
         video.style.visibility = 'hidden';
       }
@@ -86,11 +53,11 @@ export default function Hero() {
     };
   }, []);
   return (
-    <div ref={sectionRef} className="Hero relative min-h-screen w-full flex justify-center overflow-hidden">
-      {/* Fixed Video Background with parallax effect */}
+    <div ref={sectionRef} className="Hero relative min-h-screen w-full flex justify-center overflow-hidden z-10">
+      {/* Absolute Video Background with parallax effect */}
       <div 
         ref={videoRef}
-        className="fixed inset-0 z-0 w-full h-screen"
+        className="absolute inset-0 z-0 w-full h-[120vh]"
         style={{ top: 0, left: 0 }}
       >
         <video
@@ -140,31 +107,30 @@ export default function Hero() {
               Accédez-y désormais, à nos côtés.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-10 mx-auto items-center justify-center"
+              className="w-full flex justify-center mt-8 sm:mt-10"
             >
-              <motion.a
-                href="#contact"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-className="w-[280px] sm:w-auto px-8 py-3 bg-white text-black text-base md:text-lg font-normal rounded-full border shadow-sm transition hover:bg-[#f3f4f6] flex items-center justify-center gap-2"
+              <form
+                className="flex w-full max-w-lg bg-white/90 shadow-lg sm:rounded-lg rounded-lg items-center px-2 py-1 sm:py-2 sm:px-4"
+                onSubmit={e => e.preventDefault()}
               >
-                Nous Contacter
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="ml-1">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </motion.a>
-              <motion.a
-                href="#expertise"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-[280px] sm:w-auto px-8 py-3 bg-transparent text-white text-base md:text-lg font-normal rounded-full border border-white shadow-sm transition hover:bg-white/10 text-center"
-              >
-                Notre Expertise
-              </motion.a>
+                <input
+                  type="email"
+                  placeholder="Entrez votre adresse mail"
+                  className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400 px-4 py-2"
+                  required
+                />
+                <button
+                  type="submit"
+className="ml-2 px-5 py-2 bg-[#F7B096] text-black border border-[#F7B096] rounded-lg font-medium transition hover:bg-[#222222] hover:text-white"
+                  style={{ borderRadius: '0.5rem' }}
+                >
+                  Investissez à nos côtés
+                </button>
+              </form>
             </motion.div>
           </div>
         </motion.div>
