@@ -9,7 +9,7 @@ import PartnerLogosSection from "./home-page/components/PartnerLogosSection";
 /* import KeyFigures from "./home-page/components/KeyFigures"; */
 import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection";
 import AdvantageOffstoneSection from "./home-page/components/AdvantageOffstoneSection";
-import StackedCardDisplay from "./home-page/components/StackedCardDisplay";
+
 // import MontanaSection from '@/components/MontanaSection';
 import InvestSimplement from '@/components/shared/InvestSimplement';
 /* import StackedCards from '@/components/StackedCards'; */

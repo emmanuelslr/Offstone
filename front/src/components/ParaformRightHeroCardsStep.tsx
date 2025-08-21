@@ -232,7 +232,7 @@ export default function ParaformRightHeroCardsStep({
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .pf-hero-carousel {
           position: relative;
           overflow: hidden;
