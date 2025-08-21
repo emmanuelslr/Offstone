@@ -124,6 +124,32 @@ export default function AdvantageOffstoneSection() {
             ));
           })()}
         </div>
+        <div className="flex flex-col items-center mt-4 mb-2">
+          <div className="text-lg md:text-xl text-black font-normal mb-4 text-center">
+            Découvrez notre méthode pour construire ce patrimoine
+          </div>
+          <a
+            href="#expert"
+            className="inline-flex items-center justify-center px-8 py-3 text-base font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all text-black bg-[#F7B096] border border-[#F7B096] hover:bg-white hover:text-[#F7B096] gap-2 group"
+            style={{ fontWeight: 500 }}
+          >
+            Parler à un expert
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 transform transition-transform duration-200 group-hover:-translate-y-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 17L17 7M7 7h10v10"
+              />
+            </svg>
+          </a>
+        </div>
         <div className="flex justify-center mt-20">
           <div
             className="flex items-center justify-center rounded-xl"
