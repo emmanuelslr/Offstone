@@ -101,7 +101,7 @@ export default function KeyFiguresLiteSection() {
     <div className="w-full flex justify-center mt-24 pb-32">
       <div className="flex flex-row items-center gap-6">
         <span className="text-xl md:text-2xl text-gray-600 font-normal">
-          Découvrez notre méthode pour construire ce patrimoine
+        Découvrez notre méthode pour construire votre patrimoine
         </span>
         <button
           className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-8 h-8 rounded-[4px] shadow-sm"

@@ -11,7 +11,7 @@ import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection"
 import AdvantageOffstoneSection from "./home-page/components/AdvantageOffstoneSection";
 
 // import MontanaSection from '@/components/MontanaSection';
-import InvestSimplement from '@/components/shared/InvestSimplement';
+// import InvestSimplement from '@/components/shared/InvestSimplement';
 /* import StackedCards from '@/components/StackedCards'; */
 import ConversationBanner from "./home-page/components/ConversationBanner";
 import QASection from "./home-page/components/QASection";
@@ -54,7 +54,8 @@ export default function Home() {
       </section>
 
       <div className="mb-32">
-<InvestSimplement />
+{/* Section "Investissez simplement" masquée */}
+{/* <InvestSimplement /> */}
       </div>
 
 

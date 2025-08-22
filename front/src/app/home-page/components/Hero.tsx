@@ -114,18 +114,18 @@ export default function Hero() {
               className="w-full flex justify-center mt-8 sm:mt-10"
             >
               <form
-                className="flex w-full max-w-lg bg-white/90 shadow-lg sm:rounded-lg rounded-lg items-center px-2 py-1 sm:py-2 sm:px-4"
+                className="flex w-full max-w-md bg-white/90 shadow-lg sm:rounded-lg rounded-lg items-center px-2 py-1 sm:py-1.5 sm:px-3"
                 onSubmit={e => e.preventDefault()}
               >
                 <input
                   type="email"
                   placeholder="Entrez votre adresse mail"
-                  className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-400 px-4 py-2"
+                  className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-500 px-3 py-1.5 text-sm"
                   required
                 />
                 <button
                   type="submit"
-className="ml-2 px-5 py-2 bg-[#F7B096] text-black border border-[#F7B096] rounded-lg font-medium transition hover:bg-[#222222] hover:text-white"
+                  className="ml-2 px-4 py-1.5 bg-[#F7B096] text-black border border-[#F7B096] rounded-lg font-medium transition hover:bg-[#222222] hover:text-white text-sm"
                   style={{ borderRadius: '0.5rem' }}
                 >
                   Investissez à nos côtés
