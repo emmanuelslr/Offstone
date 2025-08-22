@@ -50,7 +50,7 @@ export default function ParaformRightHeroCardsStep({
       (cards && cards.length
         ? cards
         : [
-            { id: "2barbes", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg" },
+            { id: "2barbes", image: "/images/Buildings/2barbes.PNG" },
             { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
             { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
           ]
@@ -67,7 +67,7 @@ export default function ParaformRightHeroCardsStep({
     return [cloneLast, ...base, cloneFirst];
   }, [base, N]);
 
-  // États d'animation
+  // États d’animation
   const [active, setActive] = useState(0); // index logique [0..N-1]
   const [pos, setPos] = useState(1);       // pos physique [0..N+1], démarre sur 1er réel
   const [animateTrack, setAnimateTrack] = useState(true); // false => wrap instantané
@@ -113,7 +113,7 @@ export default function ParaformRightHeroCardsStep({
       schedule(() => setOverlayIndex(null), Math.max(0, holdEnd - 120));
       schedule(() => setRevealedIndex(null), holdEnd);
 
-      // Avance d'une carte + wrap si on est sur cloneFirst
+      // Avance d’une carte + wrap si on est sur cloneFirst
       schedule(() => {
         const nextActive = (activeRef.current + 1) % N;
         const nextPos = posRef.current + 1;
@@ -132,7 +132,7 @@ export default function ParaformRightHeroCardsStep({
             setAnimateTrack(false);
             posRef.current = 1;
             setPos(1);
-            // réactive l'anim au frame suivant
+            // réactive l’anim au frame suivant
             requestAnimationFrame(() => setAnimateTrack(true));
           }, hopMs + 20);
         }
@@ -145,6 +145,7 @@ export default function ParaformRightHeroCardsStep({
     clearAll();
     run();
     return clearAll;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intervalMs, N, hopMs, decropStart, holdEnd, recropEnd]);
 
   // Pause au survol
@@ -165,7 +166,7 @@ export default function ParaformRightHeroCardsStep({
 
   return (
     <div
-      className={`pf-hero-carousel ${className || ''}`}
+      className={["pf-hero-carousel", className].filter(Boolean).join(" ")}
       style={{ width: size, height: size, aspectRatio: "1 / 1" }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
@@ -185,7 +186,7 @@ export default function ParaformRightHeroCardsStep({
 
           return (
             <div
-              className={`pf-card ${isActiveLogical ? 'is-active' : 'is-dim'}`}
+              className={"pf-card" + (isActiveLogical ? " is-active" : " is-dim")}
               key={`${c.id}-${i}`}
               style={{ width: slotW, height: size }}
             >
@@ -194,23 +195,23 @@ export default function ParaformRightHeroCardsStep({
                 className="pf-card-abs"
                 style={{ width: size + 2 * peekPx, height: size, left: -peekPx }}
               >
-                {/* Cadre blanc : donne les bords blancs quand c'est croppé */}
+                {/* Cadre blanc : donne les bords blancs quand c’est croppé */}
                 <div className="pf-frame">
-                  {/* Couche clippée qui révèle/recroppe l'image */}
+                  {/* Couche clippée qui révèle/recroppe l’image */}
                   <div
-                    className={`pf-reveal ${isRevealed ? 'is-revealed' : ''}`}
+                    className={"pf-reveal" + (isRevealed ? " is-revealed" : "")}
                     style={{ clipPath: isRevealed ? "inset(0px)" : `inset(${vertCrop}px ${sideCrop}px)` }}
                   >
                     <img src={c.image} alt="" className="pf-media" draggable={false} />
 
                     {/* Cadre stroke (transparent fill, white border) pendant le plein reveal */}
                     <div
-                      className={`pf-stroke ${overlayIndex === logical ? 'is-on' : ''}`}
+                      className={"pf-stroke" + (overlayIndex === logical ? " is-on" : "")}
                       style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop }}
                     />
 
                     {/* Glass overlay (noir 30%) pendant le plein cadre */}
-                    <div className={`pf-glass ${overlayIndex === logical ? 'is-on' : ''}`}>
+                    <div className={"pf-glass" + (overlayIndex === logical ? " is-on" : "")}>
                       <div className="pf-glass-inner">
                         <div className="pf-glass-title">Great fit</div>
                         <div className="pf-glass-sub">Pre-vetted match</div>
@@ -219,7 +220,7 @@ export default function ParaformRightHeroCardsStep({
                   </div>
                 </div>
               </div>
-            </div>
+            </div> // pf-card
           );
         })}
       </div>
@@ -227,12 +228,11 @@ export default function ParaformRightHeroCardsStep({
       {/* Dots centrés */}
       <div className="pf-dots">
         {base.map((_, i) => (
-          <div key={i} className={`pf-dot ${i === active ? 'is-active' : ''}`} />
+          <div key={i} className={"pf-dot" + (i === active ? " is-active" : "")} />
         ))}
       </div>
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style>{`
         .pf-hero-carousel {
           position: relative;
           overflow: hidden;
@@ -332,7 +332,7 @@ export default function ParaformRightHeroCardsStep({
           background: rgba(0,0,0,0.25);
         }
         .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
-      `}} />
+      `}</style>
     </div>
   );
 }
