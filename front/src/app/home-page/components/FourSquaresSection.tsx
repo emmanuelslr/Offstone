@@ -12,11 +12,11 @@ const squares = [
   },
   {
     label: 'Revenus attractifs',
-    description: "Transformons l'obsolète en actif stratégique.",
+    description: "Transformons l&apos;obsolète en actif stratégique.",
   },
   {
     label: 'Accès simplifié',
-    description: "Donnons du sens à l'accueil. Réinventons l'hospitalité.",
+    description: "Donnons du sens à l&apos;accueil. Réinventons l&apos;hospitalité.",
   }
 ];
 
