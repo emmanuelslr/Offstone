@@ -109,8 +109,9 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                 <Image
                   src="/images/Team/Team_Photo_Cropped.jpg"
                   alt="Team_Photo"
-                  fill
-                  style={{ objectFit: 'cover' }}
+                  width={600}
+                  height={600}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </motion.div>
               <div className="w-full text-xs text-gray-500 text-center -mb-2">
@@ -129,8 +130,9 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                 <Image
                   src="/images/personnalites/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg"
                   alt="Image 1"
-                  fill
-                  style={{ objectFit: 'cover' }}
+                  width={600}
+                  height={600}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </motion.div>
               <div className="w-full text-xs text-gray-500 text-center -mb-2">

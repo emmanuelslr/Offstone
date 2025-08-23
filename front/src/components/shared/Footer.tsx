@@ -134,7 +134,7 @@ export default function Footer() {
           <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="linkedin-button md:ml-auto">
             <span className="sr-only">LinkedIn</span>
             <Image
-              src="/images/609a39f33751ffdaeec6111f_linkedin.svg"
+              src="/images/icones/linkedin.svg"
               alt="LinkedIn"
               width={32}
               height={32}

@@ -64,6 +64,7 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
               height={35}
               className="group"
               style={{ objectFit: "contain" }}
+              priority
             />
         </Link>
         </div>
