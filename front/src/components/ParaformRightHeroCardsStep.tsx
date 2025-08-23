@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 
 export type CardData = { id: string; image: string };
 
@@ -21,7 +20,7 @@ export default function ParaformRightHeroCardsStep({
   gap = 6,               // espace global entre slots — réduit au minimum
   intervalMs = 2600,
   cropPx = 96,
-  pauseOnHover = true,
+  pauseOnHover = false,
   className,
 }: Props) {
   // Ordre fixe
@@ -170,11 +169,12 @@ export default function ParaformRightHeroCardsStep({
     clearAll();
     run();
     return clearAll;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intervalMs, N, hopMs, decropStart, decropEnd, holdEnd, recropEnd, grayOutLeadMs, grayInPhase, overlayEnterMs, overlayLeaveMs]);
 
   // Hover pause
-  const onEnter = () => { if (pauseOnHover) hoverRef.current = true; };
-  const onLeave = () => { if (pauseOnHover) hoverRef.current = false; };
+  const onEnter = () => {};
+  const onLeave = () => {};
 
   // Peek / overlap — on affiche davantage les voisines
   const peekPx  = Math.min(Math.round(size * 0.22), Math.floor(size / 2 - 24));
@@ -249,14 +249,7 @@ export default function ParaformRightHeroCardsStep({
                     className={"pf-reveal" + (isRevealed ? " is-revealed" : "")}
                     style={{ clipPath: clip }}
                   >
-                    <Image 
-                      src={c.image} 
-                      alt="" 
-                      fill
-                      className="pf-media" 
-                      draggable={false}
-                      style={{ objectFit: 'cover' }}
-                    />
+                    <img src={c.image} alt="" className="pf-media" draggable={false} />
 
                     {/* Filtre couleur permanent */}
                     <div className="pf-tint" />
@@ -321,168 +314,212 @@ export default function ParaformRightHeroCardsStep({
         ))}
       </div>
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          .pf-hero-carousel {
-            position: relative;
-            overflow: hidden;
-            background: transparent;
-            border-radius: 12px;
-            margin: 0 auto;
-            isolation: isolate;
-            user-select: none;
-          }
-          .pf-track {
-            position: absolute; left: 0; top: 0; height: 100%;
-            display: flex; align-items: center;
-            padding: 0; will-change: transform;
-            background: transparent;
-          }
-          .pf-card {
-            position: relative;
-            flex: 0 0 auto;
-            background: transparent !important;
-            transition: filter 220ms ease;
-            overflow: visible;
-            z-index: 1;
-          }
-          .pf-card-abs { position: absolute; top: 0; }
-          .pf-card.is-active { z-index: 2; }
-          .pf-frame {
-            position: absolute; inset: 0;
-            overflow: hidden; border-radius: 0; box-sizing: border-box;
-            background: transparent;
-          }
-          .pf-reveal {
-            position: absolute; inset: 0;
-            border-radius: 12px;
-            overflow: hidden;
-            will-change: clip-path;
-            transition: clip-path 520ms cubic-bezier(0.25, 0.1, 0.25, 1);
-          }
-          .pf-reveal.is-revealed { transition-duration: 560ms; }
-          .pf-media {
-            position: absolute; inset: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            border-radius: inherit;
-          }
-          .pf-tint {
-            position: absolute; inset: 0;
-            background: #282422;
-            opacity: 0.55;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: inherit;
-          }
-          .pf-gray {
-            position: absolute; inset: 0;
-            background: #E3E5E4;
-            opacity: 1;
-            pointer-events: none;
-            transition: opacity ${grayFadeMs}ms cubic-bezier(0.25, 1, 0.30, 1);
-            z-index: 2;
-            border-radius: inherit;
-          }
-          .pf-gray.is-off { opacity: 0; }
-          .pf-crop-stroke {
-            position: absolute; pointer-events: none; z-index: 3;
-            border: 2px solid rgba(255,255,255,0);
-            border-radius: 12px;
-            opacity: 0;
-            transition: opacity 180ms ease, border-color 200ms ease;
-          }
-          .pf-crop-stroke.is-on {
-            opacity: 1;
-            border-color: rgba(255,255,255,0.96);
-          }
-          .pf-overlay-group {
-            position: absolute; inset: auto;
-            pointer-events: none;
-            z-index: 4;
-            opacity: 0;
-            transform: scale(1.10);
-            transition: transform ${overlayEnterMs}ms cubic-bezier(0.25, 1, 0.35, 1);
-            will-change: transform;
-            border-radius: 12px;
-          }
-          .pf-overlay-group.is-on {
-            opacity: 1;
-            transform: scale(1.00);
-          }
-          .pf-overlay-group.is-leaving {
-            opacity: 1;
-            transform: scale(1.14);
-            transition-duration: ${overlayLeaveMs}ms;
-          }
-          .pf-badge-wrap {
-            position: absolute;
-            top: 0.8cm; left: 0.8cm;
-            display: flex; flex-direction: column; align-items: flex-start;
-            gap: 6px;
-            pointer-events: none;
-          }
-          .pf-badge {
-            padding: 6px 0;
-            font-size: 60px;
-            line-height: 1;
-            font-weight: 500;
-            color: #F7B096;
-            text-shadow: 0 1px 6px rgba(0,0,0,0.18);
-          }
-          .pf-badge-caption {
-            font-size: 14px;
-            line-height: 1.05;
-            font-weight: 500;
-            color: #FFFFFF;
-            opacity: 0.95;
-            letter-spacing: 0.2px;
-          }
-          .pf-stroke {
-            position: absolute; inset: 0;
-            border: 2px solid rgba(255,255,255,0.95);
-            border-radius: 12px;
-            background: transparent;
-            box-shadow: 0 8px 26px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.25) inset;
-          }
-          .pf-glass {
-            position: absolute; inset: 0;
-            display: grid; place-items: end stretch;
-            padding: 0;
-            border-radius: inherit;
-          }
-          .pf-glass-inner {
-            margin: 0 0.5cm 0.5cm 0.5cm;
-            min-height: 140px;
-            border-radius: 12px;
-            padding: 22px 24px;
-            background: rgba(0,0,0,0.5);
-            border: none;
-            box-shadow: 0 8px 28px rgba(0,0,0,0.35);
-            color: #ffffff;
-            text-align: center;
-          }
-          .pf-glass-title { font-size: 22px; font-weight: 600; letter-spacing: 0.2px; }
-          .pf-glass-sub   { font-size: 15px; opacity: 0.95; margin-top: 6px; }
-          .pf-glass-meta {
-            margin-top: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 13px;
-            opacity: 0.92;
-          }
-          .pf-glass-meta svg { width: 16px; height: 16px; display: block; }
-          .pf-dots {
-            position: absolute; left: 50%; bottom: 10px;
-            transform: translateX(-50%);
-            display: flex; gap: 8px; z-index: 6;
-          }
-          .pf-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.25); }
-          .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
-        `
-      }} />
+      <style jsx>{`
+        .pf-hero-carousel {
+          position: relative;
+          overflow: hidden;
+          background: transparent;
+          border-radius: 12px; /* arrondi CONTAINER */
+          margin: 0 auto;
+          isolation: isolate;
+          user-select: none;
+        }
+        .pf-track {
+          position: absolute; left: 0; top: 0; height: 100%;
+          display: flex; align-items: center;
+          padding: 0; will-change: transform;
+          background: transparent;
+        }
+
+        /* SLOT visible : pas de fond */
+        .pf-card {
+          position: relative;
+          flex: 0 0 auto;
+          background: transparent !important;
+          transition: filter 220ms ease;
+          overflow: visible;
+          z-index: 1;
+        }
+        .pf-card-abs { position: absolute; top: 0; }
+        .pf-card.is-active { z-index: 2; }
+
+        /* FRAME transparente : laisse voir les voisines hors du slot */
+        .pf-frame {
+          position: absolute; inset: 0;
+          overflow: hidden; border-radius: 0; box-sizing: border-box;
+          background: transparent;
+        }
+
+        /* Couche clippée : coins arrondis gérés par 'clip-path: inset(... round 12px)' */
+        .pf-reveal {
+          position: absolute; inset: 0;
+          border-radius: 12px;
+          overflow: hidden;
+          will-change: clip-path;
+          transition: clip-path 520ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .pf-reveal.is-revealed { transition-duration: 560ms; }
+
+        /* Image */
+        .pf-media {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          object-fit: cover;
+          border-radius: inherit;
+        }
+
+        /* Filtre couleur permanent (#282422 à 55%) */
+        .pf-tint {
+          position: absolute; inset: 0;
+          background: #282422;
+          opacity: 0.55;
+          pointer-events: none;
+          z-index: 1; /* sous le voile gris (z:2) */
+          border-radius: inherit;
+        }
+
+        /* VOILE GRIS : unique (0 → 1 selon .is-off) — fade court */
+        .pf-gray {
+          position: absolute; inset: 0;
+          background: #E3E5E4;
+          opacity: 1;
+          pointer-events: none;
+          transition: opacity ${grayFadeMs}ms cubic-bezier(0.25, 1, 0.30, 1);
+          z-index: 2; /* sous le groupe overlay (z:4), au-dessus de l'image/tint */
+          border-radius: inherit;
+        }
+        .pf-gray.is-off { opacity: 0; }
+
+        /* Cadre blanc au DÉBUT du croppé (bref) */
+        .pf-crop-stroke {
+          position: absolute; pointer-events: none; z-index: 3;
+          border: 2px solid rgba(255,255,255,0);
+          border-radius: 12px;
+          opacity: 0;
+          transition: opacity 180ms ease, border-color 200ms ease;
+        }
+        .pf-crop-stroke.is-on {
+          opacity: 1;
+          border-color: rgba(255,255,255,0.96);
+        }
+
+        /* ===== GROUPE OVERLAY (cadre + glass + badge) ===== */
+        .pf-overlay-group {
+          position: absolute; inset: auto; /* insets via style */
+          pointer-events: none;
+          z-index: 4;
+          opacity: 0;
+          transform: scale(1.10);
+          transition: transform ${overlayEnterMs}ms cubic-bezier(0.25, 1, 0.35, 1);
+          will-change: transform;
+          border-radius: 12px;
+        }
+        .pf-overlay-group.is-on {
+          opacity: 1;
+          transform: scale(1.00);
+        }
+        .pf-overlay-group.is-leaving {
+          opacity: 1;
+          transform: scale(1.14);
+          transition-duration: ${overlayLeaveMs}ms;
+        }
+
+        /* Badge block (top-left) */
+        .pf-badge-wrap {
+          position: absolute;
+          top: 0.8cm; left: 0.8cm;
+          display: flex; flex-direction: column; align-items: flex-start;
+          gap: 6px;
+          pointer-events: none;
+        }
+        .pf-badge {
+          padding: 6px 0;
+          font-size: 60px;
+          line-height: 1;
+          font-weight: 500;
+          color: #F7B096;
+          text-shadow: 0 1px 6px rgba(0,0,0,0.18);
+        }
+        .pf-badge-caption {
+          font-size: 14px;
+          line-height: 1.05;
+          font-weight: 500;
+          color: #FFFFFF;
+          opacity: 0.95;
+          letter-spacing: 0.2px;
+        }
+
+        /* Cadre bord blanc, fond transparent (même arrondi que l'image) */
+        .pf-stroke {
+          position: absolute; inset: 0;
+          border: 2px solid rgba(255,255,255,0.95);
+          border-radius: 12px;
+          background: transparent;
+          box-shadow: 0 8px 26px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.25) inset;
+        }
+
+        /* Glass overlay — mêmes marges (0.5cm) ; texte centré ; un peu plus haut */
+        .pf-glass {
+          position: absolute; inset: 0;
+          display: grid; place-items: end stretch;
+          padding: 0;
+          border-radius: inherit;
+        }
+        .pf-glass-inner {
+          margin: 0 0.5cm 0.5cm 0.5cm; /* 0.5 cm d’espace L/R + bas */
+          min-height: 140px;           /* ++ un peu plus haute */
+          border-radius: 12px;
+          padding: 22px 24px;
+          background: rgba(0,0,0,0.5);
+          border: none;
+          box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+          color: #ffffff;
+          text-align: center;
+        }
+        .pf-glass-title { font-size: 22px; font-weight: 600; letter-spacing: 0.2px; }
+        .pf-glass-sub   { font-size: 15px; opacity: 0.95; margin-top: 6px; }
+
+        /* Ligne meta (check + texte) */
+        .pf-glass-meta {
+          margin-top: 8px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          font-size: 13px;
+          opacity: 0.92;
+        }
+        .pf-glass-meta svg { width: 16px; height: 16px; display: block; }
+
+        /* Dots centrés */
+        .pf-dots {
+          position: absolute; left: 50%; bottom: 10px;
+          transform: translateX(-50%);
+          display: flex; gap: 8px; z-index: 6;
+        }
+        .pf-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.25); }
+        .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
+      `}
+        /* Neutralise tout effet hover/over clair ("voile blanc") sur le composant */
+        /* Anti-hover flash — version compatible styled-jsx */
+.pf-hero-carousel:hover,
+.pf-hero-carousel .pf-card:hover,
+.pf-hero-carousel .pf-frame:hover,
+.pf-hero-carousel .pf-reveal:hover,
+.pf-hero-carousel .pf-overlay-group:hover,
+.pf-hero-carousel .pf-stroke:hover,
+.pf-hero-carousel .pf-crop-stroke:hover,
+.pf-hero-carousel .pf-glass:hover,
+.pf-hero-carousel .pf-media:hover,
+.pf-hero-carousel .pf-tint:hover,
+.pf-hero-carousel .pf-gray:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+      </style>
     </div>
   );
 }
