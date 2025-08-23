@@ -501,24 +501,6 @@ export default function ParaformRightHeroCardsStep({
         .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
       `}
         /* Neutralise tout effet hover/over clair ("voile blanc") sur le composant */
-        /* Anti-hover flash — version compatible styled-jsx */
-.pf-hero-carousel:hover,
-.pf-hero-carousel .pf-card:hover,
-.pf-hero-carousel .pf-frame:hover,
-.pf-hero-carousel .pf-reveal:hover,
-.pf-hero-carousel .pf-overlay-group:hover,
-.pf-hero-carousel .pf-stroke:hover,
-.pf-hero-carousel .pf-crop-stroke:hover,
-.pf-hero-carousel .pf-glass:hover,
-.pf-hero-carousel .pf-media:hover,
-.pf-hero-carousel .pf-tint:hover,
-.pf-hero-carousel .pf-gray:hover {
-  background: transparent !important;
-  box-shadow: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-  transform: none !important;
-}
       </style>
     </div>
   );

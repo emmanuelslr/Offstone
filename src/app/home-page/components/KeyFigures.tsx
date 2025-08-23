@@ -1,0 +1,160 @@
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
+import SectionTitle from '@/components/shared/SectionTitle';
+
+interface KeyFigure {
+  number: number;
+  label: React.ReactNode;
+  prefix?: string;
+  suffix?: string;
+}
+
+const keyFigures: KeyFigure[] = [
+  { number: 100, suffix: "M€", label: "D’ACTIFS PILOTÉS" },
+  { number: 41, suffix: "+", label: "OPÉRATIONS MENÉES" },
+  { number: 10, suffix: "k", label: "M² DE SURFACES RESTRUCTURÉES" },
+  { number: 15, suffix: "", label: "ANS D’EXPÉRIENCE" },
+];
+
+const CountUp = ({ value, prefix = '', suffix = '' }: { value: number, prefix?: string, suffix?: string }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-20% 0px" });
+
+  useEffect(() => {
+    if (inView) {
+      let startTime: number;
+      const duration = 1800; // 1.8 seconds duration
+      
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        
+        // Faster start with smooth end
+        const eased = 1 - Math.pow(1 - progress, 1.8);
+        setDisplayValue(Math.floor(eased * value));
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setDisplayValue(value); // Ensure we hit the exact target
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }
+  }, [inView, value]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}{displayValue}<span className="ml-1">{suffix}</span>
+    </span>
+  );
+};
+
+export default function KeyFigures() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Create smooth floating effect on scroll
+  const y = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const smoothY = useSpring(y, { stiffness: 100, damping: 30 });
+
+  return (
+<motion.div
+      ref={containerRef}
+      style={{ y: smoothY }}
+      className="w-full pt-20 pb-28 bg-[#1E2124] relative z-50"
+    >
+      <SectionTitle 
+        title={
+          <>
+            15 ans à transformer l’immobilier.
+          </>
+        }
+        subtitle="Une trajectoire bâtie en compte propre. Aujourd’hui ouverte aux investisseurs privés."
+        textColor="light"
+        fontWeight="light"
+      />
+      <div className="w-full max-w-7xl mx-auto">
+        <div className="flex flex-row justify-center items-stretch w-full px-8 gap-12 ml-8">
+          {keyFigures.map((figure, index) => (
+            <>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0,
+                  transition: {
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: [0.2, 0.65, 0.3, 0.9],
+                  }
+                }}
+                viewport={{ once: true, margin: "-20% 0px" }}
+                className="flex flex-col items-center justify-between basis-1/4 text-center"
+              >
+                  <h2 className="text-[3.5rem] sm:text-[4.3rem] md:text-[5.1rem] font-normal text-white mb-4 whitespace-nowrap tracking-wider">
+                  <CountUp 
+                    value={figure.number}
+                    prefix={figure.prefix}
+                    suffix={figure.suffix}
+                  />
+                </h2>
+                <p className={`text-[10px] md:text-[11px] tracking-widest uppercase font-medium mt-2 w-full${index === 2 ? ' whitespace-nowrap' : ''} text-gray-400`}>
+                  {figure.label}
+                </p>
+              </motion.div>
+              {index < keyFigures.length - 1 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.8,
+                      delay: (index + 1) * 0.1,
+                      ease: [0.2, 0.65, 0.3, 0.9],
+                    }
+                  }}
+                  viewport={{ once: true, margin: "-20% 0px" }}
+                  className="hidden md:block w-[1px] h-14 self-center bg-gray-400"
+                />
+              )}
+            </>
+          ))}
+        </div>
+      </div>
+      {/* CTA horizontal : texte + bouton carré */}
+      <div className="w-full flex justify-center mt-14">
+        <div className="flex flex-row items-center gap-4">
+          <span className="text-xl md:text-2xl text-gray-600 font-normal">
+            Découvrez notre méthode pour construire ce patrimoine
+          </span>
+<button
+            className="flex items-center justify-center bg-[#F7B096] hover:bg-[#222222] transition text-white w-12 h-12 rounded-[6px] shadow-sm"
+            aria-label="Découvrir la méthode"
+            type="button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="none"
+            >
+              <rect width="24" height="24" rx="6" fill="none"/>
+              <path d="M8 12h8M14 8l4 4-4 4" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
