@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import ParaformRightHeroCardsStep from '@/components/ParaformRightHeroCardsStep';
 import SectionBadge from './SectionBadge';
 
@@ -315,11 +316,11 @@ export default function AdvantageOffstoneSection() {
           <div className="lg:w-2/5 lg:pr-20 flex justify-center lg:justify-start">
             <div className="relative">
               <div className="w-full h-auto relative rounded-lg overflow-hidden" style={{ width: '600px', height: '650px' }}>
-                <img
+                <Image
                   src="/images/Buildings/Orange buildings.jpg"
                   alt="Orange Buildings"
-                  className="w-full h-full object-cover"
-                  style={{ objectFit: 'cover' }}
+                  fill
+                  className="object-cover"
                 />
                 
                 {/* Carte noire avec opacité et animation zoom globale */}

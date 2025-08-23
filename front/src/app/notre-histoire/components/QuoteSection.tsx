@@ -34,7 +34,7 @@ export default function QuoteSection() {
               style={{ y: parallax }}
             >
               <Image
-                src="/Images/autres/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3"
+                src="/images/personnalites/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3"
                 alt="Jonathan Anguelov"
                 fill
                 priority

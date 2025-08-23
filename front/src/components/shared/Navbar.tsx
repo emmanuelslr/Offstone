@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: boolean }) {
   const [isOnWhiteSection, setIsOnWhiteSection] = useState(false);
@@ -54,7 +55,7 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
       <nav className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-10 flex items-center justify-between h-16 sm:h-20">
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="group">
-            <img
+            <Image
               src={(isOnWhiteSection || forceWhiteStyle)
                 ? "/logos/offstone-logo-black.svg"
                 : "/logos/offstone-logo-white.svg"}

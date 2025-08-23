@@ -1,50 +1,30 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-
-/**
- * ParaformRightHeroCardsStep — Pure React + CSS (no deps)
- * - Step carousel: sentinels [cloneLast, 1, 2, 3, cloneFirst], toujours en avant
- * - Effet crop → décrop → recrop via clip-path (image taille constante)
- * - Bords blancs en crop, aucun arrondi sur le container
- * - Glass card : noir 30% (rgba(0,0,0,.3)), sans bord, légèrement remontée
- * - Cadre stroke blanc (coins doux) qui apparaît avec la glass, aux dimensions du rectangle croppé
- * - Dots centrés
- * - Peek/Overlap: chaque slot visible est + étroit, la carte dépasse pour montrer les voisines
- *
- * Images (public/) :
- *   /images/Buildings/2barbes.PNG
- *   /images/Buildings/Truchet.jpg
- *   /images/Buildings/Ienaa.jpg
- */
+import Image from "next/image";
 
 export type CardData = { id: string; image: string };
 
 type Props = {
   cards?: CardData[];
-  /** Taille du carré (px). Largeur = Hauteur = size */
-  size?: number;
-  /** Espace entre cartes (px) — gouttière entre slots */
-  gap?: number;
-  /** Durée totale par carte (ms) */
-  intervalMs?: number;
-  /** Base de crop (px). Les côtés seront plus croppés que haut/bas. */
-  cropPx?: number;
-  /** Pause au survol */
+  size?: number;         // carré: largeur = hauteur
+  gap?: number;          // gouttière entre slots
+  intervalMs?: number;   // durée totale par carte
+  cropPx?: number;       // base de crop (amplifiée ci-dessous)
   pauseOnHover?: boolean;
   className?: string;
 };
 
 export default function ParaformRightHeroCardsStep({
   cards,
-  size = 720,                 // carré garanti
-  gap = 40,                   // + large pour mieux voir les bords voisins
+  size = 720,
+  gap = 6,               // espace global entre slots — réduit au minimum
   intervalMs = 2600,
-  cropPx = 96,                // base forte (on renforce encore via coefficients)
+  cropPx = 96,
   pauseOnHover = true,
   className,
 }: Props) {
-  // Base data en ordre fixe
+  // Ordre fixe
   const base = useMemo<CardData[]>(
     () =>
       (cards && cards.length
@@ -53,41 +33,55 @@ export default function ParaformRightHeroCardsStep({
             { id: "2barbes", image: "/images/Buildings/2barbes.PNG" },
             { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
             { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
-          ]
-      ).slice(0, 3),
+          ]).slice(0, 3),
     [cards]
   );
+  const N = base.length;
 
-  const N = base.length; // 3
-
-  // Piste avec sentinelles: [cloneLast, ...base, cloneFirst]
+  // Track avec sentinelles
   const track = useMemo(() => {
     const cloneLast: CardData = { ...base[N - 1], id: base[N - 1].id + "-cloneLast" };
     const cloneFirst: CardData = { ...base[0], id: base[0].id + "-cloneFirst" };
     return [cloneLast, ...base, cloneFirst];
   }, [base, N]);
 
-  // États d’animation
-  const [active, setActive] = useState(0); // index logique [0..N-1]
-  const [pos, setPos] = useState(1);       // pos physique [0..N+1], démarre sur 1er réel
-  const [animateTrack, setAnimateTrack] = useState(true); // false => wrap instantané
-  const [overlayIndex, setOverlayIndex] = useState<number | null>(null);
-  const [revealedIndex, setRevealedIndex] = useState<number | null>(null);
+  // États
+  const [active, setActive] = useState(0);  // index logique [0..N-1]
+  const [pos, setPos] = useState(1);        // index physique [0..N+1]
+  const [animateTrack, setAnimateTrack] = useState(true);
 
-  // Refs stables
+  // GROUPE overlay (cadre + glass)
+  const [overlayIndex, setOverlayIndex] = useState<number | null>(null);          // affiche le groupe
+  const [overlayLeavingIndex, setOverlayLeavingIndex] = useState<number | null>(null); // zoom de sortie
+
+  const [revealedIndex, setRevealedIndex] = useState<number | null>(null); // image full reveal
+  const [cropStrokeIndex, setCropStrokeIndex] = useState<number | null>(0);// cadre de crop au début
+
+  // Voile gris : qui est **désactivé** (opacity 0) ?
+  const [grayOffIndex, setGrayOffIndex] = useState<number | null>(null);
+
+  // Refs planif
   const activeRef = useRef(0);
   const posRef = useRef(1);
   const hoverRef = useRef(false);
   const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
-  // Timings internes (hop un poil + long et S-curve pour smooth)
-  const hopMs = Math.round(Math.min(340, Math.max(260, intervalMs * 0.12))); // ~300ms smooth
-  const decropStart = hopMs;                         // quand la carte est centrée
-  const decropEnd = Math.round(decropStart + intervalMs * 0.20); // ~800ms
-  const holdEnd   = Math.round(decropEnd + intervalMs * 0.35);   // ~1700ms
-  const recropEnd = Math.round(holdEnd   + intervalMs * 0.16);   // ~2100ms
+  // ---- Timings (smooth) ----
+  const hopMs = Math.round(Math.min(420, Math.max(320, intervalMs * 0.15))); // ~390ms si 2600ms
+  const decropStart = hopMs + 20;                 // décrop juste après le hop
+  const decropEnd   = Math.round(decropStart + intervalMs * 0.20);
+  const holdEnd     = Math.round(decropEnd   + intervalMs * 0.35);
+  const recropEnd   = Math.round(holdEnd     + intervalMs * 0.16);
 
-  // Helpers de planification
+  // Voile gris — image **dégrisées tôt** & gris qui **revient plus tôt**
+  const grayFadeMs     = 380;   // fade court
+  const grayOutLeadMs  = 9999;  // énorme → planifié à 0ms (immédiat)
+  const grayInPhase    = 0.70;  // revient plus tôt pendant le recrop
+
+  // Durées du groupe overlay (dézoom à l’apparition, zoom à la disparition)
+  const overlayEnterMs = 360;
+  const overlayLeaveMs = 220;
+
   const schedule = (fn: () => void, ms: number) => {
     const id = setTimeout(fn, ms);
     timers.current.push(id);
@@ -96,6 +90,7 @@ export default function ParaformRightHeroCardsStep({
   const clearAll = () => {
     timers.current.forEach(clearTimeout);
     timers.current = [];
+    return;
   };
 
   // Cycle principal
@@ -103,17 +98,47 @@ export default function ParaformRightHeroCardsStep({
     const run = () => {
       if (hoverRef.current) { schedule(run, 120); return; }
 
-      // Début de phase: crop + pas de glass
+      const idx = activeRef.current;
+
+      // Reset phase
       setRevealedIndex(null);
       setOverlayIndex(null);
+      setOverlayLeavingIndex(null);
 
-      // Décrop + glass sur la carte logique active
-      schedule(() => setRevealedIndex(activeRef.current), decropStart);
-      schedule(() => setOverlayIndex(activeRef.current), decropStart + 40);
-      schedule(() => setOverlayIndex(null), Math.max(0, holdEnd - 120));
+      // Voile gris : **immédiatement** on enlève le gris de l'active (fade → 0)
+      setGrayOffIndex(null);
+      schedule(() => setGrayOffIndex(idx), Math.max(0, decropStart - grayOutLeadMs));
+
+      // Cadre de crop (bref) au tout début, puis disparaît AVANT le décrop
+      setCropStrokeIndex(idx);
+      schedule(() => setCropStrokeIndex(null), Math.max(0, decropStart - 220));
+
+      // Décrop → full reveal
+      schedule(() => setRevealedIndex(idx), decropStart);
+
+      // Apparition GROUPE (cadre + glass) — **dézoom** (scale > 1 → 1)
+      schedule(() => {
+        setOverlayLeavingIndex(null);
+        setOverlayIndex(idx);
+      }, decropStart + 40);
+
+      // Début recrop : disparition GROUPE — **zoom** (1 → > 1) puis on cache
+      schedule(() => {
+        setOverlayLeavingIndex(idx);
+        schedule(() => {
+          setOverlayIndex((cur) => (cur === idx ? null : cur));
+          setOverlayLeavingIndex((cur) => (cur === idx ? null : cur));
+        }, overlayLeaveMs);
+      }, holdEnd);
+
+      // Fin de lecture → recrop image
       schedule(() => setRevealedIndex(null), holdEnd);
 
-      // Avance d’une carte + wrap si on est sur cloneFirst
+      // Le voile gris revient **tôt** pendant le recrop
+      const grayInStart = Math.round(holdEnd + (recropEnd - holdEnd) * grayInPhase);
+      schedule(() => setGrayOffIndex(null), grayInStart);
+
+      // Avance
       schedule(() => {
         const nextActive = (activeRef.current + 1) % N;
         const nextPos = posRef.current + 1;
@@ -121,23 +146,23 @@ export default function ParaformRightHeroCardsStep({
         activeRef.current = nextActive;
         setActive(nextActive);
 
-        // hop animé
         setAnimateTrack(true);
         posRef.current = nextPos;
         setPos(nextPos);
 
         if (nextPos === N + 1) {
-          // Après le hop, wrap instantané → on revient sur le 1er réel
+          // wrap → 1er réel
           schedule(() => {
             setAnimateTrack(false);
             posRef.current = 1;
             setPos(1);
-            // réactive l’anim au frame suivant
             requestAnimationFrame(() => setAnimateTrack(true));
           }, hopMs + 20);
         }
 
-        // prochaine itération
+        // reset voile par défaut
+        setGrayOffIndex(null);
+
         schedule(run, Math.max(0, intervalMs - recropEnd));
       }, recropEnd);
     };
@@ -145,24 +170,29 @@ export default function ParaformRightHeroCardsStep({
     clearAll();
     run();
     return clearAll;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [intervalMs, N, hopMs, decropStart, holdEnd, recropEnd]);
+  }, [intervalMs, N, hopMs, decropStart, decropEnd, holdEnd, recropEnd, grayOutLeadMs, grayInPhase, overlayEnterMs, overlayLeaveMs]);
 
-  // Pause au survol
+  // Hover pause
   const onEnter = () => { if (pauseOnHover) hoverRef.current = true; };
   const onLeave = () => { if (pauseOnHover) hoverRef.current = false; };
 
-  // —— Peek / Overlap logic ——
-  // On voit les voisines car la carte dépasse de peekPx de chaque côté dans un slot plus étroit
-  const peekPx = Math.min(Math.round(size * 0.14), Math.floor(size / 2 - 24));
-  const slotW = Math.max(1, size - 2 * peekPx);   // largeur visible par item
-  const step = slotW + gap;                        // le track avance de ce pas
-  const x = -(pos * step);
+  // Peek / overlap — on affiche davantage les voisines
+  const peekPx  = Math.min(Math.round(size * 0.22), Math.floor(size / 2 - 24));
+  const slotW   = Math.max(1, size - 2 * peekPx);     // fenêtre visible par carte
+  const step    = slotW + gap;
 
-  // —— Crop fort (L/R beaucoup + que T/B), clampé pour sécurité ——
+  // CENTRAGE : centre le slot actif (symétrie L/R)
+  const centerOffset = (size - slotW) / 2;
+  const xRaw = centerOffset - (pos * step);
+  const x = Math.round(xRaw);
+
+  // ===== Crop rectangulaire — largeur en phase croppée alignée avec le cadre =====
   const maxInset = Math.floor(size / 2 - 8);
-  const sideCrop = Math.min(maxInset, Math.round(cropPx * 3.6)); // L/R extrême
-  const vertCrop = Math.min(maxInset, Math.round(cropPx * 2.2)); // T/B renforcé
+  const sideCrop = Math.min(maxInset, Math.round(cropPx * 3.45)); // léger resserrage (moins large) // élargit encore la fenêtre croppée (cadre + image)
+  const vertCrop = Math.min(maxInset, Math.round(cropPx * 1.22));
+
+  // Rayon d’arrondi unifié
+  const radius = 12;
 
   return (
     <div
@@ -176,13 +206,26 @@ export default function ParaformRightHeroCardsStep({
         style={{
           gap: `${gap}px`,
           transform: `translate3d(${x}px, 0, 0)`,
-          transition: animateTrack ? `transform ${hopMs}ms cubic-bezier(0.22, 1, 0.36, 1)` : "none",
+          transition: animateTrack ? `transform ${hopMs}ms cubic-bezier(0.33, 1, 0.68, 1)` : "none",
         }}
       >
         {track.map((c, i) => {
           const logical = i === 0 ? N - 1 : i === N + 1 ? 0 : i - 1;
           const isRevealed = revealedIndex === logical;
           const isActiveLogical = active === logical;
+          const showCropStroke = cropStrokeIndex === logical && !isRevealed;
+
+          // Voile unique : 0 seulement pour la carte active dans la fenêtre "off", sinon 1
+          const isGrayOff = grayOffIndex === logical && isActiveLogical;
+
+          // Flags overlay group (cadre+glass)
+          const overlayOn  = overlayIndex === logical;
+          const overlayOut = overlayLeavingIndex === logical;
+
+          // clip-path avec coins ARRONDIS
+          const clip = isRevealed
+            ? `inset(0px round ${radius}px)`
+            : `inset(${vertCrop}px ${sideCrop}px round ${radius}px)`;
 
           return (
             <div
@@ -190,37 +233,83 @@ export default function ParaformRightHeroCardsStep({
               key={`${c.id}-${i}`}
               style={{ width: slotW, height: size }}
             >
-              {/* Carte qui dépasse à gauche/droite du slot pour montrer les voisines */}
+              {/* Carte débordante centrée dans le slot → symétrie parfaite L/R */}
               <div
                 className="pf-card-abs"
-                style={{ width: size + 2 * peekPx, height: size, left: -peekPx }}
+                style={{
+                  width: size + 2 * peekPx,
+                  height: size,
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                }}
               >
-                {/* Cadre blanc : donne les bords blancs quand c’est croppé */}
                 <div className="pf-frame">
-                  {/* Couche clippée qui révèle/recroppe l’image */}
+                  {/* Image clippée (crop/décrop) avec arrondi via 'round' */}
                   <div
                     className={"pf-reveal" + (isRevealed ? " is-revealed" : "")}
-                    style={{ clipPath: isRevealed ? "inset(0px)" : `inset(${vertCrop}px ${sideCrop}px)` }}
+                    style={{ clipPath: clip }}
                   >
-                    <img src={c.image} alt="" className="pf-media" draggable={false} />
-
-                    {/* Cadre stroke (transparent fill, white border) pendant le plein reveal */}
-                    <div
-                      className={"pf-stroke" + (overlayIndex === logical ? " is-on" : "")}
-                      style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop }}
+                    <Image 
+                      src={c.image} 
+                      alt="" 
+                      fill
+                      className="pf-media" 
+                      draggable={false}
+                      style={{ objectFit: 'cover' }}
                     />
 
-                    {/* Glass overlay (noir 30%) pendant le plein cadre */}
-                    <div className={"pf-glass" + (overlayIndex === logical ? " is-on" : "")}>
+                    {/* Filtre couleur permanent */}
+                    <div className="pf-tint" />
+
+                    {/* VOILE GRIS — unique */}
+                    <div className={"pf-gray" + (isGrayOff ? " is-off" : "")} />
+                  </div>
+
+                  {/* Cadre blanc EXACT aux insets, seulement au DÉBUT du croppé */}
+                  <div
+                    className={"pf-crop-stroke" + (showCropStroke ? " is-on" : "")}
+                    style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop, borderRadius: `${radius}px` }}
+                  />
+
+                  {/* ===== GROUPE OVERLAY (cadre + glass + badge) ===== */}
+                  <div
+                    className={
+                      "pf-overlay-group" +
+                      (overlayOn ? " is-on" : "") +
+                      (overlayOut ? " is-leaving" : "")
+                    }
+                    style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop, borderRadius: `${radius}px` }}
+                  >
+                    {/* Bloc badge + légende en haut-gauche */}
+                    <div className="pf-badge-wrap">
+                      <div className="pf-badge">20%</div>
+                      <div className="pf-badge-caption">
+                        <span>Performance</span><br />
+                        <span>annuelle&nbsp;cible*</span>
+                      </div>
+                    </div>
+
+                    {/* Cadre bord blanc, fond transparent */}
+                    <div className="pf-stroke" />
+
+                    {/* Glassy card */}
+                    <div className="pf-glass">
                       <div className="pf-glass-inner">
-                        <div className="pf-glass-title">Great fit</div>
-                        <div className="pf-glass-sub">Pre-vetted match</div>
+                        <div className="pf-glass-title">MAISON IENA</div>
+                        <div className="pf-glass-sub">Hôtel | Value-Add | Paris 16ème</div>
+                        <div className="pf-glass-meta">
+                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5" stroke="#F7B096" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                          <span>Acquis par les Associés d’Aguesseau</span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {/* /pf-overlay-group */}
                 </div>
               </div>
-            </div> // pf-card
+            </div>
           );
         })}
       </div>
@@ -232,107 +321,168 @@ export default function ParaformRightHeroCardsStep({
         ))}
       </div>
 
-      <style>{`
-        .pf-hero-carousel {
-          position: relative;
-          overflow: hidden;
-          background: #ffffff;
-          border-radius: 0;
-          margin: 0 auto;
-          isolation: isolate;
-          user-select: none;
-        }
-        .pf-track {
-          position: absolute; left: 0; top: 0; height: 100%;
-          display: flex; align-items: center;
-          padding: 0; will-change: transform;
-          background: #ffffff;
-        }
-
-        .pf-card { position: relative; flex: 0 0 auto; background: #ffffff; transition: filter 220ms ease; overflow: visible; }
-        .pf-card-abs { position: absolute; top: 0; left: 0; }
-        .pf-card.is-dim .pf-media { filter: saturate(0.72) brightness(0.88); transition: filter 220ms ease; }
-        .pf-card.is-active .pf-media { filter: none; }
-        .pf-card.is-active { z-index: 2; }
-
-        /* Cadre blanc (contours) */
-        .pf-frame {
-          position: absolute; inset: 0;
-          overflow: hidden; border-radius: 0; box-sizing: border-box;
-          background: #ffffff;
-        }
-
-        /* Couche clippée (crop/décrop) */
-        .pf-reveal {
-          position: absolute; inset: 0;
-          will-change: clip-path;
-          transition: clip-path 460ms cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        .pf-reveal.is-revealed { transition-duration: 520ms; }
-
-        /* Image plein cadre */
-        .pf-media {
-          position: absolute; inset: 0;
-          width: 100%; height: 100%;
-          object-fit: cover;
-        }
-
-        /* Stroke (transparent) animé avec la glass */
-        .pf-stroke {
-          position: absolute; pointer-events: none; z-index: 4;
-          top: 0; left: 0; right: 0; bottom: 0; /* inset dyn via style */
-          border: 2px solid rgba(255,255,255,0); /* anim vers blanc */
-          border-radius: 12px;
-          background: transparent;
-          opacity: 0; transform: scale(0.96);
-          box-shadow: 0 0 0 0 rgba(255,255,255,0);
-          transition:
-            opacity 260ms cubic-bezier(0.22, 1, 0.36, 1),
-            transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
-            border-color 320ms ease,
-            box-shadow 320ms ease;
-          will-change: opacity, transform, border-color, box-shadow;
-        }
-        .pf-stroke.is-on {
-          opacity: 1; transform: scale(1);
-          border-color: rgba(255,255,255,0.95);
-          box-shadow: 0 8px 26px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.25) inset;
-        }
-
-        /* Glass overlay */
-        .pf-glass {
-          position: absolute; inset: 0;
-          display: grid; place-items: end stretch;
-          padding: 0; z-index: 3;
-          opacity: 0; transform: translateY(6px) scale(0.985);
-          transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1), transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .pf-glass.is-on { opacity: 1; transform: translateY(0) scale(1); }
-        .pf-glass-inner {
-          width: auto;
-          margin: 0 16px 24px 16px;
-          border-radius: 0;
-          padding: 14px 16px;
-          background: rgba(0,0,0,0.3);
-          border: none;
-          box-shadow: 0 8px 28px rgba(0,0,0,0.35);
-          color: #ffffff;
-        }
-        .pf-glass-title { font-size: 16px; font-weight: 700; }
-        .pf-glass-sub   { font-size: 13px; opacity: 0.92; }
-
-        /* Dots centrés */
-        .pf-dots {
-          position: absolute; left: 50%; bottom: 10px;
-          transform: translateX(-50%);
-          display: flex; gap: 8px; z-index: 6;
-        }
-        .pf-dot {
-          width: 8px; height: 8px; border-radius: 999px;
-          background: rgba(0,0,0,0.25);
-        }
-        .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
-      `}</style>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .pf-hero-carousel {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+            border-radius: 12px;
+            margin: 0 auto;
+            isolation: isolate;
+            user-select: none;
+          }
+          .pf-track {
+            position: absolute; left: 0; top: 0; height: 100%;
+            display: flex; align-items: center;
+            padding: 0; will-change: transform;
+            background: transparent;
+          }
+          .pf-card {
+            position: relative;
+            flex: 0 0 auto;
+            background: transparent !important;
+            transition: filter 220ms ease;
+            overflow: visible;
+            z-index: 1;
+          }
+          .pf-card-abs { position: absolute; top: 0; }
+          .pf-card.is-active { z-index: 2; }
+          .pf-frame {
+            position: absolute; inset: 0;
+            overflow: hidden; border-radius: 0; box-sizing: border-box;
+            background: transparent;
+          }
+          .pf-reveal {
+            position: absolute; inset: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            will-change: clip-path;
+            transition: clip-path 520ms cubic-bezier(0.25, 0.1, 0.25, 1);
+          }
+          .pf-reveal.is-revealed { transition-duration: 560ms; }
+          .pf-media {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: inherit;
+          }
+          .pf-tint {
+            position: absolute; inset: 0;
+            background: #282422;
+            opacity: 0.55;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: inherit;
+          }
+          .pf-gray {
+            position: absolute; inset: 0;
+            background: #E3E5E4;
+            opacity: 1;
+            pointer-events: none;
+            transition: opacity ${grayFadeMs}ms cubic-bezier(0.25, 1, 0.30, 1);
+            z-index: 2;
+            border-radius: inherit;
+          }
+          .pf-gray.is-off { opacity: 0; }
+          .pf-crop-stroke {
+            position: absolute; pointer-events: none; z-index: 3;
+            border: 2px solid rgba(255,255,255,0);
+            border-radius: 12px;
+            opacity: 0;
+            transition: opacity 180ms ease, border-color 200ms ease;
+          }
+          .pf-crop-stroke.is-on {
+            opacity: 1;
+            border-color: rgba(255,255,255,0.96);
+          }
+          .pf-overlay-group {
+            position: absolute; inset: auto;
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0;
+            transform: scale(1.10);
+            transition: transform ${overlayEnterMs}ms cubic-bezier(0.25, 1, 0.35, 1);
+            will-change: transform;
+            border-radius: 12px;
+          }
+          .pf-overlay-group.is-on {
+            opacity: 1;
+            transform: scale(1.00);
+          }
+          .pf-overlay-group.is-leaving {
+            opacity: 1;
+            transform: scale(1.14);
+            transition-duration: ${overlayLeaveMs}ms;
+          }
+          .pf-badge-wrap {
+            position: absolute;
+            top: 0.8cm; left: 0.8cm;
+            display: flex; flex-direction: column; align-items: flex-start;
+            gap: 6px;
+            pointer-events: none;
+          }
+          .pf-badge {
+            padding: 6px 0;
+            font-size: 60px;
+            line-height: 1;
+            font-weight: 500;
+            color: #F7B096;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.18);
+          }
+          .pf-badge-caption {
+            font-size: 14px;
+            line-height: 1.05;
+            font-weight: 500;
+            color: #FFFFFF;
+            opacity: 0.95;
+            letter-spacing: 0.2px;
+          }
+          .pf-stroke {
+            position: absolute; inset: 0;
+            border: 2px solid rgba(255,255,255,0.95);
+            border-radius: 12px;
+            background: transparent;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.25) inset;
+          }
+          .pf-glass {
+            position: absolute; inset: 0;
+            display: grid; place-items: end stretch;
+            padding: 0;
+            border-radius: inherit;
+          }
+          .pf-glass-inner {
+            margin: 0 0.5cm 0.5cm 0.5cm;
+            min-height: 140px;
+            border-radius: 12px;
+            padding: 22px 24px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.35);
+            color: #ffffff;
+            text-align: center;
+          }
+          .pf-glass-title { font-size: 22px; font-weight: 600; letter-spacing: 0.2px; }
+          .pf-glass-sub   { font-size: 15px; opacity: 0.95; margin-top: 6px; }
+          .pf-glass-meta {
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            opacity: 0.92;
+          }
+          .pf-glass-meta svg { width: 16px; height: 16px; display: block; }
+          .pf-dots {
+            position: absolute; left: 50%; bottom: 10px;
+            transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 6;
+          }
+          .pf-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.25); }
+          .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
+        `
+      }} />
     </div>
   );
 }

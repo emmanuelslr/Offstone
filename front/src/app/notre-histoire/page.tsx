@@ -9,8 +9,8 @@ export default function NotreHistoirePage() {
     <>
       <Navbar forceWhiteStyle />
       <HeroHistoire />
-<InvestSimplement image="/Images/autres/UrQqewjnRWVW1vMmm3dcpF3MF4.svg" />
-<InvestSimplement image="/Images/autres/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3" />
+<InvestSimplement image="/images/icones/urqqewjnrwvw1vmmm3dcpf3mf4.svg" />
+<InvestSimplement image="/images/personnalites/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3" />
       {/* <NotreHistoireTimeline /> */}
       <QuoteSection />
     </>
