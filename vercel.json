@@ -1,8 +1,9 @@
 {
-  "buildCommand": "cd front && npm run build",
-  "outputDirectory": "front/.next",
-  "installCommand": "cd front && npm install",
-  "devCommand": "cd front && npm run dev",
-  "framework": "nextjs",
-  "rootDirectory": "./front"
+  "version": 2,
+  "builds": [
+    {
+      "src": "front/package.json",
+      "use": "@vercel/next"
+    }
+  ]
 }
