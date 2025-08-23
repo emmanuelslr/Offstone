@@ -3,5 +3,6 @@
   "outputDirectory": "front/.next",
   "installCommand": "cd front && npm install",
   "devCommand": "cd front && npm run dev",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "rootDirectory": "./front"
 }
