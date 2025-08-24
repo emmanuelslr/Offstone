@@ -3,6 +3,7 @@ import Navbar from "@/components/shared/Navbar";
 import HeroHistoire from "./components/HeroHistoire";
 import InvestSimplement from "./components/InvestSimplement";
 import QuoteSection from "./components/QuoteSection";
+import ProCTAFooter from "../home-page/components/ProCTAFooter";
 
 export default function NotreHistoirePage() {
   return (
@@ -13,6 +14,9 @@ export default function NotreHistoirePage() {
 <InvestSimplement image="/images/personnalites/JONATHAN_ANGUELOV_0048bd2_fcf52cbd2a.jpg?v=3" />
       {/* <NotreHistoireTimeline /> */}
       <QuoteSection />
+      
+      {/* Pro CTA Footer Section */}
+      <ProCTAFooter />
     </>
   );
 }

@@ -68,7 +68,7 @@ export default function Hero() {
           className="absolute w-full h-full object-cover"
           style={{ filter: 'brightness(0.55) contrast(1.1)' }}
         >
-          <source src="/videos/Aguesseau Vidéo officielle.mp4" type="video/mp4" />
+          <source src="/videos/Official Hero Video.mp4" type="video/mp4" />
         </video>
         <div 
           className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70"

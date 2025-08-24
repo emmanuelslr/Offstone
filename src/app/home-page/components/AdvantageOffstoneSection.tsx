@@ -5,6 +5,7 @@ import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import ParaformRightHeroCardsStep from '@/components/ParaformRightHeroCardsStep';
 import SectionBadge from './SectionBadge';
+import PlatformDigitale from '../../../../public/images/Platform/Plateforme digitale.png';
 
 export default function AdvantageOffstoneSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -148,10 +149,15 @@ export default function AdvantageOffstoneSection() {
 
   return (
     <section>
-      <div ref={sectionRef} className="w-full" style={{ backgroundColor: '#F7F6F1', paddingTop: '72px', paddingBottom: '5rem' }}>
+<div ref={sectionRef} className="w-full" style={{ backgroundColor: '#F7F6F1', paddingTop: '6rem', paddingBottom: '5rem' }}>
+        {badgeVisible && (
+<div className="flex justify-center mt-0 mb-3 transition-opacity duration-700 opacity-100">
+            <SectionBadge colorClass="text-gray-600" text="IMMEUBLES EXCLUSIFS" />
+          </div>
+        )}
         <div
           ref={titleRef}
-          className={`mb-0 text-5xl md:text-[2.75rem] lg:text-[3.5rem] text-center font-light text-[#111] transition-all duration-[1800ms] ease-out ${
+          className={`mt-0 mb-0 text-5xl md:text-[2.75rem] lg:text-[3.5rem] text-center font-light text-[#111] transition-all duration-[1800ms] ease-out ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
           style={{ fontFamily: 'AllianceNo1-Regular, sans-serif', display: 'inline-block', width: '100%' }}
@@ -159,7 +165,7 @@ export default function AdvantageOffstoneSection() {
         >
           {(() => {
             // Two lines, keep <br />
-            const text = ["L’avantage d'investir", "avec Offstone."];
+            const text = ["L'avantage d'investir", "avec Offstone."];
             const allLetters = text.join('');
             const totalLetters = allLetters.length;
             const revealedCount = Math.floor(reveal * totalLetters);
@@ -188,13 +194,32 @@ export default function AdvantageOffstoneSection() {
             ));
           })()}
         </div>
-        
-        {badgeVisible && (
-          <div className="flex justify-center mt-16 mb-[-56px] transition-opacity duration-700 opacity-100">
-            <SectionBadge colorClass="text-gray-600" text="IMMEUBLES EXCLUSIFS" />
-          </div>
-        )}
-        <div className="flex justify-center mt-20">
+<div className="flex justify-center mt-8 mb-0">
+          <button
+            className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-[#F7B096] hover:text-black hover:border-[#F7B096] group"
+            style={{
+              boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+            }}
+            type="button"
+          >
+            Investir
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M17 7L7 17M7 7h10v10"
+              />
+            </svg>
+          </button>
+        </div>
+<div className="flex justify-center mt-8">
           <div
             className="flex items-center justify-center rounded-xl"
             style={{
@@ -222,31 +247,6 @@ export default function AdvantageOffstoneSection() {
             />
           </div>
         </div>
-        <div className="flex justify-center mt-12">
-          <button
-            className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-[#F7B096] hover:text-black hover:border-[#F7B096] group"
-            style={{
-              boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-            }}
-            type="button"
-          >
-            Investir
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 7L7 17M7 7h10v10"
-              />
-            </svg>
-          </button>
-        </div>
       </div>
       <div className="container mx-auto px-20 sm:px-32 mt-32">
         <div className="flex flex-col lg:flex-row items-start justify-between">
@@ -263,15 +263,19 @@ export default function AdvantageOffstoneSection() {
               Accédez à des opportunités <span style={{ color: '#9D9F9E' }}>exclusives.</span>
             </h2>
             <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-16">
-              Chaque projet est structuré, porté,<br />
-              et co-investi par Jonathan Anguelov,<br />
-              ses associés et son équipe.
+              Chaque projet à accès réservé,<br />
+              issu d&apos;un sourcing propriétaire, structuré<br />
+              par notre méthode et co-investi à vos côtés.
             </p>
             <button
               className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black mt-8 group"
               style={{
                 boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+                width: "auto",
+                minWidth: "unset",
+                maxWidth: "unset"
               }}
+              type="button"
             >
               Parler à un expert
               <svg
@@ -293,7 +297,7 @@ export default function AdvantageOffstoneSection() {
 
           {/* Section droite - Composant Paraform */}
           <div className="lg:w-1/2 lg:pl-12 flex justify-center lg:justify-end">
-            <div className="hover:opacity-75 transition-opacity duration-300">
+            <div>
               <ParaformRightHeroCardsStep
                 size={700}
                 gap={18}
@@ -458,6 +462,74 @@ export default function AdvantageOffstoneSection() {
           </div>
         </div>
       </div>
+      {/* DUPLICATE START */}
+      <div className="container relative mx-auto px-20 sm:px-32 mt-32" style={{ background: "#f7f6f1", paddingTop: "8rem", paddingBottom: "8rem" }}>
+        {/* Badge sorti au-dessus de la carte, sans affecter le flux */}
+        <div className="absolute top-20 sm:top-24 left-20 sm:left-32">
+          <SectionBadge colorClass="text-gray-600" text="UNE SOLUTION DIGITALE" />
+        </div>
+        <div className="w-full rounded-[10px] bg-[#EBE5DF] flex flex-col justify-center pl-12" style={{ minHeight: 560 }}>
+          <div className="flex flex-col lg:flex-row items-center justify-between min-h-[400px] mt-0">
+          {/* Section gauche - Texte (DUPE) */}
+          <div className="lg:w-1/2 lg:pr-6 pl-12 lg:mb-0 mt-0 flex flex-col justify-center h-full">
+            <h2
+              className={`text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-4 transition-all duration-[1200ms] ease-out ${
+                titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              Investissez<br />
+              sereinement<br />
+              avec <span style={{ color: '#9D9F9E' }}>Offstone.</span>
+            </h2>
+            <p className="text-[15px] md:text-[17px] text-gray-600 mb-6 max-w-xl mt-4">
+              Une plateforme digitale claire<br />
+              pour investir et suivre vos<br />
+              investissements immobiliers.
+            </p>
+            <button
+              className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black mt-6 group"
+              style={{
+                boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
+                width: "fit-content",
+                minWidth: "180px"
+              }}
+              type="button"
+            >
+              Parler à un expert
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M17 7L7 17M7 7h10v10"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Section droite - Image Plateforme (DUPE) */}
+          <div className="lg:w-1/2 lg:pl-12 flex items-center justify-center">
+            <div className="relative w-[620px] h-[480px] overflow-hidden">
+              <Image
+                src={PlatformDigitale}
+                alt="Plateforme digitale"
+                fill
+                className="object-contain object-left"
+                sizes="(max-width: 1024px) 100vw, 620px"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      {/* DUPLICATE END */}
     </section>
   );
 }

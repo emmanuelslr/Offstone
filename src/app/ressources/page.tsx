@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../../components/shared/Navbar";
 import Footer from "../../components/shared/Footer";
+import ProCTAFooter from "../home-page/components/ProCTAFooter";
 
 export default function RessourcesPage() {
   return (
@@ -9,6 +10,10 @@ export default function RessourcesPage() {
       <section className="bg-white text-black min-h-[60vh] flex items-center justify-center py-16 px-4">
         {/* Section blanche centrale */}
       </section>
+      
+      {/* Pro CTA Footer Section */}
+      <ProCTAFooter />
+      
       <Footer />
     </>
   );

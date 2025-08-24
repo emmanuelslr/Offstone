@@ -50,7 +50,7 @@
 
 @layer base {
   body {
-    @apply bg-[#0a0a0a] text-white min-h-screen antialiased;
+    @apply bg-white text-black min-h-screen antialiased;
   }
 }
 

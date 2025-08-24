@@ -30,7 +30,6 @@ const PeopleDoSection: React.FC = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.2, 0.65, 0.3, 0.9],
       },
     },
   };
@@ -43,7 +42,6 @@ const PeopleDoSection: React.FC = () => {
       transition: {
         delay: i * 0.2,
         duration: 0.8,
-        ease: [0.2, 0.65, 0.3, 0.9],
       },
     }),
   };
@@ -70,8 +68,10 @@ const PeopleDoSection: React.FC = () => {
 >
   Construisons ensemble notre immobilier.
 </h2>
-<p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl">
-          Chaque projet est structuré, porté, et co-investi par<br />Jonathan Anguelov, ses associés et son équipe.
+        <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl">
+          Chaque projet à accès réservé,<br />
+          issu d&apos;un sourcing propriétaire, structuré<br />
+          par notre méthode et co-investi à vos côtés.
         </p>
         <button
 className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-normal rounded-full px-6 text-base shadow-sm border border-[#F7B096] transition hover:bg-[#222222] hover:text-white mt-8 group"
@@ -99,7 +99,7 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
           <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col -mb-4">
               <motion.div
-                className="w-full h-[600px] relative mt-16"
+                className="w-full h-[600px] relative mt-16 rounded-[10px] overflow-hidden"
                 custom={0}
                 initial="hidden"
                 whileInView="visible"
@@ -114,13 +114,13 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                   style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </motion.div>
-              <div className="w-full text-xs text-gray-500 text-center -mb-2">
-                L&apos;équipe de Kelios
+              <div className="w-full text-xs text-gray-500 text-center mt-4">
+                L&apos;équipe d&apos;Offstone
               </div>
             </div>
             <div className="flex flex-col -mb-4">
               <motion.div
-                className="w-full h-[600px] relative"
+                className="w-full h-[600px] relative rounded-[10px] overflow-hidden"
                 custom={1}
                 initial="hidden"
                 whileInView="visible"
@@ -135,8 +135,8 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                   style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </motion.div>
-              <div className="w-full text-xs text-gray-500 text-center -mb-2">
-                Jonathan Anguelov de Kelios
+              <div className="w-full text-xs text-gray-500 text-center mt-4">
+                Jonathan Anguelov d&apos;Offstone
               </div>
             </div>
           </div>

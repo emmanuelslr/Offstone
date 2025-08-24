@@ -60,12 +60,35 @@ const CountUp = ({ value, prefix = '', suffix = '' }: { value: number, prefix?: 
 
 export default function KeyFiguresLiteSection() {
   return (
-    <section className="w-full bg-white m-0 p-0">
+    <section className="w-full bg-white m-0 p-0 pb-32">
       <div className="w-full max-w-7xl mx-auto m-0 p-0" style={{marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0}}>
+        <div className="w-full flex justify-center mb-8">
+          <div className="flex flex-row items-center gap-4">
+            <span className="text-base md:text-lg text-gray-600 font-normal">
+              Découvrez notre méthode pour construire votre patrimoine
+            </span>
+<button
+              className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-5 h-5 rounded-[4px] shadow-sm"
+              aria-label="Découvrir la méthode"
+              type="button"
+            >
+<svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 16 16"
+                fill="none"
+                style={{ transform: "rotate(-180deg)" }}
+              >
+                <polyline points="11 4 5 8 11 12" stroke="black" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
         <div className="flex flex-row justify-center items-stretch w-full gap-12 m-0 p-0" style={{marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0}}>
           {keyFigures.map((figure, index) => (
             <div key={index} className="flex flex-row items-center">
-              <motion.div
+<motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{
                   opacity: 1,
@@ -86,7 +109,7 @@ export default function KeyFiguresLiteSection() {
                     suffix={figure.suffix}
                   />
                 </h2>
-                <p className={`text-[10px] md:text-[11px] tracking-widest uppercase font-medium mt-2 w-full${index === 2 ? ' whitespace-nowrap' : ''} text-gray-700`}>
+<p className={`text-[10px] md:text-[11px] tracking-widest uppercase font-medium mt-2 w-full${index === 2 || index === 3 ? ' whitespace-nowrap' : ''} text-gray-700`}>
                   {figure.label}
                 </p>
               </motion.div>
@@ -97,30 +120,6 @@ export default function KeyFiguresLiteSection() {
           ))}
         </div>
       </div>
-    {/* CTA horizontal : texte + bouton carré */}
-    <div className="w-full flex justify-center mt-24 pb-32">
-      <div className="flex flex-row items-center gap-6">
-        <span className="text-xl md:text-2xl text-gray-600 font-normal">
-        Découvrez notre méthode pour construire votre patrimoine
-        </span>
-        <button
-          className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-8 h-8 rounded-[4px] shadow-sm"
-          aria-label="Découvrir la méthode"
-          type="button"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ transform: "rotate(-180deg)" }}
-          >
-            <polyline points="11 4 5 8 11 12" stroke="black" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
-    </div>
   </section>
   );
 }

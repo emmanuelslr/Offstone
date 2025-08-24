@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 
 export type CardData = { id: string; image: string };
 
@@ -20,7 +21,6 @@ export default function ParaformRightHeroCardsStep({
   gap = 6,               // espace global entre slots — réduit au minimum
   intervalMs = 2600,
   cropPx = 96,
-  pauseOnHover = false,
   className,
 }: Props) {
   // Ordre fixe
@@ -169,7 +169,7 @@ export default function ParaformRightHeroCardsStep({
     clearAll();
     run();
     return clearAll;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [intervalMs, N, hopMs, decropStart, decropEnd, holdEnd, recropEnd, grayOutLeadMs, grayInPhase, overlayEnterMs, overlayLeaveMs]);
 
   // Hover pause
@@ -249,7 +249,7 @@ export default function ParaformRightHeroCardsStep({
                     className={"pf-reveal" + (isRevealed ? " is-revealed" : "")}
                     style={{ clipPath: clip }}
                   >
-                    <img src={c.image} alt="" className="pf-media" draggable={false} />
+                    <Image src={c.image} alt="" fill className="pf-media" draggable={false} />
 
                     {/* Filtre couleur permanent */}
                     <div className="pf-tint" />

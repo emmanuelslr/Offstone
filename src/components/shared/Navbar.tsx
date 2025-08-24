@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+ 
 
 export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: boolean }) {
   const [isOnWhiteSection, setIsOnWhiteSection] = useState(false);
@@ -55,32 +55,33 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
       <nav className="mx-auto max-w-[92rem] px-4 sm:px-6 lg:px-10 flex items-center justify-between h-16 sm:h-20">
         <div className="flex items-center flex-shrink-0">
           <Link href="/" className="group">
-            <Image
-              src={(isOnWhiteSection || forceWhiteStyle)
-                ? "/logos/offstone-logo-black.svg"
-                : "/logos/offstone-logo-white.svg"}
-              alt="Offstone Logo"
-              width={220}
-              height={35}
-              className="group"
-              style={{ objectFit: "contain" }}
-              priority
-            />
-        </Link>
+            <span
+              className="block leading-none select-none antialiased"
+              style={{
+                fontFamily: "'Alliance No.1', Arial, sans-serif",
+                fontWeight: 500,
+                fontSize: 28,
+                letterSpacing: '0.02em',
+                color: (isOnWhiteSection || forceWhiteStyle) ? '#000000' : '#FFFFFF'
+              }}
+            >
+              Offstone.
+            </span>
+          </Link>
         </div>
         <ul className="hidden md:flex items-center space-x-12 mx-auto flex-1 justify-center">
           <li>
 <Link href="/notre-methode" className={`text-[15px] font-medium transition-all duration-300 ${
               (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
             }`}>
-              Stratégie
+              Notre Méthode
             </Link>
           </li>
           <li>
 <Link href="/investir" className={`text-[15px] font-medium transition-all duration-300 ${
               (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
             }`}>
-              Nos Solutions
+              Investir
             </Link>
           </li>
           <li>
@@ -154,14 +155,14 @@ href="/notre-methode"
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-[17px] font-medium text-white hover:text-[#F7B096] transition-colors"
           >
-            Stratégie
+            Notre Méthode
           </Link>
             <Link 
 href="/investir"
             onClick={() => setIsMobileMenuOpen(false)}
             className="text-[17px] font-medium text-white hover:text-[#F7B096] transition-colors"
           >
-            Nos Solutions
+            Investir
           </Link>
           
 <Link 

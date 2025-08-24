@@ -1,10 +1,10 @@
-// front/src/components/shared/PreFooterSection.tsx
+
 'use client';
 
 export default function PreFooterSection() {
   return (
 <section 
-      className="py-48 w-full bg-cover"
+      className="pt-0 pb-0 md:pt-0 md:pb-0 w-full bg-cover"
       style={{ 
         backgroundColor: "#1b1c1e",
         backgroundImage: "linear-gradient(rgba(27,28,30,0.5), rgba(27,28,30,0.5)), url('/videos/Images immeubles/9fkY4aD8cQ7RHUwy2LDm21AUj7k.svg')",
