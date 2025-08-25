@@ -5,6 +5,12 @@ import { motion } from 'framer-motion';
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLDivElement>(null);
+  
+  // Preload the poster image for instant display
+  useEffect(() => {
+    const img = new Image();
+    img.src = '/images/Backgrounds/ImageHero.png';
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,20 +61,40 @@ export default function Hero() {
   return (
     <div ref={sectionRef} className="Hero relative min-h-screen w-full flex justify-center overflow-hidden z-10">
       {/* Absolute Video Background with parallax effect */}
-      <div 
-        ref={videoRef}
-        className="absolute inset-0 z-0 w-full h-[120vh]"
-        style={{ top: 0, left: 0 }}
-      >
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/images/Backgrounds/ImageHero.png"
-          className="absolute w-full h-full object-cover"
-          style={{ filter: 'brightness(0.55) contrast(1.1)' }}
-        >
+             <div 
+         ref={videoRef}
+         className="absolute inset-0 z-0 w-full h-[120vh]"
+         style={{ 
+           top: 0, 
+           left: 0,
+           backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat'
+         }}
+       >
+                 <video
+           autoPlay
+           muted
+           loop
+           playsInline
+           poster="/images/Backgrounds/ImageHero.png"
+           className="absolute w-full h-full object-cover transition-opacity duration-300"
+           style={{ filter: 'brightness(0.55) contrast(1.1)' }}
+           onLoadStart={() => {
+             // Ensure poster is visible immediately
+             const video = document.querySelector('video');
+             if (video) video.style.opacity = '1';
+           }}
+           onCanPlay={() => {
+             // Smooth transition when video is ready
+             const video = document.querySelector('video');
+             if (video) {
+               video.style.opacity = '1';
+               video.style.transition = 'opacity 0.5s ease-in-out';
+             }
+           }}
+         >
           <source src="/videos/Official Hero Video.mp4" type="video/mp4" />
         </video>
         <div 
