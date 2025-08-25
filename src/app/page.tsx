@@ -60,7 +60,7 @@ export default function Home() {
       {/* Remove extra white space band entirely */}
       <section className="hidden"></section>
 
-      <div className="mb-32">
+      <div className="mb-0">
 {/* Section "Investissez simplement" masquée */}
 {/* <InvestSimplement /> */}
       </div>
