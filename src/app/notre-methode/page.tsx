@@ -37,7 +37,7 @@ export default function StrategiePage() {
        
       {/* Section Analyse des investissements */}
       <section className="relative pt-[110px] pb-[100px] bg-white z-50">
-        <div className="px-20 sm:px-32">
+        <div className="container mx-auto px-20 sm:px-32">
           <div className="flex flex-col lg:flex-row items-center justify-start -mb-6">
             <div className="lg:w-full lg:mb-0">
               <div className="mb-5">

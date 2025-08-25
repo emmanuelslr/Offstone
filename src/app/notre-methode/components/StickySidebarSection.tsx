@@ -7,9 +7,15 @@ import Image from "next/image";
 
 export default function StickySidebarSection() {
   const [activeStep, setActiveStep] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   const cardRef = useRef(null);
   const cardInView = useInView(cardRef, { once: false, amount: 0.3 });
   const counter = 17;
+
+  // Vérification côté client
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const steps = [
     {
@@ -39,6 +45,9 @@ export default function StickySidebarSection() {
   ];
 
   useEffect(() => {
+    // Vérification que nous sommes côté client
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
       const sections = document.querySelectorAll('.step-section');
       const scrollPosition = window.scrollY + window.innerHeight / 2;
@@ -60,9 +69,28 @@ export default function StickySidebarSection() {
 
   // Plus d'animation, compteur statique à 17%
 
+  // Éviter le rendu côté serveur pour éviter l'hydratation
+  if (!isClient) {
+    return (
+      <section style={{ backgroundColor: '#F7F6F1', paddingTop: '0px', paddingBottom: '120px' }}>
+        <div className="container mx-auto px-20 sm:px-32">
+          <div className="pt-24 flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: '#96D5F7' }} />
+            <span className="text-gray-600 text-xs tracking-[0.18em]">COMMENT ÇA MARCHE</span>
+          </div>
+          <div className="pt-0 pb-2 mb-16 -mt-8" style={{ backgroundColor: '#F7F6F1' }}>
+            <div className="text-3xl md:text-4xl lg:text-[2.85rem] max-w-[900px] text-black">
+              Co-investissez avec Jonathan et l&apos;équipe dans des immeubles exclusifs, grâce à une méthode éprouvée.
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section style={{ backgroundColor: '#F7F6F1', paddingTop: '0px', paddingBottom: '120px' }}>
-      <div className="px-20 sm:px-32">
+      <div className="container mx-auto px-20 sm:px-32">
         {/* Badge COMMENT ÇA MARCHE */}
         <div className="pt-24 flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: '#96D5F7' }} />
@@ -261,23 +289,31 @@ export default function StickySidebarSection() {
                       <p className="text-base text-gray-600 mb-6 leading-relaxed">
                         {step.description}
                       </p>
-                      <button className="h-9 flex items-center justify-center bg-black text-white font-normal rounded-full px-4 text-sm shadow-sm border border-black transition hover:bg-white hover:text-black group">
-                        En savoir plus
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="ml-2 w-4 h-4 text-white group-hover:text-black transition-transform"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17 7L7 17M7 7h10v10"
-                          />
-                        </svg>
-                      </button>
+                                             <button className={`h-9 flex items-center justify-center font-normal rounded-full px-4 text-sm shadow-sm border border-black transition group ${
+                         index === 1 || index === 3 
+                           ? 'bg-transparent text-black hover:bg-black hover:text-white' 
+                           : 'bg-black text-white hover:bg-white hover:text-black'
+                       }`}>
+                         En savoir plus
+                         <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           stroke="currentColor"
+                           className={`ml-2 w-4 h-4 transition-transform ${
+                             index === 1 || index === 3 
+                               ? 'text-black group-hover:text-white' 
+                               : 'text-white group-hover:text-black'
+                           }`}
+                         >
+                           <path
+                             strokeLinecap="round"
+                             strokeLinejoin="round"
+                             strokeWidth="2"
+                             d="M17 7L7 17M7 7h10v10"
+                           />
+                         </svg>
+                       </button>
                     </div>
                   </div>
                 </div>

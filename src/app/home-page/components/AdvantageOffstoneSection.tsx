@@ -143,18 +143,19 @@ export default function AdvantageOffstoneSection() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 2.25;
+      videoRef.current.playbackRate = 1.625;
     }
   }, []);
 
   return (
     <section>
-<div ref={sectionRef} className="w-full" style={{ backgroundColor: '#F7F6F1', paddingTop: '6rem', paddingBottom: '5rem' }}>
-        {badgeVisible && (
-<div className="flex justify-center mt-0 mb-3 transition-opacity duration-700 opacity-100">
-            <SectionBadge colorClass="text-gray-600" text="IMMEUBLES EXCLUSIFS" />
-          </div>
-        )}
+      <div ref={sectionRef} className="w-full" style={{ backgroundColor: '#F7F6F1', paddingTop: '6rem', paddingBottom: '5rem' }}>
+        <div className="container relative mx-auto px-20 sm:px-32">
+          {badgeVisible && (
+            <div className="flex justify-center mt-0 mb-3 transition-opacity duration-700 opacity-100">
+              <SectionBadge colorClass="text-gray-600" text="IMMEUBLES EXCLUSIFS" />
+            </div>
+          )}
         <div
           ref={titleRef}
           className={`mt-0 mb-0 text-5xl md:text-[2.75rem] lg:text-[3.5rem] text-center font-light text-[#111] transition-all duration-[1800ms] ease-out ${
@@ -194,7 +195,7 @@ export default function AdvantageOffstoneSection() {
             ));
           })()}
         </div>
-<div className="flex justify-center mt-8 mb-0">
+        <div className="flex justify-center mt-8 mb-0">
           <button
             className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-[#F7B096] hover:text-black hover:border-[#F7B096] group"
             style={{
@@ -219,7 +220,7 @@ export default function AdvantageOffstoneSection() {
             </svg>
           </button>
         </div>
-<div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-8">
           <div
             className="flex items-center justify-center rounded-xl"
             style={{
@@ -246,6 +247,7 @@ export default function AdvantageOffstoneSection() {
               }}
             />
           </div>
+        </div>
         </div>
       </div>
       <div className="container mx-auto px-20 sm:px-32 mt-32">
@@ -463,9 +465,10 @@ export default function AdvantageOffstoneSection() {
         </div>
       </div>
       {/* DUPLICATE START */}
-      <div className="container relative mx-auto px-20 sm:px-32 mt-32" style={{ background: "#f7f6f1", paddingTop: "8rem", paddingBottom: "8rem" }}>
+      <div className="w-full mt-32" style={{ background: "#f7f6f1", paddingTop: "8rem", paddingBottom: "8rem" }}>
+        <div className="container relative mx-auto px-20 sm:px-32">
         {/* Badge sorti au-dessus de la carte, sans affecter le flux */}
-        <div className="absolute top-20 sm:top-24 left-20 sm:left-32">
+        <div className="absolute -top-8 sm:-top-10 left-20 sm:left-32">
           <SectionBadge colorClass="text-gray-600" text="UNE SOLUTION DIGITALE" />
         </div>
         <div className="w-full rounded-[10px] bg-[#EBE5DF] flex flex-col justify-center pl-12" style={{ minHeight: 560 }}>
@@ -526,6 +529,7 @@ export default function AdvantageOffstoneSection() {
               />
             </div>
           </div>
+        </div>
         </div>
         </div>
       </div>
