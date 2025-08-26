@@ -1,18 +1,43 @@
 'use client';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
   
-  // Preload the poster image for instant display
+  // Détection mobile simple
   useEffect(() => {
-    const img = new Image();
-    img.src = '/images/Backgrounds/ImageHero.png';
+    const checkMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileUserAgent = /mobile|android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+      const isSmallScreen = Math.min(screenWidth, screenHeight) < 768;
+      
+      let mobileScore = 0;
+      if (isMobileUserAgent) mobileScore++;
+      if (hasTouch) mobileScore++;
+      if (isSmallScreen) mobileScore++;
+      
+      const isMobile = mobileScore >= 2;
+      setIsMobile(isMobile);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
+  
+  // Parallax seulement sur desktop
   useEffect(() => {
+    if (isMobile) {
+      // Sur mobile, pas de parallax
+      return;
+    }
+
     const handleScroll = () => {
       const section = sectionRef.current;
       const video = videoRef.current;
@@ -20,20 +45,15 @@ export default function Hero() {
 
       const rect = section.getBoundingClientRect();
       const windowH = window.innerHeight;
-
-      // Parallax ratio (0.8 = effet plus marqué)
       const ratio = 0.8;
 
-      // Nouvelle logique : la vidéo reste visible tant que Hero est dans le viewport
       if (rect.bottom > 0 && rect.top < windowH) {
         video.style.opacity = '1';
         video.style.visibility = 'visible';
 
-        // Parallax effect
         const scrollInSection = Math.min(Math.max(windowH - rect.top, 0), rect.height + windowH);
         const parallax = -scrollInSection * ratio;
 
-        // Figer la vidéo quand la section atteint le haut du viewport
         let translateY = parallax;
         if (rect.top <= 0 && rect.bottom >= windowH) {
           translateY = -rect.top * ratio;
@@ -57,70 +77,79 @@ export default function Hero() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
-  }, []);
+  }, [isMobile]);
+
   return (
     <div ref={sectionRef} className="Hero relative min-h-screen w-full flex justify-center overflow-hidden z-10">
-      {/* Absolute Video Background with parallax effect */}
-             <div 
-         ref={videoRef}
-         className="absolute inset-0 z-0 w-full h-[120vh]"
-         style={{ 
-           top: 0, 
-           left: 0,
-           backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat'
-         }}
-       >
-                 <video
-           autoPlay
-           muted
-           loop
-           playsInline
-           poster="/images/Backgrounds/ImageHero.png"
-           className="absolute w-full h-full object-cover transition-opacity duration-300"
-           style={{ filter: 'brightness(0.55) contrast(1.1)' }}
-           onLoadStart={() => {
-             // Ensure poster is visible immediately
-             const video = document.querySelector('video');
-             if (video) video.style.opacity = '1';
-           }}
-           onCanPlay={() => {
-             // Smooth transition when video is ready
-             const video = document.querySelector('video');
-             if (video) {
-               video.style.opacity = '1';
-               video.style.transition = 'opacity 0.5s ease-in-out';
-             }
-           }}
-         >
+      {/* Background Container */}
+      <div className="absolute inset-0 z-0 w-full h-screen xs:h-[110vh] sm:h-[120vh]">
+        {/* Vidéo avec fallback */}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/Backgrounds/ImageHero.png"
+          className="absolute w-full h-full object-cover transition-opacity duration-300"
+          style={{ 
+            filter: 'brightness(0.55) contrast(1.1)'
+          }}
+          onError={(e) => {
+            // Fallback vers l'image si la vidéo échoue
+            const video = e.target as HTMLVideoElement;
+            if (video) {
+              video.style.display = 'none';
+              const fallback = document.getElementById('video-fallback');
+              if (fallback) fallback.style.display = 'block';
+            }
+          }}
+        >
           <source src="/videos/Official Hero Video.mp4" type="video/mp4" />
         </video>
+        
+        {/* Fallback image */}
+        <div
+          id="video-fallback"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          style={{
+            backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(0.55) contrast(1.1)',
+            display: 'none'
+          }}
+        />
+        
+        {/* Gradient overlay */}
         <div 
-          className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70"
-          style={{ mixBlendMode: 'multiply' }}
+          className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/90 xs:from-black/60 xs:via-black/50 xs:to-black/80 sm:from-black/40 sm:via-black/30 sm:to-black/70"
+          style={{ 
+            mixBlendMode: 'multiply',
+            zIndex: 2
+          }}
         />
       </div>
 
       {/* Content */}
-      <div className="container-custom relative z-10">
+      <div className="container-responsive relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full max-w-6xl mx-auto flex flex-col items-center min-h-[calc(100vh-96px)] mt-20 sm:mt-24"
+          className="w-full flex flex-col items-center min-h-[calc(100vh-76px)] xs:min-h-[calc(100vh-84px)] sm:min-h-[calc(100vh-96px)] mt-16 xs:mt-18 sm:mt-20 lg:mt-24"
         >
-          <div className="flex flex-col items-center justify-center flex-1">
-            <h1 className="text-[36px] sm:text-4xl md:text-6xl lg:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto px-4 sm:px-6">
+          <div className="flex flex-col items-center justify-center flex-1 px-4">
+            <h1 className="text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto max-w-6xl">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="block mb-2"
               >
-                Investissez dans l’immobilier,<br />
-                aux côtés de ceux qui l’opèrent.
+                Investissez dans l&apos;immobilier,<br className="hidden xs:block" />
+                <span className="xs:hidden"> </span>aux côtés de ceux qui l&apos;opèrent.
               </motion.span>
             </h1>
 
@@ -128,31 +157,33 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="text-base sm:text-lg md:text-2xl text-white/90 text-center mt-6 font-light tracking-wide mx-auto px-4 sm:px-6 whitespace-normal"
+              className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 text-center mt-4 xs:mt-6 font-light tracking-wide mx-auto whitespace-normal max-w-4xl px-2"
             >
-              Nous investissons dans chaque opération que nous structurons.<br/>
-              Accédez-y désormais, à nos côtés.
+              Nous investissons dans chaque opération que nous structurons.<br className="hidden sm:block"/>
+              <span className="sm:hidden"> </span>Accédez-y désormais, à nos côtés.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="w-full flex justify-center mt-8 sm:mt-10"
+              className="w-full flex justify-center mt-6 xs:mt-8 sm:mt-10 px-4"
             >
               <form
-                className="flex w-full max-w-md bg-white/90 shadow-lg sm:rounded-lg rounded-lg items-center px-2 py-1 sm:py-1.5 sm:px-3"
+                className="flex flex-col sm:flex-row w-full max-w-xs xs:max-w-sm sm:max-w-md lg:max-w-lg bg-white/90 shadow-lg rounded-lg items-center px-2 xs:px-3 py-1 xs:py-1.5 sm:py-2"
                 onSubmit={e => e.preventDefault()}
               >
                 <input
                   type="email"
+                  id="hero-email"
+                  name="hero-email"
                   placeholder="Entrez votre adresse mail"
-                  className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-500 px-3 py-1.5 text-sm"
+                  className="w-full sm:w-auto flex-1 bg-transparent outline-none text-black placeholder:text-gray-500 px-2 xs:px-3 py-2 xs:py-2.5 text-xs xs:text-sm"
                   required
                 />
                 <button
                   type="submit"
-                  className="ml-2 px-4 py-1.5 bg-[#F7B096] text-black border border-[#F7B096] rounded-lg font-medium transition hover:bg-[#222222] hover:text-white text-sm"
+                  className="w-full sm:w-auto mt-2 sm:mt-0 sm:ml-2 px-3 xs:px-4 py-2 xs:py-2.5 bg-[#F7B096] text-black border border-[#F7B096] rounded-lg font-medium transition hover:bg-[#222222] hover:text-white text-xs xs:text-sm whitespace-nowrap"
                   style={{ borderRadius: '0.5rem' }}
                 >
                   Investissez à nos côtés

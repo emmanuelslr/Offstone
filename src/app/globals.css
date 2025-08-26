@@ -52,6 +52,25 @@
   body {
     @apply bg-white text-black min-h-screen antialiased;
   }
+  
+  /* Forcer le full width sur mobile et corriger les marges */
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Styles spéciaux pour très petits écrans (moins de 375px) */
+  @media (max-width: 374px) {
+    html {
+      font-size: 14px;
+    }
+    
+    .container-responsive {
+      padding-left: 0.75rem !important;
+      padding-right: 0.75rem !important;
+    }
+  }
+  
 }
 
 @layer components {
@@ -59,16 +78,26 @@
     @apply max-w-[1280px] mx-auto px-6 sm:px-8 lg:px-12;
   }
   
+  /* Nouveau conteneur responsive pour mobile */
+  .container-mobile {
+    @apply w-full px-4;
+  }
+  
+  /* Conteneur qui s'adapte selon la taille d'écran */
+  .container-responsive {
+    @apply w-full px-3 xs:px-4 sm:px-6 lg:px-8 xl:px-12 max-w-7xl mx-auto;
+  }
+  
   .heading-xl {
-    @apply text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;
+    @apply text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight;
   }
   
   .heading-lg {
-    @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
+    @apply text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
   }
   
   .heading-md {
-    @apply text-2xl sm:text-3xl font-bold tracking-tight;
+    @apply text-xl xs:text-2xl sm:text-3xl font-bold tracking-tight;
   }
   
   .text-gradient {
@@ -97,6 +126,48 @@
 /* Footer styles */
 .footer-separator {
   @apply w-px h-4 bg-[#333839] mx-4;
+}
+
+/* Styles critiques pour la vidéo mobile Hero */
+.mobile-video-fixed {
+  /* Styles de base pour la vidéo */
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Styles critiques pour forcer la vidéo Hero à couvrir tout l'écran */
+.Hero video {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  z-index: 1 !important;
+  /* Styles ultra-agressifs pour empêcher le déplacement */
+  transform: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  /* Forcer la position viewport */
+  inset: 0 !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  /* Empêcher les animations CSS */
+  transition: none !important;
+  animation: none !important;
+  /* Forcer la visibilité */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* Empêcher le déplacement */
+  will-change: auto !important;
+  backface-visibility: visible !important;
+  perspective: none !important;
 }
 
 .footer-section {

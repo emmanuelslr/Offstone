@@ -8,7 +8,7 @@ export default function FAQ() {
   return (
     <section>
       <div className="w-full" style={{ background: "#f7f6f1", paddingTop: "2rem", paddingBottom: "1.5rem" }}>
-        <div className="container mx-auto px-20 sm:px-32">
+        <div className="container-responsive">
           <div className="w-full flex flex-col justify-start" style={{ minHeight: 480 }}>
           <div className="flex flex-col lg:flex-row items-start justify-between min-h-[400px]">
             <div className="lg:w-5/12 lg:pr-12 lg:mb-0 mt-0 flex flex-col justify-start h-full">
@@ -63,7 +63,7 @@ export default function FAQ() {
                 </AccordionItem>
                 <AccordionItem value="faq-2" className="group hover:bg-[#EDE9E4] border-b" style={{ borderColor: '#DEDCD9' }}>
                   <AccordionTrigger data-item="faq-2" className="w-full text-left">
-                    <div className="font-normal text-[19px] md:text-[20px] lg:text-[22px] text-[#111]" style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}>Qui peut investir et quel est le ticket d'entrée ?</div>
+                    <div className="font-normal text-[19px] md:text-[20px] lg:text-[22px] text-[#111]" style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}>Qui peut investir et quel est le ticket d&apos;entrée ?</div>
                   </AccordionTrigger>
                   <AccordionContent data-item="faq-2" className="pl-3 pr-4 pb-3">
                     <div className="text-gray-600 text-[16px] md:text-[17px] lg:text-[18px]">Particuliers avertis et investisseurs professionnels, en direct ou via votre société, avec ticket précisé pour chaque dossier.</div>
@@ -79,10 +79,10 @@ export default function FAQ() {
                 </AccordionItem>
                 <AccordionItem value="faq-4" className="group hover:bg-[#EDE9E4] border-b" style={{ borderColor: '#DEDCD9' }}>
                   <AccordionTrigger data-item="faq-4" className="w-full text-left">
-                    <div className="font-normal text-[19px] md:text-[20px] lg:text-[22px] text-[#111]" style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}>Quels rendements viser et quelle durée d'investissement ?</div>
+                    <div className="font-normal text-[19px] md:text-[20px] lg:text-[22px] text-[#111]" style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}>Quels rendements viser et quelle durée d&apos;investissement ?</div>
                   </AccordionTrigger>
                   <AccordionContent data-item="faq-4" className="pl-3 pr-4 pb-3">
-                    <div className="text-gray-600 text-[16px] md:text-[17px] lg:text-[18px]">Objectifs indicatifs: Taux de rendement interne (TRI) net 8 à 12 %, durée 4 à 6 ans selon l'actif. Performance non garantie.</div>
+                    <div className="text-gray-600 text-[16px] md:text-[17px] lg:text-[18px]">Objectifs indicatifs: Taux de rendement interne (TRI) net 8 à 12 %, durée 4 à 6 ans selon l&apos;actif. Performance non garantie.</div>
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="faq-5" className="group hover:bg-[#EDE9E4] border-b" style={{ borderColor: '#DEDCD9' }}>
