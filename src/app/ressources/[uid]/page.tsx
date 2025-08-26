@@ -77,14 +77,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
                         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {(doc.data as any).excerpt ? (
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                          /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                           <p className="text-xl text-gray-600 mb-6 leading-relaxed">{(doc.data as any).excerpt}</p>
                         ) : null}
 
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
                           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {(doc.data as any).published_at ? (
-                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
                             <time dateTime={(doc.data as any).published_at}>
                               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                               {new Date((doc.data as any).published_at).toLocaleDateString("fr-FR", {
