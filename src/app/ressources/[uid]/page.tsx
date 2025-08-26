@@ -17,8 +17,10 @@ export async function generateMetadata({ params }: { params: Promise<{ uid: stri
   const doc = await client.getByUID("article" as any, uid).catch(() => null);
   if (!doc) return {};
 
-  const title = doc.data.title || "Ressources";
-  const description = doc.data.excerpt || "";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const title = (doc.data as any).title || "Ressources";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const description = (doc.data as any).excerpt || "";
   const canonical = toCanonical(`/ressources/${uid}`);
   const ogImage = "/logos/x-bleu.svg";
 
@@ -70,16 +72,16 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
           {/* Article Header */}
           <header className="mb-8">
-                                    <h1 className="text-4xl font-bold mb-4 text-gray-900">{doc.data.title || "Article"}</h1>
+                                    <h1 className="text-4xl font-bold mb-4 text-gray-900">{(doc.data as any).title || "Article"}</h1>
 
-                        {doc.data.excerpt ? (
-                          <p className="text-xl text-gray-600 mb-6 leading-relaxed">{doc.data.excerpt}</p>
+                        {(doc.data as any).excerpt ? (
+                          <p className="text-xl text-gray-600 mb-6 leading-relaxed">{(doc.data as any).excerpt}</p>
                         ) : null}
 
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
-                          {doc.data.published_at ? (
-                            <time dateTime={doc.data.published_at}>
-                              {new Date(doc.data.published_at).toLocaleDateString("fr-FR", {
+                          {(doc.data as any).published_at ? (
+                            <time dateTime={(doc.data as any).published_at}>
+                              {new Date((doc.data as any).published_at).toLocaleDateString("fr-FR", {
                                 year: "numeric",
                                 month: "long",
                                 day: "numeric"
@@ -91,7 +93,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
           {/* Article Body */}
           <div className="prose prose-lg prose-gray max-w-none">
-            <PrismicRichText field={doc.data.body} />
+            <PrismicRichText field={(doc.data as any).body} />
           </div>
         </article>
 
@@ -102,10 +104,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
                                     __html: JSON.stringify({
                           "@context": "https://schema.org",
                           "@type": "BlogPosting",
-                          headline: doc.data.title || "Article",
-                          description: doc.data.excerpt || "",
-                          datePublished: doc.data.published_at,
-                          dateModified: doc.data.published_at,
+                          headline: (doc.data as any).title || "Article",
+                          description: (doc.data as any).excerpt || "",
+                          datePublished: (doc.data as any).published_at,
+                          dateModified: (doc.data as any).published_at,
                           mainEntityOfPage: toCanonical(`/ressources/${uid}`),
                           author: {
                             "@type": "Organization",
@@ -139,7 +141,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
                 { 
                   "@type": "ListItem", 
                   "position": 2, 
-                  "name": doc.data.title || "Article", 
+                  "name": (doc.data as any).title || "Article", 
                   "item": toCanonical(`/ressources/${uid}`) 
                 }
               ]
