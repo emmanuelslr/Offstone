@@ -6,7 +6,7 @@ import Navbar from "../../../components/shared/Navbar";
 import ProCTAFooter from "../../home-page/components/ProCTAFooter";
 import { createClient } from "@/lib/prismicio";
 import { toCanonical } from "@/lib/seo";
-import type { ArticleDocument } from "../../../../prismicio-types";
+// Types will be inferred from Prismic client
 
 export const revalidate = 300;
 
