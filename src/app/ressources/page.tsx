@@ -15,6 +15,7 @@ export default async function RessourcesPage() {
     docs = await client.getAllByType("article" as any, {
       orderings: [{ field: "my.article.published_at", direction: "desc" }],
       pageSize: 24,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any[];
   } catch (error) {
     console.error("Error fetching articles:", error);
