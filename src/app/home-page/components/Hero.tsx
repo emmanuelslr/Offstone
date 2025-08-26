@@ -1,97 +1,19 @@
 'use client';
-import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Hero() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-  
-  // Détection mobile simple
-  useEffect(() => {
-    const checkMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isMobileUserAgent = /mobile|android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
-      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-      const screenWidth = window.screen.width;
-      const screenHeight = window.screen.height;
-      const isSmallScreen = Math.min(screenWidth, screenHeight) < 768;
-      
-      let mobileScore = 0;
-      if (isMobileUserAgent) mobileScore++;
-      if (hasTouch) mobileScore++;
-      if (isSmallScreen) mobileScore++;
-      
-      const isMobile = mobileScore >= 2;
-      setIsMobile(isMobile);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-  
-  // Parallax seulement sur desktop
-  useEffect(() => {
-    if (isMobile) {
-      // Sur mobile, pas de parallax
-      return;
-    }
-
-    const handleScroll = () => {
-      const section = sectionRef.current;
-      const video = videoRef.current;
-      if (!section || !video) return;
-
-      const rect = section.getBoundingClientRect();
-      const windowH = window.innerHeight;
-      const ratio = 0.8;
-
-      if (rect.bottom > 0 && rect.top < windowH) {
-        video.style.opacity = '1';
-        video.style.visibility = 'visible';
-
-        const scrollInSection = Math.min(Math.max(windowH - rect.top, 0), rect.height + windowH);
-        const parallax = -scrollInSection * ratio;
-
-        let translateY = parallax;
-        if (rect.top <= 0 && rect.bottom >= windowH) {
-          translateY = -rect.top * ratio;
-        }
-        if (rect.bottom <= windowH) {
-          translateY = -(rect.height - windowH) * ratio;
-        }
-
-        video.style.transform = `translateY(${translateY}px)`;
-      } else {
-        video.style.opacity = '0';
-        video.style.visibility = 'hidden';
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
-    handleScroll();
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, [isMobile]);
-
   return (
-    <div ref={sectionRef} className="Hero relative min-h-screen w-full flex justify-center overflow-hidden z-10">
+    <div className="Hero relative min-h-screen w-full flex justify-center overflow-hidden z-10">
       {/* Background Container */}
       <div className="absolute inset-0 z-0 w-full h-screen xs:h-[110vh] sm:h-[120vh]">
         {/* Vidéo avec fallback */}
         <video
-          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           poster="/images/Backgrounds/ImageHero.png"
-          className="absolute w-full h-full object-cover transition-opacity duration-300"
+          className="absolute w-full h-full object-cover"
           style={{ 
             filter: 'brightness(0.55) contrast(1.1)'
           }}
@@ -111,7 +33,7 @@ export default function Hero() {
         {/* Fallback image */}
         <div
           id="video-fallback"
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full"
           style={{
             backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
             backgroundSize: 'cover',

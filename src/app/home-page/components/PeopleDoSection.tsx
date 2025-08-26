@@ -48,7 +48,7 @@ const PeopleDoSection: React.FC = () => {
 
   return (
 <section className="PeopleDoSection relative pt-[120px] pb-[80px] bg-white z-50 overflow-hidden">
-<div ref={sectionRef} className="container mx-auto px-12 sm:px-24">
+<div ref={sectionRef} className="container-responsive">
     <div className="flex flex-col lg:flex-row items-center justify-start -mb-6">
       <motion.div
         className="lg:w-1/2 lg:pl-12 lg:pr-12 lg:mb-0"
@@ -111,7 +111,8 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                   alt="Team_Photo"
                   width={600}
                   height={600}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  priority
+                  className="w-full h-full object-cover"
                 />
               </motion.div>
               <div className="w-full text-xs text-gray-500 text-center mt-4">
@@ -132,7 +133,7 @@ className="h-11 flex items-center justify-center bg-[#F7B096] text-black font-no
                   alt="Image 1"
                   width={600}
                   height={600}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  className="w-full h-full object-cover"
                 />
               </motion.div>
               <div className="w-full text-xs text-gray-500 text-center mt-4">

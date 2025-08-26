@@ -19,41 +19,41 @@ import ProCTAFooter from "./home-page/components/ProCTAFooter";
 
 export default function Home() {
   return (
-    <main className="relative bg-white w-full">
+    <main className="relative bg-white">
       {/* Fixed Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <section className="Hero w-full">
+      <section className="Hero">
         <Hero />
       </section>
 
       {/* People Do Section */}
-      <section className="bg-white w-full">
+      <section className="bg-white">
         <PeopleDoSection />
       </section>
 
       {/* Text Reveal Section */}
-      <section className="bg-white w-full pt-16">
+      <section className="bg-white pt-16">
         <TextReveal />
       </section>
 
       {/* Key Figures Lite Section */}
-      <section className="bg-white w-full mt-0">
+      <section className="bg-white mt-0">
         <KeyFiguresLiteSection />
       </section>
       {/* Advantage Offstone Section */}
-      <section className="bg-white w-full">
+      <section className="bg-white">
         <AdvantageOffstoneSection />
       </section>
 
       {/* FAQ Section (same size/background as duplicate) */}
-      <section className="bg-white w-full">
+      <section className="bg-white">
         <FAQ />
       </section>
 
       {/* Pro CTA Footer Section */}
-      <section className="bg-white w-full pb-0">
+      <section className="bg-white pb-0">
         <ProCTAFooter />
       </section>
 
@@ -68,8 +68,8 @@ export default function Home() {
 
 
       {/* Core Investment and Quote Sections */}
-      <section className="bg-white w-full">
-        <div className="w-full max-w-[100vw]">
+      <section className="bg-white">
+        <div>
           {/* <CoreInvestment /> */}
           {/* <QuoteSection /> */}
         </div>

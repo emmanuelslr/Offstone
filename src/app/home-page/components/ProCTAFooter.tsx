@@ -5,7 +5,7 @@ import React from 'react';
 export default function ProCTAFooter() {
   return (
     <section className="bg-white w-full">
-      <div className="container mx-auto px-20 sm:px-32 pt-24 pb-28">
+      <div className="container-responsive pt-24 pb-28">
         <div className="w-full rounded-[10px] bg-black relative overflow-hidden" style={{ minHeight: 480 }}>
                      <div className="absolute inset-0 flex flex-col items-start justify-end pl-14 sm:pl-24 pb-14 sm:pb-24 z-10">
             <h2 className="text-3xl sm:text-[38px] md:text-[44px] font-normal tracking-tighter leading-[1.1] text-white">
@@ -20,6 +20,8 @@ export default function ProCTAFooter() {
                >
                 <input
                   type="email"
+                  id="pro-cta-email"
+                  name="pro-cta-email"
                   placeholder="Entrez votre adresse mail"
                   className="flex-1 bg-transparent outline-none text-black placeholder:text-gray-500 px-3 py-1.5 text-sm"
                   required

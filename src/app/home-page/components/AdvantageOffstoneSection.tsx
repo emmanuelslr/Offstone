@@ -250,7 +250,7 @@ export default function AdvantageOffstoneSection() {
         </div>
         </div>
       </div>
-      <div className="container mx-auto px-20 sm:px-32 mt-32">
+      <div className="container-responsive mt-32">
         <div className="flex flex-col lg:flex-row items-start justify-between">
           {/* Section gauche - Texte */}
           <div className="lg:w-1/2 lg:pr-12 lg:mb-0 mt-36">
@@ -316,7 +316,7 @@ export default function AdvantageOffstoneSection() {
       </div>
 
       {/* Section symétrique - Image à gauche, Texte à droite */}
-      <div className="container mx-auto px-20 sm:px-32 mt-48">
+      <div className="container-responsive mt-48">
         <div className="flex flex-col lg:flex-row items-start justify-between">
           {/* Section gauche - Image */}
           <div className="lg:w-2/5 lg:pr-20 flex justify-center lg:justify-start">

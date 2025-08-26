@@ -57,19 +57,21 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
   // Éviter le rendu côté serveur pour éviter l'hydratation
   if (!isClient) {
     return (
-      <header className="fixed top-0 inset-x-0 xs:top-2 sm:top-4 xs:inset-x-2 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-[100] xs:rounded-md sm:rounded-lg bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent">
-        <nav className="mx-auto max-w-[92rem] px-3 xs:px-4 sm:px-6 lg:px-10 flex items-center justify-between h-14 xs:h-16 sm:h-20">
-          <div className="flex items-center flex-shrink-0">
-            <span className="block leading-none select-none antialiased text-white" style={{ fontFamily: "'Alliance No.1', Arial, sans-serif", fontWeight: 500, fontSize: 'clamp(20px, 5vw, 28px)', letterSpacing: '0.02em' }}>
-              Offstone.
-            </span>
-          </div>
-          <div className="md:hidden p-2 -mr-2">
-            <svg className="w-5 h-5 xs:w-6 xs:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </div>
-        </nav>
+      <header className="fixed top-0 left-0 right-0 xs:top-2 sm:top-4 z-[100]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xs:rounded-md sm:rounded-lg bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent">
+          <nav className="flex items-center justify-between h-14 xs:h-16 sm:h-20">
+            <div className="flex items-center flex-shrink-0">
+              <span className="block leading-none select-none antialiased text-white" style={{ fontFamily: "'Alliance No.1', Arial, sans-serif", fontWeight: 500, fontSize: 'clamp(20px, 5vw, 28px)', letterSpacing: '0.02em' }}>
+                Offstone.
+              </span>
+            </div>
+            <div className="md:hidden p-2 -mr-2">
+              <svg className="w-5 h-5 xs:w-6 xs:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </div>
+          </nav>
+        </div>
       </header>
     );
   }
@@ -77,11 +79,14 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
   return (
     <>
       <header
-        className={`fixed top-0 inset-x-0 xs:top-2 sm:top-4 xs:inset-x-2 sm:inset-x-4 lg:inset-x-8 mx-auto max-w-[92rem] z-[100] xs:rounded-md sm:rounded-lg transition-all duration-300 ease-in-out ${
-          (isOnWhiteSection || forceWhiteStyle) ? 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none' : 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 xs:top-2 sm:top-4 z-[100] transition-all duration-300 ease-in-out`}
       >
-        <nav className="mx-auto max-w-[92rem] px-3 xs:px-4 sm:px-6 lg:px-10 flex items-center justify-between h-14 xs:h-16 sm:h-20">
+        <div 
+          className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 xs:rounded-md sm:rounded-lg ${
+            (isOnWhiteSection || forceWhiteStyle) ? 'bg-white/[0.45] backdrop-blur-[45px] backdrop-saturate-[180%] border-none' : 'bg-white/[0.10] backdrop-blur-[5px] shadow-[0_2px_8px_0_rgba(0,0,0,0.12)] border-transparent'
+          }`}
+        >
+          <nav className="flex items-center justify-between h-14 xs:h-16 sm:h-20">
           <div className="flex items-center flex-shrink-0">
             <Link href="/" className="group">
               <span
@@ -165,7 +170,8 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
               />
             </svg>
           </button>
-        </nav>
+          </nav>
+        </div>
       </header>
 
       {/* Mobile Menu */}
