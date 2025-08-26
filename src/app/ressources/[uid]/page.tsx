@@ -72,15 +72,21 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
           {/* Article Header */}
           <header className="mb-8">
-                                    <h1 className="text-4xl font-bold mb-4 text-gray-900">{(doc.data as any).title || "Article"}</h1>
+                                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                        <h1 className="text-4xl font-bold mb-4 text-gray-900">{(doc.data as any).title || "Article"}</h1>
 
+                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                         {(doc.data as any).excerpt ? (
+                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           <p className="text-xl text-gray-600 mb-6 leading-relaxed">{(doc.data as any).excerpt}</p>
                         ) : null}
 
                         <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                           {(doc.data as any).published_at ? (
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                             <time dateTime={(doc.data as any).published_at}>
+                              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                               {new Date((doc.data as any).published_at).toLocaleDateString("fr-FR", {
                                 year: "numeric",
                                 month: "long",
@@ -93,6 +99,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
           {/* Article Body */}
           <div className="prose prose-lg prose-gray max-w-none">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             <PrismicRichText field={(doc.data as any).body} />
           </div>
         </article>
@@ -104,9 +111,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
                                     __html: JSON.stringify({
                           "@context": "https://schema.org",
                           "@type": "BlogPosting",
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           headline: (doc.data as any).title || "Article",
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           description: (doc.data as any).excerpt || "",
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           datePublished: (doc.data as any).published_at,
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           dateModified: (doc.data as any).published_at,
                           mainEntityOfPage: toCanonical(`/ressources/${uid}`),
                           author: {
@@ -141,6 +152,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
                 { 
                   "@type": "ListItem", 
                   "position": 2, 
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   "name": (doc.data as any).title || "Article", 
                   "item": toCanonical(`/ressources/${uid}`) 
                 }
