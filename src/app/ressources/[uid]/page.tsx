@@ -13,7 +13,8 @@ export const revalidate = 300;
 export async function generateMetadata({ params }: { params: Promise<{ uid: string }> }): Promise<Metadata> {
   const { uid } = await params;
   const client = createClient();
-  const doc = await client.getByUID("article", uid).catch(() => null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const doc = await client.getByUID("article" as any, uid).catch(() => null);
   if (!doc) return {};
 
   const title = doc.data.title || "Ressources";
@@ -43,7 +44,8 @@ export async function generateMetadata({ params }: { params: Promise<{ uid: stri
 export default async function ArticlePage({ params }: { params: Promise<{ uid: string }> }) {
   const { uid } = await params;
   const client = createClient();
-  const doc = await client.getByUID("article", uid).catch(() => null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const doc = await client.getByUID("article" as any, uid).catch(() => null);
   if (!doc) return notFound();
 
   return (

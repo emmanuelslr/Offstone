@@ -11,10 +11,11 @@ export default async function RessourcesPage() {
   let docs: ArticleDocument[] = [];
 
   try {
-    docs = await client.getAllByType("article", {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    docs = await client.getAllByType("article" as any, {
       orderings: [{ field: "my.article.published_at", direction: "desc" }],
       pageSize: 24,
-    });
+    }) as any[];
   } catch (error) {
     console.error("Error fetching articles:", error);
   }
