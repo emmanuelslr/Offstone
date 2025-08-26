@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { PrismicPreview } from "@prismicio/next";
 import Footer from "@/components/shared/Footer";
 import HydrationFix from "@/components/shared/HydrationFix";
+import { repoName } from "@/lib/prismicio";
 import "./globals.css";
 
 const inter = Inter({
@@ -75,6 +77,7 @@ export default function RootLayout({
         <HydrationFix />
         {children}
         <Footer />
+        <PrismicPreview repositoryName={repoName} />
       </body>
     </html>
   );

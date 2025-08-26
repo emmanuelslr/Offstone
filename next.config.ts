@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   images: {
     dangerouslyAllowSVG: true,
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.prismic.io",
+        pathname: "/**",
+      },
+    ],
   },
 };
 
