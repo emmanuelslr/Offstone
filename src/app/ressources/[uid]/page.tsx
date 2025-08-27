@@ -31,19 +31,35 @@ function extractHeadings(body: any[]): { text: string; level: 2 | 3 }[] {
     .filter(heading => heading.text.trim().length > 0);
 }
 
-// Custom components for PrismicRichText with IDs
-const richTextComponents = (headings: { id: string; text: string; level: 2 | 3 }[]) => ({
-  heading2: ({ children }: { children: React.ReactNode }) => {
-    const text = typeof children === 'string' ? children : '';
-    const heading = headings.find(h => h.text === text && h.level === 2);
-    return <h2 id={heading?.id} className="text-2xl font-bold mt-12 mb-6 text-gray-900">{children}</h2>;
-  },
-  heading3: ({ children }: { children: React.ReactNode }) => {
-    const text = typeof children === 'string' ? children : '';
-    const heading = headings.find(h => h.text === text && h.level === 3);
-    return <h3 id={heading?.id} className="text-xl font-semibold mt-8 mb-4 text-gray-800">{children}</h3>;
-  },
-});
+// Custom components for PrismicRichText with IDs et CTA après 2ème H2
+const richTextComponents = (headings: { id: string; text: string; level: 2 | 3 }[], showCTA: boolean, CTAComponent: React.ComponentType) => {
+  let h2Count = 0;
+  
+  return {
+    heading2: ({ children }: { children: React.ReactNode }) => {
+      h2Count++;
+      const text = typeof children === 'string' ? children : '';
+      const heading = headings.find(h => h.text === text && h.level === 2);
+      
+      return (
+        <>
+          <h2 id={heading?.id} className="text-2xl font-bold mt-16 mb-6 text-gray-900 leading-tight">{children}</h2>
+          {/* CTA discret après le 2ème H2 */}
+          {h2Count === 2 && showCTA && (
+            <div className="my-12 not-prose">
+              <CTAComponent />
+            </div>
+          )}
+        </>
+      );
+    },
+    heading3: ({ children }: { children: React.ReactNode }) => {
+      const text = typeof children === 'string' ? children : '';
+      const heading = headings.find(h => h.text === text && h.level === 3);
+      return <h3 id={heading?.id} className="text-xl font-semibold mt-12 mb-4 text-gray-800 leading-tight">{children}</h3>;
+    },
+  };
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ uid: string }> }): Promise<Metadata> {
   const { uid } = await params;
@@ -140,7 +156,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
       
       <Navbar forceWhiteStyle />
       
-      <main className="mx-auto max-w-3xl px-4 py-16 relative">
+      <main className="mx-auto max-w-3xl px-4 py-20 relative">
         <article>
           {/* Breadcrumb */}
           <nav className="text-sm mb-8" aria-label="Breadcrumb">
@@ -158,52 +174,64 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
           </nav>
 
           {/* Article Header */}
-          <header className="mb-12">
+          <header className="mb-16">
             {/* Title */}
-            <h1 className="text-5xl md:text-6xl font-bold mb-8 text-gray-900 leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight tracking-tight">
               {data.title || "Article"}
             </h1>
 
-            {/* Meta Line */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-8 pb-6 border-b border-gray-200">
-              <span className="flex items-center gap-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {/* Meta Line - Style Substack */}
+            <div className="flex flex-wrap items-center gap-6 text-base text-gray-600 mb-12 pb-8 border-b border-gray-200">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                ⏱ {readingTime} min
-              </span>
+                <span className="font-medium">{readingTime} min de lecture</span>
+              </div>
               
               {data.published_at && (
-                <span>
-                  MAJ {new Date(data.published_at).toLocaleDateString("fr-FR", {
-                    year: "numeric",
-                    month: "long", 
-                    day: "numeric"
-                  })}
-                </span>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>
+                    {new Date(data.published_at).toLocaleDateString("fr-FR", {
+                      year: "numeric",
+                      month: "long", 
+                      day: "numeric"
+                    })}
+                  </span>
+                </div>
               )}
               
-              <span>Par Équipe Offstone</span>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span>Équipe Offstone</span>
+              </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Image - 16:9 sans CLS */}
             {data.hero_image?.url && (
-              <div className="image-wrapper mb-8 bg-gray-100">
+              <div className="image-wrapper mb-12 bg-gray-100">
                 <Image
                   src={data.hero_image.url}
                   alt={data.hero_image.alt || data.title || ""}
                   fill
                   className="object-cover"
                   priority
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                   sizes="(max-width: 768px) 100vw, 768px"
                 />
               </div>
             )}
 
-            {/* Excerpt */}
+            {/* Excerpt - Style Substack */}
             {data.excerpt && (
-              <div className="text-xl text-gray-700 leading-relaxed mb-8 p-6 bg-blue-50 rounded-xl border-l-4 border-blue-500">
-                <p className="italic">{data.excerpt}</p>
+              <div className="text-xl text-gray-700 leading-relaxed mb-12 p-6 bg-gray-50 rounded-lg border-l-4 border-gray-300">
+                <p className="font-medium">{data.excerpt}</p>
               </div>
             )}
           </header>
@@ -211,25 +239,24 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
           {/* Table of Contents */}
           <TableOfContents headings={headings} />
 
-          {/* Article Body */}
-          <div className="prose-reading max-w-none">
+          {/* Article Body - Style Substack avec espacements RRW */}
+          <div className="prose prose-neutral prose-reading max-w-none mb-16">
             <PrismicRichText 
               field={data.body} 
-              components={richTextComponents(headings)}
+              components={richTextComponents(headings, true, CoInvestCTA)}
             />
           </div>
 
-          {/* Co-Invest CTA - After content */}
-          <CoInvestCTA />
-
           {/* FAQ Section */}
           {faqItems.length > 0 && (
-            <FaqBlock items={faqItems} maxItems={3} />
+            <div className="my-20">
+              <FaqBlock items={faqItems} maxItems={3} />
+            </div>
           )}
 
           {/* Disclaimers */}
-          <div className="mt-12 p-6 bg-gray-50 rounded-xl border">
-            <div className="text-xs text-gray-600 space-y-2">
+          <div className="mt-20 p-6 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="text-sm text-gray-600 space-y-3 leading-relaxed">
               <p>
                 <strong>Avertissement :</strong> Les informations contenues dans cet article sont données à titre informatif et ne constituent pas des conseils en investissement. Tout investissement comporte des risques.
               </p>
@@ -240,8 +267,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
           </div>
         </article>
 
-        {/* Related Articles */}
-        <RelatedGrid articles={relatedArticles} />
+        {/* Related Articles - Spacing généreux */}
+        <div className="mt-24">
+          <RelatedGrid articles={relatedArticles} />
+        </div>
 
         {/* JSON-LD Scripts */}
         <script
