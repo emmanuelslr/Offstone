@@ -58,28 +58,31 @@ export default function Hero({ featuredArticles }: HeroProps) {
   };
 
   return (
-    <section className="bg-white py-20">
-      <div className="mx-auto max-w-6xl px-4">
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-4">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight tracking-tight">
-            Ressources – guides, études et analyses pour investir à nos côtés
+        <div className="text-center mb-20">
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-10 leading-[0.9] tracking-tight">
+            Ressources
           </h1>
-          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+          <p className="text-2xl md:text-3xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto">
+            Guides, études et analyses pour investir à nos côtés
+          </p>
+          <p className="text-xl text-gray-500 mb-16 leading-relaxed">
             Horizon 4–7 ans · tickets dès 20 k€ (sweet-spot 50–100 k€)
           </p>
           
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-6">
+          {/* Search Bar XL */}
+          <div className="max-w-3xl mx-auto mb-8">
             <div className="relative">
               <input
                 type="text"
                 placeholder="Rechercher un article, un thème..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 text-lg border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-8 py-6 text-xl border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent shadow-lg bg-white"
               />
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+              <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
                 <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -88,18 +91,18 @@ export default function Hero({ featuredArticles }: HeroProps) {
           </div>
 
           {/* Trust signals */}
-          <p className="text-sm text-gray-500">
-            Qualité institutionnelle accessible · Sourcing propriétaire · Co-investi par l&apos;équipe
+          <p className="text-base text-gray-500 max-w-2xl mx-auto">
+            💎 Qualité institutionnelle accessible · 🎯 Sourcing propriétaire · 🤝 Co-investi par l&apos;équipe
           </p>
         </div>
 
         {/* Featured Articles */}
         {featuredArticles.length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-              Articles mis en avant
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+              À la une
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {featuredArticles.map((article) => {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const data = article.data as any;
@@ -107,10 +110,10 @@ export default function Hero({ featuredArticles }: HeroProps) {
                   <Link
                     key={article.id}
                     href={`/ressources/${article.uid}`}
-                    className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                    className="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100"
                   >
-                    {/* Image */}
-                    <div className="image-wrapper">
+                    {/* Image - Plus haute pour variant featured */}
+                    <div className="relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
                       {data.hero_image?.url ? (
                         <Image
                           src={data.hero_image.url}
@@ -120,17 +123,17 @@ export default function Hero({ featuredArticles }: HeroProps) {
                         />
                       ) : (
                         <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                          <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                           </svg>
                         </div>
                       )}
                     </div>
 
-                    {/* Content */}
-                    <div className="p-6">
+                    {/* Content - Plus généreux pour featured */}
+                    <div className="p-8">
                       {/* Badges */}
-                      <div className="flex flex-wrap gap-2 mb-4">
+                      <div className="flex flex-wrap gap-2 mb-6">
                         {(data.asset_class || []).slice(0, 2).map((asset: string) => (
                           <span
                             key={asset}
@@ -146,21 +149,19 @@ export default function Hero({ featuredArticles }: HeroProps) {
                         )}
                       </div>
 
-                      {/* Title */}
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                      {/* Title - Plus gros pour featured */}
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors leading-tight">
                         {data.title}
                       </h3>
 
-                      {/* Excerpt */}
-                      {data.excerpt && (
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                          {data.excerpt}
-                        </p>
-                      )}
+                      {/* Excerpt - Toujours visible pour featured */}
+                      <p className="text-gray-600 text-base mb-6 line-clamp-3 leading-relaxed">
+                        {data.excerpt || "Découvrez cet article et approfondissez vos connaissances en investissement immobilier."}
+                      </p>
 
                       {/* Meta */}
-                      <div className="flex items-center justify-between text-xs text-gray-500">
-                        <span>⏱ {data.reading_time || 5} min</span>
+                      <div className="flex items-center justify-between text-sm text-gray-500">
+                        <span className="font-medium">⏱ {data.reading_time || 5} min</span>
                         <span>{new Date(data.published_at).toLocaleDateString("fr-FR")}</span>
                       </div>
                     </div>

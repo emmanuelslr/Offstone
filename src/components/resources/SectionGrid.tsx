@@ -79,15 +79,15 @@ export default function SectionGrid({ articles, pagination }: SectionGridProps) 
   };
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-12">
+    <section className="mx-auto max-w-7xl px-4 py-20">
       {/* Results Summary */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-12">
         <div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-3xl font-bold text-gray-900 mb-3">
             {pagination.totalResults > 0 ? "Articles" : "Aucun article trouvé"}
           </h2>
           {pagination.totalResults > 0 && (
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg">
               {pagination.totalResults} article{pagination.totalResults > 1 ? "s" : ""} trouvé{pagination.totalResults > 1 ? "s" : ""}
               {pagination.totalPages > 1 && (
                 <span> · Page {pagination.page} sur {pagination.totalPages}</span>
@@ -97,10 +97,10 @@ export default function SectionGrid({ articles, pagination }: SectionGridProps) 
         </div>
       </div>
 
-      {/* Articles Grid */}
+      {/* Articles Grid - Spacing plus généreux */}
       {articles.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
             {articles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
