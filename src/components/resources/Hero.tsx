@@ -100,80 +100,73 @@ export default function Hero({ featuredArticles }: HeroProps) {
               Articles mis en avant
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {featuredArticles.map((article) => (
-                <Link
-                  key={article.id}
-                  href={`/ressources/${article.uid}`}
-                  className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
-                >
-                  {/* Image */}
-                  <div className="aspect-video relative overflow-hidden">
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    {(article.data as any).hero_image?.url ? (
-                      <Image
-                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                        src={(article.data as any).hero_image.url}
-                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                        alt={(article.data as any).hero_image.alt || (article.data as any).title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                        <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Badges */}
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {((article.data as any).asset_class || []).slice(0, 2).map((asset: string) => (
-                        <span
-                          key={asset}
-                          className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
-                        >
-                          {asset}
-                        </span>
-                      ))}
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(article.data as any).level && (
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${getLevelBadgeColor((article.data as any).level)}`}>
-                          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                          {(article.data as any).level}
-                        </span>
+              {featuredArticles.map((article) => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const data = article.data as any;
+                return (
+                  <Link
+                    key={article.id}
+                    href={`/ressources/${article.uid}`}
+                    className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
+                  >
+                    {/* Image */}
+                    <div className="aspect-video relative overflow-hidden">
+                      {data.hero_image?.url ? (
+                        <Image
+                          src={data.hero_image.url}
+                          alt={data.hero_image.alt || data.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                          <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                          </svg>
+                        </div>
                       )}
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      {(article.data as any).title}
-                    </h3>
+                    {/* Content */}
+                    <div className="p-6">
+                      {/* Badges */}
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        {(data.asset_class || []).slice(0, 2).map((asset: string) => (
+                          <span
+                            key={asset}
+                            className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                          >
+                            {asset}
+                          </span>
+                        ))}
+                        {data.level && (
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${getLevelBadgeColor(data.level)}`}>
+                            {data.level}
+                          </span>
+                        )}
+                      </div>
 
-                    {/* Excerpt */}
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                    {(article.data as any).excerpt && (
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                        {(article.data as any).excerpt}
-                      </p>
-                    )}
+                      {/* Title */}
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                        {data.title}
+                      </h3>
 
-                    {/* Meta */}
-                    <div className="flex items-center justify-between text-xs text-gray-500">
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      <span>⏱ {(article.data as any).reading_time || 5} min</span>
-                      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                      <span>{new Date((article.data as any).published_at).toLocaleDateString("fr-FR")}</span>
+                      {/* Excerpt */}
+                      {data.excerpt && (
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                          {data.excerpt}
+                        </p>
+                      )}
+
+                      {/* Meta */}
+                      <div className="flex items-center justify-between text-xs text-gray-500">
+                        <span>⏱ {data.reading_time || 5} min</span>
+                        <span>{new Date(data.published_at).toLocaleDateString("fr-FR")}</span>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
