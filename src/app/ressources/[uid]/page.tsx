@@ -9,8 +9,10 @@ import { createClient } from "@/lib/prismicio";
 import { getRelatedArticles } from "@/lib/prismic-queries";
 import { toCanonical } from "@/lib/seo";
 import { blogPostingLD, breadcrumbLD, estimateReadingTime } from "@/lib/seo-jsonld";
-import TableOfContents from "@/components/article/TableOfContents";
-import { generateUniqueIds } from "@/lib/text-utils";
+import RichTextWithAnchors from "@/components/article/RichTextWithAnchors";
+import StickyTOC from "@/components/article/StickyTOC";
+import MobileTOC from "@/components/article/MobileTOC";
+import { extractHeadings } from "@/lib/toc";
 import FaqBlock, { buildFaqLD } from "@/components/article/FaqBlock";
 import RelatedGrid from "@/components/article/RelatedGrid";
 import ReadingProgress from "@/components/article/ReadingProgress";
@@ -18,47 +20,31 @@ import CoInvestCTA from "@/components/article/CoInvestCTA";
 
 export const revalidate = 300;
 
-// Extract headings from Prismic RichText
-function extractHeadings(body: any[]): { text: string; level: 2 | 3 }[] {
-  if (!Array.isArray(body)) return [];
+// Custom CTA injection après 2ème H2 (facultatif)
+const richTextWithCTA = (body: any[], CTAComponent: React.ComponentType) => {
+  if (!Array.isArray(body)) return body;
   
-  return body
-    .filter(block => block.type === "heading2" || block.type === "heading3")
-    .map(block => ({
-      text: block.text || "",
-      level: block.type === "heading2" ? 2 : 3
-    }))
-    .filter(heading => heading.text.trim().length > 0);
-}
-
-// Custom components for PrismicRichText with IDs et CTA après 2ème H2
-const richTextComponents = (headings: { id: string; text: string; level: 2 | 3 }[], showCTA: boolean, CTAComponent: React.ComponentType) => {
   let h2Count = 0;
+  const newBody = [];
   
-  return {
-    heading2: ({ children }: { children: React.ReactNode }) => {
+  for (const block of body) {
+    newBody.push(block);
+    
+    // Injecter CTA après le 2ème H2
+    if (block?.type === "heading2") {
       h2Count++;
-      const text = typeof children === 'string' ? children : '';
-      const heading = headings.find(h => h.text === text && h.level === 2);
-      
-      return (
-        <>
-          <h2 id={heading?.id} className="text-2xl font-bold mt-16 mb-6 text-gray-900 leading-tight">{children}</h2>
-          {/* CTA discret après le 2ème H2 */}
-          {h2Count === 2 && showCTA && (
-            <div className="my-12 not-prose">
-              <CTAComponent />
-            </div>
-          )}
-        </>
-      );
-    },
-    heading3: ({ children }: { children: React.ReactNode }) => {
-      const text = typeof children === 'string' ? children : '';
-      const heading = headings.find(h => h.text === text && h.level === 3);
-      return <h3 id={heading?.id} className="text-xl font-semibold mt-12 mb-4 text-gray-800 leading-tight">{children}</h3>;
-    },
-  };
+      if (h2Count === 2) {
+        newBody.push({
+          type: "paragraph", 
+          text: "",
+          spans: [],
+          __cta: true // Marqueur spécial
+        });
+      }
+    }
+  }
+  
+  return newBody;
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ uid: string }> }): Promise<Metadata> {
@@ -108,9 +94,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = doc.data as any;
 
-  // Extract headings and generate unique IDs
-  const rawHeadings = extractHeadings(data.body || []);
-  const headings = generateUniqueIds(rawHeadings);
+  // Extract headings avec IDs automatiques
+  const body = data.body || [];
+  const headings = extractHeadings(body);
+  const showTOC = headings.length >= 2;
 
   // Calculate reading time
   const bodyText = Array.isArray(data.body) 
@@ -156,8 +143,17 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
       
       <Navbar forceWhiteStyle />
       
-      <main className="mx-auto max-w-3xl px-4 py-20 relative">
-        <article>
+      <main className={`mx-auto px-4 py-20 relative ${showTOC ? 'max-w-6xl' : 'max-w-3xl'}`}>
+        <div className={`${showTOC ? 'lg:grid lg:gap-12 lg:grid-cols-[260px_minmax(0,1fr)]' : ''}`}>
+          {/* Colonne gauche : TOC */}
+          {showTOC && (
+            <div className="pt-4">
+              <StickyTOC items={headings} top={96} />
+            </div>
+          )}
+
+          {/* Colonne contenu */}
+          <article className="max-w-3xl">
           {/* Breadcrumb */}
           <nav className="text-sm mb-8" aria-label="Breadcrumb">
             <ol className="flex items-center space-x-2 text-gray-500">
@@ -236,15 +232,12 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
             )}
           </header>
 
-          {/* Table of Contents */}
-          <TableOfContents headings={headings} />
+          {/* Mobile TOC */}
+          <MobileTOC items={headings} />
 
-          {/* Article Body - Style Substack avec espacements RRW */}
+          {/* Article Body - Style Substack avec ancres automatiques */}
           <div className="prose prose-neutral prose-reading max-w-none mb-16">
-            <PrismicRichText 
-              field={data.body} 
-              components={richTextComponents(headings, true, CoInvestCTA)}
-            />
+            <RichTextWithAnchors field={body} />
           </div>
 
           {/* FAQ Section */}
@@ -265,7 +258,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
               </p>
             </div>
           </div>
-        </article>
+          </article>
+        </div>
 
         {/* Related Articles - Spacing généreux */}
         <div className="mt-24">
