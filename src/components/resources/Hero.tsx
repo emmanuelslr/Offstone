@@ -58,14 +58,14 @@ export default function Hero({ featuredArticles }: HeroProps) {
   };
 
   return (
-    <section className="bg-gradient-to-b from-blue-50 to-white py-16">
+    <section className="bg-white py-20">
       <div className="mx-auto max-w-6xl px-4">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight tracking-tight">
             Ressources – guides, études et analyses pour investir à nos côtés
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-600 mb-12 leading-relaxed">
             Horizon 4–7 ans · tickets dès 20 k€ (sweet-spot 50–100 k€)
           </p>
           
@@ -110,7 +110,7 @@ export default function Hero({ featuredArticles }: HeroProps) {
                     className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
                   >
                     {/* Image */}
-                    <div className="aspect-video relative overflow-hidden">
+                    <div className="image-wrapper">
                       {data.hero_image?.url ? (
                         <Image
                           src={data.hero_image.url}
@@ -119,8 +119,8 @@ export default function Hero({ featuredArticles }: HeroProps) {
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                          <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                          <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                           </svg>
                         </div>
@@ -130,17 +130,17 @@ export default function Hero({ featuredArticles }: HeroProps) {
                     {/* Content */}
                     <div className="p-6">
                       {/* Badges */}
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {(data.asset_class || []).slice(0, 2).map((asset: string) => (
                           <span
                             key={asset}
-                            className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                            className="chip chip-small chip-primary"
                           >
                             {asset}
                           </span>
                         ))}
                         {data.level && (
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${getLevelBadgeColor(data.level)}`}>
+                          <span className="chip chip-small chip-primary">
                             {data.level}
                           </span>
                         )}

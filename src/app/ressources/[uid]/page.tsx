@@ -160,7 +160,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
           {/* Article Header */}
           <header className="mb-12">
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold mb-8 text-gray-900 leading-tight tracking-tight">
               {data.title || "Article"}
             </h1>
 
@@ -188,7 +188,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
 
             {/* Hero Image */}
             {data.hero_image?.url && (
-              <div className="aspect-video relative overflow-hidden rounded-xl mb-8 bg-gray-100">
+              <div className="image-wrapper mb-8 bg-gray-100">
                 <Image
                   src={data.hero_image.url}
                   alt={data.hero_image.alt || data.title || ""}
@@ -212,7 +212,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
           <TableOfContents headings={headings} />
 
           {/* Article Body */}
-          <div className="prose prose-lg prose-neutral max-w-none leading-relaxed">
+          <div className="prose-reading max-w-none">
             <PrismicRichText 
               field={data.body} 
               components={richTextComponents(headings)}

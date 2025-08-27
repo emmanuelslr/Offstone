@@ -17,76 +17,140 @@
   overflow: hidden;
 }
 
-/* Prose styles for article content */
+/* === REFONTE UI : PROSE & TYPOGRAPHY TOKENS === */
+
+/* Prose reading optimisée pour la lecture longue */
+.prose-reading {
+  max-width: 65ch;
+  line-height: 1.75;
+  color: #1f2937;
+  font-size: 1.125rem;
+}
+
 .prose {
   max-width: 65ch;
 }
 
 .prose-lg {
   font-size: 1.125rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .prose-neutral {
-  color: #404040;
+  color: #1f2937;
+}
+
+/* Titres harmonisés - style Paraform/RedRiver */
+.prose h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: #111827;
+  letter-spacing: -0.025em;
 }
 
 .prose h2 {
-  margin-top: 2em;
-  margin-bottom: 1em;
-  font-size: 1.5em;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.875rem;
   font-weight: 700;
   line-height: 1.3;
+  color: #111827;
+  letter-spacing: -0.025em;
 }
 
 .prose h3 {
-  margin-top: 1.6em;
-  margin-bottom: 0.6em;
-  font-size: 1.25em;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.4;
+  color: #111827;
 }
 
 .prose p {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.75;
 }
 
 .prose ul, .prose ol {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   padding-left: 1.625em;
 }
 
 .prose li {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.75;
 }
 
 .prose blockquote {
-  margin: 1.6em 0;
-  padding-left: 1em;
-  border-left: 0.25em solid #e5e7eb;
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 0.25rem solid #e5e7eb;
   font-style: italic;
+  color: #6b7280;
+  line-height: 1.75;
 }
 
 .prose strong {
   font-weight: 600;
+  color: #111827;
 }
 
 .prose a {
-  color: #2563eb;
+  color: #1f2937;
   text-decoration: underline;
+  text-decoration-color: #d1d5db;
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
 }
 
 .prose a:hover {
-  color: #1d4ed8;
+  color: #111827;
+  text-decoration-color: #1f2937;
 }
 
 .prose img {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  border-radius: 0.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border-radius: 0.75rem;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+/* === CHIPS NORMALISÉS === */
+.chip {
+  @apply px-3 py-1.5 text-sm font-medium rounded-full border transition-all duration-200 cursor-pointer;
+}
+
+.chip-primary {
+  @apply bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 hover:border-gray-300;
+}
+
+.chip-active {
+  @apply bg-gray-900 text-white border-gray-900;
+}
+
+.chip-small {
+  @apply px-2.5 py-1 text-xs;
+}
+
+/* === ASPECT RATIOS NORMALISÉS === */
+.aspect-16-9 {
+  aspect-ratio: 16/9;
+}
+
+.image-wrapper {
+  @apply relative overflow-hidden rounded-lg;
+  aspect-ratio: 16/9;
+}
+
+.image-wrapper img {
+  @apply absolute inset-0 w-full h-full object-cover;
 }
 
 @font-face {

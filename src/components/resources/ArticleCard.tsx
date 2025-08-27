@@ -61,10 +61,10 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Link
       href={`/ressources/${article.uid}`}
-      className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer block"
+      className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 cursor-pointer block"
     >
       {/* Hero Image */}
-      <div className="aspect-video relative overflow-hidden bg-gray-100">
+      <div className="image-wrapper">
         {article.data.hero_image?.url ? (
           <Image
             src={article.data.hero_image.url}
@@ -74,7 +74,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
             <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
             </svg>
@@ -85,12 +85,12 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       {/* Content */}
       <div className="p-6">
         {/* Badges */}
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-2 mb-4">
           {/* Asset Classes */}
           {article.data.asset_class?.slice(0, 2).map((asset) => (
             <span
               key={asset}
-              className={`px-2 py-1 text-xs font-medium rounded-full ${getAssetClassColor(asset)}`}
+              className="chip chip-small chip-primary"
             >
               {asset}
             </span>
@@ -98,7 +98,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
           
           {/* Level */}
           {article.data.level && (
-            <span className={`px-2 py-1 text-xs font-medium rounded-full ${getLevelBadgeColor(article.data.level)}`}>
+            <span className="chip chip-small chip-primary">
               {article.data.level}
             </span>
           )}
