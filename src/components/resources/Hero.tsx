@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import SearchInput from "../shared/SearchInput";
 
 interface FeaturedArticle {
   id: string;
@@ -51,14 +50,6 @@ export default function Hero({ featuredArticles }: HeroProps) {
             Horizon 4–7 ans · tickets dès 20 k€ (sweet-spot 50–100 k€)
           </p>
           
-          {/* Search Bar XL */}
-          <div className="max-w-3xl mx-auto mb-8">
-            <SearchInput 
-              placeholder="Rechercher un article, un thème..."
-              size="lg"
-            />
-          </div>
-
           {/* Trust signals */}
           <p className="text-base text-gray-500 max-w-2xl mx-auto">
             💎 Qualité institutionnelle accessible · 🎯 Sourcing propriétaire · 🤝 Co-investi par l&apos;équipe
