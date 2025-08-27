@@ -125,7 +125,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
     image: data.hero_image?.url || toCanonical("/logos/x-bleu.svg")
   });
 
-  const breadcrumbLD = breadcrumbLD([
+  const breadcrumbData = breadcrumbLD([
     { name: "Accueil", url: toCanonical("/") },
     { name: "Ressources", url: toCanonical("/ressources") },
     { name: data.title || "Article", url: toCanonical(`/ressources/${uid}`) }
@@ -250,7 +250,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ uid: s
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLD) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
         />
         {faqLD && (
           <script
