@@ -1,88 +1,152 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import Navbar from "../../components/shared/Navbar";
 import ProCTAFooter from "../home-page/components/ProCTAFooter";
-import { createClient } from "@/lib/prismicio";
-import type { ArticleDocument } from "../../../prismicio-types";
+import { getFeaturedArticles, getArticles } from "@/lib/prismic-queries";
+import { toCanonical } from "@/lib/seo";
+import { collectionPageLD, breadcrumbLD } from "@/lib/seo-jsonld";
+import Hero from "@/components/resources/Hero";
+import StickyFilters from "@/components/resources/StickyFilters";
+import SectionGrid from "@/components/resources/SectionGrid";
 
 export const revalidate = 300;
 
-export default async function RessourcesPage() {
-  const client = createClient();
-  let docs: ArticleDocument[] = [];
+interface SearchParams {
+  q?: string;
+  asset?: string | string[];
+  theme?: string | string[];
+  level?: string;
+  duration?: string;
+  sort?: string;
+  page?: string;
+}
 
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    docs = await client.getAllByType("article" as any, {
-      orderings: [{ field: "my.article.published_at", direction: "desc" }],
-      pageSize: 24,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }) as any[];
-  } catch (error) {
-    console.error("Error fetching articles:", error);
-  }
+export async function generateMetadata({ searchParams }: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
+  const params = await searchParams;
+  const page = parseInt(params.page || "1");
+  const hasSearch = !!params.q;
+  const filterCount = [
+    params.asset ? (Array.isArray(params.asset) ? params.asset.length : 1) : 0,
+    params.theme ? (Array.isArray(params.theme) ? params.theme.length : 1) : 0,
+    params.level ? 1 : 0,
+    params.duration ? 1 : 0,
+    params.sort && params.sort !== "published_at_desc" ? 1 : 0
+  ].reduce((a, b) => a + b, 0);
+
+  const title = page > 1 ? `Ressources | Page ${page} | Offstone` : "Ressources | Offstone";
+  const description = "Guides, études et analyses pour investir dans l'immobilier. Horizon 4-7 ans, tickets dès 20k€. Qualité institutionnelle accessible.";
+  
+  // Construire l'URL canonique avec les paramètres
+  const url = new URL("/ressources", "https://offstone.fr");
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      if (Array.isArray(value)) {
+        value.forEach(v => url.searchParams.append(key, v));
+      } else {
+        url.searchParams.set(key, value);
+      }
+    }
+  });
+
+  const canonical = url.toString();
+
+  // Robots: noindex si recherche active ou 2+ filtres actifs
+  const shouldNoIndex = hasSearch || filterCount >= 2;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    robots: shouldNoIndex 
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "website",
+      images: [{ url: toCanonical("/logos/x-bleu.svg") }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [toCanonical("/logos/x-bleu.svg")]
+    }
+  };
+}
+
+export default async function RessourcesPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const params = await searchParams;
+  
+  // Parse des paramètres
+  const q = params.q || "";
+  const assetClasses = Array.isArray(params.asset) ? params.asset : (params.asset ? [params.asset] : []);
+  const themes = Array.isArray(params.theme) ? params.theme : (params.theme ? [params.theme] : []);
+  const level = params.level || "";
+  const duration = params.duration || "";
+  const sort = params.sort || "published_at_desc";
+  const page = parseInt(params.page || "1");
+
+  // Fetch des données
+  const [featuredArticles, articlesData] = await Promise.all([
+    getFeaturedArticles(3),
+    getArticles({
+      page,
+      pageSize: 12,
+      q,
+      assetClasses,
+      themes,
+      level,
+      duration,
+      sort
+    })
+  ]);
+
+  // JSON-LD
+  const collectionLD = collectionPageLD({
+    url: toCanonical("/ressources"),
+    name: "Ressources Offstone",
+    description: "Guides, études et analyses pour investir dans l'immobilier"
+  });
+
+  const breadcrumbData = breadcrumbLD([
+    { name: "Accueil", url: toCanonical("/") },
+    { name: "Ressources", url: toCanonical("/ressources") }
+  ]);
 
   return (
     <>
       <Navbar forceWhiteStyle />
-      <main className="mx-auto max-w-6xl px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">Ressources</h1>
-          <p className="text-lg text-gray-600">
-            Découvrez nos analyses, études de cas et insights sur l&apos;immobilier
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {docs.map((doc) => (
-            <article key={doc.id}>
-              {doc.uid ? (
-                <Link href={`/ressources/${doc.uid}`} className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-                  <div className="p-6">
-                    <h2 className="text-xl font-semibold mb-3 line-clamp-2 hover:text-blue-600 transition-colors">
-                      {doc.data.title || "Sans titre"}
-                    </h2>
-                    {doc.data.excerpt ? (
-                      <p className="text-gray-600 mb-4 line-clamp-3">{doc.data.excerpt}</p>
-                    ) : null}
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div>
-                        {doc.data.published_at ? new Date(doc.data.published_at).toLocaleDateString("fr-FR") : null}
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ) : (
-                <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="p-6">
-                    <h2 className="text-xl font-semibold mb-3 line-clamp-2">
-                      {doc.data.title || "Sans titre"}
-                    </h2>
-                    {doc.data.excerpt ? (
-                      <p className="text-gray-600 mb-4 line-clamp-3">{doc.data.excerpt}</p>
-                    ) : null}
-                    <div className="flex items-center justify-between text-sm text-gray-500">
-                      <div>
-                        {doc.data.published_at ? new Date(doc.data.published_at).toLocaleDateString("fr-FR") : null}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-        
-                {docs.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500">Aucun article publié pour le moment.</p>
-            <p className="text-sm text-gray-400 mt-2">
-              Créez un article dans Prismic pour le voir apparaître ici.
-            </p>
-          </div>
-        )}
-      </main>
       
+      {/* Hero Section */}
+      <Hero featuredArticles={featuredArticles} />
+
+      {/* Sticky Filters */}
+      <StickyFilters
+        assetClasses={assetClasses}
+        themes={themes}
+        level={level}
+        duration={duration}
+        sort={sort}
+      />
+
+      {/* Articles Grid */}
+      <SectionGrid
+        articles={articlesData.results}
+        pagination={articlesData}
+      />
+
       <ProCTAFooter />
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionLD) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
     </>
   );
 }
