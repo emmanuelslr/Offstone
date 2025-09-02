@@ -143,25 +143,26 @@ export default function AdvantageOffstoneSection() {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 1.625;
+      videoRef.current.playbackRate = 6.5;
     }
   }, []);
 
   return (
     <section>
-      <div ref={sectionRef} className="w-full" style={{ backgroundColor: '#F7F6F1', paddingTop: '6rem', paddingBottom: '5rem' }}>
-        <div className="container relative mx-auto px-20 sm:px-32">
+      {/* Première section - Titre et Vidéo */}
+      <div ref={sectionRef} className="w-full bg-[#F7F6F1] py-16 md:py-20 lg:py-24 xl:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {badgeVisible && (
-            <div className="flex justify-center mt-0 mb-3 transition-opacity duration-700 opacity-100">
+            <div className="flex justify-center mb-6 md:mb-8 transition-opacity duration-700 opacity-100">
               <SectionBadge colorClass="text-gray-600" text="IMMEUBLES EXCLUSIFS" />
             </div>
           )}
         <div
           ref={titleRef}
-          className={`mt-0 mb-0 text-5xl md:text-[2.75rem] lg:text-[3.5rem] text-center font-light text-[#111] transition-all duration-[1800ms] ease-out ${
+          className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[3.5rem] text-center font-light text-[#111] transition-all duration-[1800ms] ease-out mb-8 md:mb-12 lg:mb-16 ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
-          style={{ fontFamily: 'AllianceNo1-Regular, sans-serif', display: 'inline-block', width: '100%' }}
+          style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}
           id="advantage-title"
         >
           {(() => {
@@ -195,45 +196,29 @@ export default function AdvantageOffstoneSection() {
             ));
           })()}
         </div>
-        <div className="flex justify-center mt-8 mb-0">
+        <div className="flex justify-center mb-8 md:mb-12 lg:mb-16">
           <button
-            className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-[#F7B096] hover:text-black hover:border-[#F7B096] group"
-            style={{
-              boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-            }}
+            className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-[#F7B096] hover:text-black hover:border-[#F7B096] group"
             type="button"
           >
             Investir
             <svg
-              xmlns="http://www.w3.org/2000/svg"
+              className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
               fill="none"
-              viewBox="0 0 24 24"
               stroke="currentColor"
-              className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
+              strokeWidth={1.1}
+              viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 7L7 17M7 7h10v10"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
             </svg>
           </button>
         </div>
-        <div className="flex justify-center mt-8">
-          <div
-            className="flex items-center justify-center rounded-xl"
-            style={{
-              minHeight: 260,
-              width: 1550,
-              height: 500,
-              overflow: 'hidden',
-              background: '#F6F4F0'
-            }}
-          >
+        {/* Container vidéo responsive */}
+        <div className="flex justify-center">
+          <div className="w-full mx-auto max-w-[1400px] md:max-w-[1500px] xl:max-w-[1600px] 2xl:max-w-[1680px] aspect-[16/9] bg-[#F6F4F0] rounded-lg lg:rounded-xl overflow-hidden flex items-center justify-center">
             <video
               ref={videoRef}
-              className="max-w-full max-h-full object-contain"
+              className="w-full h-full object-contain"
               src="/videos/TEST3_Component AdvantageOffStone.mp4"
               muted
               playsInline
@@ -250,56 +235,49 @@ export default function AdvantageOffstoneSection() {
         </div>
         </div>
       </div>
-      <div className="container-responsive mt-32">
-        <div className="flex flex-col lg:flex-row items-start justify-between">
+      
+      {/* Deuxième section - Sourcing Unique */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24 xl:py-32">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 xl:gap-16">
           {/* Section gauche - Texte */}
-          <div className="lg:w-1/2 lg:pr-12 lg:mb-0 mt-36">
-            <div className="mb-5">
-              <SectionBadge colorClass="text-gray-600" text="SOURCING UNIQUE" />
-            </div>
-            <h2
-              className={`text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-8 transition-all duration-[1200ms] ease-out ${
-                titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              Accédez à des opportunités <span style={{ color: '#9D9F9E' }}>exclusives.</span>
-            </h2>
-            <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-16">
-              Chaque projet à accès réservé,<br />
-              issu d&apos;un sourcing propriétaire, structuré<br />
-              par notre méthode et co-investi à vos côtés.
-            </p>
-            <button
-              className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black mt-8 group"
-              style={{
-                boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-                width: "auto",
-                minWidth: "unset",
-                maxWidth: "unset"
-              }}
-              type="button"
-            >
-              Parler à un expert
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
+          <div className="w-full lg:w-1/2 order-2 lg:order-1 lg:min-h-[600px] flex items-center">
+            <div className="w-full">
+              <div className="mb-6">
+                <SectionBadge colorClass="text-gray-600" text="SOURCING UNIQUE" />
+              </div>
+              <h2
+                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[66px] font-normal tracking-tighter leading-tight text-[#111] mb-6 lg:mb-8 transition-all duration-[1200ms] ease-out ${
+                  titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M17 7L7 17M7 7h10v10"
-                />
-              </svg>
-            </button>
+                Accédez à des opportunités <span style={{ color: '#9D9F9E' }}>exclusives.</span>
+              </h2>
+              <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 lg:mb-12 max-w-xl leading-relaxed">
+                Chaque projet à accès réservé,<br />
+                issu d&apos;un sourcing propriétaire, structuré<br />
+                par notre méthode et co-investi à vos côtés.
+              </p>
+              <button
+                className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black group"
+                type="button"
+              >
+                Parler à un expert
+                <svg
+                  className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.1}
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {/* Section droite - Composant Paraform */}
-          <div className="lg:w-1/2 lg:pl-12 flex justify-center lg:justify-end">
-            <div>
+          {/* Section droite - Composant Paraform responsive */}
+          <div className="w-full lg:w-1/2 order-1 lg:order-2 lg:min-h-[600px] flex items-center justify-center">
+            <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-full">
               <ParaformRightHeroCardsStep
                 size={700}
                 gap={18}
@@ -315,25 +293,25 @@ export default function AdvantageOffstoneSection() {
         </div>
       </div>
 
-      {/* Section symétrique - Image à gauche, Texte à droite */}
-      <div className="container-responsive mt-48">
-        <div className="flex flex-col lg:flex-row items-start justify-between">
+      {/* Troisième section - Expertise Locale */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 lg:py-24 xl:py-32">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-12 xl:gap-16">
           {/* Section gauche - Image */}
-          <div className="lg:w-2/5 lg:pr-20 flex justify-center lg:justify-start">
-            <div className="relative">
-              <div className="w-full h-auto relative rounded-lg overflow-hidden" style={{ width: '600px', height: '650px' }}>
+          <div className="w-full lg:w-1/2 order-1">
+            <div className="relative max-w-lg mx-auto lg:max-w-none">
+              <div className="w-full h-auto relative rounded-lg overflow-hidden" style={{ width: '600px', height: '500px' }}>
                 <Image
                   src="/images/Buildings/Orange buildings.jpg"
                   alt="Orange Buildings"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
                 
-                {/* Carte noire avec opacité et animation zoom globale */}
+                {/* Carte de performance avec animation */}
                 <motion.div 
                   ref={cardRef}
-                  className="absolute flex flex-col items-center justify-between" 
-                  style={{ top: '60px', left: '57px', right: '57px', height: '220px' }}
+                  className="absolute top-8 sm:top-12 left-4 sm:left-8 right-4 sm:right-8 h-32 sm:h-40 md:h-48 lg:h-56"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={cardInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
                   transition={{ 
@@ -344,71 +322,42 @@ export default function AdvantageOffstoneSection() {
                     damping: 15
                   }}
                 >
-                  <div 
-                    className="rounded-lg w-full h-full flex flex-col justify-between px-5 py-4"
-                    style={{ 
-                      backgroundColor: 'rgba(0, 0, 0, 0.3)'
-                    }}
-                  >
+                  <div className="rounded-lg w-full h-full flex flex-col justify-between px-3 sm:px-4 md:px-5 py-3 sm:py-4 bg-black/30">
                     {/* Texte avec icône dans la partie haute */}
-                    <div className="flex items-center justify-center text-white text-base font-medium">
-                      <div 
-                        className="w-5 h-5 rounded-full border-2 flex items-center justify-center mr-3"
-                        style={{ borderColor: '#96F7B5' }}
-                      >
-                        <svg className="w-2.5 h-2.5" fill="#96F7B5" viewBox="0 0 20 20">
+                    <div className="flex items-center justify-center text-white text-xs sm:text-sm md:text-base font-medium">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 flex items-center justify-center mr-2 sm:mr-3 border-[#96F7B5]">
+                        <svg className="w-2 h-2 sm:w-2.5 sm:h-2.5" fill="#96F7B5" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
-                      Visez une performance de premier plan
+                      <span className="text-center leading-tight">Visez une performance de premier plan</span>
                     </div>
 
                     {/* Carte blanche en bas */}
-                    <div 
-                      className="bg-white rounded-lg flex items-center justify-center relative"
-                      style={{ 
-                        width: 'calc(100% - 40px)', 
-                        height: '140px',
-                        alignSelf: 'center'
-                      }}
-                    >
-                      {/* Carrés noirs à gauche avec compteurs animés */}
-                      <div className="absolute left-4 h-full flex flex-col justify-center">
-                        {/* Carré du haut - 17% animé - centré entre le haut de la carte et la ligne grise */}
-                        <div 
-                          className="bg-black text-white rounded w-12 h-12 flex items-center justify-center text-lg font-normal" 
-                          style={{ marginTop: '12px' }}
-                        >
-                          {counter17}%
+                    <div className="bg-white rounded-lg flex-1 flex items-center justify-center relative mx-2 sm:mx-4 md:mx-5">
+                      {/* Contenu de la carte responsive */}
+                      <div className="w-full h-full flex items-center justify-between p-2 sm:p-3 md:p-4">
+                        {/* Gauche - Compteurs */}
+                        <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
+                          <div className="bg-black text-white rounded w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-xs sm:text-sm md:text-lg font-normal">
+                            {counter17}%
+                          </div>
+                          <div className="bg-black text-white rounded w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-xs sm:text-sm md:text-sm font-normal">
+                            3-5
+                          </div>
                         </div>
-                        {/* Carré du bas - 3-5 statique - centré entre la ligne grise et le bas de la carte */}
-                        <div 
-                          className="bg-black text-white rounded w-12 h-12 flex items-center justify-center text-sm font-normal" 
-                          style={{ marginTop: '14px' }}
-                        >
-                          3-5
-                        </div>
-                      </div>
-
-                      {/* Trait horizontal */}
-                      <div 
-                        className="absolute"
-                        style={{
-                          width: 'calc(100% - 80px)',
-                          height: '1px',
-                          backgroundColor: '#F4F2F2'
-                        }}
-                      ></div>
-
-                      {/* Textes à droite des carrés, alignés au centre vertical des carrés */}
-                      <div className="absolute left-20 h-full flex flex-col justify-center">
-                        {/* Texte du haut - aligné avec le carré du haut */}
-                        <div className="text-gray-700 text-xs font-normal leading-tight flex items-center h-12" style={{ marginTop: '-7px' }}>
-                          Objectif de TRI net annuel
-                        </div>
-                        {/* Texte du bas - aligné avec le carré du bas */}
-                        <div className="text-gray-700 text-xs font-normal leading-tight flex items-center h-12" style={{ marginTop: '14px' }}>
-                          Horizon d&apos;investissement moyen
+                        
+                        {/* Séparateur vertical */}
+                        <div className="w-px h-full bg-gray-200 mx-2 sm:mx-3 md:mx-4"></div>
+                        
+                        {/* Droite - Labels */}
+                        <div className="flex-1 flex flex-col gap-2 sm:gap-3 md:gap-4 text-gray-700">
+                          <div className="text-[10px] sm:text-xs md:text-xs font-normal leading-tight h-8 sm:h-10 md:h-12 flex items-center">
+                            Objectif de TRI net annuel
+                          </div>
+                          <div className="text-[10px] sm:text-xs md:text-xs font-normal leading-tight h-8 sm:h-10 md:h-12 flex items-center">
+                            Horizon d&apos;investissement moyen
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -419,121 +368,100 @@ export default function AdvantageOffstoneSection() {
           </div>
 
           {/* Section droite - Texte */}
-          <div className="lg:w-3/5 lg:pl-20 lg:mb-0 flex items-center justify-center min-h-[650px]">
-            <div className="text-left">
-          <div className="mb-5 flex justify-start">
-            <SectionBadge colorClass="text-gray-600" text="EXPERTISE LOCALE" />
-          </div>
-          <h2
-            className={`text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-8 transition-all duration-[1200ms] ease-out ${
-              titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            Développons<br />
-            un patrimoine<br />
-            <span style={{ color: '#9D9F9E' }}>ensemble</span>
-          </h2>
-          <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-16">
-            Chaque investissement bénéficie<br />
-            de notre expertise terrain<br />
-            et de notre réseau privilégié.
-          </p>
-          <button
-            className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black mt-8 group"
-            style={{
-              boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-            }}
-          >
-            Découvrir nos projets
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17 7L7 17M7 7h10v10"
-              />
-            </svg>
-          </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* DUPLICATE START */}
-      <div className="w-full mt-32" style={{ background: "#f7f6f1", paddingTop: "8rem", paddingBottom: "8rem" }}>
-        <div className="container relative mx-auto px-20 sm:px-32">
-        {/* Badge sorti au-dessus de la carte, sans affecter le flux */}
-        <div className="absolute -top-8 sm:-top-10 left-20 sm:left-32">
-          <SectionBadge colorClass="text-gray-600" text="UNE SOLUTION DIGITALE" />
-        </div>
-        <div className="w-full rounded-[10px] bg-[#EBE5DF] flex flex-col justify-center pl-12" style={{ minHeight: 560 }}>
-          <div className="flex flex-col lg:flex-row items-center justify-between min-h-[400px] mt-0">
-          {/* Section gauche - Texte (DUPE) */}
-          <div className="lg:w-1/2 lg:pr-6 pl-12 lg:mb-0 mt-0 flex flex-col justify-center h-full">
-            <h2
-              className={`text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-4 transition-all duration-[1200ms] ease-out ${
-                titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-            >
-              Investissez<br />
-              sereinement<br />
-              avec <span style={{ color: '#9D9F9E' }}>Offstone.</span>
-            </h2>
-            <p className="text-[15px] md:text-[17px] text-gray-600 mb-6 max-w-xl mt-4">
-              Une plateforme digitale claire<br />
-              pour investir et suivre vos<br />
-              investissements immobiliers.
-            </p>
-            <button
-              className="h-11 flex items-center justify-center bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black mt-6 group"
-              style={{
-                boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)',
-                width: "fit-content",
-                minWidth: "180px"
-              }}
-              type="button"
-            >
-              Parler à un expert
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="ml-2 w-5 h-5 text-white group-hover:text-black transition-transform"
+          <div className="w-full lg:w-1/2 order-2 flex items-start lg:pt-16">
+            <div className="w-full">
+              <div className="mb-6">
+                <SectionBadge colorClass="text-gray-600" text="EXPERTISE LOCALE" />
+              </div>
+              <h2
+                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[66px] font-normal tracking-tighter leading-tight text-[#111] mb-6 lg:mb-8 transition-all duration-[1200ms] ease-out ${
+                  titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M17 7L7 17M7 7h10v10"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Section droite - Image Plateforme (DUPE) */}
-          <div className="lg:w-1/2 lg:pl-12 flex items-center justify-center">
-            <div className="relative w-[620px] h-[480px] overflow-hidden">
-              <Image
-                src={PlatformDigitale}
-                alt="Plateforme digitale"
-                fill
-                className="object-contain object-left"
-                sizes="(max-width: 1024px) 100vw, 620px"
-                priority
-              />
+                Développons un patrimoine <span style={{ color: '#9D9F9E' }}>ensemble</span>
+              </h2>
+              <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 lg:mb-12 max-w-xl leading-relaxed">
+                Chaque investissement bénéficie<br />
+                de notre expertise terrain<br />
+                et de notre réseau privilégié.
+              </p>
+              <button
+                className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black group"
+              >
+                Découvrir nos projets
+                <svg
+                  className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.1}
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
-        </div>
+      </div>
+      {/* Quatrième section - Solution Digitale */}
+      <div className="w-full bg-[#F7F6F1] py-16 md:py-20 lg:py-24 xl:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Badge au-dessus */}
+          <div className="flex justify-center lg:justify-start mb-6 md:mb-8">
+            <SectionBadge colorClass="text-gray-600" text="UNE SOLUTION DIGITALE" />
+          </div>
+          
+          {/* Carte principale avec texte à gauche et image à droite */}
+          <div className="bg-[#EBE5DF] rounded-lg lg:rounded-xl relative overflow-hidden min-h-[400px] lg:min-h-[500px]">
+            <div className="flex flex-col lg:flex-row">
+              {/* Section gauche - Texte avec padding */}
+              <div className="w-full lg:w-3/5 order-2 lg:order-1 p-6 sm:p-8 md:p-10 lg:p-12 xl:p-16 relative z-10">
+                <h2
+                  className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[66px] font-normal tracking-tighter leading-tight text-[#111] mb-6 lg:mb-8 transition-all duration-[1200ms] ease-out ${
+                    titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                >
+                  Investissez sereinement avec <span style={{ color: '#9D9F9E' }}>Offstone.</span>
+                </h2>
+                <p className="text-base md:text-lg lg:text-xl text-gray-600 mb-8 lg:mb-12 max-w-xl leading-relaxed">
+                  Une plateforme digitale claire<br />
+                  pour investir et suivre vos<br />
+                  investissements immobiliers.
+                </p>
+                <button
+                  className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-white hover:text-black hover:border-black group"
+                  type="button"
+                >
+                  Parler à un expert
+                  <svg
+                    className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.1}
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Image Plateforme - Collée au bord droit absolu */}
+              <div className="w-full lg:w-2/5 order-1 lg:order-2 p-6 sm:p-8 md:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:-right-0 lg:p-0 lg:w-[420px] xl:w-[480px]">
+                <div className="relative w-full aspect-[4/3] lg:translate-x-0">
+                  <Image
+                    src={PlatformDigitale}
+                    alt="Plateforme digitale"
+                    fill
+                    className="object-contain object-right"
+                    sizes="(max-width: 1024px) 100vw, 480px"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      {/* DUPLICATE END */}
     </section>
   );
 }

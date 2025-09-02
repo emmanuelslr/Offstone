@@ -1,24 +1,18 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+"use client";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-interface KeyFigure {
-  number: number;
-  label: React.ReactNode;
-  prefix?: string;
-  suffix?: string;
-}
-
-const keyFigures: KeyFigure[] = [
-  { number: 100, suffix: "M€", label: "D’ACTIFS PILOTÉS" },
-  { number: 41, suffix: "+", label: "OPÉRATIONS MENÉES" },
-  { number: 10, suffix: "k", label: "M² DE SURFACES RESTRUCTURÉES" },
-  { number: 15, suffix: "", label: "ANS D’EXPÉRIENCE" },
+// Données alignées avec "Notre histoire"
+const animatedCards = [
+  { number: 200, suffix: "M€", label: "D'actifs pilotés" },
+  { number: 41, suffix: "+", label: "Opérations menées" },
+  { number: 10, suffix: "k m²", label: "Surfaces restructurées" },
+  { number: 15, suffix: "", label: "Ans d'expérience" },
 ];
 
-const CountUp = ({ value, prefix = '', suffix = '' }: { value: number, prefix?: string, suffix?: string }) => {
+const CountUp = ({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) => {
   const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
+  const ref = useRef<HTMLSpanElement | null>(null);
   const inView = useInView(ref, { margin: "-20% 0px" });
 
   useEffect(() => {
@@ -53,26 +47,29 @@ const CountUp = ({ value, prefix = '', suffix = '' }: { value: number, prefix?: 
 
   return (
     <span ref={ref} className="tabular-nums">
-      {prefix}{displayValue}<span className="ml-1">{suffix}</span>
+      {prefix}
+      {displayValue}
+      <span>{suffix}</span>
     </span>
   );
 };
 
 export default function KeyFiguresLiteSection() {
   return (
-    <section className="w-full bg-white m-0 p-0 pb-32">
-      <div className="w-full max-w-7xl mx-auto m-0 p-0" style={{marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0}}>
-        <div className="w-full flex justify-center mb-8">
-          <div className="flex flex-row items-center gap-4">
-            <span className="text-base md:text-lg text-gray-600 font-normal">
+    <section className="w-full bg-white pt-3 md:pt-4 pb-16 md:pb-20 lg:pb-24 xl:pb-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header avec méthode */}
+        <div className="flex justify-center mb-12 md:mb-16 lg:mb-20">
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+            <span className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 font-normal text-center sm:text-left">
               Découvrez notre méthode pour construire votre patrimoine
             </span>
-<button
-              className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-5 h-5 rounded-[4px] shadow-sm"
+            <button
+              className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-6 h-6 sm:w-5 sm:h-5 rounded-[4px] shadow-sm flex-shrink-0"
               aria-label="Découvrir la méthode"
               type="button"
             >
-<svg
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
                 height="12"
@@ -85,41 +82,29 @@ export default function KeyFiguresLiteSection() {
             </button>
           </div>
         </div>
-        <div className="flex flex-row justify-center items-stretch w-full gap-12 m-0 p-0" style={{marginTop: 0, marginBottom: 0, paddingTop: 0, paddingBottom: 0}}>
-          {keyFigures.map((figure, index) => (
-            <div key={index} className="flex flex-row items-center">
-<motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.8,
-                    delay: index * 0.1,
-                    ease: [0.2, 0.65, 0.3, 0.9],
-                  }
-                }}
-                viewport={{ once: true, margin: "-20% 0px" }}
-                className="flex flex-col items-center justify-between basis-1/4 text-center"
-              >
-                <h2 className="text-[3.2rem] sm:text-[4rem] md:text-[4.8rem] font-light text-black mb-10 whitespace-nowrap tracking-wider">
-                  <CountUp
-                    value={figure.number}
-                    prefix={figure.prefix}
-                    suffix={figure.suffix}
-                  />
-                </h2>
-<p className={`text-[10px] md:text-[11px] tracking-widest uppercase font-medium mt-2 w-full${index === 2 || index === 3 ? ' whitespace-nowrap' : ''} text-gray-700`}>
-                  {figure.label}
-                </p>
-              </motion.div>
-              {index < keyFigures.length - 1 && (
-                <div className="hidden md:block w-[1px] h-14 self-center bg-gray-300 mx-8" />
-              )}
-            </div>
+
+        {/* Grille des cartes chiffres clés (style Notre histoire, en clair) */}
+        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {animatedCards.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.06 } }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              className="relative rounded-2xl border border-[#F7B096] bg-[#F9FAFB] shadow-sm p-5 md:p-6 flex flex-col items-center min-h-[240px] md:min-h-[280px]"
+            >
+              <span className="absolute left-3 top-3 inline-block h-1.5 w-1.5 rounded-full bg-[#F7B096]" />
+              <div className="flex-1" />
+              <div className="mt-4 w-full">
+                <div className="w-full text-center text-gray-900 whitespace-nowrap leading-none text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight tabular-nums">
+                  <CountUp value={c.number} suffix={c.suffix} />
+                </div>
+                <div className="mt-3 text-gray-600 text-sm text-center">{c.label}</div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
-  </section>
+    </section>
   );
 }

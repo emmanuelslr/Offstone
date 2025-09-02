@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import ParaformRightHeroCardsStep from '@/components/ParaformRightHeroCardsStep';
+// Remplace le composant dynamique par une image statique à droite
 
 export default function HeroMethode() {
   const [titleVisible, setTitleVisible] = useState(true);
@@ -70,7 +70,7 @@ export default function HeroMethode() {
             </button>
           </div>
 
-          {/* Section droite - Composant Paraform */}
+          {/* Section droite - Image statique */}
           <motion.div 
             className="lg:w-1/2 lg:pl-12 flex justify-center"
             initial={{ opacity: 0, y: 20 }}
@@ -78,15 +78,10 @@ export default function HeroMethode() {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           >
             <div className="flex justify-center">
-              <ParaformRightHeroCardsStep
-                size={700}
-                gap={18}
-                intervalMs={2600}
-                cards={[
-                  { id: "2barbes", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg" },
-                  { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
-                  { id: "ienaa",  image: "/images/Buildings/Ienaa.jpg" },
-                ]}
+              <img
+                src="/images/Buildings/Truchet.jpg"
+                alt="Illustration de notre méthode"
+                className="w-full max-w-[560px] rounded-2xl shadow-lg object-cover"
               />
             </div>
           </motion.div>

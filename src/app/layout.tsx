@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { PrismicPreview } from "@prismicio/next";
 import Footer from "@/components/shared/Footer";
 import HydrationFix from "@/components/shared/HydrationFix";
 import { repoName } from "@/lib/prismicio";
 import "./globals.css";
+import WaitlistModal from "@/components/shared/WaitlistModal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,8 +18,8 @@ export const metadata: Metadata = {
   title: "Offstone | Home",
   description: "Transform your operations with cutting-edge data analytics and AI solutions.",
   icons: {
-    icon: '/logos/x-bleu.svg',
-    apple: '/logos/x-bleu.svg',
+    icon: '/favicon.svg',
+    apple: '/favicon.svg',
   },
   };
 
@@ -76,9 +77,11 @@ export default function RootLayout({
       <body className="bg-white text-black antialiased min-h-screen w-full">
         <HydrationFix />
         {children}
+        <WaitlistModal />
         <Footer />
         <PrismicPreview repositoryName={repoName} />
       </body>
     </html>
   );
 }
+
