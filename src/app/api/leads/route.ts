@@ -21,6 +21,12 @@ export async function POST(req: Request) {
 
     const now = new Date().toISOString();
 
+    // If Supabase server env is missing (Preview or misconfig), accept the lead without persisting
+    const hasSupabase = Boolean(
+      (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+
     const record: Record<string, any> = {
       email,
       status: "open",
@@ -37,8 +43,12 @@ export async function POST(req: Request) {
       consent: body?.consent === true ? true : false,
     };
 
-    const row = await supabaseInsertLead(record);
+    if (!hasSupabase) {
+      // Degraded mode: avoid 500 in preview, do not store sensitive data
+      return NextResponse.json({ accepted: true, stored: false, note: 'supabase-env-missing' }, { status: 202 });
+    }
 
+    const row = await supabaseInsertLead(record);
     return NextResponse.json({ id: row?.id, lead: row });
   } catch (err: any) {
     console.error("POST /api/leads error", err);
