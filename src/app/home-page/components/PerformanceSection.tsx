@@ -1,34 +1,51 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
+import SectionBadge from "./SectionBadge";
 
-const CountUp = ({ value, suffix = "" }: { value: number; suffix?: string }) => {
+const CountUp = ({
+  value,
+  suffix = "",
+  durationMs = 1500,
+  className = "",
+  suffixClassName = "",
+}: {
+  value: number;
+  suffix?: string;
+  durationMs?: number;
+  className?: string;
+  suffixClassName?: string;
+}) => {
   const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { margin: "-15% 0px" });
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
     let raf: number | null = null;
     let start: number | undefined;
-    const duration = 1500;
-    const step = (t: number) => {
-      if (start === undefined) start = t;
-      const p = Math.min(1, (t - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 1.8);
-      setDisplayValue(Math.floor(eased * value));
-      if (p < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
+    if (isInView) {
+      setDisplayValue(0);
+      const step = (t: number) => {
+        if (start === undefined) start = t;
+        const p = Math.min(1, (t - start) / durationMs);
+        const eased = 1 - Math.pow(1 - p, 1.8);
+        setDisplayValue(Math.floor(eased * value));
+        if (p < 1) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    } else {
+      setDisplayValue(0);
+    }
     return () => {
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [value]);
+  }, [isInView, value, durationMs]);
 
   return (
-    <div ref={ref} className="tabular-nums">
+    <span ref={ref} className={`tabular-nums inline-flex items-baseline ${className}`}>
       {displayValue}
-      <span>{suffix}</span>
-    </div>
+      {suffix && <span className={suffixClassName}>{suffix}</span>}
+    </span>
   );
 };
 
@@ -38,26 +55,24 @@ export default function PerformanceSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white border border-dashed border-[#F7B096] rounded-2xl md:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12">
           <div className="mb-6 md:mb-8">
-            <span className="inline-block uppercase tracking-widest text-[10px] sm:text-xs font-medium bg-gray-100 text-gray-700 rounded-full px-3 py-1">
-              Performance
-            </span>
+            <SectionBadge colorClass="text-gray-600 text-xs sm:text-sm tracking-[0.15em] uppercase font-medium" text="PERFORMANCE" />
           </div>
           <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal tracking-tight text-[#111] leading-tight max-w-5xl">
-            Investissez dans les opérations <span className="text-[#9D9F9E]">créatrices de valeur</span> pour votre patrimoine
+            Valorisez votre patrimoine grâce à des <span className="text-[#9D9F9E]">opérations immobilières</span> exclusives
           </h3>
           <div className="my-8 md:my-10 h-px bg-gray-200" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
-            <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-5 md:p-6 text-white">
-              <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096]">
-                <CountUp value={15} suffix="%" />
+            <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-4 md:p-5 text-white">
+              <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096] whitespace-nowrap leading-none">
+                8-14<span className="text-[#F7B096]">%</span>
               </div>
-              <div className="mt-2 text-white/80 text-sm md:text-base">De performance cible annuelle</div>
+              <div className="mt-1 text-white/80 text-sm md:text-base">De performance cible annuelle</div>
             </div>
-            <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-5 md:p-6 text-white">
-              <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096]">
-                <CountUp value={4} /> <span className="text-[#F7B096]">ans</span>
+            <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-4 md:p-5 text-white">
+              <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096] whitespace-nowrap leading-none">
+                2 à 4 <span className="text-[#F7B096]">ans</span>
               </div>
-              <div className="mt-2 text-white/80 text-sm md:text-base">Horizon de sortie selon les projets</div>
+              <div className="mt-1 text-white/80 text-sm md:text-base">Horizon de sortie selon les projets</div>
             </div>
           </div>
         </div>
@@ -65,4 +80,3 @@ export default function PerformanceSection() {
     </section>
   );
 }
-

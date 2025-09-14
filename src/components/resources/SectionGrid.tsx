@@ -18,6 +18,7 @@ interface Article {
     level: string;
     reading_time: number;
     published_at: string;
+    category?: string;
   };
 }
 
@@ -40,12 +41,30 @@ export default function SectionGrid({ articles, pagination }: SectionGridProps) 
 
   const goToPage = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
-    if (page > 1) {
-      params.set("page", page.toString());
-    } else {
-      params.delete("page");
+    const hasAnyFilter = ["q", "asset", "theme", "level", "duration", "sort", "classe", "thematique", "niveau", "duree", "tri"]
+      .some((k) => params.has(k));
+
+    if (!hasAnyFilter) {
+      // Path-based pagination for SEO: /ressources/page/2, /ressources/{cat}/page/2,
+      // /ressources/strategie-theses/{classe}/page/2
+      const pathname = typeof window !== "undefined" ? window.location.pathname : "/ressources";
+      const parts = pathname.split("/").filter(Boolean); // ["ressources", ...]
+      let base = "/ressources";
+      if (parts[0] === "ressources") {
+        if (parts.length >= 2 && parts[1] !== "page") {
+          base = `/ressources/${parts[1]}`; // e.g., /ressources/guides or /ressources/strategie-theses
+        }
+        if (parts.length >= 3 && parts[2] !== "page") {
+          base = `${base}/${parts[2]}`; // e.g., add /residentiel
+        }
+      }
+      const dest = page > 1 ? `${base}/page/${page}` : base;
+      router.push(dest, { scroll: false });
+      return;
     }
-    
+
+    // Filtered pages: keep query-based pagination (noindex)
+    if (page > 1) params.set("page", page.toString()); else params.delete("page");
     const newUrl = params.toString() ? `?${params.toString()}` : "/ressources";
     router.push(newUrl, { scroll: false });
   };
@@ -79,28 +98,13 @@ export default function SectionGrid({ articles, pagination }: SectionGridProps) 
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20">
-      {/* Results Summary */}
-      <div className="flex items-center justify-between mb-12">
-        <div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-3">
-            {pagination.totalResults > 0 ? "Articles" : "Aucun article trouvé"}
-          </h2>
-          {pagination.totalResults > 0 && (
-            <p className="text-gray-600 text-lg">
-              {pagination.totalResults} article{pagination.totalResults > 1 ? "s" : ""} trouvé{pagination.totalResults > 1 ? "s" : ""}
-              {pagination.totalPages > 1 && (
-                <span> · Page {pagination.page} sur {pagination.totalPages}</span>
-              )}
-            </p>
-          )}
-        </div>
-      </div>
+    <section className="mx-auto max-w-7xl px-4 pt-20 pb-16">
+
 
       {/* Articles Grid - Spacing plus généreux */}
       {articles.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-0">
             {articles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}

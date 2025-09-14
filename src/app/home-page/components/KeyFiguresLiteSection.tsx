@@ -1,1 +1,106 @@
-﻿產敳挠楬湥≴਻浩潰瑲䤠慭敧映潲⁭渢硥⽴浩条≥਻浩潰瑲笠洠瑯潩⁮⁽牦浯∠牦浡牥洭瑯潩≮਻琊灹⁥敄污慃摲㴠笠 琠瑩敬›瑳楲杮਻†畳瑢瑩敬㨿猠牴湩㭧 椠慭敧›瑳楲杮਻†捡畱獩瑩潩㩮猠牴湩㭧 爠癥湥整›瑳楲杮਻㭽ਊ⼯䌠牡整⁳❤浩敭扵敬⁳癡捥洠獩⁥湥愠慶瑮搠⁥慬挠썲憩楴湯搠⁥慶敬牵挊湯瑳搠慥獬›敄污慃摲嵛㴠嬠 笠 †琠瑩敬›䴢問䥌⁎䕖呒Ⱒ †猠扵楴汴㩥∠썒玩摩湥楴汥簠倠牡獩ㄠ攴Ⱒ †椠慭敧›⼢楶敤獯椯慭敧⵳浩敭扵敬⽳〶㐳ⴸ畒ⵥ畤䴭畯楬⵮敖瑲㌭䌹ⵂ捳污摥樮杰眮扥≰ਬ††捡畱獩瑩潩㩮∠ⰴ‸겂Ⱒ †爠癥湥整›㘢㈬䴠苢⊬ਬ†ⱽ 笠 †琠瑩敬›䰢⁁佂觃䥔≅ਬ††畳瑢瑩敬›䈢牵慥硵簠倠牡獩㠠≥ਬ††浩条㩥∠椯慭敧⽳畂汩楤杮⽳畲ⵥ慬戭敯楴ⵥㄱ挭灯敩猭慣敬⹤灪≧ਬ††捡畱獩瑩潩㩮∠㈱䴠苢⊬ਬ††敲敶瑮㩥∠㔱㔬䴠苢⊬ਬ†ⱽ 笠 †琠瑩敬›䴢䥁体⁎䕉䅎Ⱒ †猠扵楴汴㩥∠썈璴汥簠嘠污敵䄭摤簠倠牡獩ㄠ收Ⱒ †椠慭敧›⼢浩条獥䈯極摬湩獧䤯湥慡樮杰Ⱒ †愠煣極楳楴湯›ㄢ‶겂Ⱒ †爠癥湥整›㈢′겂Ⱒ 素ਬ㭝ਊ硥潰瑲搠晥畡瑬映湵瑣潩⁮敋䙹杩牵獥楌整敓瑣潩⡮ ੻†敲畴湲⠠ †㰠敳瑣潩⁮汣獡乳浡㵥眢昭汵⁬杢眭楨整瀠⵴‸摭瀺⵴〱瀠ⵢ㘱洠㩤扰㈭‰杬瀺ⵢ㐲砠㩬扰㌭∲ਾ†††搼癩挠慬獳慎敭∽慭⵸⵷砷⁬硭愭瑵⁯硰㐭猠㩭硰㘭氠㩧硰㠭㸢 †††笠⨯䜠楲汬⁥敤⁳慣瑲獥椠浭略汢獥⨠累 †††㰠楤⁶汣獡乳浡㵥洢⵴‴牧摩朠楲ⵤ潣獬ㄭ猠㩭牧摩挭汯⵳′杬机楲ⵤ潣獬㌭朠灡㠭洠㩤慧⵰〱㸢 ††††笠敤污⹳汳捩⡥ⰰ㌠⸩慭⡰搨‬⥩㴠‾ਨ††††††洼瑯潩⹮牡楴汣੥†††††††敫㵹摻琮瑩敬੽†††††††湩瑩慩㵬筻漠慰楣祴›ⰰ礠›㘱素੽†††††††桷汩䥥噮敩㵷筻漠慰楣祴›ⰱ礠›ⰰ琠慲獮瑩潩㩮笠搠牵瑡潩㩮〠㔮‬敤慬㩹椠⨠〠〮‶⁽絽 ††††††瘠敩灷牯㵴筻漠据㩥琠畲ⱥ洠牡楧㩮∠ㄭ┵〠硰•絽 ††††††挠慬獳慎敭∽敲慬楴敶爠畯摮摥㈭汸漠敶晲潬⵷楨摤湥猠慨潤⵷杬戠牯敤⁲潢摲牥眭楨整ㄯ‰杢渭略牴污ㄭ〰ਢ††††††ਾ†††††††⽻‪浉条⁥⼪੽†††††††搼癩挠慬獳慎敭∽敲慬楴敶眠昭汵⁬獡数瑣嬭⼴崵㸢 †††††††㰠浉条੥†††††††††牳㵣摻椮慭敧੽†††††††††污㵴摻琮瑩敬੽†††††††††楦汬 ††††††††瀠楲牯瑩㵹楻㰠㈠੽†††††††††楳敺㵳⠢慭⵸楷瑤㩨ㄠ㈰瀴⥸ㄠ〰睶‬㔲睶ਢ†††††††††汣獡乳浡㵥漢橢捥⵴潣敶≲ †††††††⼠ਾ††††††††⽻‪潃瑮畯⁲潤硵映썡澧⁮慭畱瑥整‬潭湩⁳牡潲摮⁩⼪੽††††††††搼癩挠慬獳慎敭∽潰湩整⵲癥湥獴渭湯⁥扡潳畬整椠獮瑥㌭爠畯摮摥砭⁬楲杮㈭爠湩ⵧ桷瑩⽥〴•㸯ਊ††††††††⽻‪썄枩慲썤₩慢⁳潰牵氠捥畴敲⨠累 †††††††㰠楤⁶汣獡乳浡㵥愢獢汯瑵⁥湩敳⵴⵸‰潢瑴浯〭栠ㄭ㈯戠ⵧ牧摡敩瑮琭ⵯ⁴牦浯戭慬正㘯‰楶ⵡ汢捡⽫㔲琠ⵯ牴湡灳牡湥≴⼠ਾ †††††††笠⨯吠瑩敲⁳楬楳汢獥搠湡⁳湵⁥数楴整挠牡整猠浯牢⁥戨畬扲 ⼪੽††††††††搼癩挠慬獳慎敭∽扡潳畬整氠晥⵴‵潴⵰∵ਾ†††††††††搼癩挠慬獳慎敭∽潲湵敤ⵤ汸戠ⵧ汢捡⽫㔵戠捡摫潲⵰汢牵瀠⵸⸳‵祰㈭㔮猠慨潤⵷せ㙟硰ㅟ瀸彸杲慢〨〬〬〬㌮⤵≝ਾ††††††††††搼癩挠慬獳慎敭∽整瑸眭楨整琠硥⵴浳猠㩭整瑸戭獡⁥潦瑮猭浥扩汯⁤敬摡湩ⵧ楴桧≴ਾ†††††††††††摻琮瑩敬੽††††††††††⼼楤㹶 †††††††††笠⹤畳瑢瑩敬☠…ਨ†††††††††††搼癩挠慬獳慎敭∽整瑸眭楨整㤯‰整瑸嬭ㄱ硰⁝浳琺硥⵴獸氠慥楤杮琭杩瑨㸢 †††††††††††笠⹤畳瑢瑩敬੽†††††††††††⼼楤㹶 †††††††††⤠੽†††††††††⼼楤㹶 †††††††㰠搯癩ਾ †††††††笠⨯倠湡敮畡渠楯⁲潰牵氠獥洠湯慴瑮⁳⼪੽††††††††搼癩挠慬獳慎敭∽扡潳畬整椠獮瑥砭㌭戠瑯潴⵭∳ਾ†††††††††搼癩挠慬獳慎敭∽汦硥椠整獭挭湥整⁲番瑳晩⵹敢睴敥⁮慧⵰‴潲湵敤ⵤ砲⁬杢戭慬正㘯‵慢正牤灯戭畬⁲硰㐭瀠⵹″桳摡睯氭≧ਾ††††††††††搼癩挠慬獳慎敭∽敬摡湩ⵧ楴桧⁴整瑸眭楨整㸢 ††††††††††㰠楤⁶汣獡乳浡㵥產灰牥慣敳琠慲正湩ⵧ楷敤琠硥⵴ㅛ瀱嵸琠硥⵴桷瑩⽥〸㸢捁畱獩瑩潩㱮搯癩ਾ†††††††††††搼癩挠慬獳慎敭∽整瑸眭楨整映湯⵴敳業潢摬琠硥⵴砲⁬浳琺硥⵴砳≬笾⹤捡畱獩瑩潩絮⼼楤㹶 †††††††††㰠搯癩ਾ††††††††††⽻‪썓炩牡瑡略⁲汦ꣃ档⁥湥瀠楯瑮汩썬玩⨠累 †††††††††㰠楤⁶汣獡乳浡㵥昢敬⁸瑩浥⵳散瑮牥琠硥⵴⍛㝆あ㘹≝ਾ†††††††††††猼杶眠摩桴∽〴•敨杩瑨∽㈲•楶睥潂㵸〢〠㐠‰㈲•楦汬∽潮敮•浸湬㵳栢瑴㩰⼯睷⹷㍷漮杲㈯〰⼰癳≧ਾ††††††††††††瀼瑡⁨㵤䴢‴ㄱ㍈∴猠牴歯㵥挢牵敲瑮潃潬≲猠牴歯坥摩桴∽∲猠牴歯䱥湩捥灡∽潲湵≤猠牴歯䑥獡慨牲祡∽″∴㸯 †††††††††††㰠慰桴搠∽㍍‰䰷㐳ㄠ䰱〳ㄠ∵猠牴歯㵥挢牵敲瑮潃潬≲猠牴歯坥摩桴∽∲猠牴歯䱥湩捥灡∽潲湵≤猠牴歯䱥湩橥楯㵮爢畯摮⼢ਾ†††††††††††⼼癳㹧 †††††††††㰠搯癩ਾ††††††††††搼癩挠慬獳慎敭∽敬摡湩ⵧ楴桧⁴整瑸眭楨整琠硥⵴楲桧≴ਾ†††††††††††搼癩挠慬獳慎敭∽灵数捲獡⁥牴捡楫杮眭摩⁥整瑸嬭ㄱ硰⁝整瑸眭楨整㠯∰刾癥湥整⼼楤㹶 ††††††††††㰠楤⁶汣獡乳浡㵥琢硥⵴桷瑩⁥潦瑮猭浥扩汯⁤整瑸㈭汸猠㩭整瑸㌭汸㸢摻爮癥湥整㱽搯癩ਾ††††††††††⼼楤㹶 ††††††††㰠搯癩ਾ††††††††⼼楤㹶 ††††††㰠搯癩ਾ††††††⼼潭楴湯愮瑲捩敬ਾ†††††⤩੽††††⼼楤㹶 ††㰠搯癩ਾ††⼼敳瑣潩㹮 ⤠਻੽
+"use client";
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+type DealCard = {
+  title: string;
+  subtitle?: string;
+  image: string;
+  acquisition: string;
+  revente: string;
+};
+
+// 3 cartes d'immeubles (restauration)
+const deals: DealCard[] = [
+  {
+    title: "MOULIN VERT",
+    subtitle: "Résidentiel | Paris 14e",
+    image: "/videos/images-immeubles/60348-Rue-du-Moulin-Vert-39CB-scaled.jpg.webp",
+    acquisition: "4,8 M€",
+    revente: "6,2 M€",
+  },
+  {
+    title: "LA BOÉTIE",
+    subtitle: "Bureaux | Paris 8e",
+    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg",
+    acquisition: "12 M€",
+    revente: "15,5 M€",
+  },
+  {
+    title: "MAISON IENA",
+    subtitle: "Hôtel | Value-Add | Paris 16e",
+    image: "/images/Buildings/Ienaa.jpg",
+    acquisition: "16 M€",
+    revente: "22 M€",
+  },
+];
+
+export default function KeyFiguresLiteSection() {
+  return (
+    <section className="w-full bg-white pt-8 md:pt-10 pb-16 md:pb-20 lg:pb-24 xl:pb-32">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Grille des cartes immeubles */}
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {deals.map((d, i) => (
+            <motion.article
+              key={d.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.06 } }}
+              viewport={{ once: true, margin: "-15% 0px" }}
+              className="relative rounded-2xl overflow-hidden shadow-lg border border-white/10 bg-neutral-100"
+            >
+              {/* Image */}
+              <div className="relative w-full aspect-[4/5]">
+                <Image
+                  src={d.image}
+                  alt={d.title}
+                  fill
+                  priority={i < 2}
+                  sizes="(max-width: 1024px) 100vw, 25vw"
+                  className="object-cover"
+                />
+                {/* Contour intérieur doux */}
+                <div className="pointer-events-none absolute inset-3 rounded-xl ring-2 ring-white/40" />
+
+                {/* Titre en blurb pour lisibilité */}
+                <div className="absolute left-5 top-5">
+                  <div className="rounded-xl bg-black/55 backdrop-blur px-3.5 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,0.35)]">
+                    <div className="text-white text-sm sm:text-base font-semibold leading-tight">
+                      {d.title}
+                    </div>
+                    {d.subtitle && (
+                      <div className="text-white/90 text-[11px] sm:text-xs leading-tight">
+                        {d.subtitle}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Bandeau valeur créée */}
+                <div className="absolute inset-x-3 bottom-3">
+                  <div className="flex items-center justify-between gap-4 rounded-2xl bg-black/65 backdrop-blur px-4 py-3 shadow-lg">
+                    <div className="leading-tight text-white">
+                      <div className="uppercase tracking-wide text-[11px] text-white/80">Acquisition</div>
+                      <div className="text-white font-semibold text-2xl sm:text-3xl">{d.acquisition}</div>
+                    </div>
+                    {/* Flèche pointillée */}
+                    <div className="flex items-center text-[#F7B096]">
+                      <svg width="40" height="22" viewBox="0 0 40 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 11H34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 4"/>
+                        <path d="M30 7L34 11L30 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <div className="leading-tight text-white text-right">
+                      <div className="uppercase tracking-wide text-[11px] text-white/80">Revente</div>
+                      <div className="text-white font-semibold text-2xl sm:text-3xl">{d.revente}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

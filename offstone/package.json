@@ -11,12 +11,16 @@
     "start": "next start",
     "lint": "next lint",
     "slicemachine": "start-slicemachine",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "supabase:check": "node ./scripts/supabase-admin.mjs check",
+    "supabase:insert": "node ./scripts/supabase-admin.mjs insert --email test+cli@offstone.fr",
+    "supabase:update": "node ./scripts/supabase-admin.mjs update --id REPLACE_WITH_ID --patch '{\"status\":\"completed\"}'"
   },
   "dependencies": {
     "@prismicio/client": "^7.20.1",
     "@prismicio/next": "^2.0.1",
     "@prismicio/react": "^3.2.1",
+    "@supabase/supabase-js": "^2.56.0",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -28,6 +32,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "concurrently": "^9.1.2",
+    "dotenv": "^17.2.1",
     "eslint": "^9.19.0",
     "eslint-config-next": "^15.1.6",
     "slice-machine-ui": "^2.18.1",

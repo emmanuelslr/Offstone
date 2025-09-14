@@ -1,7 +1,7 @@
-﻿import React from "react";
+﻿import React, { Suspense } from "react";
 import Navbar from "../../components/shared/Navbar";
 import HeroPourquoiOffstone from "./components/HeroPourquoiOffstone";
-import SectorTabsSection from "./components/SectorTabsSection";
+import SectorTabsSection from "./components/SectorTabsSectionFixed";
 import TextReveal from "../home-page/components/TextReveal";
 import StickySidebarSection from "./components/StickySidebarSection";
 import ProCTAFooter from "../home-page/components/ProCTAFooter";
@@ -12,7 +12,9 @@ export default function StrategiePage() {
       <Navbar forceWhiteStyle />
       {/* Comment ça marche — section d'intro */}
       <section className="w-full">
-        <HeroPourquoiOffstone />
+        <Suspense>
+          <HeroPourquoiOffstone />
+        </Suspense>
       </section>
 
       {/* Text Section */}
@@ -154,7 +156,7 @@ export default function StrategiePage() {
       <StickySidebarSection />
 
       {/* Pro CTA Footer Section */}
-      <ProCTAFooter />
+      <ProCTAFooter utm_campaign="pourquoi-offstone" />
     </>
   );
 }

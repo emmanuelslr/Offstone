@@ -9,7 +9,7 @@ const OPENED_EVENT = 'waitlist:opened';
 const CLOSED_EVENT = 'waitlist:closed';
 
 type OpenEventDetail = {
-  email: string;
+  email?: string;
   page_url?: string;
   ref?: string;
   utm_source?: string;
@@ -18,6 +18,8 @@ type OpenEventDetail = {
   utm_content?: string;
   utm_term?: string;
   asset_class?: string;
+  // Optional identifier to know which CTA triggered the form
+  cta_id?: string;
 };
 
 type StepState = {
@@ -31,7 +33,7 @@ type StepState = {
   consent?: boolean;
 };
 
-const stepVariants = {
+const stepVariants: any = {
   initial: { opacity: 0, y: 8, scale: 0.995 },
   animate: {
     opacity: 1,
@@ -55,6 +57,16 @@ function ArrowUp() {
 function ArrowDown() {
   return (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  );
+}
+function ArrowLeft() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  );
+}
+function ArrowRight() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6"/></svg>
   );
 }
 function Check() {
@@ -125,9 +137,11 @@ export default function WaitlistModal() {
   const [leadId, setLeadId] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [meta, setMeta] = useState<OpenEventDetail | null>(null);
+  const [skipEmailStep, setSkipEmailStep] = useState(false);
 
   const [stepIndex, setStepIndex] = useState(0);
   const [data, setData] = useState<StepState>({ consent: false, phone_country: 'FR' });
+  const [validationErrors, setValidationErrors] = useState<{first_name?: boolean, last_name?: boolean, phone?: boolean, email?: boolean}>({});
 
   const [escArmed, setEscArmed] = useState(false);
   const escTimerRef = useRef<number | null>(null);
@@ -149,26 +163,38 @@ export default function WaitlistModal() {
     const digits = (raw || '').replace(/[^0-9]/g, '');
     let rest = digits;
     if (rest.startsWith('33')) rest = rest.slice(2);
-    if (rest.startsWith('0')) rest = rest.slice(1);
-    if (!rest.startsWith('6')) {
-      // Force mobile prefix 6
-      rest = '6' + rest.replace(/^[0-9]?/, '');
+    while (rest.startsWith('0')) rest = rest.slice(1);
+    // Keep only if starts with 6 or 7; otherwise wait for valid input
+    if (!/^([67]\d*)?$/.test(rest)) {
+      // Drop leading non-6/7
+      const m = rest.match(/[67].*/);
+      rest = m ? m[0] : '';
     }
-    const after = rest.slice(1, 9); // up to 8 digits after leading 6
+    // Limit to 1 + 8 digits
+    rest = rest.slice(0, 9);
+    if (!rest) return '+33';
+    const first = rest.slice(0,1);
+    const after = rest.slice(1);
     const pairs = after.match(/.{1,2}/g) || [];
-    return '+33 6' + (pairs.length ? ' ' + pairs.join(' ') : '');
+    return '+33 ' + first + (pairs.length ? ' ' + pairs.join(' ') : (after ? ' ' + after : ''));
   };
 
   type CountryCode = 'FR' | 'BE' | 'CH' | 'LU' | 'DE' | 'ES' | 'IT' | 'GB';
-  const COUNTRIES: Array<{ code: CountryCode; name: string; dial: string; flag: string; placeholder: string }>= [
-    { code: 'FR', name: 'France', dial: '+33', flag: 'FR', placeholder: '+33 6 12 34 56 78' },
-    { code: 'BE', name: 'Belgique', dial: '+32', flag: 'BE', placeholder: '+32 4x xx xx xx' },
-    { code: 'CH', name: 'Suisse', dial: '+41', flag: 'CH', placeholder: '+41 7x xxx xx xx' },
-    { code: 'LU', name: 'Luxembourg', dial: '+352', flag: 'LU', placeholder: '+352 6x xx xx xx' },
-    { code: 'DE', name: 'Allemagne', dial: '+49', flag: 'DE', placeholder: '+49 15x xxxx xxxx' },
-    { code: 'ES', name: 'Espagne', dial: '+34', flag: 'ES', placeholder: '+34 6xx xxx xxx' },
-    { code: 'IT', name: 'Italie', dial: '+39', flag: 'IT', placeholder: '+39 3xx xxx xxxx' },
-    { code: 'GB', name: 'Royaume-Uni', dial: '+44', flag: 'GB', placeholder: '+44 7xxxx xxxxxx' },
+  const COUNTRIES: Array<{
+    code: CountryCode;
+    name: string;
+    dial: string;
+    flag: string;
+    placeholder: string;
+  }>= [
+    { code: 'FR', name: 'France',      dial: '+33',  flag: 'FR', placeholder: '+33 6 12 34 56 78' },
+    { code: 'BE', name: 'Belgique',    dial: '+32',  flag: 'BE', placeholder: '+32 4xx xx xx xx' },
+    { code: 'CH', name: 'Suisse',      dial: '+41',  flag: 'CH', placeholder: '+41 7x xxx xx xx' },
+    { code: 'LU', name: 'Luxembourg',  dial: '+352', flag: 'LU', placeholder: '+352 621 123 456' },
+    { code: 'DE', name: 'Allemagne',   dial: '+49',  flag: 'DE', placeholder: '+49 15x xxxx xxxx' },
+    { code: 'ES', name: 'Espagne',     dial: '+34',  flag: 'ES', placeholder: '+34 6xx xxx xxx' },
+    { code: 'IT', name: 'Italie',      dial: '+39',  flag: 'IT', placeholder: '+39 3xx xxx xxxx' },
+    { code: 'GB', name: 'Royaume-Uni', dial: '+44',  flag: 'GB', placeholder: '+44 7xxxx xxxxxx' },
   ];
 
   const getCountry = (code: CountryCode) => COUNTRIES.find(c => c.code === code)!;
@@ -179,22 +205,28 @@ export default function WaitlistModal() {
     let rest = digits;
     const dialNoPlus = country.dial.replace('+','');
     if (rest.startsWith(dialNoPlus)) rest = rest.slice(dialNoPlus.length);
-    const groupMap: Record<CountryCode, number[]> = {
-      FR: [1,2,2,2,2],
-      BE: [1,2,2,2],
-      CH: [1,3,2,2],
-      LU: [1,2,2,2],
-      DE: [3,4,4],
-      ES: [3,3,3],
-      IT: [3,3,4],
-      GB: [5,6],
+    while (rest.startsWith('0')) rest = rest.slice(1);
+
+    const groupMap: Record<CountryCode, { groups: number[]; max: number }> = {
+      FR: { groups: [1,2,2,2,2], max: 9 },
+      BE: { groups: [3,2,2,2],   max: 9 },
+      CH: { groups: [2,3,2,2],   max: 9 },
+      LU: { groups: [3,3,3],     max: 9 },
+      DE: { groups: [3,4,4],     max: 11 },
+      ES: { groups: [3,3,3],     max: 9 },
+      IT: { groups: [3,3,4],     max: 10 },
+      GB: { groups: [5,6],       max: 11 },
     };
-    const groups = groupMap[code];
+
+    const rule = groupMap[code];
+    rest = rest.slice(0, rule.max);
+    if (!rest) return country.dial;
+
     const parts: string[] = [];
     let idx = 0;
-    for (const len of groups) {
+    for (const len of rule.groups) {
       if (idx >= rest.length) break;
-      parts.push(rest.slice(idx, idx + len));
+      parts.push(rest.slice(idx, Math.min(idx + len, rest.length)));
       idx += len;
     }
     const grouped = parts.join(' ');
@@ -214,15 +246,18 @@ export default function WaitlistModal() {
     }
   };
 
-  const under5k = data.ticket_target === 'under_5k';
+  const under20k = data.ticket_target === 'under_20k';
 
   const steps = useMemo(() => {
-    const s: Array<'ticket' | 'rdv' | 'calendly' | 'discovery' | 'profile' | 'success'> = ['ticket'];
-    if (!under5k) s.push('rdv');
-    if (!under5k && data.rdv_choice === 'now') s.push('calendly');
+    const s: Array<'email' | 'ticket' | 'rdv' | 'calendly' | 'discovery' | 'profile' | 'success'> = [];
+    // Show email step only when we didn't capture email upstream AND no lead exists yet
+    if (!skipEmailStep && !leadId) s.push('email');
+    s.push('ticket');
+    if (!under20k) s.push('rdv');
+    if (!under20k && data.rdv_choice === 'now') s.push('calendly');
     s.push('discovery', 'profile', 'success');
     return s;
-  }, [under5k, data.rdv_choice]);
+  }, [skipEmailStep, leadId, under20k, data.rdv_choice]);
 
   const current = steps[stepIndex] ?? 'ticket';
   const twoCols = current === 'calendly';
@@ -236,6 +271,8 @@ export default function WaitlistModal() {
 
     const canNext = useMemo(() => {
   switch (current) {
+    case 'email':
+      return /.+@.+\..+/.test(email);
     case 'ticket':
       return Boolean(data.ticket_target);
     case 'rdv':
@@ -245,18 +282,19 @@ export default function WaitlistModal() {
     case 'discovery':
       return Boolean(data.discovery);
     case 'profile':
-      return Boolean(data.first_name && data.last_name);
+      return true; // Toujours permettre de cliquer, on valide dans onOk
     default:
       return true;
   }
-}, [current, data]);const reset = useCallback(() => {
+}, [current, data, email]);const reset = useCallback(() => {
     setOpen(false);
     setSubmitting(false);
     setLeadId(null);
     setEmail('');
     setMeta(null);
+    setSkipEmailStep(false);
     setStepIndex(0);
-    setData({ consent: false });
+    setData({ consent: false, phone_country: 'FR' });
     setEscArmed(false);
     if (escTimerRef.current) { window.clearTimeout(escTimerRef.current); escTimerRef.current = null; }
     if (advanceTimerRef.current) { window.clearTimeout(advanceTimerRef.current); advanceTimerRef.current = null; }
@@ -265,34 +303,48 @@ export default function WaitlistModal() {
   }, []);
 
   const onOpen = useCallback(async (detail: OpenEventDetail) => {
-    const email = (detail.email || '').trim();
-    if (!email) return;
-    setEmail(email);
+    const emailInput = (detail.email || '').trim();
+    if (emailInput) setEmail(emailInput);
     setMeta(detail);
+    // If email provided upstream, skip the email step entirely
+    setSkipEmailStep(Boolean(emailInput));
     setOpen(true);
     try { window.dispatchEvent(new Event(OPENED_EVENT)); } catch {}
 
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          page_url: detail.page_url,
-          ref: detail.ref,
+    // If email already provided, create the lead immediately; otherwise wait until user provides it on first step
+    if (emailInput) {
+      try {
+        const res = await fetch('/api/leads', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: emailInput,
+            page_url: detail.page_url,
+            ref: detail.ref,
+            utm_source: detail.utm_source,
+            utm_medium: detail.utm_medium,
+            utm_campaign: detail.utm_campaign,
+            utm_content: detail.utm_content,
+            utm_term: detail.utm_term,
+            asset_class: detail.asset_class || 'retail',
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok || !json?.id) throw new Error(json?.error || 'insert failed');
+        setLeadId(json.id);
+        // Enrich analytics with CTA and UTM context
+        track('lead_open', {
+          id: json.id,
+          email: emailInput,
+          cta_id: detail.cta_id || detail.utm_content,
           utm_source: detail.utm_source,
           utm_medium: detail.utm_medium,
           utm_campaign: detail.utm_campaign,
           utm_content: detail.utm_content,
           utm_term: detail.utm_term,
-          asset_class: detail.asset_class || 'retail',
-        }),
-      });
-      const json = await res.json();
-      if (!res.ok || !json?.id) throw new Error(json?.error || 'insert failed');
-      setLeadId(json.id);
-      track('lead_open', { id: json.id, email });
-    } catch (e) {
-      console.error('Lead insert failed', e);
+        });
+      } catch (e) {
+        console.error('Lead insert failed', e);
+      }
     }
   }, []);
 
@@ -349,7 +401,7 @@ export default function WaitlistModal() {
       try {
         const payload: Record<string, any> = {};
         if (data.ticket_target) payload.ticket_target = data.ticket_target;
-        if (data.rdv_choice !== undefined) payload.wants_call = !under5k && data.rdv_choice === 'now';
+        if (data.rdv_choice !== undefined) payload.wants_call = !under20k && data.rdv_choice === 'now';
         if (data.discovery) payload.discovery = data.discovery;
         if (data.first_name) payload.first_name = data.first_name;
         if (data.last_name) payload.last_name = data.last_name;
@@ -371,7 +423,7 @@ export default function WaitlistModal() {
       } catch {}
     }, 500) as unknown as number;
     return () => { if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current); };
-  }, [data, meta, leadId, current, under5k]);
+  }, [data, meta, leadId, current, under20k]);
 
   const next = useCallback(() => { if (stepIndex < steps.length - 1) setStepIndex(i => i + 1); }, [stepIndex, steps.length]);
   const prev = useCallback(() => { if (stepIndex > 0) setStepIndex(i => i - 1); }, [stepIndex]);
@@ -385,7 +437,7 @@ export default function WaitlistModal() {
         body: JSON.stringify({
           ticket_target: data.ticket_target,
           discovery: data.discovery,
-          wants_call: !under5k && data.rdv_choice === 'now',
+          wants_call: !under20k && data.rdv_choice === 'now',
           first_name: data.first_name,
           last_name: data.last_name,
           phone: data.phone,
@@ -406,9 +458,99 @@ export default function WaitlistModal() {
       setStepIndex(steps.findIndex(s => s === 'success'));
       track('lead_completed', { id: leadId });
     } catch (e) { console.error('Lead update failed', e); } finally { setSubmitting(false); }
-  }, [leadId, data, meta, steps.length, under5k]);
+  }, [leadId, data, meta, steps.length, under20k]);
 
-  const onOk = useCallback(() => { if (current === 'profile') return submit(); if (canNext) next(); }, [current, canNext, next, submit]);
+  const clearFieldError = useCallback((field: 'first_name' | 'last_name' | 'phone' | 'email') => {
+    setValidationErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[field];
+      return newErrors;
+    });
+  }, []);
+
+  const onOk = useCallback(async () => {
+    if (current === 'profile') {
+      // Validation des champs obligatoires
+      const errors: {first_name?: boolean, last_name?: boolean, phone?: boolean} = {};
+      if (!data.first_name?.trim()) errors.first_name = true;
+      if (!data.last_name?.trim()) errors.last_name = true;
+      
+      // Validation du téléphone plus robuste
+      const phone = data.phone?.trim();
+      const countryCode = (data.phone_country ?? 'FR') as CountryCode;
+      const countryDial = getCountry(countryCode).dial;
+      
+      if (!phone || phone === countryDial) {
+        errors.phone = true;
+      } else {
+        // Vérifier que le numéro a au moins 8 chiffres après l'indicatif
+        const digitsOnly = phone.replace(/[^\d]/g, '');
+        const dialDigits = countryDial.replace(/[^\d]/g, '');
+        const phoneDigits = digitsOnly.replace(dialDigits, '');
+        
+        if (phoneDigits.length < 8) {
+          errors.phone = true;
+        }
+      }
+      
+      setValidationErrors(errors);
+      
+      // Si il y a des erreurs, ne pas continuer
+      if (Object.keys(errors).length > 0) return;
+      
+      return submit();
+    }
+    if (current === 'email') {
+      // Strict email format validation
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!isValid) {
+        setValidationErrors({ email: true });
+        return;
+      }
+      // Clear email error if valid
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.email;
+        return newErrors;
+      });
+      try {
+        setSubmitting(true);
+        const res = await fetch('/api/leads', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            page_url: meta?.page_url,
+            ref: meta?.ref,
+            utm_source: meta?.utm_source,
+            utm_medium: meta?.utm_medium,
+            utm_campaign: meta?.utm_campaign,
+            utm_content: meta?.utm_content,
+            utm_term: meta?.utm_term,
+            asset_class: meta?.asset_class || 'retail',
+          }),
+        });
+        const json = await res.json();
+        if (!res.ok || !json?.id) throw new Error(json?.error || 'insert failed');
+        setLeadId(json.id);
+        track('lead_open', {
+          id: json.id,
+          email,
+          cta_id: meta?.cta_id || meta?.utm_content,
+          utm_source: meta?.utm_source,
+          utm_medium: meta?.utm_medium,
+          utm_campaign: meta?.utm_campaign,
+          utm_content: meta?.utm_content,
+          utm_term: meta?.utm_term,
+        });
+      } catch (e) {
+        console.error('Lead insert failed', e);
+      } finally {
+        setSubmitting(false);
+      }
+      return next();
+    }
+    if (canNext) next();
+  }, [current, canNext, next, submit, email, meta]);
 
   useEffect(() => {
     setAdvancing(false);
@@ -451,7 +593,18 @@ export default function WaitlistModal() {
         <div className="relative bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#1a1a1a] text-white p-6 sm:p-10">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src="/logos/offstone-logo-white.svg" alt="Offstone" className="w-40 h-auto" />
+              <span
+                className="block leading-none select-none antialiased"
+                style={{
+                  fontFamily: "'Alliance No.1', Arial, sans-serif",
+                  fontWeight: 500,
+                  fontSize: 'clamp(20px, 5vw, 28px)',
+                  letterSpacing: '0.02em',
+                  color: '#FFFFFF'
+                }}
+              >
+                Offstone.
+              </span>
             </div>
             <button aria-label="Fermer" onClick={reset} className="text-white/70 hover:text-white text-2xl">×</button>
           </div>
@@ -481,15 +634,40 @@ export default function WaitlistModal() {
                     {current === 'profile' && (<span className="text-2xl font-semibold leading-tight">Votre profil</span>)}
                   </div>
 
+                  {current === 'email' && (
+                    <div className="space-y-4">
+                      <h4 className="text-2xl font-semibold leading-tight">Votre email</h4>
+                      <p className="text-white/80 text-sm">Entrez votre adresse email pour commencer votre candidature.</p>
+                      <div className="relative">
+                        <input
+                          type="email"
+                          inputMode="email"
+                          autoComplete="email"
+                          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                          autoFocus
+                          value={email}
+                          onChange={(e)=>{
+                            setEmail(e.target.value);
+                            clearFieldError('email');
+                          }}
+                          onKeyDown={(e)=>{ if (e.key === 'Enter') { e.preventDefault(); e.stopPropagation(); onOk(); } }}
+                          placeholder="prenom.nom@email.com"
+                          className={`w-full px-4 py-2.5 rounded-lg bg-white/10 border outline-none text-white placeholder:text-white/60 focus-visible:ring-2 ring-[#F7B096]/60 ${validationErrors.email ? 'border-red-400' : 'border-white/30'}`}
+                        />
+                        {validationErrors.email && <p className="text-red-400 text-xs mt-1">Veuillez entrer une adresse email valide</p>}
+                      </div>
+                    </div>
+                  )}
+
                   {current === 'ticket' && (
                     <div className="space-y-4">
                       {[
-                        { k: 'under_5k', label: 'Moins de 5k€' },
-                        { k: '5_10k', label: 'Entre 5 et 10k€' },
-                        { k: '10_25k', label: 'Entre 10 et 25k€' },
-                        { k: '25_50k', label: 'Entre 25 et 50k€' },
-                        { k: '50_100k', label: 'Entre 50 et 100k€' },
-                        { k: '100k_plus', label: 'Plus de 100k€' },
+                        { k: 'under_20k', label: 'Moins de 20k€' },
+                        { k: '20_40k', label: 'Entre 20 et 40k€' },
+                        { k: '40_60k', label: 'Entre 40 et 60k€' },
+                        { k: '60_80k', label: 'Entre 60 et 80k€' },
+                        { k: '100_500k', label: 'Entre 100 et 500k€' },
+                        { k: '500k_plus', label: 'Plus de 500k€' },
                       ].map((o, idx) => {
                         const selected = data.ticket_target === o.k;
                         return (
@@ -503,7 +681,7 @@ export default function WaitlistModal() {
                           </button>
                         );
                       })}
-                      {under5k && (<p className="text-xs text-white/70">Pour les tickets inférieurs à 5k€, l'étape RDV est sautée.</p>)}
+                      {/** Message supprimé: pas nécessaire pour under_5k **/}
                     </div>
                   )}
 
@@ -530,7 +708,7 @@ export default function WaitlistModal() {
 
                   {current === 'discovery' && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {['LinkedIn','Instagram / Tiktok','Podcast / Youtube','Un membre du club','Conference','Recherche Google','Autre'].map((opt, idx) => {
+                      {['LinkedIn','Instagram / Tiktok','Podcast / Youtube','Un membre de la communauté','Conference','Recherche Google','Autre'].map((opt, idx) => {
                         const selected = data.discovery === opt;
                         return (
                           <button key={opt} type="button"
@@ -549,15 +727,33 @@ export default function WaitlistModal() {
                   {current === 'profile' && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm text-white/80 mb-1">Prénom</label>
-                        <input value={data.first_name ?? ''} onChange={(e)=>startTransition(()=>setData(d=>({...d, first_name: e.target.value})))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="Votre Prénom" />
+                        <label className="block text-sm text-white/80 mb-1">Prénom <span className="text-red-400">*</span></label>
+                        <input 
+                          value={data.first_name ?? ''} 
+                          onChange={(e)=>{
+                            setData(d=>({...d, first_name: e.target.value}));
+                            clearFieldError('first_name');
+                          }}
+                          className={`w-full px-4 py-2 rounded-lg bg-white/10 border outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60 ${validationErrors.first_name ? 'border-red-400' : 'border-white/30'}`} 
+                          placeholder="Votre Prénom" 
+                        />
+                        {validationErrors.first_name && <p className="text-red-400 text-xs mt-1">Ce champ est obligatoire</p>}
                       </div>
                       <div>
-                        <label className="block text-sm text-white/80 mb-1">Nom</label>
-                        <input value={data.last_name ?? ''} onChange={(e)=>startTransition(()=>setData(d=>({...d, last_name: e.target.value})))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="Votre nom" />
+                        <label className="block text-sm text-white/80 mb-1">Nom <span className="text-red-400">*</span></label>
+                        <input 
+                          value={data.last_name ?? ''} 
+                          onChange={(e)=>{
+                            setData(d=>({...d, last_name: e.target.value}));
+                            clearFieldError('last_name');
+                          }}
+                          className={`w-full px-4 py-2 rounded-lg bg-white/10 border outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60 ${validationErrors.last_name ? 'border-red-400' : 'border-white/30'}`} 
+                          placeholder="Votre nom" 
+                        />
+                        {validationErrors.last_name && <p className="text-red-400 text-xs mt-1">Ce champ est obligatoire</p>}
                       </div>
                       <div>
-                        <label className="block text-sm text-white/80 mb-1">Téléphone</label>
+                        <label className="block text-sm text-white/80 mb-1">Téléphone <span className="text-red-400">*</span></label>
                         <div className="grid grid-cols-[180px_1fr] gap-2 items-center">
                           <div className="hidden absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                             <span className="text-base">????</span>
@@ -584,7 +780,7 @@ export default function WaitlistModal() {
                                   className={`w-full px-3 py-2 text-sm text-left ${c.code === (data.phone_country ?? 'FR') ? 'bg-white/10 text-white' : 'text-white/90 hover:bg-white/10'}`}
                                   onClick={() => {
                                     const code = c.code as CountryCode;
-                                    startTransition(()=>setData(d => ({ ...d, phone_country: code, phone: formatPhoneByCountry(d.phone ?? '', code) })));
+                                    setData(d => ({ ...d, phone_country: code, phone: formatPhoneByCountry(d.phone ?? '', code) }));
                                     setCountryOpen(false);
                                   }}
                                 >
@@ -599,19 +795,34 @@ export default function WaitlistModal() {
                             inputMode="tel"
                             autoComplete="tel"
                             value={data.phone ?? ''}
-                            onFocus={() => { if (!data.phone) { const cc = (data.phone_country ?? 'FR') as CountryCode; const dial = getCountry(cc).dial; startTransition(()=>setData(d => ({ ...d, phone: cc === 'FR' ? dial + ' 6 ' : dial + ' ' }))); } }}
-                            onChange={(e)=>{ const cc = (data.phone_country ?? 'FR') as CountryCode; startTransition(()=>setData(d=>({...d, phone: formatPhoneByCountry(e.target.value, cc)}))); }}
+                            onFocus={() => { if (!data.phone) { const cc = (data.phone_country ?? 'FR') as CountryCode; const dial = getCountry(cc).dial; setData(d => ({ ...d, phone: dial })); } }}
+                            onChange={(e)=>{ 
+                              const cc = (data.phone_country ?? 'FR') as CountryCode; 
+                              setData(d=>({...d, phone: formatPhoneByCountry(e.target.value, cc)}));
+                              clearFieldError('phone');
+                            }}
+                            onKeyDown={(e)=>{ 
+                              if (e.key === 'Enter') { 
+                                e.preventDefault(); 
+                                e.stopPropagation(); 
+                                // Vérifier que tous les champs sont remplis avant de valider
+                                if (data.first_name?.trim() && data.last_name?.trim() && data.phone?.trim() && data.phone !== '+33' && data.phone !== getCountry((data.phone_country ?? 'FR') as CountryCode).dial) {
+                                  onOk(); 
+                                }
+                              } 
+                            }}
                             maxLength={24}
-                            className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60"
+                            className={`w-full px-4 py-2 rounded-lg bg-white/10 border outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60 ${validationErrors.phone ? 'border-red-400' : 'border-white/30'}`}
                             placeholder={getCountry((data.phone_country ?? 'FR') as CountryCode).placeholder}
                           />
                         </div>
+                        {validationErrors.phone && <p className="text-red-400 text-xs mt-1">Veuillez entrer un numéro de téléphone valide</p>}
                       </div>
                       {/* consent checkbox removed */}
                     </div>
                   )}
 
-                  {current === 'submit' && (
+                  {(current as any) === 'submit' && (
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <input id="consent" type="checkbox" checked={data.consent === true} onChange={(e)=>startTransition(()=>setData(d=>({...d, consent: e.target.checked})))} />
@@ -648,7 +859,7 @@ export default function WaitlistModal() {
           <div className="absolute left-0 right-0 bottom-0 z-10 grid grid-cols-[auto_1fr_auto] items-center px-6 sm:px-10 py-3 bg-black/20 md:backdrop-blur-sm border-t border-white/10">
             <div className="flex items-center">
               <button type="button" onClick={prev} disabled={stepIndex === 0} className={`px-3 py-2 rounded-full ${stepIndex===0 ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Précédent">
-                <ArrowUp />
+                <ArrowLeft />
               </button>
             </div>
             <div className="flex items-center justify-center">
@@ -661,7 +872,7 @@ export default function WaitlistModal() {
             <div className="flex items-center justify-end">
               {current !== 'success' && (
                 <button type="button" onClick={current === 'profile' ? onOk : next} disabled={!canNext} className={`px-3 py-2 rounded-full ${!canNext ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Suivant">
-                  <ArrowDown />
+                  <ArrowRight />
                 </button>
               )}
             </div>

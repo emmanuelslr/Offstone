@@ -4,33 +4,433 @@ import type * as prismic from "@prismicio/client";
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
+type PickContentRelationshipFieldData<
+  TRelationship extends
+    | prismic.CustomTypeModelFetchCustomTypeLevel1
+    | prismic.CustomTypeModelFetchCustomTypeLevel2
+    | prismic.CustomTypeModelFetchGroupLevel1
+    | prismic.CustomTypeModelFetchGroupLevel2,
+  TData extends Record<
+    string,
+    | prismic.AnyRegularField
+    | prismic.GroupField
+    | prismic.NestedGroupField
+    | prismic.SliceZone
+  >,
+  TLang extends string,
+> =
+  // Content relationship fields
+  {
+    [TSubRelationship in Extract<
+      TRelationship["fields"][number],
+      prismic.CustomTypeModelFetchContentRelationshipLevel1
+    > as TSubRelationship["id"]]: ContentRelationshipFieldWithData<
+      TSubRelationship["customtypes"],
+      TLang
+    >;
+  } & // Group
+  {
+    [TGroup in Extract<
+      TRelationship["fields"][number],
+      | prismic.CustomTypeModelFetchGroupLevel1
+      | prismic.CustomTypeModelFetchGroupLevel2
+    > as TGroup["id"]]: TData[TGroup["id"]] extends prismic.GroupField<
+      infer TGroupData
+    >
+      ? prismic.GroupField<
+          PickContentRelationshipFieldData<TGroup, TGroupData, TLang>
+        >
+      : never;
+  } & // Other fields
+  {
+    [TFieldKey in Extract<
+      TRelationship["fields"][number],
+      string
+    >]: TFieldKey extends keyof TData ? TData[TFieldKey] : never;
+  };
+
+type ContentRelationshipFieldWithData<
+  TCustomType extends
+    | readonly (prismic.CustomTypeModelFetchCustomTypeLevel1 | string)[]
+    | readonly (prismic.CustomTypeModelFetchCustomTypeLevel2 | string)[],
+  TLang extends string = string,
+> = {
+  [ID in Exclude<
+    TCustomType[number],
+    string
+  >["id"]]: prismic.ContentRelationshipField<
+    ID,
+    TLang,
+    PickContentRelationshipFieldData<
+      Extract<TCustomType[number], { id: ID }>,
+      Extract<prismic.Content.AllDocumentTypes, { type: ID }>["data"],
+      TLang
+    >
+  >;
+}[Exclude<TCustomType[number], string>["id"]];
+
+/**
+ * Item in *Article → Sections avec images (optionnel)*
+ */
+export interface ArticleDocumentDataContentSectionsItem {
+  /**
+   * Titre de section (H2) field in *Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: Titre qui apparaîtra en H2
+   * - **API ID Path**: article.content_sections[].section_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Image de section (16:9) field in *Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.content_sections[].section_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  section_image: prismic.ImageField<never>;
+
+  /**
+   * Contenu de la section field in *Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Contenu qui apparaîtra après l'image
+   * - **API ID Path**: article.content_sections[].section_content
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  section_content: prismic.RichTextField;
+}
+
+/**
+ * Item in *Article → FAQ*
+ */
+export interface ArticleDocumentDataFaqItemsItem {
+  /**
+   * Question field in *Article → FAQ*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.faq_items[].question
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  question: prismic.KeyTextField;
+
+  /**
+   * Réponse field in *Article → FAQ*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.faq_items[].answer
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  answer: prismic.RichTextField;
+}
+
+/**
+ * Item in *Article → Auteurs*
+ */
+export interface ArticleDocumentDataAuthorsItem {
+  /**
+   * Nom field in *Article → Auteurs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.authors[].name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Rôle field in *Article → Auteurs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.authors[].role
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  role: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Article → SEO*
+ */
+export interface ArticleDocumentDataSeoItem {
+  /**
+   * Meta title field in *Article → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Article → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Open Graph image field in *Article → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Article → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Article → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: article.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+type ArticleDocumentDataSlicesSlice = never;
+
 /**
  * Content for Article documents
  */
 interface ArticleDocumentData {
   /**
    * Title field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
   title: prismic.KeyTextField;
 
   /**
    * Excerpt field in *Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.excerpt
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
    */
   excerpt: prismic.KeyTextField;
 
   /**
    * Body field in *Article*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   body: prismic.RichTextField;
 
   /**
    * Published at field in *Article*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.published_at
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
    */
   published_at: prismic.DateField;
+
+  /**
+   * Classe d'actifs field in *Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.asset_class
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  asset_class: prismic.SelectField<
+    "résidentiel" | "bureaux" | "hôtellerie" | "logistique"
+  >;
+
+  /**
+   * Thématique field in *Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.theme
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  theme: prismic.SelectField<
+    "méthode" | "fiscalité" | "études_de_cas" | "marchés"
+  >;
+
+  /**
+   * Niveau field in *Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.level
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  level: prismic.SelectField<"découverte" | "intermédiaire" | "avancé">;
+
+  /**
+   * Temps de lecture (minutes) field in *Article*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.reading_time
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  reading_time: prismic.NumberField;
+
+  /**
+   * Article mis en avant field in *Article*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: article.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
+
+  /**
+   * Catégorie (obligatoire) field in *Article*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.category_ref
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  category_ref: prismic.ContentRelationshipField<"resource_category">;
+
+  /**
+   * Image hero (optionnel) field in *Article*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.hero_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  hero_image: prismic.ImageField<never>;
+
+  /**
+   * Sections avec images (optionnel) field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.content_sections[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  content_sections: prismic.GroupField<
+    Simplify<ArticleDocumentDataContentSectionsItem>
+  >;
+
+  /**
+   * FAQ field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.faq_items[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  faq_items: prismic.GroupField<Simplify<ArticleDocumentDataFaqItemsItem>>;
+
+  /**
+   * Auteurs field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.authors[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  authors: prismic.GroupField<Simplify<ArticleDocumentDataAuthorsItem>>;
+
+  /**
+   * Source (optionnel) field in *Article*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.source_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  source_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * SEO field in *Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<ArticleDocumentDataSeoItem>>;
+
+  /**
+   * Slice Zone field in *Article*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: article.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ArticleDocumentDataSlicesSlice>;
 }
 
 /**
  * Article document from Prismic
+ *
+ * - **API ID**: `article`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
  */
 export type ArticleDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<
@@ -39,7 +439,1992 @@ export type ArticleDocument<Lang extends string = string> =
     Lang
   >;
 
-export type AllDocumentTypes = ArticleDocument;
+/**
+ * Item in *Case Study → KPIs*
+ */
+export interface CaseStudyDocumentDataKpiGroupItem {
+  /**
+   * Label field in *Case Study → KPIs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.kpi_group[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * Valeur field in *Case Study → KPIs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.kpi_group[].value
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  value: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Case Study → Timeline*
+ */
+export interface CaseStudyDocumentDataTimelineItem {
+  /**
+   * Date field in *Case Study → Timeline*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.timeline[].date
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  date: prismic.KeyTextField;
+
+  /**
+   * Événement field in *Case Study → Timeline*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.timeline[].event
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  event: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Case Study → SEO*
+ */
+export interface CaseStudyDocumentDataSeoItem {
+  /**
+   * Meta title field in *Case Study → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Case Study → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Case Study → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Case Study → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Case Study → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: case_study.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+type CaseStudyDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Case Study documents
+ */
+interface CaseStudyDocumentData {
+  /**
+   * Titre field in *Case Study*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Chapeau field in *Case Study*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.excerpt
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  excerpt: prismic.KeyTextField;
+
+  /**
+   * Ville field in *Case Study*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.city
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  city: prismic.KeyTextField;
+
+  /**
+   * Date field in *Case Study*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.published_at
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  published_at: prismic.DateField;
+
+  /**
+   * Image field in *Case Study*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.hero_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  hero_image: prismic.ImageField<never>;
+
+  /**
+   * KPIs field in *Case Study*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.kpi_group[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  kpi_group: prismic.GroupField<Simplify<CaseStudyDocumentDataKpiGroupItem>>;
+
+  /**
+   * Timeline field in *Case Study*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.timeline[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  timeline: prismic.GroupField<Simplify<CaseStudyDocumentDataTimelineItem>>;
+
+  /**
+   * Contenu field in *Case Study*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  body: prismic.RichTextField;
+
+  /**
+   * Thèse (catégorie) field in *Case Study*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.thesis_ref
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  thesis_ref: prismic.ContentRelationshipField<"resource_category">;
+
+  /**
+   * SEO field in *Case Study*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<CaseStudyDocumentDataSeoItem>>;
+
+  /**
+   * Slice Zone field in *Case Study*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: case_study.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<CaseStudyDocumentDataSlicesSlice>;
+}
+
+/**
+ * Case Study document from Prismic
+ *
+ * - **API ID**: `case_study`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type CaseStudyDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<CaseStudyDocumentData>,
+    "case_study",
+    Lang
+  >;
+
+/**
+ * Item in *Glossary Term → SEO*
+ */
+export interface GlossaryTermDocumentDataSeoItem {
+  /**
+   * Meta title field in *Glossary Term → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Glossary Term → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Glossary Term → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Glossary Term → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Glossary Term → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: glossary_term.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Glossary Term documents
+ */
+interface GlossaryTermDocumentData {
+  /**
+   * Terme field in *Glossary Term*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.term
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  term: prismic.KeyTextField;
+
+  /**
+   * Définition field in *Glossary Term*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.definition_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  definition_richtext: prismic.RichTextField;
+
+  /**
+   * Formule (code) field in *Glossary Term*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.formula_code
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  formula_code: prismic.KeyTextField;
+
+  /**
+   * Exemple field in *Glossary Term*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.example_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  example_richtext: prismic.RichTextField;
+
+  /**
+   * Erreurs fréquentes field in *Glossary Term*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.mistakes_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  mistakes_richtext: prismic.RichTextField;
+
+  /**
+   * SEO field in *Glossary Term*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: glossary_term.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<GlossaryTermDocumentDataSeoItem>>;
+}
+
+/**
+ * Glossary Term document from Prismic
+ *
+ * - **API ID**: `glossary_term`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type GlossaryTermDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<GlossaryTermDocumentData>,
+    "glossary_term",
+    Lang
+  >;
+
+/**
+ * Item in *Interview Item → Key takeaways*
+ */
+export interface InterviewItemDocumentDataKeyTakeawaysItem {
+  /**
+   * Point field in *Interview Item → Key takeaways*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.key_takeaways[].item
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  item: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Interview Item → SEO*
+ */
+export interface InterviewItemDocumentDataSeoItem {
+  /**
+   * Meta title field in *Interview Item → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Interview Item → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Interview Item → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Interview Item → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Interview Item → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: interview_item.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+type InterviewItemDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Interview Item documents
+ */
+interface InterviewItemDocumentData {
+  /**
+   * Titre field in *Interview Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Embed (vidéo/podcast) field in *Interview Item*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.embed
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/embed
+   */
+  embed: prismic.EmbedField;
+
+  /**
+   * Résumé field in *Interview Item*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.summary_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  summary_richtext: prismic.RichTextField;
+
+  /**
+   * Key takeaways field in *Interview Item*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.key_takeaways[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  key_takeaways: prismic.GroupField<
+    Simplify<InterviewItemDocumentDataKeyTakeawaysItem>
+  >;
+
+  /**
+   * URL externe field in *Interview Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.external_url
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  external_url: prismic.KeyTextField;
+
+  /**
+   * SEO field in *Interview Item*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<InterviewItemDocumentDataSeoItem>>;
+
+  /**
+   * Slice Zone field in *Interview Item*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: interview_item.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<InterviewItemDocumentDataSlicesSlice>;
+}
+
+/**
+ * Interview Item document from Prismic
+ *
+ * - **API ID**: `interview_item`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type InterviewItemDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<InterviewItemDocumentData>,
+    "interview_item",
+    Lang
+  >;
+
+/**
+ * Item in *Person → Liens*
+ */
+export interface PersonDocumentDataLinksItem {
+  /**
+   * Label field in *Person → Liens*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.links[].label
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  label: prismic.KeyTextField;
+
+  /**
+   * URL field in *Person → Liens*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.links[].url
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  url: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Person → SEO*
+ */
+export interface PersonDocumentDataSeoItem {
+  /**
+   * Meta title field in *Person → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Person → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Person → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Person → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Person → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: person.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Person documents
+ */
+interface PersonDocumentData {
+  /**
+   * Nom complet field in *Person*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.full_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  full_name: prismic.KeyTextField;
+
+  /**
+   * Bio courte field in *Person*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.short_bio
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  short_bio: prismic.RichTextField;
+
+  /**
+   * Photo field in *Person*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.photo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  photo: prismic.ImageField<never>;
+
+  /**
+   * Liens field in *Person*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  links: prismic.GroupField<Simplify<PersonDocumentDataLinksItem>>;
+
+  /**
+   * SEO field in *Person*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: person.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<PersonDocumentDataSeoItem>>;
+}
+
+/**
+ * Person document from Prismic
+ *
+ * - **API ID**: `person`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PersonDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<PersonDocumentData>, "person", Lang>;
+
+/**
+ * Item in *Press Item → SEO*
+ */
+export interface PressItemDocumentDataSeoItem {
+  /**
+   * Meta title field in *Press Item → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Press Item → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Press Item → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Press Item → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Press Item → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: press_item.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Press Item documents
+ */
+interface PressItemDocumentData {
+  /**
+   * Titre field in *Press Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Source field in *Press Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.source
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  source: prismic.KeyTextField;
+
+  /**
+   * Date field in *Press Item*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  date: prismic.DateField;
+
+  /**
+   * Résumé field in *Press Item*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.summary_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  summary_richtext: prismic.RichTextField;
+
+  /**
+   * Citation courte (≤25 mots) field in *Press Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.quote_short
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  quote_short: prismic.KeyTextField;
+
+  /**
+   * URL externe field in *Press Item*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.external_url
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  external_url: prismic.KeyTextField;
+
+  /**
+   * SEO field in *Press Item*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: press_item.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<PressItemDocumentDataSeoItem>>;
+}
+
+/**
+ * Press Item document from Prismic
+ *
+ * - **API ID**: `press_item`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type PressItemDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<PressItemDocumentData>,
+    "press_item",
+    Lang
+  >;
+
+/**
+ * Item in *QVEMA Episode → Points clés*
+ */
+export interface QvemaEpisodeDocumentDataKeyTakeawaysItem {
+  /**
+   * Point field in *QVEMA Episode → Points clés*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.key_takeaways[].item
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  item: prismic.KeyTextField;
+}
+
+/**
+ * Item in *QVEMA Episode → SEO*
+ */
+export interface QvemaEpisodeDocumentDataSeoItem {
+  /**
+   * Meta title field in *QVEMA Episode → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *QVEMA Episode → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *QVEMA Episode → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *QVEMA Episode → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *QVEMA Episode → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: qvema_episode.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for QVEMA Episode documents
+ */
+interface QvemaEpisodeDocumentData {
+  /**
+   * Titre field in *QVEMA Episode*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Numéro de saison field in *QVEMA Episode*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.season_number
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  season_number: prismic.NumberField;
+
+  /**
+   * Numéro d'épisode field in *QVEMA Episode*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.episode_number
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  episode_number: prismic.NumberField;
+
+  /**
+   * Date de diffusion field in *QVEMA Episode*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.air_date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  air_date: prismic.DateField;
+
+  /**
+   * Image field in *QVEMA Episode*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.hero_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  hero_image: prismic.ImageField<never>;
+
+  /**
+   * Vidéo (replay) field in *QVEMA Episode*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.embed_video
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/embed
+   */
+  embed_video: prismic.EmbedField;
+
+  /**
+   * Nom du projet field in *QVEMA Episode*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.project_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  project_name: prismic.KeyTextField;
+
+  /**
+   * Issue du deal field in *QVEMA Episode*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.deal_outcome
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  deal_outcome: prismic.SelectField<
+    "investi" | "non_investi" | "en_discussion"
+  >;
+
+  /**
+   * Résumé field in *QVEMA Episode*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.summary_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  summary_richtext: prismic.RichTextField;
+
+  /**
+   * Points clés field in *QVEMA Episode*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.key_takeaways[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  key_takeaways: prismic.GroupField<
+    Simplify<QvemaEpisodeDocumentDataKeyTakeawaysItem>
+  >;
+
+  /**
+   * SEO field in *QVEMA Episode*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: qvema_episode.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<QvemaEpisodeDocumentDataSeoItem>>;
+}
+
+/**
+ * QVEMA Episode document from Prismic
+ *
+ * - **API ID**: `qvema_episode`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type QvemaEpisodeDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<QvemaEpisodeDocumentData>,
+    "qvema_episode",
+    Lang
+  >;
+
+/**
+ * Item in *Resource Article → Sections avec images (optionnel)*
+ */
+export interface ResourceArticleDocumentDataContentSectionsItem {
+  /**
+   * Titre de section (H2) field in *Resource Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.content_sections[].section_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  section_title: prismic.KeyTextField;
+
+  /**
+   * Image de section (16:9) field in *Resource Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.content_sections[].section_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  section_image: prismic.ImageField<never>;
+
+  /**
+   * Contenu de la section field in *Resource Article → Sections avec images (optionnel)*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.content_sections[].section_content
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  section_content: prismic.RichTextField;
+}
+
+/**
+ * Item in *Resource Article → FAQ*
+ */
+export interface ResourceArticleDocumentDataFaqItemsItem {
+  /**
+   * Question field in *Resource Article → FAQ*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.faq_items[].question
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  question: prismic.KeyTextField;
+
+  /**
+   * Réponse field in *Resource Article → FAQ*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.faq_items[].answer
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  answer: prismic.RichTextField;
+}
+
+/**
+ * Item in *Resource Article → Auteurs*
+ */
+export interface ResourceArticleDocumentDataAuthorsItem {
+  /**
+   * Nom field in *Resource Article → Auteurs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.authors[].name
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  name: prismic.KeyTextField;
+
+  /**
+   * Rôle field in *Resource Article → Auteurs*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.authors[].role
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  role: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Resource Article → SEO*
+ */
+export interface ResourceArticleDocumentDataSeoItem {
+  /**
+   * Meta title field in *Resource Article → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Resource Article → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Open Graph image field in *Resource Article → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Resource Article → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Resource Article → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: resource_article.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+type ResourceArticleDocumentDataSlicesSlice = never;
+
+/**
+ * Content for Resource Article documents
+ */
+interface ResourceArticleDocumentData {
+  /**
+   * Title field in *Resource Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Excerpt field in *Resource Article*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.excerpt
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  excerpt: prismic.KeyTextField;
+
+  /**
+   * Body field in *Resource Article*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.body
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  body: prismic.RichTextField;
+
+  /**
+   * Published at field in *Resource Article*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.published_at
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  published_at: prismic.DateField;
+
+  /**
+   * Classe d'actifs field in *Resource Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.asset_class
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  asset_class: prismic.SelectField<
+    "résidentiel" | "bureaux" | "hôtellerie" | "logistique"
+  >;
+
+  /**
+   * Thématique field in *Resource Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.theme
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  theme: prismic.SelectField<
+    "méthode" | "fiscalité" | "études_de_cas" | "marchés"
+  >;
+
+  /**
+   * Niveau field in *Resource Article*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.level
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  level: prismic.SelectField<"découverte" | "intermédiaire" | "avancé">;
+
+  /**
+   * Temps de lecture (minutes) field in *Resource Article*
+   *
+   * - **Field Type**: Number
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.reading_time
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/number
+   */
+  reading_time: prismic.NumberField;
+
+  /**
+   * Article mis en avant field in *Resource Article*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: resource_article.featured
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  featured: prismic.BooleanField;
+
+  /**
+   * Catégorie (obligatoire) field in *Resource Article*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.category_ref
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+   */
+  category_ref: prismic.ContentRelationshipField<"resource_category">;
+
+  /**
+   * Image hero (optionnel) field in *Resource Article*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.hero_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  hero_image: prismic.ImageField<never>;
+
+  /**
+   * Sections avec images (optionnel) field in *Resource Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.content_sections[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  content_sections: prismic.GroupField<
+    Simplify<ResourceArticleDocumentDataContentSectionsItem>
+  >;
+
+  /**
+   * FAQ field in *Resource Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.faq_items[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  faq_items: prismic.GroupField<
+    Simplify<ResourceArticleDocumentDataFaqItemsItem>
+  >;
+
+  /**
+   * Auteurs field in *Resource Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.authors[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  authors: prismic.GroupField<Simplify<ResourceArticleDocumentDataAuthorsItem>>;
+
+  /**
+   * Source (optionnel) field in *Resource Article*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.source_link
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  source_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * SEO field in *Resource Article*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<ResourceArticleDocumentDataSeoItem>>;
+
+  /**
+   * Slice Zone field in *Resource Article*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_article.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<ResourceArticleDocumentDataSlicesSlice>;
+}
+
+/**
+ * Resource Article document from Prismic
+ *
+ * - **API ID**: `resource_article`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ResourceArticleDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ResourceArticleDocumentData>,
+    "resource_article",
+    Lang
+  >;
+
+/**
+ * Item in *Resource Category → Mini-FAQ (3–5)*
+ */
+export interface ResourceCategoryDocumentDataMiniFaqGroupItem {
+  /**
+   * Question field in *Resource Category → Mini-FAQ (3–5)*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.mini_faq_group[].question
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  question: prismic.KeyTextField;
+
+  /**
+   * Réponse field in *Resource Category → Mini-FAQ (3–5)*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.mini_faq_group[].answer
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  answer: prismic.RichTextField;
+}
+
+/**
+ * Item in *Resource Category → SEO*
+ */
+export interface ResourceCategoryDocumentDataSeoItem {
+  /**
+   * Meta title field in *Resource Category → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Resource Category → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Open Graph image field in *Resource Category → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Resource Category → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Resource Category → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: resource_category.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Resource Category documents
+ */
+interface ResourceCategoryDocumentData {
+  /**
+   * Titre (H1) field in *Resource Category*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Image hero field in *Resource Category*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.hero_image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  hero_image: prismic.ImageField<never>;
+
+  /**
+   * Introduction (400–800 mots) field in *Resource Category*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.intro_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  intro_richtext: prismic.RichTextField;
+
+  /**
+   * Mini-FAQ (3–5) field in *Resource Category*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.mini_faq_group[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  mini_faq_group: prismic.GroupField<
+    Simplify<ResourceCategoryDocumentDataMiniFaqGroupItem>
+  >;
+
+  /**
+   * Type de catégorie field in *Resource Category*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.category_type
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/select
+   */
+  category_type: prismic.SelectField<
+    | "guides"
+    | "strategie-theses"
+    | "fiscalite-immobiliere"
+    | "structuration-reglementation"
+    | "asset-management-marche"
+    | "etudes-de-cas"
+    | "glossaire"
+    | "webinars-videos"
+    | "outils-modeles"
+    | "jonathan"
+  >;
+
+  /**
+   * SEO field in *Resource Category*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource_category.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<ResourceCategoryDocumentDataSeoItem>>;
+}
+
+/**
+ * Resource Category document from Prismic
+ *
+ * - **API ID**: `resource_category`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ResourceCategoryDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ResourceCategoryDocumentData>,
+    "resource_category",
+    Lang
+  >;
+
+/**
+ * Item in *Tool → SEO*
+ */
+export interface ToolDocumentDataSeoItem {
+  /**
+   * Meta title field in *Tool → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Tool → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Tool → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Tool → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Tool → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: tool.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Tool documents
+ */
+interface ToolDocumentData {
+  /**
+   * Titre field in *Tool*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Fichier field in *Tool*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.file
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+   */
+  file: prismic.LinkToMediaField<prismic.FieldState, never>;
+
+  /**
+   * Mode d'emploi field in *Tool*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.how_to_use_richtext
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  how_to_use_richtext: prismic.RichTextField;
+
+  /**
+   * SEO field in *Tool*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: tool.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<ToolDocumentDataSeoItem>>;
+}
+
+/**
+ * Tool document from Prismic
+ *
+ * - **API ID**: `tool`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ToolDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<Simplify<ToolDocumentData>, "tool", Lang>;
+
+/**
+ * Item in *Webinar → Key takeaways*
+ */
+export interface WebinarDocumentDataKeyTakeawaysItem {
+  /**
+   * Point field in *Webinar → Key takeaways*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.key_takeaways[].item
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  item: prismic.KeyTextField;
+}
+
+/**
+ * Item in *Webinar → SEO*
+ */
+export interface WebinarDocumentDataSeoItem {
+  /**
+   * Meta title field in *Webinar → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.seo[].meta_title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta description field in *Webinar → SEO*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.seo[].meta_description
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * OG image field in *Webinar → SEO*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.seo[].og_image
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  og_image: prismic.ImageField<never>;
+
+  /**
+   * Canonical URL field in *Webinar → SEO*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.seo[].canonical_url
+   * - **Documentation**: https://prismic.io/docs/fields/link
+   */
+  canonical_url: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
+
+  /**
+   * Noindex field in *Webinar → SEO*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: webinar.seo[].noindex
+   * - **Documentation**: https://prismic.io/docs/fields/boolean
+   */
+  noindex: prismic.BooleanField;
+}
+
+/**
+ * Content for Webinar documents
+ */
+interface WebinarDocumentData {
+  /**
+   * Titre field in *Webinar*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Vidéo field in *Webinar*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.embed_video
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/embed
+   */
+  embed_video: prismic.EmbedField;
+
+  /**
+   * Key takeaways field in *Webinar*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.key_takeaways[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  key_takeaways: prismic.GroupField<
+    Simplify<WebinarDocumentDataKeyTakeawaysItem>
+  >;
+
+  /**
+   * Slides field in *Webinar*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.slides_download
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+   */
+  slides_download: prismic.LinkToMediaField<prismic.FieldState, never>;
+
+  /**
+   * Date field in *Webinar*
+   *
+   * - **Field Type**: Date
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.event_date
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/date
+   */
+  event_date: prismic.DateField;
+
+  /**
+   * SEO field in *Webinar*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: webinar.seo[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  seo: prismic.GroupField<Simplify<WebinarDocumentDataSeoItem>>;
+}
+
+/**
+ * Webinar document from Prismic
+ *
+ * - **API ID**: `webinar`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type WebinarDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<WebinarDocumentData>,
+    "webinar",
+    Lang
+  >;
+
+export type AllDocumentTypes =
+  | ArticleDocument
+  | CaseStudyDocument
+  | GlossaryTermDocument
+  | InterviewItemDocument
+  | PersonDocument
+  | PressItemDocument
+  | QvemaEpisodeDocument
+  | ResourceArticleDocument
+  | ResourceCategoryDocument
+  | ToolDocument
+  | WebinarDocument;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -61,6 +2446,58 @@ declare module "@prismicio/client" {
   }
 
   namespace Content {
-    export type { ArticleDocument, ArticleDocumentData, AllDocumentTypes };
+    export type {
+      ArticleDocument,
+      ArticleDocumentData,
+      ArticleDocumentDataContentSectionsItem,
+      ArticleDocumentDataFaqItemsItem,
+      ArticleDocumentDataAuthorsItem,
+      ArticleDocumentDataSeoItem,
+      ArticleDocumentDataSlicesSlice,
+      CaseStudyDocument,
+      CaseStudyDocumentData,
+      CaseStudyDocumentDataKpiGroupItem,
+      CaseStudyDocumentDataTimelineItem,
+      CaseStudyDocumentDataSeoItem,
+      CaseStudyDocumentDataSlicesSlice,
+      GlossaryTermDocument,
+      GlossaryTermDocumentData,
+      GlossaryTermDocumentDataSeoItem,
+      InterviewItemDocument,
+      InterviewItemDocumentData,
+      InterviewItemDocumentDataKeyTakeawaysItem,
+      InterviewItemDocumentDataSeoItem,
+      InterviewItemDocumentDataSlicesSlice,
+      PersonDocument,
+      PersonDocumentData,
+      PersonDocumentDataLinksItem,
+      PersonDocumentDataSeoItem,
+      PressItemDocument,
+      PressItemDocumentData,
+      PressItemDocumentDataSeoItem,
+      QvemaEpisodeDocument,
+      QvemaEpisodeDocumentData,
+      QvemaEpisodeDocumentDataKeyTakeawaysItem,
+      QvemaEpisodeDocumentDataSeoItem,
+      ResourceArticleDocument,
+      ResourceArticleDocumentData,
+      ResourceArticleDocumentDataContentSectionsItem,
+      ResourceArticleDocumentDataFaqItemsItem,
+      ResourceArticleDocumentDataAuthorsItem,
+      ResourceArticleDocumentDataSeoItem,
+      ResourceArticleDocumentDataSlicesSlice,
+      ResourceCategoryDocument,
+      ResourceCategoryDocumentData,
+      ResourceCategoryDocumentDataMiniFaqGroupItem,
+      ResourceCategoryDocumentDataSeoItem,
+      ToolDocument,
+      ToolDocumentData,
+      ToolDocumentDataSeoItem,
+      WebinarDocument,
+      WebinarDocumentData,
+      WebinarDocumentDataKeyTakeawaysItem,
+      WebinarDocumentDataSeoItem,
+      AllDocumentTypes,
+    };
   }
 }

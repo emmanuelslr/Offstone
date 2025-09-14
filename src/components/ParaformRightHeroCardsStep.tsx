@@ -205,10 +205,26 @@ export default function ParaformRightHeroCardsStep({
   const xRaw = centerOffset - (pos * step);
   const x = Math.round(xRaw);
 
-  // ===== Crop rectangulaire — largeur en phase croppée alignée avec le cadre =====
+  // ===== Crop rectangulaire — adapté à la taille pour éviter la superposition sur mobile =====
   const maxInset = Math.floor(size / 2 - 8);
-  const sideCrop = Math.min(maxInset, Math.round(cropPx * 3.45)); // léger resserrage (moins large) // élargit encore la fenêtre croppée (cadre + image)
-  const vertCrop = Math.min(maxInset, Math.round(cropPx * 1.22));
+  let sideCrop: number;
+  let vertCrop: number;
+  if (size < 480) {
+    // Mobile: fenêtre plus large pour laisser respirer badge + glass
+    sideCrop = Math.min(maxInset, Math.round(size * 0.18));
+    vertCrop = Math.min(maxInset, Math.round(size * 0.12));
+  } else if (size < 680) {
+    // Tablette petite
+    sideCrop = Math.min(maxInset, Math.round(size * 0.22));
+    vertCrop = Math.min(maxInset, Math.round(size * 0.14));
+  } else {
+    // Desktop: comportement initial préservé
+    sideCrop = Math.min(maxInset, Math.round(cropPx * 3.45));
+    vertCrop = Math.min(maxInset, Math.round(cropPx * 1.22));
+  }
+  // Padding interne du cadre blanc pour le rendre moins large que la zone clippée
+  // Accentué sur mobile pour un cadre encore plus étroit
+  const framePad = size < 360 ? 26 : size < 480 ? 22 : size < 680 ? 18 : 16;
 
   // Rayon d’arrondi unifié
   const radius = 12;
@@ -281,52 +297,52 @@ export default function ParaformRightHeroCardsStep({
                     {/* Filtre couleur permanent */}
                     <div className="pf-tint" />
 
-                    {/* VOILE GRIS — unique */}
+                    {/* VOILE GRIS - unique */}
                     <div className={"pf-gray" + (isGrayOff ? " is-off" : "") } />
-                  </div>
 
-                  {/* Cadre blanc EXACT aux insets, seulement au DÉBUT du croppé */}
-                  <div
-                    className={"pf-crop-stroke" + (showCropStroke ? " is-on" : "")}
-                    style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop, borderRadius: `${radius}px` }}
-                  />
+                    {/* Cadre blanc EXACT aux insets, seulement au DÉBUT du croppé */}
+                    <div
+                      className={"pf-crop-stroke" + (showCropStroke ? " is-on" : "")}
+                      style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop, borderRadius: `${radius}px` }}
+                    />
 
-                  {/* ===== GROUPE OVERLAY (cadre + glass + badge) ===== */}
-                  <div
-                    className={
-                      "pf-overlay-group" +
-                      (overlayOn ? " is-on" : "") +
-                      (overlayOut ? " is-leaving" : "")
-                    }
-                    style={{ top: vertCrop, right: sideCrop, bottom: vertCrop, left: sideCrop, borderRadius: `${radius}px` }}
-                  >
-                    {/* Bloc badge + légende en haut-gauche */}
-                    <div className="pf-badge-wrap">
-                      <div className="pf-badge">20%</div>
-                      <div className="pf-badge-caption">
-                        <span>Performance</span><br />
-                        <span>annuelle&nbsp;cible*</span>
+                    {/* ===== GROUPE OVERLAY (cadre + glass + badge) ===== */}
+                    <div
+                      className={
+                        "pf-overlay-group" +
+                        (overlayOn ? " is-on" : "") +
+                        (overlayOut ? " is-leaving" : "")
+                      }
+                      style={{ top: vertCrop + framePad, right: sideCrop + framePad, bottom: vertCrop + framePad, left: sideCrop + framePad, borderRadius: `${radius}px` }}
+                      >
+                      {/* Bloc badge + légende en haut-gauche */}
+                      <div className="pf-badge-wrap">
+                        <div className="pf-badge">20%</div>
+                        <div className="pf-badge-caption">
+                          <span>Performance</span><br />
+                          <span>annuelle&nbsp;cible*</span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Cadre bord blanc, fond transparent */}
-                    <div className="pf-stroke" />
+                      {/* Cadre bord blanc, fond transparent */}
+                      <div className="pf-stroke" />
 
-                    {/* Glassy card */}
-                    <div className="pf-glass">
-                      <div className="pf-glass-inner">
-                        <div className="pf-glass-title">{glassTitle}</div>
-                        <div className="pf-glass-sub">{glassSub}</div>
-                        <div className="pf-glass-meta">
-                          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M20 6 9 17l-5-5" stroke="#F7B096" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                          <span>Acquis par les Associés d’Offstone</span>
+                      {/* Glassy card */}
+                      <div className="pf-glass">
+                        <div className="pf-glass-inner">
+                          <div className="pf-glass-title">{glassTitle}</div>
+                          <div className="pf-glass-sub">{glassSub}</div>
+                          <div className="pf-glass-meta">
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                              <path d="M20 6 9 17l-5-5" stroke="#F7B096" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                            <span>Acquis par les Associés d'Offstone</span>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    {/* /pf-overlay-group */}
                   </div>
-                  {/* /pf-overlay-group */}
                 </div>
               </div>
             </div>

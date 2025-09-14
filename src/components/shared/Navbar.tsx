@@ -105,10 +105,10 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
           </div>
           <ul className="hidden md:flex items-center space-x-6 lg:space-x-12 mx-auto flex-1 justify-center">
             <li>
-              <Link href="/notre-methode" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/pourquoi-offstone" className={`text-[15px] font-medium transition-all duration-300 ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
-                Notre Méthode
+                Pourquoi Offstone ?
               </Link>
             </li>
             <li>
@@ -134,19 +134,19 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
             </li>
           </ul>
           <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 flex-shrink-0">
-            <Link href="#expert" className={`inline-flex items-center justify-center px-4 xl:px-6 py-2 text-[13px] xl:text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all whitespace-nowrap ${
+            <Link href="/espace-membre" className={`inline-flex items-center justify-center px-4 xl:px-6 py-2 text-[13px] xl:text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all whitespace-nowrap ${
               (isOnWhiteSection || forceWhiteStyle)
                 ? 'text-black border border-black hover:bg-black hover:text-white' 
                 : 'text-white border border-white hover:bg-white hover:text-black'
             }`}>
-              Parler à un expert
+              Mon Espace
             </Link>
-            <Link href="#membre" className={`inline-flex items-center justify-center px-4 xl:px-6 py-2.5 text-[13px] xl:text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all whitespace-nowrap ${
+            <Link href="/investir" className={`inline-flex items-center justify-center px-4 xl:px-6 py-2.5 text-[13px] xl:text-[15px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all whitespace-nowrap ${
               (isOnWhiteSection || forceWhiteStyle)
-                ? 'text-black bg-[#F7B096] border border-[#F7B096] hover:bg-white hover:text-[#F7B096]' 
-                : 'text-black bg-[#F7B096] border border-[#F7B096] hover:bg-white hover:text-[#F7B096]'
+                ? 'text-black bg-[#F7B096] border border-[#F7B096] hover:bg-transparent hover:text-black' 
+                : 'text-black bg-[#F7B096] border border-[#F7B096] hover:bg-transparent hover:text-black'
             }`}>
-              Devenir Membre
+              Investir à nos côtés
             </Link>
           </div>
 
@@ -187,11 +187,11 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
         >
           <div className="flex flex-col items-center space-y-6 xs:space-y-8 w-full max-w-[280px] xs:max-w-[320px]">
             <Link 
-              href="/notre-methode"
+              href="/pourquoi-offstone"
               onClick={() => setIsMobileMenuOpen(false)}
               className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
             >
-              Notre Méthode
+              Pourquoi Offstone ?
             </Link>
             <Link 
               href="/investir"

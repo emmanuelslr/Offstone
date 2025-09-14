@@ -49,7 +49,10 @@ export default function RelatedGrid({ articles }: RelatedGridProps) {
           {articles.slice(0, 3).map((article) => (
             <Link
               key={article.id}
-              href={`/ressources/${article.uid}`}
+              href={(() => {
+                const cat = (article as any)?.data?.category as string | undefined;
+                return cat ? `/ressources/${cat}/${article.uid}` : `/ressources`;
+              })()}
               className="group bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
             >
               {/* Compact Image */}

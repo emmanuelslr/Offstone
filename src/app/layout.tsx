@@ -1,9 +1,9 @@
 ﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { PrismicPreview } from "@prismicio/next";
-import Footer from "@/components/shared/Footer";
+import Footer from "@/components/Footer";
 import HydrationFix from "@/components/shared/HydrationFix";
-import { repoName } from "@/lib/prismicio";
+import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
 
@@ -78,8 +78,8 @@ export default function RootLayout({
         <HydrationFix />
         {children}
         <WaitlistModal />
-        <Footer />
-        <PrismicPreview repositoryName={repoName} />
+  <Footer />
+        <PrismicPreview repositoryName={repositoryName} />
       </body>
     </html>
   );

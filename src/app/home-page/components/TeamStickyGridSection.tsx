@@ -175,10 +175,10 @@ export default function TeamStickyGridSection() {
 
           {/* Colonne droite rétrécie avec grilles 2x2 */}
           <div className="lg:w-2/3">
-            <div className="space-y-16 max-w-[620px] ml-auto" ref={contentTopRef}>
+            <div className="space-y-16 max-w-[740px] ml-auto" ref={contentTopRef}>
               {((activeRoles.length > 0) ? steps.filter((s) => activeRoles.includes(s.title)) : steps).map((s, i) => (
                 <motion.div key={i} className="step-section" layout>
-                  <motion.div className="grid grid-cols-2 gap-y-6 sm:gap-y-8 gap-x-6 md:gap-x-8 lg:gap-x-12" layout>
+                  <motion.div className="grid grid-cols-[260px_260px] md:grid-cols-[300px_300px] lg:grid-cols-[320px_320px] gap-y-6 sm:gap-y-8 gap-x-8 md:gap-x-12 lg:gap-x-16 justify-between" layout>
                     {s.people.map((src, k) => (
                       // On alterne la colonne la plus "mobile" un bloc sur deux
                       <motion.div key={k} layout>

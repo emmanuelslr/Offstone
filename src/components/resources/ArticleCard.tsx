@@ -17,11 +17,31 @@ interface ArticleCardProps {
       level: string;
       reading_time: number;
       published_at: string;
+      category?: string;
+      authors?: Array<{
+        name: string;
+        role?: string;
+      }>;
     };
   };
 }
 
 export default function ArticleCard({ article }: ArticleCardProps) {
+  // Get author name from authors array
+  const authorName = Array.isArray(article.data.authors) && article.data.authors.length > 0 
+    ? article.data.authors[0].name || "Équipe Offstone"
+    : "Équipe Offstone";
+  
+  // Check if we have a role to display alongside the name
+  const authorRole = Array.isArray(article.data.authors) && article.data.authors.length > 0 
+    ? article.data.authors[0].role 
+    : null;
+  
+  // Format author display name
+  const authorDisplayName = authorRole 
+    ? `${authorName} ${authorRole}`
+    : authorName;
+
   const getLevelBadgeColor = (level: string) => {
     switch (level) {
       case "découverte": return "bg-green-100 text-green-800";
@@ -58,9 +78,14 @@ export default function ArticleCard({ article }: ArticleCardProps) {
     );
   }
 
+  // Generate proper link with category
+  const articleLink = article.data.category 
+    ? `/ressources/${article.data.category}/${article.uid}`
+    : `/ressources/${article.uid}`;
+
   return (
     <Link
-      href={`/ressources/${article.uid}`}
+      href={articleLink}
       className="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 cursor-pointer block"
     >
       {/* Hero Image */}
@@ -87,7 +112,8 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
           {/* Asset Classes */}
-          {article.data.asset_class?.slice(0, 2).map((asset) => (
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {Array.isArray((article.data as any).asset_class) && (article.data as any).asset_class?.slice(0, 2).map((asset: string) => (
             <span
               key={asset}
               className="chip chip-small chip-primary"
@@ -105,7 +131,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-semibold mb-3 line-clamp-2 hover:text-blue-600 transition-colors">
+        <h3 className="text-xl font-semibold mb-3 line-clamp-2 hover:text-[#F7B096] transition-colors">
           {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
           {(article.data as any).title || "Sans titre"}
         </h3>
@@ -121,6 +147,14 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         {/* Meta */}
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center gap-4">
+            {/* Author */}
+            <span className="flex items-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              {authorDisplayName}
+            </span>
+
             {/* Reading time */}
             <span className="flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,9 +164,11 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             </span>
 
             {/* Themes (max 1) */}
-            {article.data.theme?.[0] && (
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {Array.isArray((article.data as any).theme) && (article.data as any).theme?.[0] && (
               <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
-                {article.data.theme[0]}
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {(article.data as any).theme[0]}
               </span>
             )}
           </div>
