@@ -1,8 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏢 Offstone Website
 
-## Getting Started
+Site web officiel d'Offstone - Plateforme d'investissement immobilier.
 
-First, run the development server:
+**🌐 Live Site:** [offstone.vercel.app](https://offstone.vercel.app)
+
+## 🚀 Getting Started
+
+### Prérequis
+- Node.js 18+ 
+- Variables d'environnement configurées (voir [SECURITY_SETUP.md](./SECURITY_SETUP.md))
+
+### Installation
+
+1. Clonez le repository :
+```bash
+git clone https://github.com/emmanuelslr/Offstone.git
+cd Offstone
+```
+
+2. Installez les dépendances :
+```bash
+npm install
+```
+
+3. Configurez les variables d'environnement :
+```bash
+cp env.example .env.local
+# Éditez .env.local avec vos vraies valeurs
+```
+
+4. Lancez le serveur de développement :
 
 ```bash
 npm run dev
@@ -14,23 +41,44 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez [http://localhost:3001](http://localhost:3001) dans votre navigateur.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** Next.js 15
+- **Styling:** Tailwind CSS
+- **CMS:** Prismic
+- **Database:** Supabase
+- **Deployment:** Vercel
 
-## Learn More
+## 🔒 Sécurité
 
-To learn more about Next.js, take a look at the following resources:
+Ce projet utilise Row Level Security (RLS) sur Supabase pour protéger les données sensibles.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**⚠️ IMPORTANT:** Consultez [SECURITY_SETUP.md](./SECURITY_SETUP.md) pour la configuration des variables d'environnement.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Structure du Projet
 
-## Deploy on Vercel
+```
+src/
+├── app/                 # Pages et API routes
+│   ├── api/leads/      # API pour la gestion des leads
+│   └── home-page/      # Page d'accueil
+├── components/         # Composants React
+├── lib/               # Utilitaires et configurations
+└── slices/            # Composants Prismic
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 Déploiement
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Le site est automatiquement déployé sur Vercel à chaque push sur la branche `main`.
+
+### Configuration Vercel
+
+Assurez-vous d'avoir configuré les variables d'environnement dans votre dashboard Vercel :
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+## 📞 Support
+
+Pour toute question ou problème, consultez la documentation ou contactez l'équipe de développement.
