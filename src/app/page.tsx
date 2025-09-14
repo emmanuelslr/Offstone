@@ -10,6 +10,7 @@ import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection"
 import AdvantageOffstoneSection from "./home-page/components/AdvantageOffstoneSection";
 import FAQ from "./home-page/components/FAQ";
 import ProCTAFooter from "./home-page/components/ProCTAFooter";
+import PerformanceSection from "./home-page/components/PerformanceSection";
 
 // import MontanaSection from '@/components/MontanaSection';
 // import InvestSimplement from '@/components/shared/InvestSimplement';
@@ -34,18 +35,24 @@ export default function Home() {
       </section>
 
       {/* Text Reveal Section */}
-      <section className="bg-white pt-16">
-        <TextReveal />
+      <section className="bg-white pt-6 md:pt-8">
+        <TextReveal className="leading-[1.06]" containerPaddingClass="pt-6 md:pt-8 lg:pt-10 pb-1 md:pb-2 lg:pb-2" />
       </section>
 
       {/* Key Figures Lite Section */}
       <section className="bg-white mt-0">
         <KeyFiguresLiteSection />
       </section>
-      {/* Advantage Offstone Section */}
+      {/* Performance Section (remontée) */}
       <section className="bg-white">
-        <AdvantageOffstoneSection />
+        <PerformanceSection />
       </section>
+
+      {/* Advantage Offstone Section (sans vidéo, vidéo déplacée vers /investir) */}
+      <section className="bg-white">
+        <AdvantageOffstoneSection showVideo={false} />
+      </section>
+
 
       {/* FAQ Section (same size/background as duplicate) */}
       <section className="bg-white">

@@ -65,6 +65,25 @@ export default function ParaformRightHeroCardsStep({
   const hoverRef = useRef(false);
   const timers = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
+  // Pause when global waitlist modal is open
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
+  useEffect(() => { pausedRef.current = paused; }, [paused]);
+  useEffect(() => {
+    const onOpened = () => setPaused(true);
+    const onClosed = () => setPaused(false);
+    try {
+      window.addEventListener('waitlist:opened', onOpened);
+      window.addEventListener('waitlist:closed', onClosed);
+    } catch {}
+    return () => {
+      try {
+        window.removeEventListener('waitlist:opened', onOpened);
+        window.removeEventListener('waitlist:closed', onClosed);
+      } catch {}
+    };
+  }, []);
+
   // ---- Timings (smooth) ----
   const hopMs = Math.round(Math.min(420, Math.max(320, intervalMs * 0.15))); // ~390ms si 2600ms
   const decropStart = hopMs + 20;                 // décrop juste après le hop
@@ -95,7 +114,7 @@ export default function ParaformRightHeroCardsStep({
   // Cycle principal
   useEffect(() => {
     const run = () => {
-      if (hoverRef.current) { schedule(run, 120); return; }
+      if (hoverRef.current || pausedRef.current) { schedule(run, 120); return; }
 
       const idx = activeRef.current;
 
@@ -227,6 +246,14 @@ export default function ParaformRightHeroCardsStep({
             ? `inset(0px round ${radius}px)`
             : `inset(${vertCrop}px ${sideCrop}px round ${radius}px)`;
 
+          // Personnalisation de la première carte uniquement
+          let glassTitle = "MAISON IENA";
+          let glassSub = "Hôtel | Value-Add | Paris 16ème";
+          if (logical === 0) {
+            glassTitle = "MAISON BOÉTIE";
+            glassSub = "Événementiel | Value-Add | Paris 8ème";
+          }
+
           return (
             <div
               className={"pf-card" + (isActiveLogical ? " is-active" : " is-dim")}
@@ -255,7 +282,7 @@ export default function ParaformRightHeroCardsStep({
                     <div className="pf-tint" />
 
                     {/* VOILE GRIS — unique */}
-                    <div className={"pf-gray" + (isGrayOff ? " is-off" : "")} />
+                    <div className={"pf-gray" + (isGrayOff ? " is-off" : "") } />
                   </div>
 
                   {/* Cadre blanc EXACT aux insets, seulement au DÉBUT du croppé */}
@@ -288,13 +315,13 @@ export default function ParaformRightHeroCardsStep({
                     {/* Glassy card */}
                     <div className="pf-glass">
                       <div className="pf-glass-inner">
-                        <div className="pf-glass-title">MAISON IENA</div>
-                        <div className="pf-glass-sub">Hôtel | Value-Add | Paris 16ème</div>
+                        <div className="pf-glass-title">{glassTitle}</div>
+                        <div className="pf-glass-sub">{glassSub}</div>
                         <div className="pf-glass-meta">
                           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M20 6 9 17l-5-5" stroke="#F7B096" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
-                          <span>Acquis par les Associés d’Aguesseau</span>
+                          <span>Acquis par les Associés d’Offstone</span>
                         </div>
                       </div>
                     </div>
@@ -499,6 +526,64 @@ export default function ParaformRightHeroCardsStep({
         }
         .pf-dot { width: 8px; height: 8px; border-radius: 999px; background: rgba(0,0,0,0.25); }
         .pf-dot.is-active { background: rgba(0,0,0,0.65); transform: scale(1.1); }
+
+        /* ===== Responsive tweaks (mobile-first) ===== */
+        @media (max-width: 1280px) {
+          .pf-badge { font-size: 50px; }
+          .pf-badge-wrap { top: 24px; left: 24px; }
+          .pf-glass-inner { margin: 0 14px 14px 14px; min-height: 120px; padding: 18px 20px; }
+          .pf-glass-title { font-size: 20px; }
+          .pf-glass-sub { font-size: 14px; }
+          .pf-glass-meta { font-size: 12px; }
+        }
+
+        @media (max-width: 1024px) {
+          .pf-badge { font-size: 46px; }
+          .pf-badge-caption { font-size: 13px; }
+          .pf-glass-title { font-size: 19px; }
+          .pf-glass-sub { font-size: 13px; }
+          .pf-glass-meta { font-size: 12px; }
+        }
+
+        @media (max-width: 768px) {
+          .pf-badge { font-size: 42px; }
+          .pf-badge-wrap { top: 18px; left: 18px; }
+          .pf-glass-inner { margin: 0 12px 12px 12px; min-height: 110px; padding: 16px 18px; }
+          .pf-glass-title { font-size: 18px; }
+          .pf-glass-sub { font-size: 13px; }
+          .pf-glass-meta { font-size: 11.5px; }
+          .pf-glass-meta svg { width: 15px; height: 15px; }
+          .pf-dots { bottom: 8px; }
+        }
+
+        @media (max-width: 640px) {
+          .pf-badge { font-size: 36px; }
+          .pf-badge-caption { font-size: 12px; }
+          .pf-glass-inner { min-height: 100px; padding: 14px 16px; }
+          .pf-glass-title { font-size: 17px; }
+          .pf-glass-sub { font-size: 12.5px; }
+          .pf-glass-meta { font-size: 11px; }
+          .pf-glass-meta svg { width: 14px; height: 14px; }
+        }
+
+        @media (max-width: 480px) {
+          .pf-badge { font-size: 32px; }
+          .pf-badge-wrap { top: 14px; left: 14px; }
+          .pf-badge-caption { font-size: 11px; }
+          .pf-glass-inner { min-height: 92px; padding: 12px 14px; }
+          .pf-glass-title { font-size: 16px; }
+          .pf-glass-sub { font-size: 12px; }
+          .pf-glass-meta { font-size: 10.5px; }
+        }
+
+        @media (max-width: 360px) {
+          .pf-badge { font-size: 28px; }
+          .pf-badge-caption { font-size: 10px; }
+          .pf-glass-inner { min-height: 86px; padding: 10px 12px; }
+          .pf-glass-title { font-size: 15px; }
+          .pf-glass-sub { font-size: 11.5px; }
+          .pf-glass-meta { font-size: 10px; }
+        }
       `}
       </style>
     </div>
