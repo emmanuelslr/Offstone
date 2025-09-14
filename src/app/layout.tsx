@@ -6,6 +6,7 @@ import HydrationFix from "@/components/shared/HydrationFix";
 import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -80,8 +81,8 @@ export default function RootLayout({
         <WaitlistModal />
   <Footer />
         <PrismicPreview repositoryName={repositoryName} />
+        <Analytics />
       </body>
     </html>
   );
 }
-
