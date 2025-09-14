@@ -1,0 +1,24 @@
+{
+  "format": "custom",
+  "id": "qvema_episode",
+  "label": "QVEMA Episode",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": { "type": "UID", "config": { "label": "UID" } },
+      "title": { "type": "Text", "config": { "label": "Titre" } },
+      "season_number": { "type": "Number", "config": { "label": "Numéro de saison" } },
+      "episode_number": { "type": "Number", "config": { "label": "Numéro d'épisode" } },
+      "air_date": { "type": "Date", "config": { "label": "Date de diffusion" } },
+      "hero_image": { "type": "Image", "config": { "label": "Image", "constraint": {}, "thumbnails": [] } },
+      "embed_video": { "type": "Embed", "config": { "label": "Vidéo (replay)" } },
+      "project_name": { "type": "Text", "config": { "label": "Nom du projet" } },
+      "deal_outcome": { "type": "Select", "config": { "label": "Issue du deal", "options": ["investi", "non_investi", "en_discussion"], "allowMultiple": false } },
+      "summary_richtext": { "type": "StructuredText", "config": { "label": "Résumé", "allowTargetBlank": true, "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item" } },
+      "key_takeaways": { "type": "Group", "config": { "label": "Points clés", "fields": { "item": { "type": "Text", "config": { "label": "Point" } } } } },
+      "seo": { "type": "Group", "config": { "label": "SEO", "fields": { "meta_title": { "type": "Text", "config": { "label": "Meta title" } }, "meta_description": { "type": "Text", "config": { "label": "Meta description" } }, "og_image": { "type": "Image", "config": { "label": "OG image", "constraint": {}, "thumbnails": [] } }, "canonical_url": { "type": "Link", "config": { "label": "Canonical URL", "select": null } }, "noindex": { "type": "Boolean", "config": { "label": "Noindex", "default_value": false } } } } }
+    }
+  }
+}
+

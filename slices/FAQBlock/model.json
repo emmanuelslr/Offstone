@@ -1,0 +1,21 @@
+{
+  "id": "faq_block",
+  "type": "SharedSlice",
+  "name": "FAQBlock",
+  "description": "Bloc de FAQ (Q/R)",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {},
+      "items": {
+        "question": { "type": "Text", "config": { "label": "Question" } },
+        "answer": { "type": "StructuredText", "config": { "label": "Réponse", "allowTargetBlank": true, "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item" } }
+      }
+    }
+  ]
+}
+

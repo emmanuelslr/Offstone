@@ -1,0 +1,20 @@
+{
+  "id": "table_of_contents",
+  "type": "SharedSlice",
+  "name": "TableOfContents",
+  "description": "Affiche/masque la table des matières",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "enabled": { "type": "Boolean", "config": { "label": "Activer TOC", "default_value": true } }
+      },
+      "items": {}
+    }
+  ]
+}
+

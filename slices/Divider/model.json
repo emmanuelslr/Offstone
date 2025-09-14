@@ -1,0 +1,18 @@
+{
+  "id": "divider",
+  "type": "SharedSlice",
+  "name": "Divider",
+  "description": "Séparateur visuel",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {},
+      "items": {}
+    }
+  ]
+}
+

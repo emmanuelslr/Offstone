@@ -1,0 +1,38 @@
+{
+  "investir": [
+    {"label": "Opportunities", "href": "/investir#opportunites"},
+    {"label": "Investment process", "href": "/investir#process"},
+    {"label": "Apply", "href": "/investir#candidature"},
+    {"label": "Simulator", "href": "/simulateur"},
+    {"label": "Events & interviews", "href": "/investir#calendrier"}
+  ],
+  "ressources": [
+    {"label": "Guides", "href": "/ressources/guides"},
+    {"label": "Strategies & theses", "href": "/ressources/strategie-theses"},
+    {"label": "Real estate taxation", "href": "/ressources/fiscalite-immobiliere"},
+    {"label": "Structuring & regulation", "href": "/ressources/structuration-reglementation"},
+    {"label": "Market & asset management", "href": "/ressources/asset-management-marche"},
+    {"label": "FAQ", "href": "/ressources/faq"},
+    {"label": "Glossary", "href": "/ressources/glossaire"}
+  ],
+  "offstone": [
+    {"label": "Our story", "href": "/notre-histoire"},
+    {"label": "Our achievements", "href": "/nos-realisations"},
+    {"label": "Jonathan Anguelov", "href": "/ressources/jonathan-anguelov"},
+    {"label": "Press", "href": "/ressources/jonathan-anguelov/presse"},
+    {"label": "Contact", "href": "/contact"},
+    {"label": "Member area", "href": "/espace-membre"}
+  ],
+  "legal": [
+    {"label": "Legal notice", "href": "/legal/mentions-legales"},
+    {"label": "Privacy (GDPR)", "href": "/legal/confidentialite"},
+    {"label": "Cookies", "href": "/legal/cookies"},
+    {"label": "Fee schedule", "href": "/legal/frais"},
+    {"label": "Terms of use", "href": "/legal/conditions"},
+    {"label": "Compliance & claims", "href": "/legal/reclamations"},
+    {"label": "KYC/KYB documentation", "href": "/legal/kyc-kyb"}
+  ],
+  "social": [
+    {"label": "LinkedIn", "href": "https://www.linkedin.com/company/offstone/"}
+  ]
+}

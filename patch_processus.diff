@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: src/app/investir/components/ProcessusInvestissement.tsx
+@@
+-        {/* En-t?te ?pur? */}
++        {/* En-t?te ?pur? (spacing ajust?) */}
+*** End Patch

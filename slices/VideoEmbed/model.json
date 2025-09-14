@@ -1,0 +1,20 @@
+{
+  "id": "video_embed",
+  "type": "SharedSlice",
+  "name": "VideoEmbed",
+  "description": "Vidéo YouTube/Vimeo/Podcast",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "embed": { "type": "Embed", "config": { "label": "Embed" } }
+      },
+      "items": {}
+    }
+  ]
+}
+

@@ -1,0 +1,154 @@
+{
+  "format": "custom",
+  "id": "case_study",
+  "label": "Case Study",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID"
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Titre"
+        }
+      },
+      "excerpt": {
+        "type": "Text",
+        "config": {
+          "label": "Chapeau"
+        }
+      },
+      "city": {
+        "type": "Text",
+        "config": {
+          "label": "Ville"
+        }
+      },
+      "published_at": {
+        "type": "Date",
+        "config": {
+          "label": "Date"
+        }
+      },
+      "hero_image": {
+        "type": "Image",
+        "config": {
+          "label": "Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "kpi_group": {
+        "type": "Group",
+        "config": {
+          "label": "KPIs",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label"
+              }
+            },
+            "value": {
+              "type": "Text",
+              "config": {
+                "label": "Valeur"
+              }
+            }
+          }
+        }
+      },
+      "timeline": {
+        "type": "Group",
+        "config": {
+          "label": "Timeline",
+          "fields": {
+            "date": {
+              "type": "Text",
+              "config": {
+                "label": "Date"
+              }
+            },
+            "event": {
+              "type": "Text",
+              "config": {
+                "label": "Événement"
+              }
+            }
+          }
+        }
+      },
+      "body": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Contenu",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "thesis_ref": {
+        "type": "Link",
+        "config": {
+          "label": "Thèse (catégorie)",
+          "select": "document",
+          "customtypes": ["resource_category"]
+        }
+      },
+      "seo": {
+        "type": "Group",
+        "config": {
+          "label": "SEO",
+          "fields": {
+            "meta_title": {
+              "type": "Text",
+              "config": {
+                "label": "Meta title"
+              }
+            },
+            "meta_description": {
+              "type": "Text",
+              "config": {
+                "label": "Meta description"
+              }
+            },
+            "og_image": {
+              "type": "Image",
+              "config": {
+                "label": "OG image",
+                "constraint": {},
+                "thumbnails": []
+              }
+            },
+            "canonical_url": {
+              "type": "Link",
+              "config": {
+                "label": "Canonical URL",
+                "select": null
+              }
+            },
+            "noindex": {
+              "type": "Boolean",
+              "config": {
+                "label": "Noindex",
+                "default_value": false
+              }
+            }
+          }
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
+      }
+    }
+  }
+}

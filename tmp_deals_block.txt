@@ -1,0 +1,65 @@
+const deals: Deal[] = [
+  {
+    id: 'rezi-hamburg',
+    title: 'Rezi Hamburg - Allemagne',
+    location: 'Hamburg, Kiel, Lübeck',
+    image: '/images/Acquisitions/Moulin vert.webp',
+    description:
+      "Acquisition d’un portefeuille de 3 immeubles résidentiels situés dans la région d'Hambourg, Kiel et Lübeck en Allemagne.",
+    tags: ['Core plus', 'Résidentiel', 'Kiel', 'Lübeck', 'Hamburg', 'Allemagne'],
+  },
+  {
+    id: 'we-ef-lyon',
+    title: 'WE-EF - Satolas-et-Bonce (38)',
+    location: 'Lyon, France',
+    image: '/images/Buildings/rue-la-boetie-11-copie-scaled.jpg',
+    description:
+      "Acquisition d’un actif logistique de 5 925 m² situé dans la zone logistique principale de Lyon et loué à l’un des leaders mondiaux des solutions d’éclairage.",
+    tags: ['Core plus', 'Logistique', 'Auvergne-Rhône-Alpes', 'France'],
+  },
+  {
+    id: 'exelmans-paris',
+    title: 'Exelmans - Paris 16e',
+    location: 'Paris, France',
+    image: '/images/Buildings/Truchet.jpg',
+    description:
+      "Situé au sein du quartier d’Auteuil dans le 16è arrondissement de Paris, cet immeuble emblématique est l’ancien siège des sociétés de production de Claude François. Il abrite aujourd’hui le siège social de Puressentiel, entreprise de renommée internationale produisant des huiles essentielles.",
+    tags: ['Core plus', 'Bureaux', 'Île-de-France', 'France'],
+  },
+  {
+    id: 'west-monoprix',
+    title: 'West Monoprix - Saint-Cloud (92), Meudon (92), Saint-Maur (94) et Saint-Ouen (93)',
+    location: 'Île-de-France',
+    image: '/images/Buildings/Ienaa.jpg',
+    description:
+      "Acquisition d’un portefeuille de Monoprix idéalement situés en région parisienne, au cœur de villes bénéficiant d’une population à fort pouvoir d’achat comme Saint-Cloud, Meudon et Saint-Germain en Laye, ou en cours de renouvellement urbain comme Saint-Ouen et Saint-Maur.",
+    tags: ['Core plus', 'Commerce', 'Île-de-France', 'France'],
+  },
+  {
+    id: 'green-oak',
+    title: 'Green Oak - Arcueil (94)',
+    location: 'Île-de-France',
+    image: '/images/Acquisitions/hotel barbes.avif',
+    description:
+      "Développement d’un immeuble de bureau idéalement localisé au cœur d’un pôle majeur de la périphérie sud de Paris (quartier de la Vache Noire) bénéficiant de perspectives de croissance forte suite à l’arrivée programmée du métro ligne 4 en 2020.",
+    tags: ['Valeur ajoutée', 'Bureaux', 'Île-de-France', 'France'],
+  },
+  {
+    id: 'portefeuille-food',
+    title: 'Portefeuille Food - Lyon (3 & 9), Villeurbanne',
+    location: 'Auvergne-Rhône-Alpes',
+    image: '/images/Acquisitions/Jules Guesde Levallois.webp',
+    description:
+      "Acquisition auprès d’un privé de 3 actifs de commerce alimentaire de proximité loués à des enseignes nationales de 1er plan (notamment Picard et Utile – Système U) et situés en centre-ville de Lyon et à Villeurbanne.",
+    tags: ['Core plus', 'Commerce', 'Auvergne-Rhône-Alpes', 'France'],
+  },
+  {
+    id: '360-paris',
+    title: '360 Paris - Vanves (92)',
+    location: 'Île-de-France',
+    image: '/images/Acquisitions/Paris - Resi.webp',
+    description:
+      "Acquisition d’un ensemble immobilier de 25 000m² situé Porte de Brancion, face au boulevard périphérique bénéficiant d’un fort potentiel de création de valeur.",
+    tags: ['Valeur ajoutée', 'Bureaux', 'Île-de-France', 'France'],
+  },
+];

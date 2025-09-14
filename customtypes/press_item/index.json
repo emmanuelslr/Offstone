@@ -1,0 +1,33 @@
+{
+  "format": "custom",
+  "id": "press_item",
+  "label": "Press Item",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": { "type": "UID", "config": { "label": "UID" } },
+      "title": { "type": "Text", "config": { "label": "Titre" } },
+      "source": { "type": "Text", "config": { "label": "Source" } },
+      "date": { "type": "Date", "config": { "label": "Date" } },
+      "summary_richtext": { "type": "StructuredText", "config": { "label": "Résumé", "allowTargetBlank": true, "multi": "paragraph,strong,em,hyperlink,list-item,o-list-item" } },
+      "quote_short": { "type": "Text", "config": { "label": "Citation courte (≤25 mots)" } },
+      "external_url": { "type": "Text", "config": { "label": "URL externe" } },
+      "section": {
+        "type": "Select",
+        "config": {
+          "label": "Section",
+          "options": [
+            "presse",
+            "interview",
+            "podcast",
+            "autre"
+          ],
+          "default_value": "presse"
+        }
+      },
+      "seo": { "type": "Group", "config": { "label": "SEO", "fields": { "meta_title": { "type": "Text", "config": { "label": "Meta title" } }, "meta_description": { "type": "Text", "config": { "label": "Meta description" } }, "og_image": { "type": "Image", "config": { "label": "OG image", "constraint": {}, "thumbnails": [] } }, "canonical_url": { "type": "Link", "config": { "label": "Canonical URL", "select": null } }, "noindex": { "type": "Boolean", "config": { "label": "Noindex", "default_value": false } } } } }
+    }
+  }
+}
+

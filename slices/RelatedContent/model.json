@@ -1,0 +1,20 @@
+{
+  "id": "related_content",
+  "type": "SharedSlice",
+  "name": "RelatedContent",
+  "description": "Contenu relié (manuel)",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {},
+      "items": {
+        "article": { "type": "Link", "config": { "label": "Article", "select": "document", "customtypes": ["article"] } }
+      }
+    }
+  ]
+}
+

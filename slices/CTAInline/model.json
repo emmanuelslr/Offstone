@@ -1,0 +1,21 @@
+{
+  "id": "cta_inline",
+  "type": "SharedSlice",
+  "name": "CTAInline",
+  "description": "Bouton CTA inline",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "label": { "type": "Text", "config": { "label": "Label" } },
+        "href": { "type": "Link", "config": { "label": "Lien", "select": null } }
+      },
+      "items": {}
+    }
+  ]
+}
+

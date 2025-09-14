@@ -1,0 +1,21 @@
+{
+  "id": "pull_quote",
+  "type": "SharedSlice",
+  "name": "PullQuote",
+  "description": "Citation courte avec source",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "quote": { "type": "Text", "config": { "label": "Citation (≤25 mots)" } },
+        "source": { "type": "Text", "config": { "label": "Source" } }
+      },
+      "items": {}
+    }
+  ]
+}
+

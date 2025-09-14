@@ -1,0 +1,22 @@
+{
+  "id": "download_cta",
+  "type": "SharedSlice",
+  "name": "DownloadCTA",
+  "description": "CTA de téléchargement (fichier)",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "title": { "type": "Text", "config": { "label": "Titre" } },
+        "description": { "type": "Text", "config": { "label": "Description" } },
+        "file": { "type": "Link", "config": { "label": "Fichier", "select": "media" } }
+      },
+      "items": {}
+    }
+  ]
+}
+

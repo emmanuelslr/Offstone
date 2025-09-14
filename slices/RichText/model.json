@@ -1,0 +1,20 @@
+{
+  "id": "rich_text",
+  "type": "SharedSlice",
+  "name": "RichText",
+  "description": "Bloc de texte riche (H2/H3)",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "content": { "type": "StructuredText", "config": { "label": "Contenu", "allowTargetBlank": true, "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink,list-item,o-list-item" } }
+      },
+      "items": {}
+    }
+  ]
+}
+

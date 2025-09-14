@@ -1,0 +1,27 @@
+{
+  "id": "callout",
+  "type": "SharedSlice",
+  "name": "Callout",
+  "description": "Encadré d'information / avertissement / risques",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "variant": {
+          "type": "Select",
+          "config": { "label": "Variant", "options": ["info", "warning", "danger"] }
+        },
+        "content": {
+          "type": "StructuredText",
+          "config": { "label": "Contenu", "allowTargetBlank": true, "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink,list-item,o-list-item" }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
+

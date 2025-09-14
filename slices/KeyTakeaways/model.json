@@ -1,0 +1,20 @@
+{
+  "id": "key_takeaways",
+  "type": "SharedSlice",
+  "name": "KeyTakeaways",
+  "description": "Points à retenir (3–5)",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {},
+      "items": {
+        "item": { "type": "Text", "config": { "label": "Point" } }
+      }
+    }
+  ]
+}
+

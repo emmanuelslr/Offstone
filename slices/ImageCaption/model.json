@@ -1,0 +1,21 @@
+{
+  "id": "image_caption",
+  "type": "SharedSlice",
+  "name": "ImageCaption",
+  "description": "Image avec légende et crédit",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "",
+      "version": "1.0.0",
+      "description": "",
+      "primary": {
+        "image": { "type": "Image", "config": { "label": "Image", "constraint": {}, "thumbnails": [] } },
+        "caption": { "type": "Text", "config": { "label": "Légende / Crédit" } }
+      },
+      "items": {}
+    }
+  ]
+}
+
