@@ -64,13 +64,17 @@ export default function PerformanceSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
             <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-4 md:p-5 text-white">
               <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096] whitespace-nowrap leading-none">
-                8-14<span className="text-[#F7B096]">%</span>
+                <CountUp value={8} suffix="-" durationMs={800} className="text-[#F7B096]" />
+                <CountUp value={14} suffix="%" durationMs={800} className="text-[#F7B096]" />
               </div>
               <div className="mt-1 text-white/80 text-sm md:text-base">De performance cible annuelle</div>
             </div>
             <div className="bg-[#1E2124] border border-gray-800 rounded-xl p-4 md:p-5 text-white">
               <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096] whitespace-nowrap leading-none">
-                2 à 4 <span className="text-[#F7B096]">ans</span>
+                <CountUp value={2} suffix=" " durationMs={600} className="text-[#F7B096]" />
+                <span className="text-[#F7B096]"> à </span>
+                <CountUp value={5} suffix=" " durationMs={600} className="text-[#F7B096]" />
+                <span className="text-[#F7B096]">ans</span>
               </div>
               <div className="mt-1 text-white/80 text-sm md:text-base">Horizon de sortie selon les projets</div>
             </div>
