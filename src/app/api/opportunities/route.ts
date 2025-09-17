@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate investment amount
+    // Validate investment amount (using current form values)
     const validInvestmentAmounts = ['lt_20k', '20k_50k', '50k_100k', '100k_500k', '500k_1m', 'gt_1m'];
     if (!validInvestmentAmounts.includes(body.investmentAmount)) {
       return NextResponse.json(
