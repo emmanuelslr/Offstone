@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type Step = {
   id: string;
@@ -152,7 +153,16 @@ export default function OriginesOffstoneSection() {
                           animate={{ opacity: isActive ? 1 : 0.92, scale: isActive ? 1.02 : 1 }}
                           transition={{ type: "spring", stiffness: 260, damping: 24 }}
                         >
-                          <img src={step.image} alt={step.title} className="w-full h-full object-cover object-center" />
+                          <Image 
+                            src={step.image} 
+                            alt={step.title} 
+                            fill
+                            className="object-cover object-center" 
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            loading="lazy"
+                            placeholder="blur"
+                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                          />
                           <motion.div
                             initial={{ y: -6, opacity: 0.85, scale: 1 }}
                             animate={{ y: isActive ? 0 : -2, opacity: isActive ? 1 : 0.9, scale: isActive ? 1.1 : 1 }}
