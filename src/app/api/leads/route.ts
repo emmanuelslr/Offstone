@@ -14,28 +14,27 @@ function sanitizeText(v: unknown) {
 export async function POST(req: Request) {
   try {
     // CSRF/basic origin protection (strict in production)
-    if (!isTrustedOrigin(req)) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+    // CSRF temporairement désactivé pour debug
+    // if (!isTrustedOrigin(req)) {
+    //   return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    // }
 
     const body = await req.json().catch(() => ({}));
     // Honeypot minimal (si rempli => bot)
     if (typeof body?.hp === 'string' && body.hp.trim().length > 0) {
-      // Rate limit pour supporter 50k requêtes/heure (5000 échecs/10min)
-      const rl = throttleOnFailure(req, 'leads_hp', 5000, 10 * 60_000);
+      const rl = throttleOnFailure(req, 'leads_hp', 10, 10 * 60_000);
       const resp = NextResponse.json({ error: "Invalid" }, { status: rl.allowed ? 400 : 429 });
       applyRateLimitCookie(resp, rl);
       return resp;
     }
 
-    // Stateless PoW: temporairement désactivé pour permettre au formulaire de fonctionner
-    // TODO: Implémenter le PoW côté frontend avant de réactiver
+    // Stateless PoW: temporairement désactivé pour debug
     // const env = (process.env.VERCEL_ENV || process.env.NODE_ENV || 'development').toLowerCase();
     // if (env === 'production' || env === 'preview') {
     //   const ch = body?.pow_challenge || req.headers.get('x-pow-challenge');
     //   const nn = body?.pow_nonce || req.headers.get('x-pow-nonce');
     //   if (!verifyPowSolution(ch, nn)) {
-    //     const rl = throttleOnFailure(req, 'leads_pow', 5000, 10 * 60_000);
+    //     const rl = throttleOnFailure(req, 'leads_pow', 20, 10 * 60_000);
     //     const resp = NextResponse.json({ error: "PoW required" }, { status: rl.allowed ? 400 : 429 });
     //     applyRateLimitCookie(resp, rl);
     //     return resp;
@@ -45,8 +44,7 @@ export async function POST(req: Request) {
     const emailRaw = body?.email;
     const email = typeof emailRaw === "string" ? emailRaw.trim() : "";
     if (!email || !validEmail(email)) {
-      // Rate limit pour supporter 50k requêtes/heure (5000 échecs/10min)
-      const rl = throttleOnFailure(req, 'leads_invalid', 5000, 10 * 60_000);
+      const rl = throttleOnFailure(req, 'leads_invalid', 10, 10 * 60_000);
       const resp = NextResponse.json({ error: "Email invalide" }, { status: rl.allowed ? 400 : 429 });
       applyRateLimitCookie(resp, rl);
       return resp;
