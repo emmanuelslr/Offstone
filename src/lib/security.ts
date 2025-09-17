@@ -65,6 +65,8 @@ function parseHost(u: string | undefined | null): string | null {
 
 export function isTrustedOrigin(req: Request): boolean {
   if (process.env.NODE_ENV !== 'production') return true;
+  // Temporairement désactivé pour debug - à réactiver après config des env vars
+  if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) return true;
   const origin = req.headers.get('origin');
   const originHost = parseHost(origin);
   if (!originHost) return false;
