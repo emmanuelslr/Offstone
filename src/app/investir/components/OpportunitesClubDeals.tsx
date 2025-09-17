@@ -32,7 +32,7 @@ const opportunites = [
     rendement: "Confidentiel",
     duree: "Confidentiel",
     description: "Immeuble mixte indépendant de 6 étages sur 314 m² de terrain. Comprend 17 lots dont 13 appartements et 4 locaux commerciaux. Surface Carrez habitable optimisée.",
-    image: "/images/réalisations images/simart.webp",
+    image: "/images/réalisations images/Simart.webp",
     participants: "Club Deal",
     type: "Mixte",
     isBlurred: true
