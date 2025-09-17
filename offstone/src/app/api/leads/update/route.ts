@@ -103,7 +103,7 @@ export async function PATCH(req: Request) {
     }
 
     const { error: updateErr } = await supabaseServer
-      .from("leads")
+      .from("leads_candidature")
       .update(updates)
       .eq("id", lead_id);
 

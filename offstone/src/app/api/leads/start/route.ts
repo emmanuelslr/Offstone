@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     // Look for an existing OPEN lead for this email created in the last 30 days
     const { data: existing, error: findErr } = await supabaseServer
-      .from("leads")
+      .from("leads_candidature")
       .select("id")
       .eq("email", email)
       .eq("status", "open")
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     } as const;
 
     const { data: created, error: insertErr } = await supabaseServer
-      .from("leads")
+      .from("leads_candidature")
       .insert([insertPayload])
       .select("id")
       .single();
