@@ -67,8 +67,11 @@ export function isTrustedOrigin(req: Request): boolean {
   if (process.env.NODE_ENV !== 'production') return true;
   // Temporairement désactivé pour debug - à réactiver après config des env vars
   if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) return true;
+  
+  // Logs temporaires pour debug
   const origin = req.headers.get('origin');
   const originHost = parseHost(origin);
+  console.log('🔍 Origin check:', { origin, originHost, SITE_URL: process.env.SITE_URL, NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL });
   if (!originHost) return false;
 
   const allowed: string[] = [];
