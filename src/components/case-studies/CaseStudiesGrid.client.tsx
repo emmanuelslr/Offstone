@@ -151,9 +151,9 @@ export default function CaseStudiesGrid({ studies }: Props) {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        {filtered.map((s) => (
+        {filtered.map((s, index) => (
           <motion.div key={s.id} variants={itemVariants}>
-            <CaseStudyCard study={s} />
+            <CaseStudyCard study={s} priority={index < 3} />
           </motion.div>
         ))}
       </motion.div>

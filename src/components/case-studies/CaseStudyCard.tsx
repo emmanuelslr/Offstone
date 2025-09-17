@@ -6,7 +6,7 @@ import { CaseStudyDoc, pickCardKPIs } from "@/lib/prismic/caseStudiesCore";
 import { ComplianceBadge } from "@/components/common/CompliantDisclaimer";
 import { track } from "@/lib/analytics";
 
-export default function CaseStudyCard({ study }: { study: CaseStudyDoc }) {
+export default function CaseStudyCard({ study, priority = false }: { study: CaseStudyDoc; priority?: boolean }) {
   // Utiliser headlineData si disponible, sinon fallback sur les KPIs
   const displayData = study.headlineData && study.headlineData.length > 0 
     ? study.headlineData.slice(0, 3) 
@@ -28,7 +28,8 @@ export default function CaseStudyCard({ study }: { study: CaseStudyDoc }) {
             fill
             className="object-cover transition-transform duration-150 group-hover:scale-[1.02]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            priority={priority}
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
           />

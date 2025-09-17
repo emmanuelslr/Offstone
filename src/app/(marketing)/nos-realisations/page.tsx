@@ -7,6 +7,7 @@ import { CompliantBanner, LISTING_TEXT } from "@/components/common/CompliantDisc
 import Breadcrumbs from "@/components/common/Breadcrumbs";
 import ProCTAFooter from "@/app/home-page/components/ProCTAFooter";
 import FadeInOnView from "@/components/animations/FadeInOnView.client";
+import ImagePreloader from "@/components/ui/ImagePreloader";
 
 export const revalidate = 3600; // ISR 1h
 
@@ -25,8 +26,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function NosRealisationsPage() {
   const studies = await getCaseStudies();
+  
+  // Précharger les 3 premières images critiques
+  const criticalImages = studies.slice(0, 3).map(study => study.heroImage?.url).filter(Boolean) as string[];
+  
   return (
     <>
+      <ImagePreloader images={criticalImages} priority />
       <Navbar forceWhiteStyle />
       <main className="mx-auto max-w-7xl px-4 md:px-6 pt-24 md:pt-28 pb-12 md:pb-16">
         <FadeInOnView>

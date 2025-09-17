@@ -15,6 +15,7 @@ import LocationCard from "@/components/case-studies/LocationCard";
 import PortfolioGallery from "@/components/case-studies/PortfolioGallery";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import ProCTAFooter from "@/app/home-page/components/ProCTAFooter";
+import ImagePreloader from "@/components/ui/ImagePreloader";
 
 export const revalidate = 3600;
 
@@ -52,8 +53,15 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
     doc.assetClass
   ].filter(Boolean) as string[];
 
+  // Précharger l'image hero et les premières images du portfolio
+  const criticalImages = [
+    doc.heroImage?.url,
+    ...(doc.portfolioImages?.slice(0, 3).map(img => img.url) || [])
+  ].filter(Boolean) as string[];
+
   return (
     <>
+      <ImagePreloader images={criticalImages} priority />
       <Navbar forceWhiteStyle />
       <main className="mx-auto max-w-[1320px] px-3 md:px-6 xl:px-8 py-16 md:py-20">
         <Breadcrumbs items={[{ name: "Accueil", href: "/" }, { name: "Nos réalisations", href: "/nos-realisations" }, { name: doc.title, href: `/nos-realisations/${doc.uid}` }]} className="mb-6" />
@@ -63,17 +71,17 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
           <div className="lg:col-span-8">
             <div className="relative w-full overflow-hidden rounded-lg bg-gray-100 aspect-[4/3] md:aspect-[3/2]">
               {doc.heroImage?.url && (
-                doc.heroImage.url.startsWith('/images/') ? (
-                  // Pour les images locales, utiliser une balise img normale
-                  <img
-                    src={doc.heroImage.url}
-                    alt={doc.heroImage.alt || doc.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  // Pour les images externes, utiliser le composant Image optimisé
-                  <Image src={doc.heroImage.url} alt={doc.heroImage.alt || doc.title} fill className="object-cover" sizes="(max-width:1024px) 100vw, 60vw" />
-                )
+                <Image 
+                  src={doc.heroImage.url} 
+                  alt={doc.heroImage.alt || doc.title} 
+                  fill 
+                  className="object-cover" 
+                  sizes="(max-width:1024px) 100vw, 60vw"
+                  priority
+                  quality={90}
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                />
               )}
               <div className="absolute left-3 top-3 z-10"><ComplianceBadge text="Acquis par les associes d'Offstone" /></div>
             </div>
