@@ -292,6 +292,7 @@ export default function WaitlistModal() {
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [leadId, setLeadId] = useState<string | null>(null);
+  const [leadToken, setLeadToken] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [meta, setMeta] = useState<OpenEventDetail | null>(null);
   const [skipEmailStep, setSkipEmailStep] = useState(false);
@@ -506,6 +507,10 @@ export default function WaitlistModal() {
         }
         
         setLeadId(json.id);
+        // Store the token for future PATCH requests
+        if (json.token) {
+          setLeadToken(json.token);
+        }
         // Enrich analytics with CTA and UTM context
         track('lead_open', {
           id: json.id,
@@ -619,7 +624,14 @@ export default function WaitlistModal() {
         const s = JSON.stringify(payload);
         if (Object.keys(payload).length === 0) return;
         if (s === lastSaveRef.current) return; lastSaveRef.current = s;
-        await fetch(`/api/leads/${leadId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: s });
+        await fetch(`/api/leads/${leadId}`, { 
+          method: 'PATCH', 
+          headers: { 
+            'Content-Type': 'application/json',
+            ...(leadToken && { 'x-lead-token': leadToken })
+          }, 
+          body: s 
+        });
         track('lead_partial_save', { id: leadId, step: current });
       } catch {}
     }, 500) as unknown as number;
@@ -634,7 +646,11 @@ export default function WaitlistModal() {
     setSubmitting(true);
     try {
       const res = await fetch(`/api/leads/${leadId}`, {
-        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        method: 'PATCH', 
+        headers: { 
+          'Content-Type': 'application/json',
+          ...(leadToken && { 'x-lead-token': leadToken })
+        },
         body: JSON.stringify({
           ticket_target: data.ticket_target,
           discovery: data.discovery,
