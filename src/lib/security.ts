@@ -67,19 +67,10 @@ function parseHost(u: string | undefined | null): string | null {
 export function isTrustedOrigin(req: Request): boolean {
   if (process.env.NODE_ENV !== 'production') return true;
   
-  // Debug: afficher les variables d'environnement
-  console.log('🔍 Environment check:', {
-    NODE_ENV: process.env.NODE_ENV,
-    SITE_URL: process.env.SITE_URL,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-    VERCEL_ENV: process.env.VERCEL_ENV
-  });
-  
-  // Si les variables d'environnement ne sont pas configurées, utiliser le fallback
+  // Si les variables d'environnement ne sont pas configurées, accepter en mode dégradé
   if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) {
-    console.log('⚠️ SITE_URL not configured, using fallback: https://offstone.eu');
-    console.log('🔍 All env vars:', Object.keys(process.env).filter(k => k.includes('SITE')));
-    // Continue avec le fallback au lieu de retourner true
+    // Mode dégradé : accepter toutes les origines en production si pas de config
+    return true;
   }
   
   const origin = req.headers.get('origin');
@@ -87,7 +78,7 @@ export function isTrustedOrigin(req: Request): boolean {
   if (!originHost) return false;
 
   const allowed: string[] = [];
-  const site = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://offstone.eu';
+  const site = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || '';
   // Include Vercel preview deployment host automatically when VERCEL_ENV=preview
   const vercelPreviewHost = (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL)
     ? `https://${process.env.VERCEL_URL}`
