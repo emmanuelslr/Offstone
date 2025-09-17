@@ -21,6 +21,7 @@
 
   if (!res.ok) {
     const text = await res.text();
+    console.error('🔍 Supabase insert error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature` });
     throw new Error(`Supabase insert error: ${res.status} ${text}`);
   }
   const data = await res.json();
@@ -49,6 +50,7 @@ export async function supabaseUpdateLeadById(id: string, fields: Record<string, 
 
   if (!res.ok) {
     const text = await res.text();
+    console.error('🔍 Supabase update error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature?id=eq.${encodeURIComponent(id)}` });
     throw new Error(`Supabase update error: ${res.status} ${text}`);
   }
   const data = await res.json();
