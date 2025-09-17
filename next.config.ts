@@ -52,10 +52,6 @@ const nextConfig: NextConfig = {
     // Optimisations de performance
     unoptimized: false,
     loader: 'default',
-    // Qualité optimisée pour Vercel
-    quality: 85,
-    // Compression agressive pour les images
-    compress: true,
     remotePatterns: [
       { protocol: "https", hostname: "images.prismic.io", pathname: "/**" },
       { protocol: "https", hostname: "offstone.fr", pathname: "/**" },
