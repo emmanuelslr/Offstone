@@ -23,18 +23,6 @@ export default function ParaformRightHeroCardsStep({
   cropPx = 96,
   className,
 }: Props) {
-  // Détection iPhone SE pour forcer l'affichage
-  const [isIPhoneSE, setIsIPhoneSE] = useState(false);
-  
-  useEffect(() => {
-    const checkScreen = () => {
-      const width = window.innerWidth;
-      setIsIPhoneSE(width <= 320);
-    };
-    checkScreen();
-    window.addEventListener('resize', checkScreen);
-    return () => window.removeEventListener('resize', checkScreen);
-  }, []);
   // Ordre fixe
   const base = useMemo<CardData[]>(
     () =>
@@ -307,38 +295,7 @@ export default function ParaformRightHeroCardsStep({
                     className={"pf-reveal" + (isRevealed ? " is-revealed" : "")}
                     style={{ clipPath: clip }}
                   >
-                    <Image 
-                      src={c.image} 
-                      alt="" 
-                      fill 
-                      className="pf-media" 
-                      draggable={false}
-                      style={{
-                        // Styles de débogage pour forcer l'affichage
-                        display: 'block',
-                        visibility: 'visible',
-                        opacity: 1,
-                        objectFit: 'cover',
-                        // Force l'affichage sur iPhone SE
-                        ...(isIPhoneSE && {
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          zIndex: 1
-                        })
-                      }}
-                      onError={(e) => {
-                        console.error('Erreur de chargement image:', c.image);
-                        const target = e.target as HTMLImageElement;
-                        target.style.backgroundColor = '#f0f0f0';
-                        target.style.display = 'flex';
-                        target.style.alignItems = 'center';
-                        target.style.justifyContent = 'center';
-                        target.innerHTML = '<span style="color: #666; font-size: 12px;">Image non disponible</span>';
-                      }}
-                    />
+                    <Image src={c.image} alt="" fill className="pf-media" draggable={false} />
 
                     {/* Filtre couleur permanent */}
                     <div className="pf-tint" />
