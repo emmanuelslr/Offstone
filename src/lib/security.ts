@@ -66,13 +66,15 @@ function parseHost(u: string | undefined | null): string | null {
 
 export function isTrustedOrigin(req: Request): boolean {
   if (process.env.NODE_ENV !== 'production') return true;
-  // Temporairement désactivé pour debug - à réactiver après config des env vars
-  if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) return true;
   
-  // Logs temporaires pour debug
+  // Si les variables d'environnement ne sont pas configurées, accepter en mode dégradé
+  if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) {
+    console.warn('⚠️ SITE_URL not configured, accepting all origins in production');
+    return true;
+  }
+  
   const origin = req.headers.get('origin');
   const originHost = parseHost(origin);
-  console.log('🔍 Origin check:', { origin, originHost, SITE_URL: process.env.SITE_URL, NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL });
   if (!originHost) return false;
 
   const allowed: string[] = [];
@@ -199,7 +201,7 @@ function leadingZeroBits(buf: Buffer): number {
   return bits;
 }
 
-export function issuePowChallenge(difficulty = Number(process.env.POW_DIFFICULTY || 16), ttlMs = 2 * 60_000): string {
+export function issuePowChallenge(difficulty = Number(process.env.POW_DIFFICULTY || 12), ttlMs = 2 * 60_000): string {
   const secret = getSecretOrThrow('LEAD_SIGNING_SECRET', { allowDevDefault: true, devDefault: 'dev-lead-secret' });
   const now = Date.now();
   const payload = {
