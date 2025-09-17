@@ -47,9 +47,16 @@ export default async function NosRealisationsPage() {
 
         </FadeInOnView>
         {studies.length > 0 ? (
-          <FadeInOnView delay={0.05}>
-            <CaseStudiesGrid studies={studies} />
-          </FadeInOnView>
+          <div className="case-studies-section" style={{
+            // Styles de secours pour iPhone SE
+            opacity: 1,
+            visibility: 'visible',
+            display: 'block'
+          }}>
+            <FadeInOnView delay={0.05}>
+              <CaseStudiesGrid studies={studies} />
+            </FadeInOnView>
+          </div>
         ) : (
           <div className="rounded-lg border border-dashed border-gray-300 p-8 text-center text-gray-600">
             Aucune réalisation disponible pour le moment. Ajoutez des documents "case_study" dans Prismic ou lancez le script d'ingestion.

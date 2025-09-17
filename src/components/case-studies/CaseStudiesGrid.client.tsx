@@ -53,15 +53,31 @@ export default function CaseStudiesGrid({ studies }: Props) {
     },
   } as const;
 
+  // Détecter si on est sur un petit écran pour désactiver les animations
+  const [isSmallScreen, setIsSmallScreen] = React.useState(false);
+  
+  React.useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth <= 375);
+    };
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
     <div className="space-y-6">
-      <motion.div
-        className="flex flex-wrap gap-6 items-end"
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
+      {isSmallScreen ? (
+        <div className="flex flex-wrap gap-4 sm:gap-6 items-end" style={{ opacity: 1, transform: 'translateY(0)' }}>
+      ) : (
+        <motion.div
+          className="flex flex-wrap gap-4 sm:gap-6 items-end"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+      )}
         <div className="flex-1 min-w-[200px]">
           <label className="block text-sm font-medium text-gray-900 mb-3 tracking-wide">Typologie</label>
           <div className="relative">
@@ -105,29 +121,50 @@ export default function CaseStudiesGrid({ studies }: Props) {
         </div>
         
         {hasActiveFilters && (
-          <motion.button
-            onClick={clearFilters}
-            className="h-12 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 6L6 18M6 6l12 12"/>
-            </svg>
-            Effacer les filtres
-          </motion.button>
+          isSmallScreen ? (
+            <button
+              onClick={clearFilters}
+              className="h-12 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+              style={{ opacity: 1, transform: 'scale(1)' }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+              Effacer les filtres
+            </button>
+          ) : (
+            <motion.button
+              onClick={clearFilters}
+              className="h-12 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+              Effacer les filtres
+            </motion.button>
+          )
         )}
         
-      </motion.div>
+      {isSmallScreen ? (
+        </div>
+      ) : (
+        </motion.div>
+      )}
 
       {/* Résultats et compteur */}
-      <motion.div
-        className="flex items-center justify-between mb-6"
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 }}
-      >
+      {isSmallScreen ? (
+        <div className="flex items-center justify-between mb-6" style={{ opacity: 1, transform: 'translateY(0)' }}>
+      ) : (
+        <motion.div
+          className="flex items-center justify-between mb-6"
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 }}
+        >
+      )}
         <div className="text-sm text-gray-600">
           {filtered.length === studies.length ? (
             <span>{studies.length} réalisation{studies.length > 1 ? 's' : ''}</span>
@@ -142,21 +179,35 @@ export default function CaseStudiesGrid({ studies }: Props) {
             </span>
           )}
         </div>
-      </motion.div>
+      {isSmallScreen ? (
+        </div>
+      ) : (
+        </motion.div>
+      )}
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-      >
-        {filtered.map((s, index) => (
-          <motion.div key={s.id} variants={itemVariants}>
-            <CaseStudyCard study={s} priority={index < 3} />
-          </motion.div>
-        ))}
-      </motion.div>
+      {isSmallScreen ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {filtered.map((s, index) => (
+            <div key={s.id} style={{ opacity: 1, transform: 'translateY(0)' }}>
+              <CaseStudyCard study={s} priority={index < 3} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {filtered.map((s, index) => (
+            <motion.div key={s.id} variants={itemVariants}>
+              <CaseStudyCard study={s} priority={index < 3} />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 }
