@@ -67,6 +67,14 @@ function parseHost(u: string | undefined | null): string | null {
 export function isTrustedOrigin(req: Request): boolean {
   if (process.env.NODE_ENV !== 'production') return true;
   
+  // Debug: afficher les variables d'environnement
+  console.log('🔍 Environment check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    SITE_URL: process.env.SITE_URL,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+    VERCEL_ENV: process.env.VERCEL_ENV
+  });
+  
   // Si les variables d'environnement ne sont pas configurées, accepter en mode dégradé
   if (!process.env.SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL) {
     console.warn('⚠️ SITE_URL not configured, accepting all origins in production');
