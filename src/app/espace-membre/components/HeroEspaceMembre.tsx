@@ -113,8 +113,8 @@ const HeroEspaceMembre: React.FC = () => {
           >
             <div className="relative w-full max-w-[500px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] rounded-lg overflow-hidden bg-gray-100">
               <Image
-                src="/images/Backgrounds/Mokup ecran tabouret.jpeg"
-                alt="Plateforme digitale Offstone - Bientôt disponible"
+                src="/images/Platform/New%20offstone%20platform.png"
+                alt="New offstone platform - Bientôt disponible"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
                 className="object-cover object-center"

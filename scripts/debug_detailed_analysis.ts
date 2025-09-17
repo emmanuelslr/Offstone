@@ -4,12 +4,12 @@ async function debugDetailedAnalysis() {
   const urls = [
     {
       name: 'Maison Iéna',
-      url: 'https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/',
+      url: 'https://offstone.fr/biens/maison-iena-hotel-de-luxe-paris/',
       uid: 'maison-iena'
     },
     {
       name: 'Jules Guesde', 
-      url: 'https://aguesseaucapital.com/biens/acquisition-immeuble-bureaux-levallois-perret/',
+      url: 'https://offstone.fr/biens/acquisition-immeuble-bureaux-levallois-perret/',
       uid: 'jules-guesde'
     }
   ];

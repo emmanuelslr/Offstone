@@ -23,7 +23,7 @@ export default function CaseStudyBodyDarwin({ body }: { body: RichTextField }) {
           /acteur engagé/i,
           /avertissement\s*:/i,
           /un investissement ne peut/i,
-          /ag\s*uesseau|aguesseau\s*capital/i,
+          /offstone\s*capital/i,
           /tous droits réservés/i,
           /remplir le formulaire d'investissement/i,
           /^timeline du projet/i,

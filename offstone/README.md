@@ -189,7 +189,7 @@ Exemples curl (QA)
 
 Rappels contractuels
 - `/api/leads/start` : dédoublonnage par email pour les leads `status='open'` de moins de 30 jours ; sinon création. Capture `page_url`, `ref`, `utm_*`, `asset_class`, `article_uid` via querystring. Retour toujours `{ ok: true, lead_id }`.
-- `/api/leads/update` : met à jour uniquement les champs fournis dans `patch`. Normalise `ticket_target` en "<10k" | "20k" | "50k" | "100k+". Accepte `status`: "open" | "completed". Met toujours `updated_at` à `now()`.
+- `/api/leads/update` : met à jour uniquement les champs fournis dans `patch`. Normalise `ticket_target` en `lt_20k` | `20k_50k` | `50k_100k` | `100k_500k` | `500k_1m` | `gt_1m`. Accepte `status`: "open" | "completed". Met toujours `updated_at` à `now()`.
 - Service Role utilisé uniquement côté serveur via `offstone/lib/supabaseServer.ts`.
 - Les routes montent sous `/api/leads/...` (même en `src/app`).
 
@@ -203,7 +203,7 @@ create table if not exists public.leads (
   updated_at timestamptz default now(),
   status text default 'open',
   email text not null,
-  ticket_target text,         -- '<10k' | '20k' | '50k' | '100k+'
+  ticket_target text,         -- 'lt_20k' | '20k_50k' | '50k_100k' | '100k_500k' | '500k_1m' | 'gt_1m'
   discovery text,             -- 'tv' | 'linkedin' | 'google' | ...
   wants_call boolean,
   first_name text,
@@ -225,7 +225,7 @@ create index if not exists leads_email_idx on public.leads (email);
 1) Parcours utilisateur (UI)
 - Ouvrir la modale via le bouton « Investir à nos côtés » → événement GA `lead_view`.
 - Saisir un email valide et soumettre → POST `/api/leads/start` OK → événement GA `lead_start`.
-- Choisir ticket `<10k` → `lead_progress` (step=2, ticket="<10k") → saute l’étape RDV → coordonnées → consentement → `lead_submit` → redirection `/merci`.
+- Choisir ticket `lt_20k` → `lead_progress` (step=2, ticket="Moins de 20 k€") → coordonnées → consentement → `lead_submit` → redirection `/merci`.
 - Refaire avec ticket `50k` → étape RDV:
   - « Plus tard » → coordonnées → consentement → `/merci`.
   - « Oui, maintenant » → panneau Calendly visible → coordonnées → consentement → `/rdv`.
@@ -250,7 +250,7 @@ create index if not exists leads_email_idx on public.leads (email);
 - Email invalide → 400 `bad_email`.
 - Re-soumission du même email <30j → même `lead_id` (pas de doublon).
 - Fermeture de la modale au milieu → données partielles présentes en DB.
-- Ticket non normalisé (ex.: `"50K"`, `"100 K +"`) → enregistré normalisé (`"50k"`, `"100k+"`).
+- Ticket non normalisé (ex.: `"50 K – 100 K €"`, `"1M+"`) → enregistré normalisé (`"50k_100k"`, `"gt_1m"`).
 
 6) Accessibilité / UX
 - Overlay : `Esc` ferme, scroll du body verrouillé.

@@ -5,7 +5,7 @@ import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 import ParaformRightHeroCardsStep from '@/components/ParaformRightHeroCardsStep';
 import SectionBadge from './SectionBadge';
-import PlatformDigitale from '../../../../public/images/Platform/Plateforme digitale.png';
+import PlatformDigitale from '../../../../public/images/Platform/New offstone platform.png';
 import OffDealAdvantageLike from './OffDealAdvantageLike';
 
 export default function AdvantageOffstoneSection() {

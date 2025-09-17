@@ -107,7 +107,7 @@ const overridesByImage: Record<string, Partial<Deal>> = {
   '/images/Buildings/Truchet.jpg': {
     id: 'truchet',
     title: 'Truchet',
-    location: 'Paris',
+    location: '75020 Paris',
     description:
       'Immeuble de bureaux rue Abel‑Truchet à Paris, valorisation d’un actif emblématique.',
     tags: ['Bureaux', 'Île‑de‑France'],
@@ -137,16 +137,35 @@ const overridesByImage: Record<string, Partial<Deal>> = {
     tags: ['Commerce', 'Hauts‑de‑Seine'],
   },
   '/images/Acquisitions/Paris - Resi.webp': {
-    id: 'paris-resi',
-    title: 'Résidentiel — Paris',
-    location: 'Paris',
+    id: 'planchat',
+    title: 'Planchat',
+    location: '75020 Paris',
     description:
-      'Portefeuille résidentiel parisien à forte valeur ajoutée, revalorisation et optimisation d’usage.',
-    tags: ['Résidentiel', 'Île‑de‑France'],
+      "Acquisition d'un hotel de 760 m2 au 65 rue Planchat (Paris 20e) et revalorisation complete.",
+    tags: ['Hotellerie', 'Paris 20e'],
   },
 };
 
 const viewDeals: Deal[] = deals.map((d) => ({ ...d, ...(overridesByImage[d.image] || {}) }));
+
+// Replace images with local assets from "/images/réalisations images" when possible
+const REALISATIONS_DIR = "/images/réalisations images";
+const imageById: Record<string, string> = {
+  // Align with overridesByImage outputs (ids)
+  'maison-du-moulin-vert': `${REALISATIONS_DIR}/maison du moulin vert.webp`,
+  'maison-boetie': `${REALISATIONS_DIR}/maison boetie.webp`,
+  'truchet': `${REALISATIONS_DIR}/truchet.webp`,
+  'maison-iena': `${REALISATIONS_DIR}/Maison iena.webp`,
+  'maison-barbes': `${REALISATIONS_DIR}/maison barbes.webp`,
+  'jules-guesde': `${REALISATIONS_DIR}/jules guesde.webp`,
+  // Generic résidentiel Paris — choix d'une image proche
+  'planchat': '/images/r%C3%A9alisations%20images/Planchat.webp',
+};
+
+const viewDealsWithImages: Deal[] = viewDeals.map((d) => ({
+  ...d,
+  image: imageById[d.id] || d.image,
+}));
 
 
 export default function HorizontalDealsSection() {
@@ -171,7 +190,7 @@ export default function HorizontalDealsSection() {
 
   const totalTrackWidth = useMemo(() => {
     // approximate width for SSR safety; replaced on client after mount
-    return viewDeals.length * (cardWidth + cardGap) + 100;
+    return viewDealsWithImages.length * (cardWidth + cardGap) + 100;
   }, []);
 
   useEffect(() => {
@@ -328,7 +347,7 @@ export default function HorizontalDealsSection() {
                   padding: `0 ${basePadRef.current}px ${bottomPadRef.current}px ${basePadRef.current}px`,
                 }}
               >
-                {viewDeals.map((deal) => {
+                {viewDealsWithImages.map((deal) => {
                   const href = deal?.id ? `/nos-realisations/${deal.id}` : '/nos-realisations';
                   return (
                 <Link

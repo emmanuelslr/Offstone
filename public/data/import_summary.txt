@@ -1,0 +1,21 @@
+Articles ready for import:
+
+1. Thèse Bureaux prime 2025–2026 : opportunités et risques
+   UID: these-bureaux-prime-2025-2026-opportunites-et-risques
+   Type: resource_article
+   Lang: fr-fr
+
+2. Fiscalité immobilière : 150-0 B ter et IFI — cadres et cas pratiques
+   UID: fiscalite-150-0-b-ter-ifi-cadres-cas
+   Type: resource_article
+   Lang: fr-fr
+
+3. Société dédiée, pacte et gouvernance : clauses clés du co-investissement
+   UID: societe-dediee-pacte-gouvernance-clauses-cles
+   Type: resource_article
+   Lang: fr-fr
+
+4. Vacance et remise sur le marché : méthode opérationnelle
+   UID: vacance-et-remise-sur-le-marche-bureaux
+   Type: resource_article
+   Lang: fr-fr

@@ -306,9 +306,9 @@ export default function WaitlistModal() {
               <img src="/logos/offstone-logo-white.svg" alt="Offstone" className="w-40 h-auto" />
             </div>
             <div className="relative">
-              <button aria-label="Fermer" onClick={reset} className="text-white/70 hover:text-white text-2xl">Ã—</button>
+              <button aria-label="Fermer" onClick={reset} className="text-white/70 hover:text-white text-2xl">×</button>
               {escArmed && (
-                <div className="absolute right-0 mt-2 px-2 py-1 rounded bg-white/10 text-white/80 text-xs whitespace-nowrap">Appuyez encore sur Ã‰chap pour fermer</div>
+                <div className="absolute right-0 mt-2 px-2 py-1 rounded bg-white/10 text-white/80 text-xs whitespace-nowrap">Appuyez encore sur Échap pour fermer</div>
               )}
             </div>
           </div>
@@ -317,7 +317,7 @@ export default function WaitlistModal() {
             <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
               <div className="h-full bg-[#F7B096]" style={{ width: `${progress.pct}%` }} />
             </div>
-            <div className="mt-2 text-xs text-white/60">Ã‰tape {progress.currentNumber} / {progress.total}</div>
+            <div className="mt-2 text-xs text-white/60">Étape {progress.currentNumber} / {progress.total}</div>
           </div>
 
           <div className={`mt-4 grid gap-8 items-start ${twoCols ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
@@ -327,8 +327,8 @@ export default function WaitlistModal() {
                   <div className="mb-6">
                     {current === 'ticket' && (<span className="text-2xl font-semibold leading-tight">Indiquez votre ticket d'investissement</span>)}
                     {current === 'rdv' && (<span className="text-2xl font-semibold leading-tight">Souhaitez-vous programmer un RDV ?</span>)}
-                    {current === 'calendly' && (<span className="text-2xl font-semibold leading-tight">Choisissez un crÃ©neau avec notre Ã©quipe</span>)}
-                    {current === 'discovery' && (<span className="text-2xl font-semibold leading-tight">Comment nous avez-vous dÃ©couvert ?</span>)}
+                    {current === 'calendly' && (<span className="text-2xl font-semibold leading-tight">Choisissez un créneau avec notre équipe</span>)}
+                    {current === 'discovery' && (<span className="text-2xl font-semibold leading-tight">Comment nous avez-vous découvert ?</span>)}
                     {current === 'profile' && (<span className="text-2xl font-semibold leading-tight">Votre profil</span>)}
                     {current === 'submit' && (<span className="text-2xl font-semibold leading-tight">Confirmation</span>)}
                   </div>
@@ -360,7 +360,7 @@ export default function WaitlistModal() {
                           </button>
                         );
                       })}
-                      {under5k && (<p className="text-xs text-white/70">Pour les tickets infÃ©rieurs Ã  5kâ‚¬, l'Ã©tape RDV est sautÃ©e.</p>)}
+                      {under5k && (<p className="text-xs text-white/70">Pour les tickets inférieurs à 5k€, l'étape RDV est sautée.</p>)}
                     </div>
                   )}
 
@@ -392,7 +392,7 @@ export default function WaitlistModal() {
 
                   {current === 'discovery' && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {['LinkedIn','Instagram / Tiktok','Podcast / Youtube','Un membre du club','ConfÃ©rence','Recherche Google','Autre'].map((opt, idx) => {
+                      {['LinkedIn','Instagram / Tiktok','Podcast / Youtube','Un membre du club','Conférence','Recherche Google','Autre'].map((opt, idx) => {
                         const selected = data.discovery === opt;
                         return (
                           <button
@@ -416,15 +416,15 @@ export default function WaitlistModal() {
                   {current === 'profile' && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm text-white/80 mb-1">PrÃ©nom</label>
-                        <input value={data.first_name ?? ''} onChange={(e)=>setData((d)=>({...d, first_name: e.target.value}))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="Votre prÃ©nom" />
+                        <label className="block text-sm text-white/80 mb-1">Prénom</label>
+                        <input value={data.first_name ?? ''} onChange={(e)=>setData((d)=>({...d, first_name: e.target.value}))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="Votre prénom" />
                       </div>
                       <div>
                         <label className="block text-sm text-white/80 mb-1">Nom</label>
                         <input value={data.last_name ?? ''} onChange={(e)=>setData((d)=>({...d, last_name: e.target.value}))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="Votre nom" />
                       </div>
                       <div>
-                        <label className="block text-sm text-white/80 mb-1">TÃ©lÃ©phone (optionnel)</label>
+                        <label className="block text-sm text-white/80 mb-1">Téléphone (optionnel)</label>
                         <input value={data.phone ?? ''} onChange={(e)=>setData((d)=>({...d, phone: e.target.value}))} className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" placeholder="06 12 34 56 78" />
                       </div>
                     </div>
@@ -434,7 +434,7 @@ export default function WaitlistModal() {
                     <div className="space-y-4">
                       <div className="flex items-center gap-3">
                         <input id="consent" type="checkbox" checked={data.consent === true} onChange={(e)=>setData((d)=>({...d, consent: e.target.checked}))} />
-                        <label htmlFor="consent" className="text-sm text-white/80">J'accepte d'Ãªtre contactÃ©(e) et la politique de confidentialitÃ©.</label>
+                        <label htmlFor="consent" className="text-sm text-white/80">J'accepte d'être contacté(e) et la politique de confidentialité.</label>
                       </div>
                     </div>
                   )}
@@ -442,7 +442,7 @@ export default function WaitlistModal() {
                   {steps[stepIndex] === 'success' && (
                     <div className="text-left">
                       <h4 className="text-xl font-semibold mb-2">Merci !</h4>
-                      <p className="text-white/80">Votre demande a bien Ã©tÃ© enregistrÃ©e. Nous revenons vers vous trÃ¨s vite.</p>
+                      <p className="text-white/80">Votre demande a bien été enregistrée. Nous revenons vers vous très vite.</p>
                       <div className="mt-6">
                         <button onClick={reset} className="px-4 py-2 rounded-lg bg-[#F7B096] text-black text-sm">Fermer</button>
                       </div>
@@ -464,8 +464,8 @@ export default function WaitlistModal() {
               <div className="hidden lg:block">
                 <div className="w-full h-[480px] rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70">
                   <div className="text-center">
-                    <div className="text-sm mb-2">IntÃ©gration Calendly</div>
-                    <div className="text-xs text-white/50">Placez ici l'iframe Calendly ou un composant personnalisÃ©.</div>
+                    <div className="text-sm mb-2">Intégration Calendly</div>
+                    <div className="text-xs text-white/50">Placez ici l'iframe Calendly ou un composant personnalisé.</div>
                   </div>
                 </div>
                 </div>

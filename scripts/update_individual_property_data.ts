@@ -2,13 +2,13 @@
 
 /**
  * Script pour mettre à jour les données individuelles de chaque bien
- * avec les 4 informations spécifiques basées sur le site Aguesseau Capital
+ * avec les 4 informations spécifiques basées sur le site Offstone
  */
 
 import fs from 'fs';
 import path from 'path';
 
-// Données spécifiques pour chaque bien basées sur le site Aguesseau Capital
+// Données spécifiques pour chaque bien basées sur le site Offstone
 const propertySpecificData = {
   "planchat": {
     headline: ["2024", "760 m²", "6 niveaux", "43 chambres"],

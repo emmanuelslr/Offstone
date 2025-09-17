@@ -4,24 +4,24 @@ import path from 'node:path';
 
 // URLs des biens avec leurs UIDs correspondants
 const propertyUrls = [
-  { uid: 'planchat', url: 'https://aguesseaucapital.com/biens/acquisition-hotel-planchat/' },
-  { uid: 'chilly-mazarin', url: 'https://aguesseaucapital.com/biens/investissement-immobilier-chilly-mazarin/' },
-  { uid: 'simart', url: 'https://aguesseaucapital.com/biens/immeuble-mixte-paris-18e-simart/' },
-  { uid: 'maison-iena', url: 'https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/' },
-  { uid: 'jules-guesde', url: 'https://aguesseaucapital.com/biens/acquisition-immeuble-bureaux-levallois-perret/' },
-  { uid: 'bonnet', url: 'https://aguesseaucapital.com/biens/immeuble-residentiel-paris-rue-bonnet/' },
-  { uid: 'maison-barbes', url: 'https://aguesseaucapital.com/biens/hotel-4-etoiles-paris-maison-barbes/' },
-  { uid: 'maison-boetie', url: 'https://aguesseaucapital.com/biens/maison-boetie-lieu-evenementiel-paris/' },
-  { uid: 'truchet', url: 'https://aguesseaucapital.com/biens/bureaux-haut-de-gamme-paris/' },
-  { uid: 'passage-du-caire', url: 'https://aguesseaucapital.com/biens/bureaux-passage-du-caire/' },
-  { uid: 'maison-du-moulin-vert', url: 'https://aguesseaucapital.com/biens/maison-du-moulin-vert/' },
-  { uid: 'hector-malot', url: 'https://aguesseaucapital.com/biens/hector-malot/' },
-  { uid: 'ivry', url: 'https://aguesseaucapital.com/biens/immeuble-renove-ivry/' },
-  { uid: 'jean-jacques-rousseau', url: 'https://aguesseaucapital.com/biens/15-jean-jacques-rousseau/' },
-  { uid: 'vitry', url: 'https://aguesseaucapital.com/biens/35-genie-immeuble-renove-vitry-sur-seine/' },
-  { uid: 'villa-seurat', url: 'https://aguesseaucapital.com/biens/2villa-seurat-hotel-particulier-art-deco-paris/' },
-  { uid: 'henri-barbusse', url: 'https://aguesseaucapital.com/biens/102-henri-barbusse/' },
-  { uid: 'drancy', url: 'https://aguesseaucapital.com/biens/46-grosperrin/' }
+  { uid: 'planchat', url: 'https://offstone.fr/nos-realisations/planchat/' },
+  { uid: 'chilly-mazarin', url: 'https://offstone.fr/nos-realisations/chilly-mazarin/' },
+  { uid: 'simart', url: 'https://offstone.fr/nos-realisations/simart/' },
+  { uid: 'maison-iena', url: 'https://offstone.fr/nos-realisations/maison-iena/' },
+  { uid: 'jules-guesde', url: 'https://offstone.fr/nos-realisations/jules-guesde/' },
+  { uid: 'bonnet', url: 'https://offstone.fr/nos-realisations/bonnet/' },
+  { uid: 'maison-barbes', url: 'https://offstone.fr/nos-realisations/maison-barbes/' },
+  { uid: 'maison-boetie', url: 'https://offstone.fr/nos-realisations/maison-boetie/' },
+  { uid: 'truchet', url: 'https://offstone.fr/biens/bureaux-haut-de-gamme-paris/' },
+  { uid: 'passage-du-caire', url: 'https://offstone.fr/biens/bureaux-passage-du-caire/' },
+  { uid: 'maison-du-moulin-vert', url: 'https://offstone.fr/biens/maison-du-moulin-vert/' },
+  { uid: 'hector-malot', url: 'https://offstone.fr/biens/hector-malot/' },
+  { uid: 'ivry', url: 'https://offstone.fr/biens/immeuble-renove-ivry/' },
+  { uid: 'jean-jacques-rousseau', url: 'https://offstone.fr/biens/15-jean-jacques-rousseau/' },
+  { uid: 'vitry', url: 'https://offstone.fr/biens/35-genie-immeuble-renove-vitry-sur-seine/' },
+  { uid: 'villa-seurat', url: 'https://offstone.fr/biens/2villa-seurat-hotel-particulier-art-deco-paris/' },
+  { uid: 'henri-barbusse', url: 'https://offstone.fr/biens/102-henri-barbusse/' },
+  { uid: 'drancy', url: 'https://offstone.fr/biens/46-grosperrin/' }
 ];
 
 interface PortfolioImage {

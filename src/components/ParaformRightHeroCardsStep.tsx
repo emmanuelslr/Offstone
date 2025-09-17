@@ -262,12 +262,15 @@ export default function ParaformRightHeroCardsStep({
             ? `inset(0px round ${radius}px)`
             : `inset(${vertCrop}px ${sideCrop}px round ${radius}px)`;
 
-          // Personnalisation de la première carte uniquement
-          let glassTitle = "MAISON IENA";
-          let glassSub = "Hôtel | Value-Add | Paris 16ème";
+          // Personnalisation des cartes
+          let glassTitle = "MAISON BOÉTIE";
+          let glassSub = "Événementiel | Value-Add | Paris 8ème";
           if (logical === 0) {
-            glassTitle = "MAISON BOÉTIE";
-            glassSub = "Événementiel | Value-Add | Paris 8ème";
+            glassTitle = "MAISON IENA";
+            glassSub = "Hôtel | Value-Add | Paris 16ème";
+          } else if (logical === 2) {
+            glassTitle = "TRUCHET";
+            glassSub = "Bureaux | Value-Add | Paris 2ème";
           }
 
           return (
@@ -316,7 +319,7 @@ export default function ParaformRightHeroCardsStep({
                       style={{ top: vertCrop + framePad, right: sideCrop + framePad, bottom: vertCrop + framePad, left: sideCrop + framePad, borderRadius: `${radius}px` }}
                       >
                       {/* Bloc badge + légende en haut-gauche */}
-                      <div className="pf-badge-wrap">
+                      <div className="pf-badge-wrap" style={{ display: 'none' }}>
                         <div className="pf-badge">20%</div>
                         <div className="pf-badge-caption">
                           <span>Performance</span><br />

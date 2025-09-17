@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 
 async function debugChillyMazarin() {
   try {
-    const url = 'https://aguesseaucapital.com/biens/investissement-immobilier-chilly-mazarin/';
+    const url = 'https://offstone.fr/biens/investissement-immobilier-chilly-mazarin/';
     console.log(`Analyse de la page: ${url}`);
     
     const response = await fetch(url);

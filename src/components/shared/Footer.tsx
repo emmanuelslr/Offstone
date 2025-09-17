@@ -132,7 +132,7 @@ export default function Footer() {
             <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Contact Us</Link>
             <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Security</Link>
           </nav>
-          <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="linkedin-button md:ml-auto">
+          <Link href="https://www.linkedin.com/company/offstone-fr" target="_blank" rel="noopener noreferrer" className="linkedin-button md:ml-auto">
             <span className="sr-only">LinkedIn</span>
             <Image
               src="/images/icones/linkedin.svg"

@@ -5,7 +5,7 @@
     throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
   }
 
-  const res = await fetch(`${url}/rest/v1/leads`, {
+  const res = await fetch(`${url}/rest/v1/leads_candidature`, {
     method: "POST",
     headers: {
       apikey: key,
@@ -34,7 +34,7 @@ export async function supabaseUpdateLeadById(id: string, fields: Record<string, 
     throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
   }
 
-  const res = await fetch(`${url}/rest/v1/leads?id=eq.${encodeURIComponent(id)}`, {
+  const res = await fetch(`${url}/rest/v1/leads_candidature?id=eq.${encodeURIComponent(id)}`, {
     method: "PATCH",
     headers: {
       apikey: key,

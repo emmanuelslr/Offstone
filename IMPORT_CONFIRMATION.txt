@@ -1,0 +1,16 @@
+IMPORT AUTOMATIQUE TERMINÉ
+========================
+
+Date: 16/09/2025 18:02:20
+Status: ✅ SUCCESS
+
+Articles importés automatiquement:
+1. Thèse Bureaux prime 2025–2026 : opportunités et risques
+2. Fiscalité immobilière : 150-0 B ter et IFI — cadres et cas pratiques  
+3. Société dédiée, pacte et gouvernance : clauses clés du co-investissement
+4. Vacance et remise sur le marché : méthode opérationnelle
+
+Tous les articles sont maintenant disponibles dans Prismic.
+Aucune action manuelle requise.
+
+Fichier source: public/data/resource_articles.ndjson

@@ -2,8 +2,8 @@ import { JSDOM } from 'jsdom';
 
 async function debugIenaGuesde() {
   const urls = [
-    'https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/',
-    'https://aguesseaucapital.com/biens/acquisition-immeuble-bureaux-levallois-perret/'
+    'https://offstone.fr/biens/maison-iena-hotel-de-luxe-paris/',
+    'https://offstone.fr/biens/acquisition-immeuble-bureaux-levallois-perret/'
   ];
 
   for (const url of urls) {

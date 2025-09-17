@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 
 async function run() {
-  const url = 'https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/';
+  const url = 'https://offstone.fr/biens/maison-iena-hotel-de-luxe-paris/';
   const res = await fetch(url);
   const html = await res.text();
   const m = html.match(/"featuredImage"\s*:\s*"(https?:[^\"]+)"/);

@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 
 async function debugMoulinVertDetailed() {
   try {
-    const url = 'https://aguesseaucapital.com/biens/maison-du-moulin-vert/';
+    const url = 'https://offstone.fr/biens/maison-du-moulin-vert/';
     console.log(`Analyse détaillée de la page: ${url}`);
     
     const response = await fetch(url);

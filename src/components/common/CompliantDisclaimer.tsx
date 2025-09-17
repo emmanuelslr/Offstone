@@ -3,10 +3,10 @@
 import React from "react";
 
 export const LISTING_TEXT =
-  "Réalisations historiques conduites par les associés d’Offstone via Aguesseau Capital. Informations descriptives et non contractuelles ; ceci ne constitue ni une offre au public ni une communication promotionnelle sur un instrument financier. Les performances passées ne préjugent pas des performances futures.";
+  "Réalisations historiques conduites par les associés d'Offstone. Informations descriptives et non contractuelles ; ceci ne constitue ni une offre au public ni une communication promotionnelle sur un instrument financier. Les performances passées ne préjugent pas des performances futures.";
 
 export const CARD_BADGE_TEXT =
-  "Acquis par les associés d’Offstone (via Aguesseau Capital)";
+  "Acquis par les associés d'Offstone";
 
 export const DETAIL_BANNER_TEXT =
   "Réalisation passée. Données factuelles. Aucun appel à souscription. Pour investir avec Offstone, l’accès éventuel aux offres se fait après éligibilité et via Tylia, PSI agréé par l’ACPR.";

@@ -14,9 +14,9 @@ const STEPS: Step[] = [
   {
     id: "y2014",
     year: "2014",
-    title: "Partir de rien. Construire une licorne.",
+    title: "Jonathan, parti de rien, a bâti une licorne française*.",
     description:
-      "Cofondateur d’Aircall, Jonathan Anguelov a bâti une entreprise technologique mondiale avec une obsession: exécuter vite, bien, et durablement.",
+      "Cofondateur d'Aircall, Jonathan Anguelov a bâti une entreprise technologique mondiale avec une obsession: exécuter vite, bien, et durablement.",
     image: "/images/personnalites/67f78cf01d122756a6d6b632_jonathan-anguelov-s-quive-magazine.jpg",
   },
   {
@@ -24,7 +24,7 @@ const STEPS: Step[] = [
     year: "2018",
     title: "De la tech à l'immobilier professionnel.",
     description:
-      "Création d'Aguesseau Capital : une foncière pour bâtir un portefeuille immobilier professionnel avec un réseau d’intermédiaires éprouvé (notaires, marchands, family offices).",
+      "Jonathan crée Aguesseau capital : sa foncière qui lui permet de bâtir un portefeuille immobilier professionnel avec un réseau d'intermédiaires éprouvé (notaires, marchands, family offices).",
     image: "/images/Buildings/Logistics.jpg",
   },
   {
@@ -32,16 +32,16 @@ const STEPS: Step[] = [
     year: "2024",
     title: "200M€ d'acquisitions, une méthode.",
     description:
-      "Près de 200 M€ d’immeubles acquis avec discipline et alignement. Sélection serrée, structure adaptée, co‑investissement personnel.",
+      "Aguesseau capital acquiert près de 200 M€ d'immeubles avec discipline et alignement. La société applique une sélection stricte, et ne cesse de faire grandir son réseau pour trouver les meilleures opportunités immobilières.",
     image: "/images/Buildings/Truchet.jpg",
   },
   {
     id: "y2025",
     year: "2025",
-    title: "Offstone: ouvrir l’accès.",
+    title: "Offstone: ouvrir l'accès.",
     description:
-      "Rendre la qualité institutionnelle et professionnelle accessible à une communauté d’investisseurs. Industrialiser le sourcing, la structuration et la gestion.",
-    image: "/images/Backgrounds/Mokup ecran tabouret.jpeg",
+      "Offstone rend la qualité institutionnelle et professionnelle accessible à une communauté d'investisseurs. La plateforme industrialise le sourcing, la structuration et la gestion.",
+    image: "/images/Platform/offstone plateform mockup ordi.png",
   },
 ];
 
@@ -140,6 +140,11 @@ export default function OriginesOffstoneSection() {
                         <div className="p-6 sm:p-8">
                           <h3 className="text-xl sm:text-2xl font-medium text-[#111] mb-3">{step.title}</h3>
                           <p className="text-sm sm:text-base text-gray-700 leading-relaxed max-w-[60ch]">{step.description}</p>
+                          {step.id === "y2014" && (
+                            <p className="text-xs text-gray-500 mt-3 italic">
+                              *Licorne : entreprise valorisée plus d'un milliard d'euros
+                            </p>
+                          )}
                         </div>
                         <motion.div
                           className="relative min-h-[220px] sm:min-h-[260px]"

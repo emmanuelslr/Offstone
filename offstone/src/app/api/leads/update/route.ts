@@ -16,13 +16,44 @@ type PatchBody = {
 };
 
 const normalizeTicketTarget = (v: unknown) => {
-  const raw = typeof v === "number" ? String(v) : (v as string | null | undefined);
-  if (!raw) return null;
-  const s = raw.toString().toLowerCase().replace(/\s/g, "");
-  if (s.includes("100") || s.includes("100k") || s.includes("100000")) return "100k+";
-  if (s.includes("50") || s.includes("50k") || s.includes("50000")) return "50k";
-  if (s.includes("20") || s.includes("20k") || s.includes("20000")) return "20k";
-  if (s.includes("10") || s.includes("10k") || s.includes("<10")) return "<10k";
+  if (v === null || v === undefined) return null;
+
+  // Numeric inputs are treated as an absolute amount in euros
+  if (typeof v === "number" && !Number.isNaN(v)) {
+    const n = v;
+    if (n < 20000) return "lt_20k";
+    if (n < 50000) return "20k_50k";
+    if (n < 100000) return "50k_100k";
+    if (n < 500000) return "100k_500k";
+    if (n < 1000000) return "500k_1m";
+    return "gt_1m";
+  }
+
+  const raw = String(v);
+  // Normalize string for robust matching: lower-case, remove accents, spaces, currency, punctuation
+  const s = raw
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "") // strip accents
+    .replace(/[\s€\u202f]/g, "") // spaces, euro signs, narrow spaces
+    .replace(/[.,]/g, "") // separators
+    .replace(/[–—-]/g, ""); // dashes
+
+  // Expected canonical tokens from UI
+  if (/^lt_?20k$/.test(s) || /moinsde20k/.test(s) || /^<20k$/.test(s) || /^0?20k$/.test(s)) return "lt_20k";
+  if (/^20k_?50k$/.test(s) || /20k50k/.test(s)) return "20k_50k";
+  if (/^50k_?100k$/.test(s) || /50k100k/.test(s)) return "50k_100k";
+  if (/^100k_?500k$/.test(s) || /100k500k/.test(s)) return "100k_500k";
+  if (/^500k_?1m$/.test(s) || /500k1m/.test(s)) return "500k_1m";
+  if (/^gt_?1m$/.test(s) || /plusde1m/.test(s) || /^>1m$/.test(s) || /1m\+/.test(raw)) return "gt_1m";
+
+  // Legacy tokens support (mapped approximately to new buckets)
+  const legacy = raw.toLowerCase().replace(/\s/g, "");
+  if (legacy.includes("100k")) return "100k_500k"; // legacy "100k+" → bucket starting at 100k
+  if (legacy.includes("50k")) return "50k_100k";
+  if (legacy.includes("20k")) return "20k_50k";
+  if (legacy.includes("<10") || legacy.includes("10k")) return "lt_20k";
+
   return null;
 };
 

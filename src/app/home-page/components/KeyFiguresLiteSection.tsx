@@ -76,14 +76,13 @@ export default function KeyFiguresLiteSection() {
                   </div>
                 </div>
 
-                {/* Bandeau valeur créée */}
-                <div className="absolute inset-x-3 bottom-3">
+                {/* Bandeau valeur créée - MASQUÉ */}
+                {/* <div className="absolute inset-x-3 bottom-3">
                   <div className="flex items-center justify-between gap-4 rounded-2xl bg-black/65 backdrop-blur px-4 py-3 shadow-lg">
                     <div className="leading-tight text-white">
                       <div className="uppercase tracking-wide text-[11px] text-white/80">Acquisition</div>
                       <div className="text-white font-semibold text-2xl sm:text-3xl">{d.acquisition}</div>
                     </div>
-                    {/* Flèche pointillée */}
                     <div className="flex items-center text-[#F7B096]">
                       <svg width="40" height="22" viewBox="0 0 40 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 11H34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="3 4"/>
@@ -95,7 +94,7 @@ export default function KeyFiguresLiteSection() {
                       <div className="text-white font-semibold text-2xl sm:text-3xl">{d.revente}</div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </motion.article>
           ))}

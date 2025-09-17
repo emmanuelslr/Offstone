@@ -61,9 +61,9 @@ function HeroPourquoiOffstoneInner(props: any) {
               </h2>
 
               <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-6 md:mt-10">
-                Des projets immobiliers rigoureusement analysés<br />
-                et sélectionnés, structurés par Jonathan Anguelov<br />
-                et réservés à nos membres
+                Nous analysons, sélectionnons<br />
+                et structurons des projets immobiliers<br />
+                de qualité, exclusivement pour nos membres.
               </p>
 
               <form
@@ -143,9 +143,9 @@ function HeroPourquoiOffstoneInner(props: any) {
                   gap={18}
                   intervalMs={2600}
                   cards={[
+                    { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
                     { id: "2barbes", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg" },
                     { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
-                    { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
                   ]}
                 />
               </div>

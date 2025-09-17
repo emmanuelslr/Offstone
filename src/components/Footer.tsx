@@ -132,7 +132,7 @@ export default function Footer({ locale }: { locale?: string }) {
               </svg>
             </button>
           </form>
-          <a href="https://www.linkedin.com/company/offstone/" target="_blank" rel="noopener" title={dict['linkedinTitle']} onClick={()=>trackOutboundClick('LinkedIn','footer')} className="mt-4 inline-flex items-center hover:opacity-80 focus-visible:ring">
+          <a href="https://www.linkedin.com/company/offstone-fr" target="_blank" rel="noopener" title={dict['linkedinTitle']} onClick={()=>trackOutboundClick('LinkedIn','footer')} className="mt-4 inline-flex items-center hover:opacity-80 focus-visible:ring">
             <Image src="/images/icones/linkedin.svg" alt="LinkedIn" width={28} height={28} />
             <span className="sr-only">LinkedIn</span>
           </a>
@@ -140,9 +140,8 @@ export default function Footer({ locale }: { locale?: string }) {
         {/* Bloc conformité/statut avec séparateur */}
         <div className="w-full border-t border-[#333839] my-6" />
         <div className="mb-4 text-xs text-[#8F9193] leading-relaxed text-center max-w-3xl mx-auto">
-          <span>{dict['compliance1']} <Link href="/legal/partenaires-psi" className="underline">Tylia</Link>, PSI ACPR (<a href="https://acpr.banque-france.fr/" target="_blank" rel="noopener" title={dict['acprTitle']} onClick={()=>trackOutboundClick('ACPR','footer')}>ACPR</a>).</span><br />
+          <span>{dict['compliance1']}</span><br />
           <span>{dict['compliance2']}</span><br />
-          <span>{dict['compliance3']} <Link href="/legal/frais" className="underline">{dict['fees']}</Link>.</span><br />
           {/* <span>{dict['compliance4']}</span> */}
         </div>
         <div className="w-full border-t border-[#333839] my-6" />
@@ -150,9 +149,28 @@ export default function Footer({ locale }: { locale?: string }) {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6">
           <span>© Offstone 2025 — {dict['allRights']}</span>
           <div className="flex items-center gap-4">
-            <Link href="/legal/cookies" className="underline text-sm">{dict['cookies']}</Link>
+            <button 
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  // Vérifier si tarteaucitron est disponible
+                  if (typeof (window as any).tarteaucitron !== 'undefined' && (window as any).tarteaucitron.userInterface) {
+                    // Ouvrir directement le panneau de gestion des cookies
+                    (window as any).tarteaucitron.userInterface.openPanel();
+                  } else {
+                    // Fallback : supprimer le cookie et recharger si tarteaucitron n'est pas encore chargé
+                    document.cookie = 'offstone-consent=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    document.cookie = 'tarteaucitron=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    window.location.reload();
+                  }
+                }
+              }}
+              className="underline text-sm hover:opacity-80 transition-opacity duration-200"
+            >
+              {dict['cookies']}
+            </button>
             <Link href="/legal/mentions-legales" className="underline text-sm">{dict['legalNotice']}</Link>
-            <Link href="/status" className="underline text-sm">{dict['status']}</Link>
+            <Link href="/legal/conditions" className="underline text-sm">CGU</Link>
           </div>
         </div>
       </div>
@@ -167,8 +185,8 @@ function FooterCol({ title, links, section }: FooterColProps) {
     <div className="flex-1 min-w-[140px]">
       <h3 className="text-sm font-semibold text-white mb-3 tracking-wide uppercase">{title}</h3>
       <ul className="space-y-2">
-        {links.map((l: FooterNavLink) => (
-          <li key={l.href}>
+        {links.map((l: FooterNavLink, index) => (
+          <li key={`${l.label}-${l.href}-${index}`}>
             {l.disabled ? (
               <span className="text-[#8F9193] cursor-not-allowed" aria-disabled="true">{l.label}</span>
             ) : (
@@ -206,8 +224,8 @@ function AccordionFooterCol({ title, links, section }: FooterColProps) {
       </button>
       {open && (
         <ul id={`footer-accordion-${section}`} className="px-4 py-2 space-y-2 bg-[#23262A]">
-          {links.map((l: FooterNavLink) => (
-            <li key={l.href}>
+          {links.map((l: FooterNavLink, index) => (
+            <li key={`${l.label}-${l.href}-${index}`}>
               {l.disabled ? (
                 <span className="text-[#8F9193] cursor-not-allowed" aria-disabled="true">{l.label}</span>
               ) : (

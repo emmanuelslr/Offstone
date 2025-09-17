@@ -20,7 +20,7 @@ export default function WaitlistMiniForm({ dict }: WaitlistMiniFormProps) {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, consent })
+        body: JSON.stringify({ email, consent, hp: '' })
       });
       if (res.ok) {
         setMsg(dict['formSuccess']);

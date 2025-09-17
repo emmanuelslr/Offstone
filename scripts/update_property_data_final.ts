@@ -2,7 +2,7 @@
 
 /**
  * Script pour mettre à jour toutes les données des biens immobiliers
- * avec les 4 informations exactes de chaque page Aguesseau Capital
+ * avec les 4 informations exactes de chaque page Offstone
  */
 
 import fs from 'fs';
@@ -10,7 +10,7 @@ import path from 'path';
 
 const DATA_FILE = path.join(process.cwd(), 'public/data/case_studies.ndjson');
 
-// Données exactes extraites des pages Aguesseau Capital
+// Données exactes extraites des pages Offstone
 const propertyData = {
   "planchat": {
     headlineData: ["2024", "760 m²", "6 niveaux", "43 chambres"]

@@ -59,7 +59,7 @@ export default function TextReveal({
             transition={{ duration: 0.8, ease: [0.77, 0, 0.18, 1] }}
             viewport={{ once: true, amount: 0.3 }}
             className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] text-center font-light tracking-tight leading-tight ${className}`}
-            style={{ fontFamily: "AllianceNo1-Regular, sans-serif" }}
+            style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}
           >
             {lines.map((line, lineIndex) => (
               <div key={lineIndex} className="mb-4 sm:mb-6 last:mb-0 block w-full">
@@ -95,7 +95,7 @@ export default function TextReveal({
           transition={{ duration: 0.8, ease: [0.77, 0, 0.18, 1] }}
           viewport={{ once: true, amount: 0.3 }}
           className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] text-center font-light tracking-tight leading-tight ${className}`}
-          style={{ fontFamily: "AllianceNo1-Regular, sans-serif" }}
+          style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}
         >
           {letters.map((char, i) => (
             <span

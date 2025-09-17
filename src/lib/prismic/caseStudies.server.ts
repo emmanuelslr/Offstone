@@ -85,6 +85,92 @@ function mapDoc(doc: any): CaseStudyDoc {
   };
 }
 
+// Try to find and use local images from "public/images/réalisations images" (name-insensitive)
+function applyLocalImageOverrides(studies: CaseStudyDoc[]): CaseStudyDoc[] {
+  try {
+    // Lazy-require to keep client bundles clean
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const fs = require("node:fs") as typeof import("node:fs");
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const path = require("node:path") as typeof import("node:path");
+
+    const imagesRoot = path.join(process.cwd(), "public", "images");
+    if (!fs.existsSync(imagesRoot)) return studies;
+
+    // Find the folder that ends with "alisations images" to be resilient to accents
+    const dirEntry = fs
+      .readdirSync(imagesRoot, { withFileTypes: true })
+      .find((d: any) => d.isDirectory() && /alisations images$/i.test(String(d.name)));
+    if (!dirEntry) return studies;
+
+    const realDirName: string = String(dirEntry.name);
+    const fullDir = path.join(imagesRoot, realDirName);
+
+    // Build index of available files keyed by a slug (accent/space-insensitive)
+    const files = fs
+      .readdirSync(fullDir, { withFileTypes: true })
+      .filter((f: any) => f.isFile())
+      .map((f: any) => String(f.name));
+
+    const toSlug = (s?: string) => {
+      if (!s) return "";
+      return String(s)
+        .normalize("NFD")
+        .replace(/\p{Diacritic}+/gu, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    };
+
+    const fileIndex = files.map((name) => {
+      const base = name.replace(/\.(webp|jpg|jpeg|png|avif)$/i, "");
+      return {
+        name,
+        slug: toSlug(base),
+        tokens: toSlug(base).split("-").filter(Boolean),
+      };
+    });
+
+    function bestMatch(candidate: string): string | null {
+      const candSlug = toSlug(candidate);
+      const candTokens = candSlug.split("-").filter(Boolean);
+      let best: { name: string; score: number } | null = null;
+      for (const f of fileIndex) {
+        let score = 0;
+        if (!candSlug || !f.slug) continue;
+        if (f.slug === candSlug) score = 100; // exact slug
+        else if (f.slug.includes(candSlug) || candSlug.includes(f.slug)) score = 60; // contains
+        else {
+          // token intersection
+          const commons = new Set(candTokens.filter((t) => f.tokens.includes(t)));
+          if (commons.size > 0) score = 10 * commons.size;
+        }
+        if (!best || score > best.score) best = { name: f.name, score };
+      }
+      return best && best.score > 0 ? best.name : null;
+    }
+
+    return (studies || []).map((s) => {
+      const cand = s.uid || s.title || "";
+      const match = bestMatch(cand);
+      if (!match) return s;
+      const localUrl = `/images/${realDirName}/${match}`;
+      const alt = s.heroImage?.alt || s.title || "";
+      return {
+        ...s,
+        heroImage: { url: localUrl, alt },
+      } as CaseStudyDoc;
+    });
+  } catch {
+    return studies;
+  }
+}
+
+function applyLocalImageOverride(study: CaseStudyDoc | null): CaseStudyDoc | null {
+  if (!study) return null;
+  const [overridden] = applyLocalImageOverrides([study]);
+  return overridden || study;
+}
 export async function getCaseStudies(): Promise<CaseStudyDoc[]> {
   try {
     const client = createClient();
@@ -95,10 +181,10 @@ export async function getCaseStudies(): Promise<CaseStudyDoc[]> {
       })
       .catch(() => [] as any[]);
     const mapped = items.map(mapDoc);
-    if (mapped.length > 0) return mapped;
-    return readLocalNDJSON();
+    if (mapped.length > 0) return applyLocalImageOverrides(mapped);
+    return applyLocalImageOverrides(readLocalNDJSON());
   } catch {
-    return readLocalNDJSON();
+    return applyLocalImageOverrides(readLocalNDJSON());
   }
 }
 
@@ -107,11 +193,11 @@ export async function getCaseStudyByUID(uid: string): Promise<CaseStudyDoc | nul
     const client = createClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const doc = await client.getByUID("case_study" as any, uid).catch(() => null);
-    if (doc) return mapDoc(doc);
-    const local = readLocalNDJSON();
+    if (doc) return applyLocalImageOverride(mapDoc(doc));
+    const local = applyLocalImageOverrides(readLocalNDJSON());
     return local.find((d) => d.uid === uid) || null;
   } catch {
-    const local = readLocalNDJSON();
+    const local = applyLocalImageOverrides(readLocalNDJSON());
     return local.find((d) => d.uid === uid) || null;
   }
 }
@@ -159,4 +245,3 @@ function readLocalNDJSON(): CaseStudyDoc[] {
     return [];
   }
 }
-

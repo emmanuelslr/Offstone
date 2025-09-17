@@ -63,7 +63,17 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
           <div className="lg:col-span-8">
             <div className="relative w-full overflow-hidden rounded-lg bg-gray-100 aspect-[4/3] md:aspect-[3/2]">
               {doc.heroImage?.url && (
-                <Image src={doc.heroImage.url} alt={doc.heroImage.alt || doc.title} fill className="object-cover" sizes="(max-width:1024px) 100vw, 60vw" />
+                doc.heroImage.url.startsWith('/images/') ? (
+                  // Pour les images locales, utiliser une balise img normale
+                  <img
+                    src={doc.heroImage.url}
+                    alt={doc.heroImage.alt || doc.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  // Pour les images externes, utiliser le composant Image optimisé
+                  <Image src={doc.heroImage.url} alt={doc.heroImage.alt || doc.title} fill className="object-cover" sizes="(max-width:1024px) 100vw, 60vw" />
+                )
               )}
               <div className="absolute left-3 top-3 z-10"><ComplianceBadge text="Acquis par les associes d'Offstone" /></div>
             </div>
@@ -92,7 +102,7 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
                 ))}
               </div>
             )}
-            {/* Horizontal headline pills like Aguesseau */}
+            {/* Horizontal headline pills like Offstone */}
             
             {doc.kpis?.length ? (
               <div className="mt-5">

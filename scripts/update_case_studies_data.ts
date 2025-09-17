@@ -2,13 +2,13 @@
 
 /**
  * Script pour mettre à jour les données des case studies avec les informations correctes
- * depuis le site Aguesseau Capital
+ * depuis le site Offstone
  */
 
 import fs from 'fs';
 import path from 'path';
 
-// Données corrigées basées sur le site Aguesseau Capital
+// Données corrigées basées sur le site Offstone
 const updatedCaseStudies = [
   {
     uid: "planchat",
@@ -22,7 +22,7 @@ const updatedCaseStudies = [
       { label: "Chambres", value: "43 chambres" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/11/Facade-1.png",
+      url: "https://offstone.fr/wp-content/uploads/2024/11/Facade-1.png",
       alt: "Planchat — Projet"
     }
   },
@@ -38,7 +38,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Actifs d'activité" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/11/00000017-PHOTO-2023-12-13-18-35-56.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2024/11/00000017-PHOTO-2023-12-13-18-35-56.jpg",
       alt: "Chilly Mazarin — Projet"
     }
   },
@@ -54,7 +54,7 @@ const updatedCaseStudies = [
       { label: "Commerces", value: "4 locaux commerciaux" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/11/costar.brightspotcdn-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2024/11/costar.brightspotcdn-scaled.jpg",
       alt: "Simart — Projet"
     }
   },
@@ -70,7 +70,7 @@ const updatedCaseStudies = [
       { label: "Équipements", value: "Jardin et terrasse" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/11/AGUESSEAU-GESTION-11-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2024/11/AGUESSEAU-GESTION-11-scaled.jpg",
       alt: "Maison Iéna — Projet"
     }
   },
@@ -86,7 +86,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Immeuble commercial" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/10/Photo-Immeuble-clean-1-768x542.png",
+      url: "https://offstone.fr/wp-content/uploads/2024/10/Photo-Immeuble-clean-1-768x542.png",
       alt: "Jules Guesde — Projet"
     }
   },
@@ -102,7 +102,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Résidentiel" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2024/09/bonnet-20-1-1.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2024/09/bonnet-20-1-1.jpg",
       alt: "Bonnet — Projet"
     }
   },
@@ -118,7 +118,7 @@ const updatedCaseStudies = [
       { label: "Classification", value: "4 étoiles" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/WEB_LUX_0749.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/WEB_LUX_0749.jpg",
       alt: "Maison Barbès — Projet"
     }
   },
@@ -134,7 +134,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Localisation prime" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/58226-rue-la-boetie-13-copie-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/58226-rue-la-boetie-13-copie-scaled.jpg",
       alt: "Maison Boétie — Projet"
     }
   },
@@ -150,7 +150,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Bureaux opéré flex" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/WEB_Rue-Abel-Truchet-47951-PictHouse.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/WEB_Rue-Abel-Truchet-47951-PictHouse.jpg",
       alt: "Truchet — Projet"
     }
   },
@@ -166,7 +166,7 @@ const updatedCaseStudies = [
       { label: "Équipements", value: "Rooftop" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/Rooftop_-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/Rooftop_-scaled.jpg",
       alt: "Passage du Caire — Projet"
     }
   },
@@ -182,7 +182,7 @@ const updatedCaseStudies = [
       { label: "Équipements", value: "Jardin" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/60348-Rue-du-Moulin-Vert-39CB-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/60348-Rue-du-Moulin-Vert-39CB-scaled.jpg",
       alt: "Maison du Moulin Vert — Projet"
     }
   },
@@ -198,7 +198,7 @@ const updatedCaseStudies = [
       { label: "Commerces", value: "2 commerces" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/Facade-6.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/Facade-6.jpg",
       alt: "Hector Malot — Projet"
     }
   },
@@ -214,7 +214,7 @@ const updatedCaseStudies = [
       { label: "Type", value: "Restructuration complète" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/WEB_Facade.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/WEB_Facade.jpg",
       alt: "Ivry — Projet"
     }
   },
@@ -230,7 +230,7 @@ const updatedCaseStudies = [
       { label: "Localisation", value: "Localisation prime" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/IMG_36ddd42-2-scaled.jpeg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/IMG_36ddd42-2-scaled.jpeg",
       alt: "Jean-Jacques Rousseau — Projet"
     }
   },
@@ -246,7 +246,7 @@ const updatedCaseStudies = [
       { label: "Parkings", value: "6 parkings" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/Copie-de-7b60f6e6-0273-4289-8b54-988f300f4661-1-2.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/Copie-de-7b60f6e6-0273-4289-8b54-988f300f4661-1-2.jpg",
       alt: "Vitry — Projet"
     }
   },
@@ -262,7 +262,7 @@ const updatedCaseStudies = [
       { label: "Commerces", value: "1 local commercial créé" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/Villa-Seurat-35-scaled.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/Villa-Seurat-35-scaled.jpg",
       alt: "Villa Seurat — Projet"
     }
   },
@@ -278,7 +278,7 @@ const updatedCaseStudies = [
       { label: "Commerces", value: "2 locaux commerciaux" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/Facade.jpg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/Facade.jpg",
       alt: "Henri Barbusse — Projet"
     }
   },
@@ -294,7 +294,7 @@ const updatedCaseStudies = [
       { label: "Box", value: "6 box" }
     ],
     heroImage: {
-      url: "https://aguesseaucapital.com/wp-content/uploads/2023/11/IMG_0908-scaled.jpeg",
+      url: "https://offstone.fr/wp-content/uploads/2023/11/IMG_0908-scaled.jpeg",
       alt: "Drancy — Projet"
     }
   }

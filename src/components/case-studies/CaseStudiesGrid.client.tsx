@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 import CaseStudyCard from "@/components/case-studies/CaseStudyCard";
 import type { CaseStudyDoc } from "@/lib/prismic/caseStudiesCore";
 import { uniqueSorted } from "@/lib/prismic/caseStudiesCore";
@@ -36,61 +37,126 @@ export default function CaseStudiesGrid({ studies }: Props) {
 
   const hasActiveFilters = assetClass || city;
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.03, delayChildren: 0.02 },
+    },
+  } as const;
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    },
+  } as const;
+
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-4 items-end">
-        <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Typologie</label>
-          <select
-            value={assetClass}
-            onChange={(e) => onChangeAsset(e.target.value)}
-            className="h-11 rounded-lg border border-gray-300 bg-white px-4 text-sm font-normal text-gray-900 focus:ring-2 focus:ring-[#F7B096] focus:border-[#F7B096] transition-colors min-w-[140px]"
-          >
-            <option value="">Toutes les typologies</option>
-            {assetOptions.map((o) => (
-              <option key={o} value={o}>{o}</option>
-            ))}
-          </select>
+      <motion.div
+        className="flex flex-wrap gap-6 items-end"
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-sm font-medium text-gray-900 mb-3 tracking-wide">Typologie</label>
+          <div className="relative">
+            <select
+              value={assetClass}
+              onChange={(e) => onChangeAsset(e.target.value)}
+              className="w-full h-12 rounded-xl border-2 border-gray-200 bg-white px-4 pr-10 text-sm font-normal text-gray-900 focus:ring-2 focus:ring-[#F7B096]/20 focus:border-[#F7B096] transition-all duration-200 hover:border-gray-300 appearance-none cursor-pointer"
+            >
+              <option value="">Toutes les typologies</option>
+              {assetOptions.map((o) => (
+                <option key={o} value={o}>{o}</option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Ville</label>
-          <select
-            value={city}
-            onChange={(e) => onChangeCity(e.target.value)}
-            className="h-11 rounded-lg border border-gray-300 bg-white px-4 text-sm font-normal text-gray-900 focus:ring-2 focus:ring-[#F7B096] focus:border-[#F7B096] transition-colors min-w-[140px]"
-          >
-            <option value="">Toutes les villes</option>
-            {cityOptions.map((o) => (
-              <option key={o} value={o}>{o}</option>
-            ))}
-          </select>
+        
+        <div className="flex-1 min-w-[200px]">
+          <label className="block text-sm font-medium text-gray-900 mb-3 tracking-wide">Ville</label>
+          <div className="relative">
+            <select
+              value={city}
+              onChange={(e) => onChangeCity(e.target.value)}
+              className="w-full h-12 rounded-xl border-2 border-gray-200 bg-white px-4 pr-10 text-sm font-normal text-gray-900 focus:ring-2 focus:ring-[#F7B096]/20 focus:border-[#F7B096] transition-all duration-200 hover:border-gray-300 appearance-none cursor-pointer"
+            >
+              <option value="">Toutes les villes</option>
+              {cityOptions.map((o) => (
+                <option key={o} value={o}>{o}</option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
         
         {hasActiveFilters && (
-          <button
+          <motion.button
             onClick={clearFilters}
-            className="h-11 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium rounded-lg border border-gray-300 transition-colors flex items-center gap-2"
+            className="h-12 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 6L6 18M6 6l12 12"/>
             </svg>
             Effacer les filtres
-          </button>
+          </motion.button>
         )}
         
-        <div className="text-sm text-gray-600 ml-auto flex items-center gap-2">
-          <span className="font-medium">{filtered.length}</span>
-          <span>sur</span>
-          <span className="font-medium">{studies.length}</span>
-          <span>résultats</span>
-        </div>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Résultats et compteur */}
+      <motion.div
+        className="flex items-center justify-between mb-6"
+        initial={{ opacity: 0, y: 8 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.25, ease: "easeOut", delay: 0.05 }}
+      >
+        <div className="text-sm text-gray-600">
+          {filtered.length === studies.length ? (
+            <span>{studies.length} réalisation{studies.length > 1 ? 's' : ''}</span>
+          ) : (
+            <span>
+              {filtered.length} réalisation{filtered.length > 1 ? 's' : ''} sur {studies.length}
+              {hasActiveFilters && (
+                <span className="ml-1 text-[#F7B096] font-medium">
+                  (filtrées)
+                </span>
+              )}
+            </span>
+          )}
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+      >
         {filtered.map((s) => (
-          <CaseStudyCard key={s.id} study={s} />
+          <motion.div key={s.id} variants={itemVariants}>
+            <CaseStudyCard study={s} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

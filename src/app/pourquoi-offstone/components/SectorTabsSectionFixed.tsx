@@ -20,38 +20,38 @@ interface SectorStats {
 
 const SECTOR_STATS: Record<SectorKey, SectorStats> = {
   residentiel: { tri: "16%", assets: "5 immeubles", units: "62 appartements" },
-  hotels: { tri: "17%", assets: "4 hotels", units: "74 unites" },
-  logistique: { tri: "40%", assets: "2 sites", units: "1300 m2" },
+  hotels: { tri: "17%", assets: "4 hôtels", units: "74 unités" },
+  logistique: { tri: "14%", assets: "2 sites", units: "1300 m2" },
   bureaux: { tri: "19%", assets: "4 immeubles", units: "1000 m2" },
 };
 
 const SECTORS: SectorConfig[] = [
   {
     key: "residentiel",
-    title: "Residentiel",
+    title: "R\u00e9sidentiel",
     subtitle:
-      "Identifier des actifs en centre-ville, reveler leur potentiel par un repositionnement soigne et les adresser a la clientele qui en valorise le mieux l'usage.",
+      "Nous sourçons des actifs en centre-ville, révélons leur potentiel par un repositionnement soigné et les adressons aux clients qui les valorisent le mieux.",
     image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg",
   },
   {
     key: "hotels",
-    title: "Hotels",
+    title: "H\u00f4tels",
     subtitle:
-      "Gerer toute la chaine de valeur, du design a la tarification dynamique, pour des hotels centraux a forte identite et des revenus durables.",
+      "Nous gérons toute la chaîne de valeur, du design\n      à la tarification dynamique, pour des hôtels\n      idéalement situés, à forte identité, offrant des revenus pérennes.",
     image: "/images/Buildings/Ienaa.jpg",
   },
   {
     key: "logistique",
     title: "Logistique",
     subtitle:
-      "Acquerir des sites urbains, adapter l'outil au dernier kilometre, optimiser les flux et securiser des baux longs.",
+      "Nous faisons l'acquisition de sites urbains, adaptons l'outil aux besoins logistiques du dernier kilomètre, optimisons les flux et sécurisons des baux de longue durée.",
     image: "/images/Buildings/Logistics.jpg",
   },
   {
     key: "bureaux",
     title: "Bureaux",
     subtitle:
-      "Transformer des immeubles centraux en actifs de premier plan via travaux lourds et conversions, puis louer a des entreprises de reference.",
+      "Nous transformons des immeubles centraux en actifs de premier plan grâce à des travaux lourds et des conversions, puis les louons à des entreprises de référence.",
     image: "/images/Buildings/Truchet.jpg",
   },
 ];
@@ -64,15 +64,15 @@ export default function SectorTabsSectionFixed() {
 
   return (
     <section>
-      <div className="container mx-auto px-4 sm:px-8 lg:px-20 xl:px-32 mt-20 pb-8">
-        <div className="mb-8 flex items-center gap-2">
+      <div className="container mx-auto px-4 sm:px-8 lg:px-20 xl:px-32 mt-16 pb-6">
+        <div className="mb-6 flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: "#96D5F7" }} />
           <span className="text-gray-600 text-xs tracking-[0.18em]">SECTEURS</span>
         </div>
 
         <div className="flex flex-col lg:flex-row items-start justify-between">
           <div className="lg:w-3/5 lg:pr-20 w-full">
-            <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-5">
               {SECTORS.map((sector) => {
                 const isActive = sector.key === activeKey;
                 const panelId = `sector-panel-${sector.key}`;
@@ -81,13 +81,13 @@ export default function SectorTabsSectionFixed() {
                     <button
                       type="button"
                       onClick={() => setActiveKey(sector.key)}
-                      className="w-full text-left rounded-lg px-0 py-2"
+                      className="w-full text-left rounded-lg px-0 py-1"
                       aria-expanded={isActive}
                       aria-controls={panelId}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div
-                          className={`text-4xl md:text-5xl lg:text-[3.5rem] font-light tracking-tight transition-all duration-300 ${
+                          className={`text-3xl md:text-4xl lg:text-[3rem] font-light tracking-tight transition-all duration-300 ${
                             isActive ? "text-[#111]" : "text-[#BDBDBD]"
                           }`}
                           style={{ fontFamily: "AllianceNo1-Regular, sans-serif" }}
@@ -101,8 +101,8 @@ export default function SectorTabsSectionFixed() {
                         </span>
                       </div>
                       <div
-                        className="hidden lg:block text-[19px] md:text-[21px] text-gray-600 mt-4 overflow-hidden transition-all duration-300"
-                        style={{ maxHeight: isActive ? "120px" : "0px", opacity: isActive ? 1 : 0 }}
+                        className="hidden lg:block text-[18px] md:text-[20px] text-gray-600 mt-3 overflow-hidden transition-all duration-300"
+                        style={{ maxHeight: isActive ? "100px" : "0px", opacity: isActive ? 1 : 0 }}
                       >
                         {sector.subtitle}
                       </div>
@@ -134,7 +134,7 @@ export default function SectorTabsSectionFixed() {
                               <div className="h-px bg-gray-200"></div>
                               <div>
                                 <div className="text-sm font-bold text-black mb-0.5">{activeStats.units}</div>
-                                <div className="text-[11px] text-gray-600 leading-tight">{activeKey === "residentiel" ? "Appartements" : activeKey === "hotels" ? "Unites" : "Surfaces louees"}</div>
+                                <div className="text-[11px] text-gray-600 leading-tight">{activeKey === "residentiel" ? "Appartements" : activeKey === "hotels" ? "Unités" : "Surfaces louées"}</div>
                               </div>
                             </div>
                           </div>
@@ -148,7 +148,7 @@ export default function SectorTabsSectionFixed() {
           </div>
 
           <div className="hidden lg:flex lg:w-2/5 w-full mt-10 lg:mt-0 justify-center">
-            <div className="relative w-full max-w-[500px] h-[360px] sm:h-[420px] lg:h-[500px]">
+            <div className="relative w-full max-w-[500px] h-[320px] sm:h-[380px] lg:h-[450px]">
               <div className="relative rounded-xl overflow-hidden w-full h-full" style={{ background: "#F6F4F0" }}>
                 {SECTORS.map((sector) => {
                   const isActive = sector.key === activeKey;
@@ -175,7 +175,7 @@ export default function SectorTabsSectionFixed() {
                   <div className="h-px bg-gray-200"></div>
                   <div>
                     <div className="text-sm font-bold text-black mb-0.5">{activeStats.units}</div>
-                    <div className="text-[11px] text-gray-600 leading-tight">{activeKey === "residentiel" ? "Appartements" : activeKey === "hotels" ? "Unites" : "Surfaces louees"}</div>
+                    <div className="text-[11px] text-gray-600 leading-tight">{activeKey === "residentiel" ? "Appartements" : activeKey === "hotels" ? "Unités" : "Surfaces louées"}</div>
                   </div>
                 </div>
               </div>

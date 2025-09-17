@@ -11,7 +11,7 @@ export default function HeroPourquoiOffstone() {
   const [carouselSize, setCarouselSize] = useState<number>(700);
 
   useEffect(() => {
-    // Animation d'entrÃ©e du titre au chargement de la page
+    // Animation d'entrée du titre au chargement de la page
     const timer = setTimeout(() => {
       setTitleVisible(true);
     }, 100);
@@ -60,13 +60,13 @@ export default function HeroPourquoiOffstone() {
                 titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              AccÃ©dez Ã  des opportunitÃ©s <span style={{ color: '#9D9F9E' }}>exclusives.</span>
+              Accédez à des opportunités <span style={{ color: '#9D9F9E' }}>exclusives.</span>
             </h2>
 
             <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-6 md:mt-10">
-              Des projets immobiliers rigoureusement analysÃ©s<br />
-              et sÃ©lectionnÃ©s, structurÃ©s par Jonathan Anguelov<br />
-              et rÃ©servÃ©s Ã  nos membres
+              Des projets immobiliers rigoureusement analysés<br />
+              et sélectionnés, structurés par Jonathan Anguelov<br />
+              et réservés à nos membres
             </p>
 
             <form
@@ -96,7 +96,7 @@ export default function HeroPourquoiOffstone() {
                     asset_class: 'retail'
                   });
                   setSubmitted(true);
-                  if (input) { input.value = 'Inscription confirmÃ©e'; input.readOnly = true; }
+                  if (input) { input.value = 'Inscription confirmée'; input.readOnly = true; }
                 } catch {}
               }}
             >

@@ -114,7 +114,11 @@ export default function FAQ() {
                 </AccordionTrigger>
                 <AccordionContent data-item="faq-4" className="pb-4 sm:pb-5">
                   <div className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
-                    Objectifs indicatifs: Taux de rendement interne (TRI) net 8 à 12 %, durée 4 à 6 ans selon l&apos;actif. Performance non garantie.
+                    Objectifs indicatifs: Taux de rendement interne (TRI) net 8 à 14 %, durée 2 à 5 ans selon l&apos;actif. Performance non garantie.
+                    <br /><br />
+                    <span className="text-xs text-gray-500">
+                      Les performances passées ne préjugent pas des résultats futurs. Investir comporte des risques de perte en capital. Les investissements sont illiquides et ne sont pas garantis.
+                    </span>
                   </div>
                 </AccordionContent>
               </AccordionItem>

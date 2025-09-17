@@ -94,7 +94,7 @@ export default function LeMontana2({
               Jonathan Anguelov
             </span>
             <span className="mt-1 text-center text-sm text-gray-500 font-light">
-              Co-Fondateur Aguesseau
+              Co-Fondateur Offstone
             </span>
           </div>
         </div>

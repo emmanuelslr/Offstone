@@ -1,5 +1,6 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { supabaseInsertLead } from "@/lib/supabaseAdmin";
+import { isTrustedOrigin, applyRateLimitCookie, issueLeadToken, truncate, validEmail, throttleOnFailure, verifyPowSolution } from "@/lib/security";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,11 +13,40 @@ function sanitizeText(v: unknown) {
 
 export async function POST(req: Request) {
   try {
+    // CSRF/basic origin protection (strict in production)
+    if (!isTrustedOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const body = await req.json().catch(() => ({}));
+    // Honeypot minimal (si rempli => bot)
+    if (typeof body?.hp === 'string' && body.hp.trim().length > 0) {
+      const rl = throttleOnFailure(req, 'leads_hp', 10, 10 * 60_000);
+      const resp = NextResponse.json({ error: "Invalid" }, { status: rl.allowed ? 400 : 429 });
+      applyRateLimitCookie(resp, rl);
+      return resp;
+    }
+
+    // Stateless PoW: exiger un challenge + nonce en prod/preview
+    const env = (process.env.VERCEL_ENV || process.env.NODE_ENV || 'development').toLowerCase();
+    if (env === 'production' || env === 'preview') {
+      const ch = body?.pow_challenge || req.headers.get('x-pow-challenge');
+      const nn = body?.pow_nonce || req.headers.get('x-pow-nonce');
+      if (!verifyPowSolution(ch, nn)) {
+        const rl = throttleOnFailure(req, 'leads_pow', 20, 10 * 60_000);
+        const resp = NextResponse.json({ error: "PoW required" }, { status: rl.allowed ? 400 : 429 });
+        applyRateLimitCookie(resp, rl);
+        return resp;
+      }
+    }
+
     const emailRaw = body?.email;
     const email = typeof emailRaw === "string" ? emailRaw.trim() : "";
-    if (!email) {
-      return NextResponse.json({ error: "Email requis" }, { status: 400 });
+    if (!email || !validEmail(email)) {
+      const rl = throttleOnFailure(req, 'leads_invalid', 10, 10 * 60_000);
+      const resp = NextResponse.json({ error: "Email invalide" }, { status: rl.allowed ? 400 : 429 });
+      applyRateLimitCookie(resp, rl);
+      return resp;
     }
 
     const now = new Date().toISOString();
@@ -30,17 +60,17 @@ export async function POST(req: Request) {
     const record: Record<string, any> = {
       email,
       status: "open",
-      page_url: sanitizeText(body?.page_url),
-      ref: sanitizeText(body?.ref),
-      utm_source: sanitizeText(body?.utm_source),
-      utm_medium: sanitizeText(body?.utm_medium),
-      utm_campaign: sanitizeText(body?.utm_campaign),
-      utm_content: sanitizeText(body?.utm_content),
-      utm_term: sanitizeText(body?.utm_term),
-      asset_class: sanitizeText(body?.asset_class) ?? "retail",
+      page_url: truncate(sanitizeText(body?.page_url), 2048),
+      ref: truncate(sanitizeText(body?.ref), 255),
+      utm_source: truncate(sanitizeText(body?.utm_source), 255),
+      utm_medium: truncate(sanitizeText(body?.utm_medium), 255),
+      utm_campaign: truncate(sanitizeText(body?.utm_campaign), 255),
+      utm_content: truncate(sanitizeText(body?.utm_content), 255),
+      utm_term: truncate(sanitizeText(body?.utm_term), 255),
+      asset_class: truncate(sanitizeText(body?.asset_class), 64) ?? "retail",
       created_at: now,
       updated_at: now,
-      consent: body?.consent === true ? true : false,
+      consent: body?.consent === true ? true : false
     };
 
     if (!hasSupabase) {
@@ -49,9 +79,11 @@ export async function POST(req: Request) {
     }
 
     const row = await supabaseInsertLead(record);
-    return NextResponse.json({ id: row?.id, lead: row });
+    const token = row?.id ? issueLeadToken(row.id) : undefined;
+    return NextResponse.json({ id: row?.id, lead: row, token });
   } catch (err: any) {
     console.error("POST /api/leads error", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+

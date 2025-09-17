@@ -51,8 +51,8 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
     remotePatterns: [
       { protocol: "https", hostname: "images.prismic.io", pathname: "/**" },
-      { protocol: "https", hostname: "aguesseaucapital.com", pathname: "/**" },
-      { protocol: "https", hostname: "www.aguesseaucapital.com", pathname: "/**" },
+      { protocol: "https", hostname: "offstone.fr", pathname: "/**" },
+      { protocol: "https", hostname: "www.offstone.fr", pathname: "/**" },
     ],
   },
 };

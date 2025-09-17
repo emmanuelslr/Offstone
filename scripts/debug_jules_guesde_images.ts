@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 
 async function debugJulesGuesdeImages() {
   try {
-    const url = 'https://aguesseaucapital.com/biens/acquisition-immeuble-bureaux-levallois-perret/';
+    const url = 'https://offstone.fr/biens/acquisition-immeuble-bureaux-levallois-perret/';
     console.log(`Analyse des images pour Jules Guesde: ${url}`);
     
     const response = await fetch(url);

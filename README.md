@@ -1,8 +1,8 @@
 # 🏢 Offstone Website
 
-Site web officiel d'Offstone - Plateforme d'investissement immobilier.
+Site web officiel d'Offstone - Plateforme d'investissement immobilier professionnel.
 
-**🌐 Live Site:** [offstone.vercel.app](https://offstone.vercel.app)
+**🌐 Live Site:** [offstone.fr](https://offstone.fr)
 
 ## 🚀 Getting Started
 

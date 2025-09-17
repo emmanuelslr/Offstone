@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom';
 
 async function testManualExtraction() {
-  const url = 'https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/';
+  const url = 'https://offstone.fr/biens/maison-iena-hotel-de-luxe-paris/';
   
   try {
     console.log(`Test d'extraction manuelle pour: ${url}`);

@@ -8,12 +8,12 @@ import Image from "next/image";
 // Normalisation minimale: encode les espaces et caractères spéciaux
 const fixLocalSrc = (p: string) => (typeof p === 'string' ? encodeURI(p) : p);
 
-// Import dynamique de TextReveal pour Ã©viter les problÃ¨mes de chunks
+// Import dynamique de TextReveal pour éviter les problèmes de chunks
 const TextReveal = dynamic(() => import("../../home-page/components/TextReveal"), {
   ssr: false,
   loading: () => (
     <div className="text-3xl md:text-4xl lg:text-[2.85rem] max-w-[900px] text-black">
-      Associez-vous avec Jonathan Anguelov et faites l&apos;acquisition d&apos;immeubles exclusifs.
+      Associez-vous avec Jonathan Anguelov et faites l'acquisition d'immeubles exclusifs.
     </div>
   )
 });
@@ -25,7 +25,7 @@ export default function StickySidebarSection() {
   const cardInView = useInView(cardRef, { once: false, amount: 0.3 });
   const counter = 17;
 
-  // VÃ©rification cÃ´tÃ© client
+  // Vérification côté client
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -34,7 +34,7 @@ export default function StickySidebarSection() {
     {
       title: "Projets exclusifs",
       description: "Accédez à un portefeuille de projets immobiliers premium : opérations de rénovation haut de gamme, développements résidentiels et acquisitions stratégiques en France et Europe.",
-      image: "/images/Acquisitions/Paris - Resi.webp",
+      image: "/images/Backgrounds/Immeuble hausmannien I.jpeg",
       number: "01"
     },
     {
@@ -52,13 +52,13 @@ export default function StickySidebarSection() {
     {
       title: "Investir en toute sérénité",
       description: "Plateforme sécurisée, documentation complète, suivi en temps réel. Gérez vos participations immobilières depuis un tableau de bord unifié et transparent.",
-      image: "/images/Backgrounds/Mokup ecran tabouret.jpeg",
+      image: "/images/Platform/offstone plateform mockup ordi.png",
       number: "04"
     }
   ];
 
   useEffect(() => {
-    // VÃ©rification que nous sommes cÃ´tÃ© client
+    // Vérification que nous sommes côté client
     if (typeof window === 'undefined') return;
 
     const handleScroll = () => {
@@ -80,9 +80,9 @@ export default function StickySidebarSection() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Plus d'animation, compteur statique Ã  17%
+  // Plus d'animation, compteur statique à 17%
 
-  // Ã‰viter le rendu cÃ´tÃ© serveur pour Ã©viter l'hydratation
+  // Éviter le rendu côté serveur pour éviter l'hydratation
   if (!isClient) {
     return (
       <section style={{ backgroundColor: '#F7F5F2', paddingTop: '0px', paddingBottom: '120px' }}>
@@ -93,7 +93,7 @@ export default function StickySidebarSection() {
           </div>
           <div className="pt-0 pb-2 mb-16 -mt-8" style={{ backgroundColor: '#F7F5F2' }}>
             <div className="text-3xl md:text-4xl lg:text-[2.85rem] max-w-[900px] text-black">
-              Associez-vous avec Jonathan Anguelov et faites l&apos;acquisition d&apos;immeubles exclusifs.
+              Associez-vous avec Jonathan Anguelov et faites l'acquisition d'immeubles exclusifs.
             </div>
           </div>
         </div>
@@ -104,7 +104,7 @@ export default function StickySidebarSection() {
   return (
     <section style={{ backgroundColor: '#F7F5F2', paddingTop: '0px', paddingBottom: '120px' }}>
       <div className="container mx-auto px-4 sm:px-8 lg:px-20 xl:px-32">
-        {/* Badge COMMENT Ã‡A MARCHE */}
+        {/* Badge COMMENT ÇA MARCHE */}
         <div className="pt-24 flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full" style={{ backgroundColor: '#96D5F7' }} />
           <span className="text-gray-600 text-xs tracking-[0.18em]">COMMENT ÇA MARCHE</span>
@@ -113,7 +113,7 @@ export default function StickySidebarSection() {
         {/* TextReveal Section */}
         <div className="pt-0 pb-1 mb-8 sm:mb-12 md:mb-16 mt-2 sm:mt-3 md:-mt-8" style={{ backgroundColor: '#F7F5F2' }}>
           <TextReveal
-            text="Associez-vous avec Jonathan Anguelov et faites l&apos;acquisition d&apos;immeubles exclusifs."
+            text="Associez-vous avec Jonathan Anguelov et faites l'acquisition d'immeubles exclusifs."
             multiline={true}
             backgroundColor="bg-[#F7F5F2]"
             className="text-3xl md:text-4xl lg:text-[2.85rem] max-w-[900px] text-black"
@@ -121,7 +121,7 @@ export default function StickySidebarSection() {
         </div>
 
   <div className="flex flex-col lg:flex-row gap-0">
-          {/* Sticky Sidebar Ã  gauche avec barre de progression */}
+          {/* Sticky Sidebar à gauche avec barre de progression */}
           <div className="hidden lg:block lg:w-1/4">
             <div
               style={{
@@ -130,7 +130,7 @@ export default function StickySidebarSection() {
                 height: 'fit-content'
               }}
             >
-              {/* Barre de progression Ã  gauche */}
+              {/* Barre de progression à gauche */}
               <div className="relative">
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-gray-300">
                   <div
@@ -141,7 +141,7 @@ export default function StickySidebarSection() {
                   />
                 </div>
 
-                {/* Navigation des Ã©tapes */}
+                {/* Navigation des étapes */}
                 <div className="space-y-10 pl-8 pr-4">
                   {steps.map((step, index) => (
                     <div
@@ -162,7 +162,7 @@ export default function StickySidebarSection() {
             </div>
           </div>
 
-          {/* Section centrale et droite combinÃ©es pour l'alignement */}
+          {/* Section centrale et droite combinées pour l'alignement */}
           <div className="w-full lg:w-3/4">
             <div className="space-y-10 sm:space-y-14 lg:space-y-24">
               {steps.map((step, index) => (
@@ -170,7 +170,7 @@ export default function StickySidebarSection() {
                   key={index}
                   className="step-section flex flex-col lg:flex-row items-start gap-6 sm:gap-10 lg:gap-20"
                 >
-                  {/* Image ou carte animÃ©e pour l'Ã©tape 3 */}
+                  {/* Image ou carte animée pour l'étape 3 */}
                   <div className="w-full lg:w-1/2 flex justify-center ml-0 lg:-ml-8 order-2 lg:order-1 mt-4 sm:mt-6 lg:mt-0">
                     {index === 2 ? (
                       <div
@@ -191,7 +191,7 @@ export default function StickySidebarSection() {
                           className="object-cover rounded-lg"
                           priority={index === 0}
                         />
-                        {/* Overlay carte animÃ©e */}
+                        {/* Overlay carte animée */}
                         <motion.div
                           ref={cardRef}
                           className="absolute flex flex-col items-center justify-between top-6 md:top-14 left-4 right-4 md:left-[57px] md:right-[57px] h-[180px] md:h-[220px]"
@@ -222,7 +222,7 @@ export default function StickySidebarSection() {
                               className="rounded-lg flex items-center justify-center relative w-[calc(100%-40px)] h-[120px] md:h-[140px]"
                               style={{ backgroundColor: '#EFEAE7', alignSelf: 'center' }}
                             >
-                              {/* CarrÃ© noir avec compteur animÃ© */}
+                              {/* Carré noir avec compteur animé */}
                               <div className="absolute left-4 h-full flex flex-col justify-center">
                                 <div
                                   className="bg-black text-white rounded w-12 h-12 flex items-center justify-center text-lg font-normal"
@@ -239,10 +239,10 @@ export default function StickySidebarSection() {
                               </div>
                               {/* Trait horizontal */}
                               <div className="absolute left-24 right-4 top-1/2 h-[2px] bg-gray-200" />
-                              {/* LibellÃ©s Ã  droite */}
+                              {/* Libellés à droite */}
                               <div className="absolute right-6 top-4 bottom-4 flex flex-col justify-between text-gray-800">
-                                <div className="text-sm">Prime sÃ©curitÃ©</div>
-                                <div className="text-sm">AnnÃ©es</div>
+                                <div className="text-sm">Prime sécurité</div>
+                                <div className="text-sm">Années</div>
                               </div>
                             </div>
                           </div>
@@ -270,7 +270,7 @@ export default function StickySidebarSection() {
                     )}
                   </div>
 
-                  {/* Bloc de contenu Ã  droite */}
+                  {/* Bloc de contenu à droite */}
                   <div className="w-full lg:w-1/2 lg:ml-12 order-1 lg:order-2">
                     <div className="pt-2 sm:pt-4 lg:pt-12 max-w-none lg:max-w-xs">
                       <div className="text-sm lg:text-base text-gray-500 mb-2">{step.number}</div>

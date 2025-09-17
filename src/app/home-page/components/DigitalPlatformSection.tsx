@@ -101,20 +101,20 @@ export default function DigitalPlatformSection() {
               </motion.div>
             </motion.div>
 
-            {/* Image Plateforme - Collée au bord droit absolu */}
+            {/* Image Plateforme - Alignée aux bords droit et bas de la carte */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full lg:w-2/5 order-1 lg:order-2 p-6 sm:p-8 md:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:-right-0 lg:p-0 lg:w-[420px] xl:w-[480px]"
+              className="w-full lg:w-2/5 order-1 lg:order-2 pl-6 sm:pl-8 md:pl-10 pr-0 pb-0 pt-6 sm:pt-8 md:pt-10 lg:absolute lg:bottom-0 lg:right-0 lg:p-0 lg:w-[420px] xl:w-[480px]"
             >
               <div className="relative w-full aspect-[4/3] lg:translate-x-0">
                 <Image
-                  src="/images/Platform/Plateforme%20digitale.png"
-                  alt="Plateforme digitale"
+                  src="/images/Platform/New%20offstone%20platform.png"
+                  alt="New offstone platform"
                   fill
-                  className="object-contain object-right"
+                  className="object-contain object-right-bottom"
                   sizes="(max-width: 1024px) 100vw, 480px"
                   priority
                 />

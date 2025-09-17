@@ -2,7 +2,7 @@
 
 /**
  * Script pour mettre à jour toutes les données des biens immobiliers
- * avec les 4 informations exactes de chaque page Aguesseau Capital
+ * avec les 4 informations exactes de chaque page Offstone
  */
 
 import fs from 'fs';
@@ -13,24 +13,24 @@ const DATA_FILE = path.join(process.cwd(), 'public/data/case_studies.ndjson');
 
 // URLs et données spécifiques pour chaque bien
 const propertyUrls = {
-  "planchat": "https://aguesseaucapital.com/biens/acquisition-hotel-planchat/",
-  "chilly-mazarin": "https://aguesseaucapital.com/biens/investissement-immobilier-chilly-mazarin/",
-  "simart": "https://aguesseaucapital.com/biens/immeuble-mixte-paris-18e-simart/",
-  "maison-iena": "https://aguesseaucapital.com/biens/maison-iena-hotel-de-luxe-paris/",
-  "jules-guesde": "https://aguesseaucapital.com/biens/acquisition-immeuble-bureaux-levallois-perret/",
-  "bonnet": "https://aguesseaucapital.com/biens/immeuble-residentiel-paris-rue-bonnet/",
-  "maison-barbes": "https://aguesseaucapital.com/biens/hotel-4-etoiles-paris-maison-barbes/",
-  "maison-boetie": "https://aguesseaucapital.com/biens/maison-boetie-lieu-evenementiel-paris/",
-  "truchet": "https://aguesseaucapital.com/biens/bureaux-haut-de-gamme-paris/",
-  "passage-du-caire": "https://aguesseaucapital.com/biens/bureaux-passage-du-caire/",
-  "maison-du-moulin-vert": "https://aguesseaucapital.com/biens/maison-du-moulin-vert/",
-  "hector-malot": "https://aguesseaucapital.com/biens/hector-malot/",
-  "ivry": "https://aguesseaucapital.com/biens/immeuble-renove-ivry/",
-  "jean-jacques-rousseau": "https://aguesseaucapital.com/biens/15-jean-jacques-rousseau/",
-  "vitry": "https://aguesseaucapital.com/biens/35-genie-immeuble-renove-vitry-sur-seine/",
-  "villa-seurat": "https://aguesseaucapital.com/biens/2villa-seurat-hotel-particulier-art-deco-paris/",
-  "henri-barbusse": "https://aguesseaucapital.com/biens/102-henri-barbusse/",
-  "drancy": "https://aguesseaucapital.com/biens/46-grosperrin/"
+  "planchat": "https://offstone.fr/biens/acquisition-hotel-planchat/",
+  "chilly-mazarin": "https://offstone.fr/biens/investissement-immobilier-chilly-mazarin/",
+  "simart": "https://offstone.fr/biens/immeuble-mixte-paris-18e-simart/",
+  "maison-iena": "https://offstone.fr/biens/maison-iena-hotel-de-luxe-paris/",
+  "jules-guesde": "https://offstone.fr/biens/acquisition-immeuble-bureaux-levallois-perret/",
+  "bonnet": "https://offstone.fr/biens/immeuble-residentiel-paris-rue-bonnet/",
+  "maison-barbes": "https://offstone.fr/biens/hotel-4-etoiles-paris-maison-barbes/",
+  "maison-boetie": "https://offstone.fr/biens/maison-boetie-lieu-evenementiel-paris/",
+  "truchet": "https://offstone.fr/biens/bureaux-haut-de-gamme-paris/",
+  "passage-du-caire": "https://offstone.fr/biens/bureaux-passage-du-caire/",
+  "maison-du-moulin-vert": "https://offstone.fr/biens/maison-du-moulin-vert/",
+  "hector-malot": "https://offstone.fr/biens/hector-malot/",
+  "ivry": "https://offstone.fr/biens/immeuble-renove-ivry/",
+  "jean-jacques-rousseau": "https://offstone.fr/biens/15-jean-jacques-rousseau/",
+  "vitry": "https://offstone.fr/biens/35-genie-immeuble-renove-vitry-sur-seine/",
+  "villa-seurat": "https://offstone.fr/biens/2villa-seurat-hotel-particulier-art-deco-paris/",
+  "henri-barbusse": "https://offstone.fr/biens/102-henri-barbusse/",
+  "drancy": "https://offstone.fr/biens/46-grosperrin/"
 };
 
 async function fetchPropertyData(url: string): Promise<string[]> {

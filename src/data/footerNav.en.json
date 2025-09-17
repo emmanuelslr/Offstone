@@ -8,19 +8,18 @@
   ],
   "ressources": [
     {"label": "Guides", "href": "/ressources/guides"},
-    {"label": "Strategies & theses", "href": "/ressources/strategie-theses"},
-    {"label": "Real estate taxation", "href": "/ressources/fiscalite-immobiliere"},
-    {"label": "Structuring & regulation", "href": "/ressources/structuration-reglementation"},
-    {"label": "Market & asset management", "href": "/ressources/asset-management-marche"},
+    {"label": "Strategies & theses", "href": "/ressources"},
+    {"label": "Real estate taxation", "href": "/ressources"},
+    {"label": "Structuring & regulation", "href": "/ressources"},
+    {"label": "Market & asset management", "href": "/ressources"},
     {"label": "FAQ", "href": "/ressources/faq"},
     {"label": "Glossary", "href": "/ressources/glossaire"}
   ],
   "offstone": [
     {"label": "Our story", "href": "/notre-histoire"},
     {"label": "Our achievements", "href": "/nos-realisations"},
-    {"label": "Jonathan Anguelov", "href": "/ressources/jonathan-anguelov"},
+    {"label": "Jonathan Anguelov", "href": "/ressources"},
     {"label": "Press", "href": "/ressources/jonathan-anguelov/presse"},
-    {"label": "Contact", "href": "/contact"},
     {"label": "Member area", "href": "/espace-membre"}
   ],
   "legal": [
@@ -29,7 +28,8 @@
     {"label": "Cookies", "href": "/legal/cookies"},
     {"label": "Fee schedule", "href": "/legal/frais"},
     {"label": "Terms of use", "href": "/legal/conditions"},
-    {"label": "Compliance & claims", "href": "/legal/reclamations"},
+    {"label": "Compliance policy", "href": "/legal/conformite"},
+    {"label": "Claims procedure", "href": "/legal/reclamations"},
     {"label": "KYC/KYB documentation", "href": "/legal/kyc-kyb"}
   ],
   "social": [

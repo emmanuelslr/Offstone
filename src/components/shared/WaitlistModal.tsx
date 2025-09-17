@@ -8,6 +8,9 @@ const OPEN_EVENT = 'waitlist:open';
 const OPENED_EVENT = 'waitlist:opened';
 const CLOSED_EVENT = 'waitlist:closed';
 
+const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website?embed=true';
+const HUBSPOT_MEETINGS_SCRIPT_SRC = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+
 type OpenEventDetail = {
   email?: string;
   page_url?: string;
@@ -21,6 +24,155 @@ type OpenEventDetail = {
   // Optional identifier to know which CTA triggered the form
   cta_id?: string;
 };
+
+type HubspotMeetingsEmbedProps = {
+  url: string;
+  title: string;
+  active: boolean;
+  variant?: 'mobile' | 'desktop';
+  className?: string;
+};
+
+declare global {
+  interface Window {
+    hbspt?: {
+      meetings?: {
+        create?: (selector: string) => void;
+      };
+    };
+  }
+}
+
+function HubspotMeetingsEmbed({ url, title, active, variant = 'desktop', className }: HubspotMeetingsEmbedProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerId = useMemo(() => 'hs-meetings-' + Math.random().toString(36).slice(2, 10), []);
+  const containerClassName = useMemo(() => {
+    const classes = ['meetings-iframe-container'];
+    if (className) classes.push(className);
+    if (variant === 'mobile') classes.push('mobile-hubspot');
+    return classes.join(' ');
+  }, [className, variant]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.setAttribute('data-src', url);
+    containerRef.current.setAttribute('data-title', title);
+  }, [url, title]);
+
+  useEffect(() => {
+    if (!active || !containerRef.current) return;
+
+    const container = containerRef.current;
+    container.style.minHeight = '0px';
+    container.style.height = '100%';
+    container.style.width = '100%';
+    container.style.overflow = 'hidden';
+
+    const applyResponsiveStyles = () => {
+      const iframe = container.querySelector('iframe');
+      if (!iframe) return;
+      const isMobile = variant === 'mobile';
+      
+      if (isMobile) {
+        // Version mobile - pas de scaling, dimensions naturelles
+        container.style.display = 'block';
+        container.style.overflow = 'auto';
+        container.style.padding = '0';
+        container.style.margin = '0';
+        
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.minHeight = '600px';
+        iframe.style.border = '0';
+        iframe.style.transform = 'none';
+        iframe.style.margin = '0';
+        iframe.style.maxWidth = '100%';
+        iframe.style.maxHeight = 'none';
+        iframe.style.pointerEvents = 'auto';
+      } else {
+        // Version desktop - optimisée pour le conteneur
+        container.style.display = 'block';
+        container.style.overflow = 'hidden';
+        container.style.padding = '0';
+        container.style.margin = '0';
+        
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.minHeight = '500px';
+        iframe.style.border = '0';
+        iframe.style.transform = 'none';
+        iframe.style.margin = '0';
+        iframe.style.maxWidth = '100%';
+        iframe.style.maxHeight = '100%';
+        iframe.style.pointerEvents = 'auto';
+        iframe.style.overflow = 'hidden';
+      }
+    };
+
+    const renderEmbed = () => {
+      if (container.querySelector('iframe')) {
+        applyResponsiveStyles();
+        return;
+      }
+      try {
+        window.hbspt?.meetings?.create?.('#' + containerId);
+        window.setTimeout(applyResponsiveStyles, 90);
+      } catch (error) {
+        console.error('Unable to render HubSpot meetings embed', error);
+      }
+    };
+
+    const observer = new MutationObserver(applyResponsiveStyles);
+    observer.observe(container, { childList: true, subtree: true });
+
+    let cleanupScriptListener;
+    const existingScript = document.querySelector('script[src="' + HUBSPOT_MEETINGS_SCRIPT_SRC + '"]');
+
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = HUBSPOT_MEETINGS_SCRIPT_SRC;
+      script.async = true;
+      script.defer = true;
+      const onLoad = () => {
+        script.dataset.loaded = 'true';
+        renderEmbed();
+      };
+      script.addEventListener('load', onLoad);
+      document.body.appendChild(script);
+      cleanupScriptListener = () => {
+        script.removeEventListener('load', onLoad);
+      };
+    } else if (existingScript.dataset.loaded === 'true' || window.hbspt?.meetings?.create) {
+      renderEmbed();
+    } else {
+      const onLoad = () => {
+        existingScript.dataset.loaded = 'true';
+        renderEmbed();
+      };
+      existingScript.addEventListener('load', onLoad);
+      cleanupScriptListener = () => {
+        existingScript.removeEventListener('load', onLoad);
+      };
+    }
+
+    applyResponsiveStyles();
+
+    return () => {
+      observer.disconnect();
+      if (cleanupScriptListener) cleanupScriptListener();
+    };
+  }, [active, containerId, variant, url, title]);
+
+  useEffect(() => {
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+      }
+    };
+  }, []);
+
+  return <div id={containerId} ref={containerRef} className={containerClassName} data-src={url} data-title={title} />;
+}
 
 type StepState = {
   ticket_target?: string; // 'under_5k' | '5_10k' | '10_25k' | '25_50k' | '50_100k' | '100k_plus'
@@ -72,6 +224,11 @@ function ArrowRight() {
 function Check() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+  );
+}
+function CloseIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   );
 }
 
@@ -153,6 +310,7 @@ export default function WaitlistModal() {
   const advancingRef = useRef(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const countryMenuRef = useRef<HTMLDivElement | null>(null);
+  const [isCalendarMobileOpen, setIsCalendarMobileOpen] = useState(false);
   const flagStyle: React.CSSProperties = {
     fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla","EmojiOne Color","Segoe UI Symbol",system-ui,sans-serif',
     lineHeight: '1',
@@ -262,6 +420,12 @@ export default function WaitlistModal() {
   const current = steps[stepIndex] ?? 'ticket';
   const twoCols = current === 'calendly';
 
+  useEffect(() => {
+    if (current !== 'calendly' && isCalendarMobileOpen) {
+      setIsCalendarMobileOpen(false);
+    }
+  }, [current, isCalendarMobileOpen]);
+
   const progress = useMemo(() => {
     const total = steps.length;
     const currentNumber = Math.min(stepIndex + 1, total);
@@ -328,8 +492,19 @@ export default function WaitlistModal() {
             asset_class: detail.asset_class || 'retail',
           }),
         });
+        
+        if (!res.ok) {
+          console.error('API error:', res.status, res.statusText);
+          // Continue without lead ID - the form will still work
+          return;
+        }
+        
         const json = await res.json();
-        if (!res.ok || !json?.id) throw new Error(json?.error || 'insert failed');
+        if (!json?.id) {
+          console.error('No lead ID returned from API');
+          return;
+        }
+        
         setLeadId(json.id);
         // Enrich analytics with CTA and UTM context
         track('lead_open', {
@@ -344,6 +519,7 @@ export default function WaitlistModal() {
         });
       } catch (e) {
         console.error('Lead insert failed', e);
+        // Continue without lead ID - the form will still work
       }
     }
   }, []);
@@ -354,8 +530,10 @@ export default function WaitlistModal() {
       const ce = e as CustomEvent<OpenEventDetail>;
       if (ce?.detail) onOpen(ce.detail);
     };
+    
     window.addEventListener(OPEN_EVENT, handler as EventListener);
     document.addEventListener(OPEN_EVENT, handler as EventListener);
+    
     try {
       const w: any = window as any;
       const q: any[] | undefined = w.__offstone_waitlist_queue;
@@ -372,9 +550,32 @@ export default function WaitlistModal() {
   // Lock scroll
   useEffect(() => {
     if (!open) return;
-    const original = document.body.style.overflow;
+    
+    // Sauvegarder les styles originaux
+    const originalOverflow = document.body.style.overflow;
+    const originalPosition = document.body.style.position;
+    const originalTop = document.body.style.top;
+    const originalWidth = document.body.style.width;
+    
+    // Obtenir la position de scroll actuelle
+    const scrollY = window.scrollY;
+    
+    // Appliquer les styles pour bloquer le scroll
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = original; };
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    
+    return () => { 
+      // Restaurer les styles originaux
+      document.body.style.overflow = originalOverflow;
+      document.body.style.position = originalPosition;
+      document.body.style.top = originalTop;
+      document.body.style.width = originalWidth;
+      
+      // Restaurer la position de scroll
+      window.scrollTo(0, scrollY);
+    };
   }, [open]);
 
   // Close country menu on outside click / Escape
@@ -529,8 +730,19 @@ export default function WaitlistModal() {
             asset_class: meta?.asset_class || 'retail',
           }),
         });
+        
+        if (!res.ok) {
+          console.error('API error:', res.status, res.statusText);
+          // Continue without lead ID - the form will still work
+          return next();
+        }
+        
         const json = await res.json();
-        if (!res.ok || !json?.id) throw new Error(json?.error || 'insert failed');
+        if (!json?.id) {
+          console.error('No lead ID returned from API');
+          return next();
+        }
+        
         setLeadId(json.id);
         track('lead_open', {
           id: json.id,
@@ -544,6 +756,7 @@ export default function WaitlistModal() {
         });
       } catch (e) {
         console.error('Lead insert failed', e);
+        // Continue without lead ID - the form will still work
       } finally {
         setSubmitting(false);
       }
@@ -615,7 +828,7 @@ export default function WaitlistModal() {
           </div>
 
           <div className={`mt-4 grid gap-8 items-start ${twoCols ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative min-h-[560px] pb-36 sm:pb-40`}>
+            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : 'min-h-[560px] pb-36 sm:pb-40'}`}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -703,6 +916,35 @@ export default function WaitlistModal() {
                           </button>
                         );
                       })}
+                    </div>
+                  )}
+
+                  {current === 'calendly' && (
+                    <div className="space-y-4">
+                      <div className="text-white/80 text-sm leading-relaxed">
+                        <p>
+                          Parfait ! Nous allons maintenant planifier un échange personnalisé pour mieux comprendre vos objectifs d'investissement.
+                        </p>
+                      </div>
+                      
+                      {/* Version mobile - bouton calendrier */}
+                      <div className="lg:hidden">
+                        <button
+                          type="button"
+                          onClick={() => setIsCalendarMobileOpen(true)}
+                          className="w-full px-6 py-4 rounded-xl border-2 border-[#F7B096] bg-[#F7B096]/10 hover:bg-[#F7B096]/20 transition-colors text-center"
+                        >
+                          <div className="flex items-center justify-center gap-3">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                              <line x1="16" y1="2" x2="16" y2="6"/>
+                              <line x1="8" y1="2" x2="8" y2="6"/>
+                              <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            <span className="text-[#F7B096] font-medium">Ouvrir le calendrier</span>
+                          </div>
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -832,10 +1074,12 @@ export default function WaitlistModal() {
                   )}
 
                   {steps[stepIndex] === 'success' && (
-                    <div className="text-left">
-                      <h4 className="text-xl font-semibold mb-2">Merci !</h4>
-                      <p className="text-white/80">Votre demande a bien été enregistrée. Nous revenons vers vous très vite.</p>
-                      <div className="mt-6"><button type="button" onClick={reset} className="px-4 py-2 rounded-lg bg-[#F7B096] text-black text-sm">Fermer</button></div>
+                    <div className="text-left flex flex-col justify-center h-full">
+                      <div className="text-center">
+                        <h4 className="text-2xl font-semibold mb-4">Merci !</h4>
+                        <p className="text-white/80 text-lg mb-8">Votre demande a bien été enregistrée. Nous revenons vers vous très vite.</p>
+                        <button type="button" onClick={reset} className="px-6 py-3 rounded-lg bg-[#F7B096] text-black text-base font-medium hover:opacity-90">Fermer</button>
+                      </div>
                     </div>
                   )}
                 </motion.div>
@@ -846,11 +1090,14 @@ export default function WaitlistModal() {
 
             {twoCols && (
               <div className="hidden lg:block">
-                <div className="w-full h-[480px] rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70">
-                  <div className="text-center">
-                    <div className="text-sm mb-2">Integration Calendly</div>
-                    <div className="text-xs text-white/50">Placez ici l'iframe Calendly ou un composant personnalise.</div>
-                  </div>
+                <div className={`w-full rounded-xl bg-white/5 border border-white/10 overflow-hidden ${current === 'success' ? 'h-[500px]' : 'h-[700px]'}`}>
+                  <HubspotMeetingsEmbed 
+                    url={HUBSPOT_MEETING_URL}
+                    title="Choisissez un créneau avec notre équipe"
+                    active={current === 'calendly'}
+                    variant="desktop"
+                    className="w-full h-full"
+                  />
                 </div>
               </div>
             )}
@@ -879,6 +1126,74 @@ export default function WaitlistModal() {
           </div>
         </div>
       </motion.div>
+
+      {/* Popup mobile pour l'agenda HubSpot */}
+      <AnimatePresence>
+        {isCalendarMobileOpen && (
+          <motion.div
+            className="fixed inset-0 z-[1001] flex items-center justify-center lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="absolute inset-0 bg-black/80" onClick={() => setIsCalendarMobileOpen(false)} />
+            <motion.div
+              className="relative w-[95%] max-w-lg h-[75vh] rounded-2xl overflow-hidden bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#1a1a1a]"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            >
+              <div className="p-4 border-b border-white/10">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-white">Choisissez un créneau</h3>
+                  <button
+                    onClick={() => setIsCalendarMobileOpen(false)}
+                    className="text-white/70 hover:text-white text-xl"
+                  >
+                    ×
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 p-2">
+                <div className="h-[60vh]">
+                  <HubspotMeetingsEmbed 
+                    url={HUBSPOT_MEETING_URL}
+                    title="Choisissez un créneau avec notre équipe"
+                    active={true}
+                    variant="mobile"
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
+              
+              {/* Barre de navigation en bas du popup mobile */}
+              <div className="p-4 border-t border-white/10 bg-black/20">
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setIsCalendarMobileOpen(false)}
+                    className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsCalendarMobileOpen(false);
+                      next();
+                    }}
+                    className="px-6 py-2 rounded-full bg-[#F7B096] text-black hover:opacity-90 text-sm font-medium"
+                  >
+                    Suivant
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
@@ -888,6 +1203,7 @@ export function openWaitlist(detail: OpenEventDetail) {
   const event = new CustomEvent(OPEN_EVENT, { detail });
   window.dispatchEvent(event);
 }
+
 
 
 

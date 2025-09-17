@@ -38,7 +38,7 @@ export default function InvestisseursSection() {
         {/* Les classes importantes sont : sticky, top-16, et self-start */}
         <div className="flex-1 text-left sticky top-16 self-start">
           <h2 className="text-lg font-medium text-gray-900">
-            Pourquoi choisir Aguesseau ?
+            Pourquoi choisir Offstone ?
           </h2>
           <p className="text-base text-gray-700 mt-2">
             Découvrez nos avantages pour les investisseurs.

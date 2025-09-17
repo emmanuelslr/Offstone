@@ -71,7 +71,7 @@ npm run build
 ```
 - Update a lead:
 ```
-{"tool":"update_lead","input":{"id":"<LEAD_ID>","patch":{"ticket_target":"50k","discovery":"tv","wants_call":true}}}
+{"tool":"update_lead","input":{"id":"<LEAD_ID>","patch":{"ticket_target":"50k_100k","discovery":"tv","wants_call":true}}}
 ```
 
 - Create leads table (idempotent):
@@ -90,6 +90,6 @@ Dangerous example (for demonstration only; avoid in practice):
 
 Notes
 - If pg env is not configured, create the `public.leads` table once in the Supabase SQL Editor (see the SQL in `offstone/README.md`). After that, the MCP can insert/update freely.
-- The MCP server standardizes `ticket_target` ("<10k" | "20k" | "50k" | "100k+").
+- The MCP server standardizes `ticket_target` (`lt_20k` | `20k_50k` | `50k_100k` | `100k_500k` | `500k_1m` | `gt_1m`).
 - Service Role key is server-only. Do not expose it in client code.
  - With pg mode configured, the MCP can create tables and run arbitrary SQL with a safety guard (blocks drop/alter/etc. unless `allowDangerous=true`).

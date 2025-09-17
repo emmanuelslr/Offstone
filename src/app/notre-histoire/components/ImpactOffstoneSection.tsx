@@ -8,7 +8,7 @@ const TILES: Tile[] = [
   { id: "acces", title: "Accès qualifié", subtitle: "Dealflow sélectionné", image: "/images/Buildings/Truchet.jpg" },
   { id: "alignement", title: "Alignement", subtitle: "Co‑investissement", image: "/images/notre-histoire/Jonathan Anguelov Balcon.jpg" },
   { id: "communaute", title: "Communauté", subtitle: "Entrepreneurs & épargnants", image: "/images/notre-histoire/Jonathan Anguelov Communauté.JPG" },
-  { id: "plateforme", title: "Plateforme", subtitle: "Documentation & suivi", image: "/images/notre-histoire/Mokup Plateforme 2.png" },
+  { id: "plateforme", title: "Plateforme", subtitle: "Documentation & suivi", image: "/images/Platform/mockup telephon platform.png" },
 ];
 
 export default function ImpactOffstoneSection() {

@@ -55,9 +55,9 @@ export function useFooterDictionary(locale: string) {
     status: "Statut du service",
     langLabel: "Langue",
     linkedinTitle: "Ouvre LinkedIn dans un nouvel onglet",
-    compliance1: "Offstone agit en qualité d’agent lié pour la réception-transmission d’ordres (RTO) et la commercialisation au nom de Tylia, prestataire de services d’investissement (PSI) agréé par l’",
-    compliance2: "Les informations présentées ne constituent pas un conseil en investissement ni une recommandation personnalisée.",
-    compliance3: "Ticket d’entrée indicatif : à partir de 20 000 €. Frais d’adhésion à la plateforme : 1 200 € TTC. Voir barème des frais pour le détail.",
+    compliance1: "AVERTISSEMENT : Investir en immobilier non coté présente un risque de perte en capital et d'illiquidité. Investissez uniquement l'argent dont vous n'avez pas besoin immédiatement et diversifiez vos placements. Offstone opère dans le cadre d'un cercle privé et réserve ses opportunités d'investissement à un cercle restreint d'investisseurs (personnes physiques et morales).",
+    compliance2: "Offstone ne propose pas de conseils en investissement. Rien ici ne doit être considéré comme une recommandation d'investir dans un titre quel qu'il soit. Les documents relatifs à votre investissement via un SPV dédié, disponibles dans votre espace compte sécurisé, décrivent les risques potentiels, les frais et les dépenses. Veuillez lire attentivement ces avertissements de risques. La valeur des investissements peut varier dans le temps. Les investissements en immobilier via nos club-deals ont un horizon de sortie à moyen terme (2 à 5 ans) avec une liquidité limitée. Les performances passées ne garantissent pas les rendements futurs. Investir dans un club-deal immobilier n'est pas comparable à un dépôt bancaire.",
+    compliance3: "",
     compliance4: "Performance non garantie ; risque de perte en capital ; investissement illiquide.",
     fees: "barème des frais",
     acprTitle: "Ouvre l’ACPR dans un nouvel onglet"

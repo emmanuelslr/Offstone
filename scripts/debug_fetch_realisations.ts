@@ -1,8 +1,8 @@
-// Quick debug to list links on Aguesseau realisations page
+// Quick debug to list links on Offstone realisations page
 import { load } from 'cheerio';
 
 async function main() {
-  const res = await fetch('https://aguesseaucapital.com/realisations/', { headers: { 'user-agent': 'Offstone-Debug/1.0' } });
+  const res = await fetch('https://offstone.fr/realisations/', { headers: { 'user-agent': 'Offstone-Debug/1.0' } });
   const html = await res.text();
   const $ = load(html);
   const hrefs: string[] = [];

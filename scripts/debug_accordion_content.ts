@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 
 async function debugAccordionContent() {
   try {
-    const url = 'https://aguesseaucapital.com/biens/investissement-immobilier-chilly-mazarin/';
+    const url = 'https://offstone.fr/biens/investissement-immobilier-chilly-mazarin/';
     console.log(`Analyse du contenu de l'accordéon: ${url}`);
     
     const response = await fetch(url);

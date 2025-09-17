@@ -1,0 +1,84 @@
+import { NextResponse } from "next/server";
+import { supabaseUpdateLeadById } from "@/lib/supabaseAdmin";
+import { isTrustedOrigin, rateLimitByCookie, applyRateLimitCookie, verifyLeadToken, truncate } from "@/lib/security";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+function sanitizeText(v: unknown) {
+  if (typeof v !== "string") return undefined;
+  const s = v.trim();
+  return s.length ? s : undefined;
+}
+
+export async function PATCH(req: Request, context: { params: { id: string } }) {
+  try {
+    // CSRF/basic origin protection (strict in production)
+    if (!isTrustedOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    // Rate limit partial/final saves (30 req/30 min per IP) — can be disabled via RATE_LIMIT_ENABLED=false
+    const rl = process.env.RATE_LIMIT_ENABLED === 'false' ? null : rateLimitByCookie(req, 'leads_patch', 30, 30 * 60_000);
+    if (rl && !rl.allowed) {
+      const resp = NextResponse.json({ error: "Too many requests" }, { status: 429 });
+      applyRateLimitCookie(resp, rl);
+      return resp;
+    }
+
+    const id = context?.params?.id;
+    if (!id) {
+      const resp = NextResponse.json({ error: "id requis" }, { status: 400 });
+      if (rl) applyRateLimitCookie(resp, rl);
+      return resp;
+    }
+    // Require per-lead token in header
+    const token = req.headers.get('x-lead-token');
+    if (!verifyLeadToken(id, token)) {
+      const resp = NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      if (rl) applyRateLimitCookie(resp, rl);
+      return resp;
+    }
+    const body = await req.json().catch(() => ({}));
+
+    const fields: Record<string, any> = {};
+
+    const set = (k: string, v: any) => {
+      if (v !== undefined) fields[k] = v;
+    };
+
+    set("ticket_target", truncate(sanitizeText(body?.ticket_target), 255));
+    set("discovery", truncate(sanitizeText(body?.discovery), 4000));
+    set("wants_call", body?.wants_call === true || body?.wants_call === false ? body?.wants_call : undefined);
+    set("first_name", truncate(sanitizeText(body?.first_name), 128));
+    set("last_name", truncate(sanitizeText(body?.last_name), 128));
+    set("phone", truncate(sanitizeText(body?.phone), 64));
+    set("consent", body?.consent === true ? true : body?.consent === false ? false : undefined);
+    set("asset_class", truncate(sanitizeText(body?.asset_class), 64));
+    set("article_uid", truncate(sanitizeText(body?.article_uid), 128));
+    set("page_url", truncate(sanitizeText(body?.page_url), 2048));
+    set("ref", truncate(sanitizeText(body?.ref), 255));
+    set("utm_source", truncate(sanitizeText(body?.utm_source), 255));
+    set("utm_medium", truncate(sanitizeText(body?.utm_medium), 255));
+    set("utm_campaign", truncate(sanitizeText(body?.utm_campaign), 255));
+    set("utm_content", truncate(sanitizeText(body?.utm_content), 255));
+    set("utm_term", truncate(sanitizeText(body?.utm_term), 255));
+
+    if (Object.keys(fields).length === 0) {
+      const resp = NextResponse.json({ error: "Aucun champ fourni" }, { status: 400 });
+      if (rl) applyRateLimitCookie(resp, rl);
+      return resp;
+    }
+
+    fields.updated_at = new Date().toISOString();
+
+    const row = await supabaseUpdateLeadById(id, fields);
+
+    const resp = NextResponse.json({ id: row?.id, lead: row });
+    if (rl) applyRateLimitCookie(resp, rl);
+    return resp;
+  } catch (err: any) {
+    console.error("PATCH /api/leads/[id] error", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}

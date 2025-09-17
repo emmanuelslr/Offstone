@@ -2,32 +2,30 @@
   "investir": [
     {"label": "Investir", "href": "/investir"},
     {"label": "Pourquoi Offstone", "href": "/pourquoi-offstone"},
-    {"label": "Simulateur", "href": "/simulateur"},
-    {"label": "Candidatez", "href": "/investir#candidature"}
+    {"label": "Candidatez", "href": "/#pro-cta-footer"}
   ],
   "ressources": [
-    {"label": "Stratégies & thèses", "href": "/ressources/strategie-theses"},
-    {"label": "Fiscalité immobilière", "href": "/ressources/fiscalite-immobiliere"},
-    {"label": "Structuration & réglementation", "href": "/ressources/structuration-reglementation"},
-    {"label": "Marché & asset management", "href": "/ressources/asset-management-marche"},
+    {"label": "Stratégies & thèses", "href": "/ressources"},
+    {"label": "Fiscalité immobilière", "href": "/ressources"},
+    {"label": "Structuration & réglementation", "href": "/ressources"},
+    {"label": "Marché & asset management", "href": "/ressources"},
     {"label": "FAQ", "href": "/faq"},
     {"label": "Glossaire", "href": "/ressources/glossaire"}
   ],
   "offstone": [
     {"label": "Notre histoire", "href": "/notre-histoire"},
     {"label": "Nos réalisations", "href": "/nos-realisations"},
-    {"label": "Jonathan Anguelov", "href": "/ressources/jonathan-anguelov"},
+    {"label": "Jonathan Anguelov", "href": "/ressources"},
     {"label": "Presse", "href": "/ressources/jonathan-anguelov/presse"},
-    {"label": "Contact", "href": "/contact"},
     {"label": "Espace membre", "href": "/espace-membre"}
   ],
   "legal": [
     {"label": "Mentions légales", "href": "/legal/mentions-legales"},
     {"label": "Confidentialité (RGPD)", "href": "/legal/confidentialite"},
     {"label": "Cookies", "href": "/legal/cookies"},
-    {"label": "Barème des frais", "href": "/legal/frais"},
-    {"label": "Conditions d’utilisation", "href": "/legal/conditions"},
-    {"label": "Conformité & réclamations", "href": "/legal/reclamations"}
+    {"label": "Conditions d'utilisation", "href": "/legal/conditions"},
+    {"label": "Politique de conformité", "href": "/legal/conformite"},
+    {"label": "Procédure de réclamations", "href": "/legal/reclamations"}
   ],
   "social": [
     {"label": "LinkedIn", "href": "https://www.linkedin.com/company/offstone/"}

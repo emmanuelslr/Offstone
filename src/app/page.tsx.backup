@@ -75,10 +75,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:grid-rows-1">
             <div className="md:col-span-6 flex flex-col">
 <h2 className="text-6xl md:text-7xl font-light tracking-tight text-black mb-8">
-                Pourquoi choisir Aguesseau ?
+                Pourquoi choisir Offstone ?
               </h2>
 <p className="text-xl text-gray-600 mt-4">
-                Parce que l’exception devient accessible,<br /> portée par l’exigence et le savoir-faire d’Aguesseau.
+                Parce que l'exception devient accessible,<br /> portée par l'exigence et le savoir-faire d'Offstone.
               </p>
               <div className="mt-12">
 <a href="#expert" className="inline-flex items-center justify-center px-10 py-4 text-[17px] font-medium tracking-[-0.01em] shadow-sm rounded-full transition-all text-white bg-black border border-black hover:bg-white hover:text-black gap-2 group">

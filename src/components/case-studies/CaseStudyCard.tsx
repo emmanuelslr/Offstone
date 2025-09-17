@@ -22,13 +22,23 @@ export default function CaseStudyCard({ study }: { study: CaseStudyDoc }) {
       {/* Media: slightly taller than 16:9 but not too tall */}
       <div className="relative aspect-[7/6] md:aspect-[6/5] overflow-hidden">
         {study.heroImage?.url ? (
-          <Image
-            src={study.heroImage.url}
-            alt={study.heroImage.alt || study.title}
-            fill
-            className="object-cover transition-transform duration-150 group-hover:scale-[1.02]"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+          study.heroImage.url.startsWith('/images/') ? (
+            // Pour les images locales, utiliser une balise img normale
+            <img
+              src={study.heroImage.url}
+              alt={study.heroImage.alt || study.title}
+              className="w-full h-full object-cover transition-transform duration-150 group-hover:scale-[1.02]"
+            />
+          ) : (
+            // Pour les images externes, utiliser le composant Image optimisé
+            <Image
+              src={study.heroImage.url}
+              alt={study.heroImage.alt || study.title}
+              fill
+              className="object-cover transition-transform duration-150 group-hover:scale-[1.02]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          )
         ) : (
           <div className="w-full h-full bg-gray-100" />
         )}
