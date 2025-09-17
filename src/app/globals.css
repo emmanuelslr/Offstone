@@ -620,3 +620,90 @@
   background: #F7B096;
   color: #fff;
 }
+
+/* Fix pour les overlays de hover sur mobile */
+.mobile-hover-fix {
+  /* Sur mobile, désactiver complètement l'overlay de hover */
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+  
+  /* Sur desktop, garder le comportement normal */
+  @media (min-width: 769px) {
+    display: flex;
+  }
+}
+
+/* Fix pour les images du carousel Paraform sur mobile */
+.pf-media {
+  /* Forcer l'affichage des images sur tous les écrans */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  object-fit: cover !important;
+}
+
+/* Fix spécifique pour iPhone SE (320px) et très petits écrans */
+@media (max-width: 375px) {
+  .pf-media {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .pf-reveal {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .pf-frame {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Fix ultra-spécifique pour iPhone SE (320px exactement) */
+@media (max-width: 320px) {
+  .pf-media {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+  
+  .pf-reveal {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+  }
+  
+  .pf-frame {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+  }
+  
+  .pf-card {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .pf-card-abs {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

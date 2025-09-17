@@ -85,9 +85,10 @@ export default function DigitalPlatformSection() {
               >
                 <Link
                   href="/investir"
-                  className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-6 text-base shadow-sm border border-black transition hover:bg-transparent hover:text-black hover:border-black group"
+                  className="inline-flex items-center justify-center h-11 bg-black text-white font-normal rounded-full px-4 sm:px-6 text-sm sm:text-base shadow-sm border border-black transition hover:bg-transparent hover:text-black hover:border-black group"
                 >
-                  En savoir plus sur le fonctionnement
+                  <span className="hidden sm:inline">En savoir plus sur le fonctionnement</span>
+                  <span className="sm:hidden">Comment ça marche</span>
                   <svg
                     className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
                     fill="none"

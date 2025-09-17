@@ -381,7 +381,7 @@ export default function HorizontalDealsSection() {
                       ))}
                     </div>
                   </div>
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#F9FAFB] bg-opacity-95 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#F9FAFB] bg-opacity-95 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 mobile-hover-fix">
                     <h3 className="text-base md:text-[17px] font-medium text-[#111] mb-2">{deal.title}</h3>
                     <p className="text-gray-700 text-xs md:text-sm mb-3 px-4 text-center" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {deal.description.length > 80 ? deal.description.slice(0, 80) + '...' : deal.description}
