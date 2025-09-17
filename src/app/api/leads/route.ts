@@ -28,19 +28,19 @@ export async function POST(req: Request) {
       return resp;
     }
 
-    // Stateless PoW: activé en production avec difficulté réduite pour supporter le fort trafic
-    const env = (process.env.VERCEL_ENV || process.env.NODE_ENV || 'development').toLowerCase();
-    if (env === 'production' || env === 'preview') {
-      const ch = body?.pow_challenge || req.headers.get('x-pow-challenge');
-      const nn = body?.pow_nonce || req.headers.get('x-pow-nonce');
-      if (!verifyPowSolution(ch, nn)) {
-        // Rate limit pour supporter 50k requêtes/heure (5000 échecs/10min)
-        const rl = throttleOnFailure(req, 'leads_pow', 5000, 10 * 60_000);
-        const resp = NextResponse.json({ error: "PoW required" }, { status: rl.allowed ? 400 : 429 });
-        applyRateLimitCookie(resp, rl);
-        return resp;
-      }
-    }
+    // Stateless PoW: temporairement désactivé pour permettre au formulaire de fonctionner
+    // TODO: Implémenter le PoW côté frontend avant de réactiver
+    // const env = (process.env.VERCEL_ENV || process.env.NODE_ENV || 'development').toLowerCase();
+    // if (env === 'production' || env === 'preview') {
+    //   const ch = body?.pow_challenge || req.headers.get('x-pow-challenge');
+    //   const nn = body?.pow_nonce || req.headers.get('x-pow-nonce');
+    //   if (!verifyPowSolution(ch, nn)) {
+    //     const rl = throttleOnFailure(req, 'leads_pow', 5000, 10 * 60_000);
+    //     const resp = NextResponse.json({ error: "PoW required" }, { status: rl.allowed ? 400 : 429 });
+    //     applyRateLimitCookie(resp, rl);
+    //     return resp;
+    //   }
+    // }
 
     const emailRaw = body?.email;
     const email = typeof emailRaw === "string" ? emailRaw.trim() : "";
