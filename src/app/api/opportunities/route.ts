@@ -9,6 +9,8 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🚀 Opportunities API called');
+    
     // Check if Supabase is configured
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
       console.error('❌ Supabase configuration missing');
@@ -19,6 +21,13 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
+    console.log('📝 Received data:', { 
+      firstName: body.firstName, 
+      lastName: body.lastName, 
+      email: body.email, 
+      phone: body.phone,
+      investmentAmount: body.investmentAmount 
+    });
     
     // Validate required fields
     const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'investmentAmount'];
@@ -106,6 +115,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert into database
+    console.log('💾 Inserting into opportunities_exclusives:', opportunityData);
     const { data, error } = await supabase
       .from('opportunities_exclusives')
       .insert([opportunityData])
@@ -113,7 +123,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Database error:', error);
+      console.error('❌ Database error:', error);
       return NextResponse.json(
         { error: 'Erreur lors de l\'enregistrement de votre demande' },
         { status: 500 }
