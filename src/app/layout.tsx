@@ -7,6 +7,7 @@ import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 
 const inter = Inter({
@@ -89,6 +90,7 @@ export default function RootLayout({
         <Footer />
         <PrismicPreview repositoryName={repositoryName} />
         <Analytics />
+        <SpeedInsights />
 
         {/* Tarteaucitron - Gestion des cookies RGPD */}
         <Script 
