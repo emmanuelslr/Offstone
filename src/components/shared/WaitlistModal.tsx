@@ -806,7 +806,7 @@ export default function WaitlistModal() {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[1000] flex items-center justify-center"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] as any }}
@@ -814,7 +814,7 @@ export default function WaitlistModal() {
     >
       <div className="absolute inset-0 bg-black/70 md:backdrop-blur-sm" />
       <motion.div
-        className={`relative w-[98%] ${twoCols ? 'max-w-6xl' : 'max-w-3xl'} rounded-2xl overflow-hidden shadow-2xl`}
+        className={`relative w-full sm:w-[98%] ${twoCols ? 'max-w-6xl' : 'max-w-3xl'} rounded-2xl overflow-hidden shadow-2xl`}
         initial={{ y: 8, scale: 0.98, opacity: 0 }}
         animate={{ y: 0, scale: 1, opacity: 1, transition: { type: 'spring', stiffness: 420, damping: 32, mass: 0.6 } }}
         style={{ willChange: 'transform, opacity' }}
@@ -844,7 +844,7 @@ export default function WaitlistModal() {
           </div>
 
           <div className={`mt-4 grid gap-8 items-start ${twoCols ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : 'min-h-[560px] pb-36 sm:pb-40'}`}>
+            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : current === 'ticket' || current === 'discovery' ? 'min-h-[520px] sm:min-h-[560px] pb-32 sm:pb-40' : 'min-h-[480px] sm:min-h-[560px] pb-36 sm:pb-40'}`}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -1155,7 +1155,7 @@ export default function WaitlistModal() {
           >
             <div className="absolute inset-0 bg-black/80" onClick={() => setIsCalendarMobileOpen(false)} />
             <motion.div
-              className="relative w-[95%] max-w-lg h-[75vh] rounded-2xl overflow-hidden bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#1a1a1a]"
+              className="relative w-[95%] max-w-lg h-[85vh] rounded-2xl overflow-hidden bg-gradient-to-br from-[#0d0d0d] via-[#121212] to-[#1a1a1a]"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -1173,7 +1173,7 @@ export default function WaitlistModal() {
                 </div>
               </div>
               <div className="flex-1 p-2">
-                <div className="h-[60vh]">
+                <div className="h-[65vh]">
                   <HubspotMeetingsEmbed 
                     url={HUBSPOT_MEETING_URL}
                     title="Choisissez un créneau avec notre équipe"
