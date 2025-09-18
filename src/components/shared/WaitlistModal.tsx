@@ -8,7 +8,8 @@ const OPEN_EVENT = 'waitlist:open';
 const OPENED_EVENT = 'waitlist:opened';
 const CLOSED_EVENT = 'waitlist:closed';
 
-const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website?embed=true';
+// URL HubSpot de base - sera modifiée dynamiquement avec les paramètres
+const HUBSPOT_MEETING_BASE_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website';
 const HUBSPOT_MEETINGS_SCRIPT_SRC = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
 
 type OpenEventDetail = {
@@ -31,6 +32,9 @@ type HubspotMeetingsEmbedProps = {
   active: boolean;
   variant?: 'mobile' | 'desktop';
   className?: string;
+  email?: string;
+  firstname?: string;
+  lastname?: string;
 };
 
 declare global {
@@ -43,135 +47,77 @@ declare global {
   }
 }
 
-function HubspotMeetingsEmbed({ url, title, active, variant = 'desktop', className }: HubspotMeetingsEmbedProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const containerId = useMemo(() => 'hs-meetings-' + Math.random().toString(36).slice(2, 10), []);
-  const containerClassName = useMemo(() => {
-    const classes = ['meetings-iframe-container'];
-    if (className) classes.push(className);
-    if (variant === 'mobile') classes.push('mobile-hubspot');
-    return classes.join(' ');
-  }, [className, variant]);
+function HubspotMeetingsEmbed({ url, title, active, variant = 'desktop', className, email, firstname, lastname }: HubspotMeetingsEmbedProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!containerRef.current) return;
-    containerRef.current.setAttribute('data-src', url);
-    containerRef.current.setAttribute('data-title', title);
-  }, [url, title]);
-
-  useEffect(() => {
-    if (!active || !containerRef.current) return;
-
-    const container = containerRef.current;
-    container.style.minHeight = '0px';
-    container.style.height = '100%';
-    container.style.width = '100%';
-    container.style.overflow = 'hidden';
-
-    const applyResponsiveStyles = () => {
-      const iframe = container.querySelector('iframe');
-      if (!iframe) return;
-      const isMobile = variant === 'mobile';
-      
-      if (isMobile) {
-        // Version mobile - pas de scaling, dimensions naturelles
-        container.style.display = 'block';
-        container.style.overflow = 'auto';
-        container.style.padding = '0';
-        container.style.margin = '0';
-        
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.style.minHeight = '600px';
-        iframe.style.border = '0';
-        iframe.style.transform = 'none';
-        iframe.style.margin = '0';
-        iframe.style.maxWidth = '100%';
-        iframe.style.maxHeight = 'none';
-        iframe.style.pointerEvents = 'auto';
-      } else {
-        // Version desktop - optimisée pour le conteneur
-        container.style.display = 'block';
-        container.style.overflow = 'hidden';
-        container.style.padding = '0';
-        container.style.margin = '0';
-        
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.style.minHeight = '500px';
-        iframe.style.border = '0';
-        iframe.style.transform = 'none';
-        iframe.style.margin = '0';
-        iframe.style.maxWidth = '100%';
-        iframe.style.maxHeight = '100%';
-        iframe.style.pointerEvents = 'auto';
-        iframe.style.overflow = 'hidden';
-      }
-    };
-
-    const renderEmbed = () => {
-      if (container.querySelector('iframe')) {
-        applyResponsiveStyles();
-        return;
-      }
-      try {
-        window.hbspt?.meetings?.create?.('#' + containerId);
-        window.setTimeout(applyResponsiveStyles, 90);
-      } catch (error) {
-        console.error('Unable to render HubSpot meetings embed', error);
-      }
-    };
-
-    const observer = new MutationObserver(applyResponsiveStyles);
-    observer.observe(container, { childList: true, subtree: true });
-
-    let cleanupScriptListener;
-    const existingScript = document.querySelector('script[src="' + HUBSPOT_MEETINGS_SCRIPT_SRC + '"]');
-
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = HUBSPOT_MEETINGS_SCRIPT_SRC;
-      script.async = true;
-      script.defer = true;
-      const onLoad = () => {
-        script.dataset.loaded = 'true';
-        renderEmbed();
-      };
-      script.addEventListener('load', onLoad);
-      document.body.appendChild(script);
-      cleanupScriptListener = () => {
-        script.removeEventListener('load', onLoad);
-      };
-    } else if (existingScript.dataset.loaded === 'true' || window.hbspt?.meetings?.create) {
-      renderEmbed();
-    } else {
-      const onLoad = () => {
-        existingScript.dataset.loaded = 'true';
-        renderEmbed();
-      };
-      existingScript.addEventListener('load', onLoad);
-      cleanupScriptListener = () => {
-        existingScript.removeEventListener('load', onLoad);
-      };
+  // Construire l'URL avec les paramètres pré-remplis
+  const hubspotUrl = useMemo(() => {
+    const params = new URLSearchParams({ embed: 'true' });
+    if (email) params.set('email', email);
+    if (firstname) params.set('firstname', firstname);
+    if (lastname) params.set('lastname', lastname);
+    
+    if (variant === 'mobile') {
+      params.set('hideEventTypeDetails', 'true');
+      params.set('hideLandingPageDetails', 'true');
     }
+    
+    const finalUrl = `${HUBSPOT_MEETING_BASE_URL}?${params.toString()}`;
+    console.log('🔗 URL HubSpot générée:', finalUrl);
+    return finalUrl;
+  }, [email, firstname, lastname, variant]);
 
-    applyResponsiveStyles();
-
-    return () => {
-      observer.disconnect();
-      if (cleanupScriptListener) cleanupScriptListener();
+  const containerStyle = useMemo(() => {
+    const minHeight = variant === 'mobile' ? 500 : 580;
+    return {
+      minHeight,
+      maxHeight: variant === 'mobile' ? 'calc(100vh - 120px)' : 'min(580px, calc(100vh - 180px))',
+      height: variant === 'mobile' ? 'calc(100vh - 120px)' : 'min(580px, calc(100vh - 180px))',
+      width: '100%',
+      margin: 0,
+      padding: 0,
+      overflow: 'hidden',
+      background: 'transparent',
     };
-  }, [active, containerId, variant, url, title]);
+  }, [variant]);
 
-  useEffect(() => {
-    return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = '';
-      }
-    };
-  }, []);
+  const wrapperClass = [
+    'relative w-full rounded-2xl',
+    variant === 'mobile' ? 'border border-white/15' : 'border border-white/10 bg-white/[0.04] backdrop-blur-sm',
+    'z-10',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  return <div id={containerId} ref={containerRef} className={containerClassName} data-src={url} data-title={title} />;
+  if (!active) {
+    return <div className={wrapperClass} style={containerStyle} />;
+  }
+
+  return (
+    <div className={wrapperClass} style={containerStyle}>
+      {!isLoaded && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-2xl border border-white/10 bg-[#0A1E42]/25 backdrop-blur-sm">
+          <div className="h-6 w-6 animate-spin rounded-full border-4 border-white/30 border-t-white" />
+          <p className="text-xs uppercase tracking-[0.2em] text-white/70">Chargement du calendrier</p>
+        </div>
+      )}
+      <iframe
+        src={hubspotUrl}
+        title={title}
+        allow="microphone; camera; geolocation"
+        style={{
+          border: '0',
+          width: '100%',
+          height: '100%',
+          minHeight: '100%',
+          zIndex: 1,
+          position: 'relative',
+        }}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </div>
+  );
 }
 
 type StepState = {
@@ -312,6 +258,7 @@ export default function WaitlistModal() {
   const [countryOpen, setCountryOpen] = useState(false);
   const countryMenuRef = useRef<HTMLDivElement | null>(null);
   const [isCalendarMobileOpen, setIsCalendarMobileOpen] = useState(false);
+  const [hubspotData, setHubspotData] = useState<{first_name?: string, last_name?: string, email?: string} | null>(null);
   const flagStyle: React.CSSProperties = {
     fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla","EmojiOne Color","Segoe UI Symbol",system-ui,sans-serif',
     lineHeight: '1',
@@ -460,10 +407,13 @@ export default function WaitlistModal() {
     setSkipEmailStep(false);
     setStepIndex(0);
     setData({ consent: false, phone_country: 'FR' });
+    setHubspotData(null);
     setEscArmed(false);
     if (escTimerRef.current) { window.clearTimeout(escTimerRef.current); escTimerRef.current = null; }
     if (advanceTimerRef.current) { window.clearTimeout(advanceTimerRef.current); advanceTimerRef.current = null; }
     if (saveTimerRef.current) { window.clearTimeout(saveTimerRef.current); saveTimerRef.current = null; }
+    // Nettoyer les données HubSpot stockées
+    try { sessionStorage.removeItem('offstone_hubspot_data'); } catch {}
     try { window.dispatchEvent(new Event(CLOSED_EVENT)); } catch {}
   }, []);
 
@@ -598,6 +548,94 @@ export default function WaitlistModal() {
 
   // Track step
   useEffect(() => { if (open && leadId) track('lead_step_view', { id: leadId, step: current, index: stepIndex + 1 }); }, [open, leadId, current, stepIndex]);
+
+  // Capturer les données HubSpot via postMessage
+  useEffect(() => {
+    if (current !== 'calendly') return;
+
+    const handleHubSpotMessage = (event: MessageEvent) => {
+      // Vérifier l'origine pour la sécurité
+      if (!event.origin.includes('hubspot.com')) return;
+
+      console.log('📨 Message HubSpot reçu:', event.data);
+
+      // Capturer les données du meeting HubSpot
+      if (event.data && typeof event.data === 'object') {
+        const messageData = event.data;
+        
+        // Gérer les meetings HubSpot
+        if (messageData.meetingBookSucceeded && messageData.meetingsPayload) {
+          const contact = messageData.meetingsPayload.bookingResponse?.postResponse?.contact;
+          
+          if (contact && (contact.firstName || contact.lastName)) {
+            console.log('✅ Données HubSpot Meeting capturées:', contact);
+            
+            // Stocker directement dans l'état local et sessionStorage
+            const hubspotData = {
+              first_name: contact.firstName,
+              last_name: contact.lastName,
+              email: contact.email || email
+            };
+            
+            setHubspotData(hubspotData);
+            sessionStorage.setItem('offstone_hubspot_data', JSON.stringify(hubspotData));
+            console.log('✅ Données HubSpot stockées localement:', hubspotData);
+          }
+        }
+      }
+    };
+
+    // Écouter les messages de HubSpot
+    window.addEventListener('message', handleHubSpotMessage);
+
+    return () => {
+      window.removeEventListener('message', handleHubSpotMessage);
+    };
+  }, [current, email]);
+
+
+
+  // Pre-fill profile data with HubSpot data when reaching profile step
+  useEffect(() => {
+    if (current === 'profile') {
+      console.log('🔍 Arrivée à l\'étape profile - vérification des données HubSpot');
+      
+      // Vérifier d'abord les données HubSpot en mémoire
+      if (hubspotData && (hubspotData.first_name || hubspotData.last_name)) {
+        console.log('📝 Pré-remplissage avec données HubSpot en mémoire:', hubspotData);
+        
+        setData(prevData => ({
+          ...prevData,
+          first_name: hubspotData.first_name || prevData.first_name,
+          last_name: hubspotData.last_name || prevData.last_name,
+        }));
+        return;
+      }
+      
+      // Fallback: check sessionStorage
+      const storedData = sessionStorage.getItem('offstone_hubspot_data');
+      if (storedData) {
+        try {
+          const parsedData = JSON.parse(storedData);
+          if (parsedData.first_name || parsedData.last_name) {
+            console.log('📝 Pré-remplissage avec données HubSpot du sessionStorage:', parsedData);
+            
+            setData(prevData => ({
+              ...prevData,
+              first_name: parsedData.first_name || prevData.first_name,
+              last_name: parsedData.last_name || prevData.last_name,
+            }));
+            
+            // Mettre à jour l'état local aussi
+            setHubspotData(parsedData);
+          }
+        } catch (error) {
+          console.error('❌ Erreur parsing sessionStorage HubSpot:', error);
+        }
+      }
+    }
+  }, [current, hubspotData]);
+
 
   // Debounced partial save
   useEffect(() => {
@@ -844,7 +882,7 @@ export default function WaitlistModal() {
           </div>
 
           <div className={`mt-4 grid gap-8 items-start ${twoCols ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : current === 'calendly' ? 'min-h-[320px] sm:min-h-[380px] pb-32 sm:pb-40' : current === 'ticket' || current === 'discovery' ? 'min-h-[520px] sm:min-h-[560px] pb-32 sm:pb-40' : 'min-h-[480px] sm:min-h-[560px] pb-36 sm:pb-40'}`}>
+            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : current === 'calendly' ? 'min-h-[500px] sm:min-h-[620px] lg:min-h-[650px] pb-16 sm:pb-20' : current === 'ticket' || current === 'discovery' ? 'min-h-[520px] sm:min-h-[560px] pb-32 sm:pb-40' : 'min-h-[480px] sm:min-h-[560px] pb-36 sm:pb-40'}`}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -984,6 +1022,7 @@ export default function WaitlistModal() {
 
                   {current === 'profile' && (
                     <div className="space-y-4">
+                      
                       <div>
                         <label className="block text-sm text-white/80 mb-1">Prénom <span className="text-red-400">*</span></label>
                         <input 
@@ -1106,20 +1145,21 @@ export default function WaitlistModal() {
 
             {twoCols && (
               <div className="hidden lg:block">
-                <div className={`w-full rounded-xl bg-white/5 border border-white/10 overflow-hidden ${current === 'success' ? 'h-[500px]' : current === 'calendly' ? 'h-[500px]' : 'h-[700px]'}`}>
-                  <HubspotMeetingsEmbed 
-                    url={HUBSPOT_MEETING_URL}
-                    title="Choisissez un créneau avec notre équipe"
-                    active={current === 'calendly'}
-                    variant="desktop"
-                    className="w-full h-full"
-                  />
-                </div>
+                <HubspotMeetingsEmbed 
+                  url={HUBSPOT_MEETING_BASE_URL}
+                  title="Choisissez un créneau avec notre équipe"
+                  active={current === 'calendly'}
+                  variant="desktop"
+                  className="w-full"
+                  email={email}
+                  firstname={data.first_name}
+                  lastname={data.last_name}
+                />
               </div>
             )}
           </div>
           {/* Global bottom action bar spanning full modal width */}
-          <div className="absolute left-0 right-0 bottom-0 z-10 grid grid-cols-[auto_1fr_auto] items-center px-6 sm:px-10 py-3 bg-black/20 md:backdrop-blur-sm border-t border-white/10">
+          <div className="absolute left-0 right-0 bottom-0 z-50 grid grid-cols-[auto_1fr_auto] items-center px-6 sm:px-10 py-3 bg-black/20 md:backdrop-blur-sm border-t border-white/10">
             <div className="flex items-center">
               <button type="button" onClick={prev} disabled={stepIndex === 0} className={`px-3 py-2 rounded-full ${stepIndex===0 ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Précédent">
                 <ArrowLeft />
@@ -1175,11 +1215,14 @@ export default function WaitlistModal() {
               <div className="flex-1 p-2">
                 <div className="h-[65vh]">
                   <HubspotMeetingsEmbed 
-                    url={HUBSPOT_MEETING_URL}
+                    url={HUBSPOT_MEETING_BASE_URL}
                     title="Choisissez un créneau avec notre équipe"
                     active={true}
                     variant="mobile"
                     className="w-full h-full"
+                    email={email}
+                    firstname={data.first_name}
+                    lastname={data.last_name}
                   />
                 </div>
               </div>
