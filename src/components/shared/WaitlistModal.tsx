@@ -259,6 +259,7 @@ export default function WaitlistModal() {
   const countryMenuRef = useRef<HTMLDivElement | null>(null);
   const [isCalendarMobileOpen, setIsCalendarMobileOpen] = useState(false);
   const [hubspotData, setHubspotData] = useState<{first_name?: string, last_name?: string, email?: string} | null>(null);
+  const [meetingBooked, setMeetingBooked] = useState(false);
   const flagStyle: React.CSSProperties = {
     fontFamily: '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla","EmojiOne Color","Segoe UI Symbol",system-ui,sans-serif',
     lineHeight: '1',
@@ -579,7 +580,14 @@ export default function WaitlistModal() {
             
             setHubspotData(hubspotData);
             sessionStorage.setItem('offstone_hubspot_data', JSON.stringify(hubspotData));
+            setMeetingBooked(true);
             console.log('✅ Données HubSpot stockées localement:', hubspotData);
+            
+            // Passer automatiquement à l'étape suivante après 2 secondes
+            setTimeout(() => {
+              console.log('🚀 Passage automatique à l\'étape suivante après rendez-vous HubSpot');
+              next();
+            }, 2000);
           }
         }
       }
@@ -975,11 +983,22 @@ export default function WaitlistModal() {
 
                   {current === 'calendly' && (
                     <div className="space-y-4">
-                      <div className="text-white/80 text-sm leading-relaxed">
-                        <p>
-                          Parfait ! Nous allons maintenant planifier un échange personnalisé pour mieux comprendre vos objectifs d'investissement.
-                        </p>
-                      </div>
+                      {meetingBooked ? (
+                        <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                          <div className="flex items-center gap-3 text-green-400">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M20 6L9 17l-5-5"/>
+                            </svg>
+                            <span className="text-sm font-medium">Rendez-vous confirmé ! Passage automatique à l'étape suivante...</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-white/80 text-sm leading-relaxed">
+                          <p>
+                            Parfait ! Nous allons maintenant planifier un échange personnalisé pour mieux comprendre vos objectifs d'investissement.
+                          </p>
+                        </div>
+                      )}
                       
                       {/* Version mobile - bouton calendrier */}
                       <div className="lg:hidden">
@@ -1174,7 +1193,7 @@ export default function WaitlistModal() {
             </div>
             <div className="flex items-center justify-end">
               {current !== 'success' && (
-                <button type="button" onClick={current === 'profile' ? onOk : next} disabled={!canNext} className={`px-3 py-2 rounded-full ${!canNext ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Suivant">
+                <button type="button" onClick={current === 'profile' ? onOk : next} disabled={!canNext || (current === 'calendly' && meetingBooked)} className={`px-3 py-2 rounded-full ${!canNext || (current === 'calendly' && meetingBooked) ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Suivant">
                   <ArrowRight />
                 </button>
               )}
