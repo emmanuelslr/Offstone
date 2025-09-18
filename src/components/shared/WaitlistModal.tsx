@@ -844,7 +844,7 @@ export default function WaitlistModal() {
           </div>
 
           <div className={`mt-4 grid gap-8 items-start ${twoCols ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : current === 'ticket' || current === 'discovery' ? 'min-h-[520px] sm:min-h-[560px] pb-32 sm:pb-40' : 'min-h-[480px] sm:min-h-[560px] pb-36 sm:pb-40'}`}>
+            <div className={`${twoCols ? 'max-w-xl' : 'max-w-2xl'} relative ${current === 'success' ? 'min-h-[500px] pb-20' : current === 'calendly' ? 'min-h-[320px] sm:min-h-[380px] pb-32 sm:pb-40' : current === 'ticket' || current === 'discovery' ? 'min-h-[520px] sm:min-h-[560px] pb-32 sm:pb-40' : 'min-h-[480px] sm:min-h-[560px] pb-36 sm:pb-40'}`}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={current}
@@ -1106,7 +1106,7 @@ export default function WaitlistModal() {
 
             {twoCols && (
               <div className="hidden lg:block">
-                <div className={`w-full rounded-xl bg-white/5 border border-white/10 overflow-hidden ${current === 'success' ? 'h-[500px]' : 'h-[700px]'}`}>
+                <div className={`w-full rounded-xl bg-white/5 border border-white/10 overflow-hidden ${current === 'success' ? 'h-[500px]' : current === 'calendly' ? 'h-[500px]' : 'h-[700px]'}`}>
                   <HubspotMeetingsEmbed 
                     url={HUBSPOT_MEETING_URL}
                     title="Choisissez un créneau avec notre équipe"

@@ -15,33 +15,12 @@ export default function CaseStudyCard({ study, priority = false }: { study: Case
   return (
     <Link
       href={study.url}
-      className="group block rounded-lg border-2 border-gray-400 overflow-hidden transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/60 hover:shadow-lg hover:border-gray-500 case-study-card bg-gray-50 shadow-sm"
-      style={{
-        // Styles de secours pour iPhone SE
-        minHeight: '280px',
-        backgroundColor: '#f9fafb',
-        border: '2px solid #9ca3af',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        display: 'block',
-        visibility: 'visible',
-        opacity: 1
-      }}
+      className="group block rounded-lg border border-gray-200 overflow-hidden transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/60 hover:shadow-lg hover:border-gray-300 case-study-card"
+      style={{ backgroundColor: '#EFEAE7' }}
       onClick={() => track('case_card_click', { uid: study.uid, title: study.title, action: 'card' })}
     >
       {/* Media: slightly taller than 16:9 but not too tall */}
-      <div 
-        className="relative aspect-[7/6] md:aspect-[6/5] overflow-hidden bg-gray-100"
-        style={{
-          // Styles de secours pour iPhone SE
-          height: '200px',
-          minHeight: '200px',
-          display: 'block',
-          visibility: 'visible',
-          opacity: 1,
-          position: 'relative',
-          backgroundColor: '#e5e7eb'
-        }}
-      >
+      <div className="relative aspect-[7/6] md:aspect-[6/5] overflow-hidden">
         {study.heroImage?.url ? (
           <Image
             src={study.heroImage.url}
@@ -64,9 +43,7 @@ export default function CaseStudyCard({ study, priority = false }: { study: Case
             }}
           />
         ) : (
-          <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-            <span className="text-gray-400 text-sm">Image non disponible</span>
-          </div>
+          <div className="w-full h-full bg-gray-100" />
         )}
         <div className="absolute left-3 top-3">
           <ComplianceBadge text="Acquis par les associés d’Offstone" />
@@ -88,12 +65,7 @@ export default function CaseStudyCard({ study, priority = false }: { study: Case
           </div>
         )}
 
-        <h3 className="text-lg md:text-xl font-semibold tracking-tight mb-1 text-black" style={{
-          display: '-webkit-box',
-          WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden'
-        }}>{study.title}</h3>
+        <h3 className="text-lg md:text-xl font-semibold tracking-tight mb-1 line-clamp-2">{study.title}</h3>
 
         {displayData.length > 0 && (
           <div className="text-sm text-gray-700 mb-1.5">
@@ -107,12 +79,7 @@ export default function CaseStudyCard({ study, priority = false }: { study: Case
         )}
 
         {study.excerpt && (
-          <p className="text-gray-600 leading-snug mt-2" style={{
-            display: '-webkit-box',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            overflow: 'hidden'
-          }}>
+          <p className="text-gray-600 line-clamp-2 leading-snug mt-2">
             {study.excerpt}
           </p>
         )}

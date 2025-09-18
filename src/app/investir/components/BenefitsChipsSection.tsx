@@ -129,7 +129,7 @@ function BenefitsChipsSectionInner(props: any) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     readOnly={submitted}
-                    className={`w-full sm:w-auto flex-1 bg-transparent outline-none placeholder:text-gray-500 pl-9 pr-2 xs:pl-9 py-2 xs:py-2.5 text-xs xs:text-sm ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
+                    className={`w-full bg-transparent outline-none placeholder:text-gray-500 pl-9 pr-2 xs:pl-9 py-2 xs:py-2.5 text-xs xs:text-sm ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
                     required
                   />
                 </div>
@@ -198,7 +198,7 @@ function BenefitsChipsSectionInner(props: any) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     readOnly={submitted}
-                    className={`w-full sm:w-auto flex-1 bg-transparent outline-none placeholder:text-gray-500 pl-9 pr-2 xs:pl-9 py-2 xs:py-2.5 text-xs xs:text-sm ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
+                    className={`w-full bg-transparent outline-none placeholder:text-gray-500 pl-9 pr-2 xs:pl-9 py-2 xs:py-2.5 text-xs xs:text-sm ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
                     required
                   />
                 </div>

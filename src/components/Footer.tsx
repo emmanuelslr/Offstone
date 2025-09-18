@@ -118,7 +118,7 @@ export default function Footer({ locale }: { locale?: string }) {
               id="footer-email"
               type="email"
               placeholder="Votre adresse mail"
-              className="flex-1 rounded px-4 py-2 text-[#1E2124] text-base bg-white focus:outline-none focus:ring"
+              className="w-full rounded px-4 py-2 text-[#1E2124] text-base bg-white focus:outline-none focus:ring"
               aria-label="Votre adresse mail"
               required
             />

@@ -120,7 +120,7 @@ export default function InvestirHero() {
                 id="investir-email"
                 name="investir-email"
                 placeholder="Entrez votre adresse mail"
-                className={`flex-1 bg-transparent outline-none text-black placeholder:text-gray-500 px-4 py-3 sm:py-2 text-base rounded-md sm:rounded-none border-0 focus:ring-0 ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
+                className={`w-full bg-transparent outline-none text-black placeholder:text-gray-500 px-4 py-3 sm:py-2 text-base rounded-md sm:rounded-none border-0 focus:ring-0 ${submitted ? 'text-green-600 font-medium' : 'text-black'}`}
                 required
               />
               <button
