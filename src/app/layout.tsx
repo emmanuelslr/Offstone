@@ -82,6 +82,29 @@ export default function RootLayout({
             `,
           }}
         />
+        
+        {/* Microsoft Clarity - Behavioral Analytics */}
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "tcmdqy7kch");
+              
+              // Vérification que Clarity se charge correctement
+              setTimeout(function() {
+                if (typeof window.clarity === 'function') {
+                  console.log('✅ Microsoft Clarity loaded successfully');
+                } else {
+                  console.warn('⚠️ Microsoft Clarity failed to load');
+                }
+              }, 2000);
+            `
+          }}
+        />
       </head>
       <body className="bg-white text-black antialiased min-h-screen w-full">
         <HydrationFix />
