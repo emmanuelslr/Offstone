@@ -583,11 +583,11 @@ export default function WaitlistModal() {
             setMeetingBooked(true);
             console.log('✅ Données HubSpot stockées localement:', hubspotData);
             
-            // Passer automatiquement à l'étape suivante après 2 secondes
+            // Passer automatiquement à l'étape suivante après 1 seconde
             setTimeout(() => {
               console.log('🚀 Passage automatique à l\'étape suivante après rendez-vous HubSpot');
               next();
-            }, 2000);
+            }, 1000);
           }
         }
       }
