@@ -938,11 +938,11 @@ export default function WaitlistModal() {
                     <div className="space-y-4">
                       {[
                         { k: 'under_20k', label: 'Moins de 20k€' },
-                        { k: '20_40k', label: 'Entre 20 et 40k€' },
-                        { k: '40_60k', label: 'Entre 40 et 60k€' },
-                        { k: '60_80k', label: 'Entre 60 et 80k€' },
-                        { k: '100_500k', label: 'Entre 100 et 500k€' },
-                        { k: '500k_plus', label: 'Plus de 500k€' },
+                        { k: '20_50k', label: 'Entre 20k€ et 50k€' },
+                        { k: '50_100k', label: 'Entre 50k€ et 100k€' },
+                        { k: '100_500k', label: 'Entre 100k€ et 500k€' },
+                        { k: '500k_1m', label: 'Entre 500k€ et 1M€' },
+                        { k: '1m_plus', label: 'Plus de 1M€' },
                       ].map((o, idx) => {
                         const selected = data.ticket_target === o.k;
                         return (
