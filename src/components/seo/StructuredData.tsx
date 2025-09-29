@@ -8,25 +8,35 @@ interface StructuredDataProps {
 
 export default function StructuredData({ data }: StructuredDataProps) {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(data);
-    script.id = 'structured-data';
-    
-    // Remove existing structured data with same ID
-    const existingScript = document.getElementById('structured-data');
-    if (existingScript) {
-      existingScript.remove();
+    // Vérifier que les données existent et sont valides
+    if (!data || typeof data !== 'object') {
+      console.warn('StructuredData: Invalid data provided');
+      return;
     }
-    
-    document.head.appendChild(script);
-    
-    return () => {
-      const scriptToRemove = document.getElementById('structured-data');
-      if (scriptToRemove) {
-        scriptToRemove.remove();
+
+    try {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(data);
+      script.id = 'structured-data';
+      
+      // Remove existing structured data with same ID
+      const existingScript = document.getElementById('structured-data');
+      if (existingScript) {
+        existingScript.remove();
       }
-    };
+      
+      document.head.appendChild(script);
+      
+      return () => {
+        const scriptToRemove = document.getElementById('structured-data');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    } catch (error) {
+      console.error('StructuredData: Error creating script:', error);
+    }
   }, [data]);
 
   return null;

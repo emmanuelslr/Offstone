@@ -115,7 +115,7 @@ export function createOptimizedImport<T>(importFn: () => Promise<T>) {
 
 // Configuration pour le preloading des ressources critiques
 export const criticalResources = [
-  '/fonts/inter-var.woff2',
+  '/fonts/AllianceNo1-Regular.woff2',
   '/favicon.png',
   '/images/og-image.jpg',
 ];

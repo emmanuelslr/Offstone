@@ -28,39 +28,49 @@ const homePageFAQs = [
 
 export default function HomePageFAQStructuredData() {
   useEffect(() => {
-    // Générer les données structurées FAQ pour la home page
-    const faqStructuredData = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": homePageFAQs.map(faq => ({
-        "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
-    };
-
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(faqStructuredData);
-    script.id = 'homepage-faq-structured-data';
-    
-    // Remove existing script
-    const existingScript = document.getElementById('homepage-faq-structured-data');
-    if (existingScript) {
-      existingScript.remove();
-    }
-    
-    document.head.appendChild(script);
-    
-    return () => {
-      const scriptToRemove = document.getElementById('homepage-faq-structured-data');
-      if (scriptToRemove) {
-        scriptToRemove.remove();
+    try {
+      // Vérifier que les données FAQ existent
+      if (!homePageFAQs || !Array.isArray(homePageFAQs) || homePageFAQs.length === 0) {
+        console.warn('HomePageFAQStructuredData: No FAQ data available');
+        return;
       }
-    };
+
+      // Générer les données structurées FAQ pour la home page
+      const faqStructuredData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": homePageFAQs.map(faq => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(faqStructuredData);
+      script.id = 'homepage-faq-structured-data';
+      
+      // Remove existing script
+      const existingScript = document.getElementById('homepage-faq-structured-data');
+      if (existingScript) {
+        existingScript.remove();
+      }
+      
+      document.head.appendChild(script);
+      
+      return () => {
+        const scriptToRemove = document.getElementById('homepage-faq-structured-data');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
+    } catch (error) {
+      console.error('HomePageFAQStructuredData: Error creating FAQ structured data:', error);
+    }
   }, []);
 
   return null; // Ce composant ne rend rien visuellement

@@ -8,7 +8,7 @@ export default function PerformanceOptimizer() {
     const optimizePerformance = () => {
       // Preload des ressources critiques
       const preloadResources = [
-        '/fonts/inter-var.woff2',
+        '/fonts/AllianceNo1-Regular.woff2',
         '/images/og-image.jpg',
         '/favicon.png'
       ];
