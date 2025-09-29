@@ -21,13 +21,76 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || 'https://offstone.fr'),
-  title: "Offstone | Investissez aux côtés de Jonathan Anguelov",
-  description: "Investissez dans l'immobilier professionnel avec Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert pour diversifier votre patrimoine.",
+  title: {
+    default: "Offstone | Investissez aux côtés de Jonathan Anguelov",
+    template: "%s | Offstone - Jonathan Anguelov"
+  },
+  description: "Investissez dans l'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées, accompagnement expert et diversification patrimoniale. Club de deals exclusifs.",
+  keywords: [
+    "Jonathan Anguelov",
+    "Offstone",
+    "investissement immobilier",
+    "immobilier professionnel",
+    "club de deals",
+    "diversification patrimoine",
+    "investissement immobilier France",
+    "Jonathan Anguelov investisseur",
+    "Offstone immobilier",
+    "club investisseurs",
+    "deals immobiliers",
+    "accompagnement investissement"
+  ],
+  authors: [{ name: "Jonathan Anguelov", url: "https://offstone.fr" }],
+  creator: "Jonathan Anguelov",
+  publisher: "Offstone",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: 'https://offstone.fr',
+    siteName: 'Offstone',
+    title: 'Offstone | Investissez aux côtés de Jonathan Anguelov',
+    description: 'Investissez dans l\'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert.',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Offstone - Jonathan Anguelov - Investissement Immobilier',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Offstone | Investissez aux côtés de Jonathan Anguelov',
+    description: 'Investissez dans l\'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées.',
+    images: ['/images/og-image.jpg'],
+    creator: '@offstone_fr',
+  },
+  alternates: {
+    canonical: 'https://offstone.fr',
+  },
+  category: 'Finance & Investissement',
+  classification: 'Investissement Immobilier',
   icons: {
-    icon: [{ url: '/favicon.png', type: 'image/png' }],
+    icon: [
+      { url: '/favicon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon.png', type: 'image/png', sizes: '192x192' }
+    ],
     shortcut: '/favicon.png',
     apple: '/favicon.png',
   },
+  manifest: '/manifest.json',
   };
 
 export default function RootLayout({
@@ -38,11 +101,98 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable}`}>
       <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192" />
         <link rel="shortcut icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
+        
+        {/* Données structurées JSON-LD pour le SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Offstone",
+              "alternateName": "Offstone Investissement",
+              "url": "https://offstone.fr",
+              "logo": "https://offstone.fr/favicon.png",
+              "description": "Investissez dans l'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert.",
+              "founder": {
+                "@type": "Person",
+                "name": "Jonathan Anguelov",
+                "jobTitle": "Fondateur & Investisseur Immobilier",
+                "description": "Expert en investissement immobilier professionnel et fondateur d'Offstone"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "FR"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "url": "https://offstone.fr"
+              },
+              "sameAs": [
+                "https://offstone.fr"
+              ],
+              "serviceType": "Investissement Immobilier",
+              "areaServed": "France",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Services d'Investissement Immobilier",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Club de Deals Immobiliers",
+                      "description": "Accès à des opérations immobilières sélectionnées"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Accompagnement Investissement",
+                      "description": "Conseil et accompagnement pour vos investissements immobiliers"
+                    }
+                  }
+                ]
+              }
+            })
+          }}
+        />
+        
+        {/* Données structurées pour Jonathan Anguelov */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Jonathan Anguelov",
+              "jobTitle": "Fondateur & Investisseur Immobilier",
+              "description": "Expert en investissement immobilier professionnel, fondateur d'Offstone",
+              "url": "https://offstone.fr",
+              "image": "https://offstone.fr/images/personnalites/jonathan-anguelov.jpg",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Offstone"
+              },
+              "knowsAbout": [
+                "Investissement Immobilier",
+                "Immobilier Professionnel",
+                "Club de Deals",
+                "Diversification Patrimoniale",
+                "Finance Immobilière"
+              ],
+              "alumniOf": "Expert en investissement immobilier",
+              "award": "Fondateur d'Offstone - Club d'investissement immobilier"
+            })
+          }}
+        />
         {/* Script pour nettoyer l'attribut cz-shortcut-listen AVANT l'hydratation */}
         <script
           dangerouslySetInnerHTML={{
