@@ -42,6 +42,8 @@ const nextConfig: NextConfig = {
   experimental: {
     // Optimiser le chunking
     optimizePackageImports: ['framer-motion', 'swiper'],
+    // Optimiser les imports
+    optimizeServerReact: true,
   },
   images: {
     dangerouslyAllowSVG: true,

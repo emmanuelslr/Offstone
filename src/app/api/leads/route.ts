@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { supabaseInsertLead } from "@/lib/supabaseAdmin";
 import { isTrustedOrigin, applyRateLimitCookie, issueLeadToken, truncate, validEmail, throttleOnFailure, verifyPowSolution } from "@/lib/security";
 import { submitToHubspot, buildHubspotPayload } from "../submit-lead/route";
+import { cacheHeaders, getCacheStrategy } from "@/lib/cache-optimization";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -111,7 +112,15 @@ export async function POST(req: Request) {
     }
     
     const token = row?.id ? issueLeadToken(row.id) : undefined;
-    return NextResponse.json({ id: row?.id, lead: row, token });
+    const response = NextResponse.json({ id: row?.id, lead: row, token });
+    
+    // Ajouter les headers de cache optimisés
+    const cacheStrategy = getCacheStrategy('/api/leads');
+    Object.entries(cacheHeaders[cacheStrategy]).forEach(([key, value]) => {
+      response.headers.set(key, value);
+    });
+    
+    return response;
   } catch (err: any) {
     console.error("POST /api/leads error", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

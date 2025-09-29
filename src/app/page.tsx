@@ -15,6 +15,7 @@ import FAQ from "./home-page/components/FAQ";
 import ProCTAFooter from "./home-page/components/ProCTAFooter";
 import PerformanceSection from "./home-page/components/PerformanceSection";
 import StructuredData, { homePageStructuredData, servicesStructuredData } from '@/components/seo/StructuredData';
+import HomePageFAQStructuredData from '@/components/seo/HomePageFAQStructuredData';
 
 // import MontanaSection from '@/components/MontanaSection';
 // import InvestSimplement from '@/components/shared/InvestSimplement';
@@ -72,6 +73,7 @@ export default function Home() {
       {/* Données structurées SEO */}
       <StructuredData data={homePageStructuredData} />
       <StructuredData data={servicesStructuredData} />
+      <HomePageFAQStructuredData />
       
       {/* Fixed Navbar */}
       <Navbar />
