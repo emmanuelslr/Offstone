@@ -11,7 +11,6 @@ import DigitalPlatformSection from '../home-page/components/DigitalPlatformSecti
 import FAQ from '../home-page/components/FAQ';
 import ProCTAFooter from '../home-page/components/ProCTAFooter';
 import StructuredData from '@/components/seo/StructuredData';
-import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export const metadata: Metadata = {
   title: "Investir avec Jonathan Anguelov | Club de Deals Immobiliers Offstone",
@@ -92,14 +91,6 @@ export default function InvestirPage() {
       {/* Données structurées SEO */}
       <StructuredData data={investirStructuredData} />
       
-      {/* Breadcrumbs */}
-      <Breadcrumbs 
-        items={[
-          { name: 'Accueil', url: '/' },
-          { name: 'Investir', url: '/investir' }
-        ]}
-        className="px-4 py-2 bg-gray-50"
-      />
       
       <Navbar />
       <Suspense fallback={null}>
