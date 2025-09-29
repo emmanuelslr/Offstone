@@ -16,7 +16,7 @@ export default function InvestirHero() {
           poster="/images/Backgrounds/ImageHero.png"
           className="absolute w-full h-full object-cover"
           style={{ 
-            filter: 'brightness(0.55) contrast(1.1)'
+            filter: 'brightness(0.65) contrast(1.1)'
           }}
           onError={(e) => {
             // Fallback vers l'image si la vidéo échoue
@@ -40,7 +40,7 @@ export default function InvestirHero() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            filter: 'brightness(0.55) contrast(1.1)',
+            filter: 'brightness(0.65) contrast(1.1)',
             display: 'none'
           }}
         />
