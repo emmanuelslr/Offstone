@@ -10,7 +10,7 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🚀 Opportunities API called');
+    console.log('🚀 Newsletter Jonathan API called');
     
     // Check if Supabase is configured
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -22,23 +22,18 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    console.log('📝 Received data:', { 
-      firstName: body.firstName, 
-      lastName: body.lastName, 
-      email: body.email, 
-      phone: body.phone,
-      investmentAmount: body.investmentAmount 
+    console.log('📝 Received newsletter data:', { 
+      email: body.email,
+      utm_source: body.utm_source,
+      utm_campaign: body.utm_campaign
     });
     
     // Validate required fields
-    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'investmentAmount'];
-    for (const field of requiredFields) {
-      if (!body[field] || body[field].trim() === '') {
-        return NextResponse.json(
-          { error: `Le champ ${field} est requis` },
-          { status: 400 }
-        );
-      }
+    if (!body.email || body.email.trim() === '') {
+      return NextResponse.json(
+        { error: 'L\'email est requis' },
+        { status: 400 }
+      );
     }
 
     // Validate email format
@@ -50,41 +45,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate investment amount (using current form values)
-    const validInvestmentAmounts = ['lt_20k', '20k_50k', '50k_100k', '100k_500k', '500k_1m', 'gt_1m'];
-    if (!validInvestmentAmounts.includes(body.investmentAmount)) {
-      return NextResponse.json(
-        { error: 'Montant d\'investissement invalide' },
-        { status: 400 }
-      );
-    }
-
     // Get UTM parameters and context from request
     const url = new URL(request.url);
-    const utmSource = url.searchParams.get('utm_source') || body.utm_source || 'website';
-    const utmMedium = url.searchParams.get('utm_medium') || body.utm_medium || 'form';
-    const utmCampaign = url.searchParams.get('utm_campaign') || body.utm_campaign || 'opportunities_exclusives';
-    const utmContent = url.searchParams.get('utm_content') || body.utm_content || 'contact_form';
+    const utmSource = url.searchParams.get('utm_source') || body.utm_source || 'jonathananguelov';
+    const utmMedium = url.searchParams.get('utm_medium') || body.utm_medium || 'newsletter';
+    const utmCampaign = url.searchParams.get('utm_campaign') || body.utm_campaign || 'newsletter_jonathan';
+    const utmContent = url.searchParams.get('utm_content') || body.utm_content || 'newsletter_signup';
     const utmTerm = url.searchParams.get('utm_term') || body.utm_term || '';
 
     // Get page context
-    const pageUrl = body.page_url || request.headers.get('referer') || '';
+    const pageUrl = body.page_url || request.headers.get('referer') || 'https://jonathananguelov.com';
     const referrer = body.referrer || request.headers.get('referer') || '';
-    const ctaId = body.cta_id || 'opportunities_contact_form';
-    const assetClass = body.asset_class || 'mixed';
-
-    // Get environment
+    const ctaId = body.cta_id || 'newsletter_jonathan_signup';
     const vercelEnv = process.env.VERCEL_ENV || 'development';
 
     // Prepare data for insertion
-    const opportunityData = {
-      first_name: body.firstName.trim(),
-      last_name: body.lastName.trim(),
+    const newsletterData = {
       email: body.email.toLowerCase().trim(),
-      phone: body.phone.trim(),
-      investment_amount: body.investmentAmount,
-      message: body.message?.trim() || null,
-      status: 'new',
       utm_source: utmSource,
       utm_medium: utmMedium,
       utm_campaign: utmCampaign,
@@ -93,7 +70,6 @@ export async function POST(request: NextRequest) {
       page_url: pageUrl,
       referrer: referrer,
       cta_id: ctaId,
-      asset_class: assetClass,
       vercel_env: vercelEnv
     };
 
@@ -103,82 +79,86 @@ export async function POST(request: NextRequest) {
     
     if (isDevelopment && !hasSupabaseConfig) {
       // Development mode: just log the data and return success
-      console.log('🚀 Development mode - Opportunity submission:', {
-        ...opportunityData,
+      console.log('🚀 Development mode - Newsletter submission:', {
+        ...newsletterData,
         id: 'dev-' + Date.now()
       });
       
       return NextResponse.json({
         success: true,
-        message: 'Votre demande a été envoyée avec succès (mode développement)',
+        message: 'Votre inscription à la newsletter a été enregistrée (mode développement)',
         id: 'dev-' + Date.now()
       });
     }
 
     // Insert into database
-    console.log('💾 Inserting into opportunities_exclusives:', opportunityData);
+    console.log('💾 Inserting into newsletter_jonathan:', newsletterData);
     const { data, error } = await supabase
-      .from('opportunities_exclusives')
-      .insert([opportunityData])
+      .from('newsletter_jonathan')
+      .insert([newsletterData])
       .select()
       .single();
 
     if (error) {
       console.error('❌ Database error:', error);
       return NextResponse.json(
-        { error: 'Erreur lors de l\'enregistrement de votre demande' },
+        { error: 'Erreur lors de l\'enregistrement de votre inscription' },
         { status: 500 }
       );
     }
 
     // Log successful submission (for debugging)
-    console.log('Opportunity submission successful:', {
+    console.log('Newsletter submission successful:', {
       id: data.id,
       email: data.email,
-      investment_amount: data.investment_amount,
       utm_campaign: data.utm_campaign
     });
 
-    // Submit to HubSpot via the main API with priority system
+    // Submit directly to HubSpot (bypassing internal API call)
     try {
-      const response = await fetch(`${process.env.SITE_URL || 'http://localhost:3001'}/api/submit-lead`, {
+      const hubspotPayload = {
+        fields: [
+          { name: "email", value: data.email },
+          { name: "utm_source", value: data.utm_source },
+          { name: "utm_medium", value: data.utm_medium },
+          { name: "utm_campaign", value: data.utm_campaign },
+          { name: "utm_content", value: data.utm_content },
+          { name: "utm_term", value: data.utm_term },
+          { name: "consentement_marketing", value: "true" }
+        ],
+        context: {
+          pageUri: data.page_url,
+          pageName: "Newsletter Jonathan"
+        }
+      };
+
+      console.log('newsletter.hubspot_payload', { email: data.email, payload: hubspotPayload });
+      
+      const hubspotResponse = await fetch('https://api.hsforms.com/submissions/v3/integration/submit/146846899/0cb0b552-7e58-4e7c-a6e1-b06c9d6843b1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: data.email,
-          firstname: data.first_name,
-          lastname: data.last_name,
-          phone: data.phone,
-          capacite_investissement: data.investment_amount,
-          consentement_marketing: true,
-          form_priority: 'opportunities', // Medium priority
-          page_url: data.page_url,
-          utm_source: data.utm_source,
-          utm_medium: data.utm_medium,
-          utm_campaign: data.utm_campaign,
-          utm_content: data.utm_content,
-          utm_term: data.utm_term,
-          asset_class: data.asset_class || 'mixed'
-        })
+        body: JSON.stringify(hubspotPayload)
       });
       
-      if (response.ok) {
-        console.log('opportunities.hubspot_success', { email: data.email });
+      if (hubspotResponse.ok) {
+        console.log('newsletter.hubspot_success', { email: data.email });
       } else {
-        console.error('opportunities.hubspot_error', { 
+        const errorText = await hubspotResponse.text();
+        console.error('newsletter.hubspot_error', { 
           email: data.email, 
-          status: response.status 
+          status: hubspotResponse.status,
+          error: errorText
         });
       }
     } catch (hubspotError) {
-      console.error('opportunities.hubspot_error', hubspotError);
+      console.error('newsletter.hubspot_error', hubspotError);
       // Continue even if HubSpot fails
     }
 
     // Return success response
     return NextResponse.json({
       success: true,
-      message: 'Votre demande a été envoyée avec succès',
+      message: 'Votre inscription à la newsletter a été enregistrée avec succès',
       id: data.id
     });
 
@@ -215,3 +195,5 @@ export async function OPTIONS() {
     },
   });
 }
+
+

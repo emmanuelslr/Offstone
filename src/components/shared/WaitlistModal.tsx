@@ -128,6 +128,7 @@ type StepState = {
   last_name?: string;
   phone?: string;
   phone_country?: 'FR' | 'BE' | 'CH' | 'LU' | 'DE' | 'ES' | 'IT' | 'GB';
+  linkedin_url?: string;
   consent?: boolean;
 };
 
@@ -430,10 +431,16 @@ export default function WaitlistModal() {
     // If email already provided, create the lead immediately; otherwise wait until user provides it on first step
     if (emailInput) {
       try {
-        const res = await fetch('/api/leads', {
+        const res = await fetch('/api/submit-lead', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: emailInput,
+            firstname: '',
+            lastname: '',
+            phone: '',
+            capacite_investissement: '100_500k',
+            consentement_marketing: true,
+            form_priority: 'waitinglist', // Highest priority
             page_url: detail.page_url,
             ref: detail.ref,
             utm_source: detail.utm_source,
@@ -452,19 +459,19 @@ export default function WaitlistModal() {
         }
         
         const json = await res.json();
-        if (!json?.id) {
-          console.error('No lead ID returned from API');
+        if (!json?.supabaseStored) {
+          console.error('No lead stored in Supabase');
           return;
         }
         
-        setLeadId(json.id);
-        // Store the token for future PATCH requests
-        if (json.token) {
-          setLeadToken(json.token);
-        }
+        // Note: New API doesn't return lead ID/token, so we skip lead tracking
+        // setLeadId(json.id);
+        // if (json.token) {
+        //   setLeadToken(json.token);
+        // }
         // Enrich analytics with CTA and UTM context
         track('lead_open', {
-          id: json.id,
+          id: 'new-api-submit', // Placeholder since new API doesn't return ID
           email: emailInput,
           cta_id: detail.cta_id || detail.utm_content,
           utm_source: detail.utm_source,
@@ -658,6 +665,7 @@ export default function WaitlistModal() {
         if (data.first_name) payload.first_name = data.first_name;
         if (data.last_name) payload.last_name = data.last_name;
         if (data.phone) payload.phone = data.phone;
+        if (data.linkedin_url) payload.linkedin_url = data.linkedin_url;
         // consent removed
         if (meta?.page_url) payload.page_url = meta.page_url;
         if (meta?.ref) payload.ref = meta.ref;
@@ -688,23 +696,25 @@ export default function WaitlistModal() {
   const prev = useCallback(() => { if (stepIndex > 0) setStepIndex(i => i - 1); }, [stepIndex]);
 
   const submit = useCallback(async () => {
-    if (!leadId) return;
+    // Simplified submission - just go to success page
     setSubmitting(true);
     try {
-      const res = await fetch(`/api/leads/${leadId}`, {
-        method: 'PATCH', 
-        headers: { 
-          'Content-Type': 'application/json',
-          ...(leadToken && { 'x-lead-token': leadToken })
-        },
+      // Submit final data to new API
+      const res = await fetch('/api/submit-lead', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ticket_target: data.ticket_target,
-          discovery: data.discovery,
-          wants_call: !under20k && data.rdv_choice === 'now',
-          first_name: data.first_name,
-          last_name: data.last_name,
-          phone: data.phone,
-          // consent removed
+          email,
+          firstname: data.first_name || '',
+          lastname: data.last_name || '',
+          phone: data.phone || '',
+          capacite_investissement: data.ticket_target === 'under_20k' ? 'lt_20k' : 
+                                   data.ticket_target === '20_50k' ? '20_50k' :
+                                   data.ticket_target === '50_100k' ? '50_100k' :
+                                   data.ticket_target === '100_500k' ? '100_500k' :
+                                   data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m',
+          consentement_marketing: true,
+          form_priority: 'waitinglist', // Highest priority
           page_url: meta?.page_url,
           ref: meta?.ref,
           utm_source: meta?.utm_source,
@@ -712,16 +722,22 @@ export default function WaitlistModal() {
           utm_campaign: meta?.utm_campaign,
           utm_content: meta?.utm_content,
           utm_term: meta?.utm_term,
-          asset_class: meta?.asset_class || 'retail',
-          status: 'completed',
-        }),
+          asset_class: meta?.asset_class || 'retail'
+        })
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || 'update failed');
-      setStepIndex(steps.findIndex(s => s === 'success'));
-      track('lead_completed', { id: leadId });
-    } catch (e) { console.error('Lead update failed', e); } finally { setSubmitting(false); }
-  }, [leadId, data, meta, steps.length, under20k]);
+      
+      if (res.ok) {
+        setStepIndex(steps.findIndex(s => s === 'success'));
+        track('lead_completed', { id: 'new-api-submit' });
+      } else {
+        console.error('Final submission failed');
+      }
+    } catch (e) { 
+      console.error('Final submission failed', e); 
+    } finally { 
+      setSubmitting(false); 
+    }
+  }, [data, meta, steps, under20k, email]);
 
   const clearFieldError = useCallback((field: 'first_name' | 'last_name' | 'phone' | 'email') => {
     setValidationErrors(prev => {
@@ -778,10 +794,16 @@ export default function WaitlistModal() {
       });
       try {
         setSubmitting(true);
-        const res = await fetch('/api/leads', {
+        const res = await fetch('/api/submit-lead', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email,
+            firstname: formData.firstname || '',
+            lastname: formData.lastname || '',
+            phone: formData.phone || '',
+            capacite_investissement: formData.capacite_investissement || '100_500k',
+            consentement_marketing: true,
+            form_priority: 'waitinglist', // Highest priority
             page_url: meta?.page_url,
             ref: meta?.ref,
             utm_source: meta?.utm_source,
@@ -800,14 +822,15 @@ export default function WaitlistModal() {
         }
         
         const json = await res.json();
-        if (!json?.id) {
-          console.error('No lead ID returned from API');
+        if (!json?.supabaseStored) {
+          console.error('Lead not stored in Supabase');
           return next();
         }
         
-        setLeadId(json.id);
+        // Note: New API doesn't return lead ID, so we use a placeholder
+        // setLeadId(json.id);
         track('lead_open', {
-          id: json.id,
+          id: 'new-api-submit', // Placeholder since new API doesn't return ID
           email,
           cta_id: meta?.cta_id || meta?.utm_content,
           utm_source: meta?.utm_source,
@@ -1133,6 +1156,18 @@ export default function WaitlistModal() {
                           />
                         </div>
                         {validationErrors.phone && <p className="text-red-400 text-xs mt-1">Veuillez entrer un numéro de téléphone valide</p>}
+                      </div>
+                      <div>
+                        <label className="block text-sm text-white/80 mb-1">Votre profil LinkedIn <span className="text-white/50">(optionnel)</span></label>
+                        <input 
+                          type="url"
+                          value={data.linkedin_url ?? ''} 
+                          onChange={(e)=>{
+                            setData(d=>({...d, linkedin_url: e.target.value}));
+                          }}
+                          className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 outline-none text-white placeholder:text-white/50 focus-visible:ring-2 ring-[#F7B096]/60" 
+                          placeholder="https://linkedin.com/in/votre-profil" 
+                        />
                       </div>
                       {/* consent checkbox removed */}
                     </div>

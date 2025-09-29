@@ -66,7 +66,8 @@ export default function OpportunitesClubDeals() {
     phone: '',
     phoneCountry: 'FR' as 'FR' | 'BE' | 'CH' | 'LU' | 'DE' | 'ES' | 'IT' | 'GB',
     investmentAmount: '',
-    message: ''
+    message: '',
+    linkedinUrl: ''
   });
   const [countryOpen, setCountryOpen] = useState(false);
   const [validationErrors, setValidationErrors] = useState<{phone?: boolean}>({});
@@ -271,6 +272,7 @@ export default function OpportunitesClubDeals() {
         phoneCountry: formData.phoneCountry,
         investmentAmount: formData.investmentAmount,
         message: formData.message,
+        linkedinUrl: formData.linkedinUrl,
         page_url: typeof window !== 'undefined' ? window.location.href : undefined,
         referrer: typeof document !== 'undefined' ? document.referrer : undefined,
         utm_source: searchParams?.get('utm_source') || 'website',
@@ -719,6 +721,20 @@ export default function OpportunitesClubDeals() {
                 </select>
               </div>
 
+              <div>
+                <label htmlFor="linkedinUrl" className="block text-sm font-medium text-gray-700 mb-2">
+                  Votre profil LinkedIn <span className="text-gray-500">(optionnel)</span>
+                </label>
+                <input
+                  type="url"
+                  id="linkedinUrl"
+                  name="linkedinUrl"
+                  value={formData.linkedinUrl}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#F7B096] focus:border-transparent transition-all"
+                  placeholder="https://linkedin.com/in/votre-profil"
+                />
+              </div>
 
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button

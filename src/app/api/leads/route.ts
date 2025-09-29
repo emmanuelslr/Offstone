@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseInsertLead } from "@/lib/supabaseAdmin";
 import { isTrustedOrigin, applyRateLimitCookie, issueLeadToken, truncate, validEmail, throttleOnFailure, verifyPowSolution } from "@/lib/security";
+import { submitToHubspot, buildHubspotPayload } from "../submit-lead/route";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -80,6 +81,35 @@ export async function POST(req: Request) {
     }
 
     const row = await supabaseInsertLead(record);
+    
+    // Submit to HubSpot as well
+    try {
+      const hubspotPayload = buildHubspotPayload({
+        email,
+        firstname: sanitizeText(body?.firstname) || null,
+        lastname: sanitizeText(body?.lastname) || null,
+        phoneE164: sanitizeText(body?.phone) || null,
+        capacity: sanitizeText(body?.asset_class) || null,
+        utm: {
+          utm_source: sanitizeText(body?.utm_source),
+          utm_medium: sanitizeText(body?.utm_medium),
+          utm_campaign: sanitizeText(body?.utm_campaign),
+          utm_term: sanitizeText(body?.utm_term),
+          utm_content: sanitizeText(body?.utm_content),
+        },
+        consent: body?.consent === true,
+        pageUri: sanitizeText(body?.page_url),
+        pageName: undefined
+      });
+      
+      console.log('leads.hubspot_payload', { email, payload: hubspotPayload });
+      const hubspotResult = await submitToHubspot(hubspotPayload);
+      console.log('leads.hubspot_result', hubspotResult);
+    } catch (hubspotError) {
+      console.error('leads.hubspot_error', hubspotError);
+      // Continue even if HubSpot fails
+    }
+    
     const token = row?.id ? issueLeadToken(row.id) : undefined;
     return NextResponse.json({ id: row?.id, lead: row, token });
   } catch (err: any) {

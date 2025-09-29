@@ -18,7 +18,8 @@ module.exports = {
       const webinars = await client.getAllByType("webinar").catch(() => []);
       const pressItems = await client.getAllByType("press_item").catch(() => []);
       const interviews = await client.getAllByType("interview_item").catch(() => []);
-      const qvema = await client.getAllByType("qvema_episode").catch(() => []);
+      // TEMPORAIREMENT MASQUÉ - QVEMA
+      // const qvema = await client.getAllByType("qvema_episode").catch(() => []);
 
       const mapArticle = (article) => {
         const catUid = article?.data?.category;
@@ -59,7 +60,8 @@ module.exports = {
         ...webinarEntries,
         ...pressEntries,
         ...interviewEntries,
-        ...qvema.map((doc) => ({ loc: `/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/${doc.uid}`, changefreq: "weekly", priority: 0.6, lastmod: doc.last_publication_date })),
+        // TEMPORAIREMENT MASQUÉ - QVEMA
+        // ...qvema.map((doc) => ({ loc: `/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/${doc.uid}`, changefreq: "weekly", priority: 0.6, lastmod: doc.last_publication_date })),
       ];
     } catch (error) {
       console.warn("Could not fetch resources for sitemap:", error);

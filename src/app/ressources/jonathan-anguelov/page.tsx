@@ -75,11 +75,13 @@ export default async function JonathanPage() {
 
         <JonathanLanding articles={articlesMapped} press={pressMapped} />
 
+        {/* TEMPORAIREMENT MASQUÉ - SECTION QVEMA
         <section className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">Qui veut être mon associé ?</h2>
-          <p className="text-gray-600 mb-3">Suivez la participation de Jonathan à l’émission. Replays, résumés et points clés.</p>
+          <p className="text-gray-600 mb-3">Suivez la participation de Jonathan à l'émission. Replays, résumés et points clés.</p>
           <a href="/ressources/jonathan-anguelov/qui-veut-etre-mon-associe" className="inline-block px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Voir les épisodes</a>
         </section>
+        */}
       </main>
       <ProCTAFooter utm_campaign="ressources" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }} />

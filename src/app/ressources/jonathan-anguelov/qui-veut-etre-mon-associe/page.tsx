@@ -1,3 +1,11 @@
+// ========================================
+// QVEMA PAGE - TEMPORAIREMENT MASQUÉE
+// ========================================
+// Cette page est masquée temporairement mais peut être restaurée facilement
+// Pour la restaurer : décommentez tout le contenu ci-dessous
+// ========================================
+
+/*
 import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
@@ -67,5 +75,11 @@ export default async function QvemaIndexPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionLD) }} />
     </>
   );
+}
+*/
+
+// Page temporairement masquée - retourne une 404
+export default function QvemaIndexPage() {
+  return null;
 }
 

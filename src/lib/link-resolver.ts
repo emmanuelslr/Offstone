@@ -22,8 +22,9 @@ export function linkResolver(doc: any): string {
       return `/ressources/jonathan-anguelov/presse/${uid}/`;
     case "interview_item":
       return `/ressources/jonathan-anguelov/interviews-podcasts/${uid}/`;
-    case "qvema_episode":
-      return `/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/${uid}/`;
+    // TEMPORAIREMENT MASQUÉ - QVEMA
+    // case "qvema_episode":
+    //   return `/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/${uid}/`;
     default:
       return "/";
   }

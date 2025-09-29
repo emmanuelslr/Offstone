@@ -1,3 +1,11 @@
+// ========================================
+// QVEMA EPISODE PAGE - TEMPORAIREMENT MASQUÉE
+// ========================================
+// Cette page est masquée temporairement mais peut être restaurée facilement
+// Pour la restaurer : décommentez tout le contenu ci-dessous
+// ========================================
+
+/*
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/shared/Navbar";
@@ -96,5 +104,11 @@ export default async function QvemaEpisodePage({ params }: { params: Promise<Par
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(tvEpisodeLD) }} />
     </>
   );
+}
+*/
+
+// Page temporairement masquée - retourne une 404
+export default function QvemaEpisodePage() {
+  return null;
 }
 

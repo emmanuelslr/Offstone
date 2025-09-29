@@ -1,4 +1,4 @@
-﻿export async function supabaseInsertLead(record: Record<string, any>) {
+export async function supabaseInsertLead(record: Record<string, any>) {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) {
@@ -21,7 +21,7 @@
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('🔍 Supabase insert error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature` });
+    console.error('?? Supabase insert error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature` });
     throw new Error(`Supabase insert error: ${res.status} ${text}`);
   }
   const data = await res.json();
@@ -50,9 +50,44 @@ export async function supabaseUpdateLeadById(id: string, fields: Record<string, 
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('🔍 Supabase update error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature?id=eq.${encodeURIComponent(id)}` });
+    console.error('?? Supabase update error:', { status: res.status, text, url: `${url}/rest/v1/leads_candidature?id=eq.${encodeURIComponent(id)}` });
     throw new Error(`Supabase update error: ${res.status} ${text}`);
   }
   const data = await res.json();
   return Array.isArray(data) ? data[0] : data;
 }
+
+export async function supabaseUpsertProspect(record: Record<string, unknown>) {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
+  }
+
+  const endpoint = `${url}/rest/v1/leads_candidature`;
+  const requestInit: RequestInit = {
+    method: "POST",
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      Prefer: "return=representation",
+    },
+    body: JSON.stringify([record]),
+    cache: "no-store",
+  };
+  const res = await fetch(endpoint, requestInit);
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('?? Supabase leads_candidature upsert error:', { status: res.status, text, url: endpoint });
+    throw new Error(`Supabase leads_candidature upsert error: ${res.status} ${text}`);
+  }
+  const data = await res.json();
+  return Array.isArray(data) ? data[0] : data;
+}
+
+
+
+
+

@@ -12,7 +12,8 @@ export default function TaxonomyNav() {
     { href: "/ressources/webinars-videos", label: "Webinars & vidéos" },
     { href: "/ressources/outils-modeles", label: "Outils & modèles" },
     { href: "/ressources/jonathan-anguelov", label: "Jonathan Anguelov" },
-    { href: "/ressources/jonathan-anguelov/qui-veut-etre-mon-associe", label: "Qui veut être mon associé ?" },
+    // TEMPORAIREMENT MASQUÉ - QVEMA
+    // { href: "/ressources/jonathan-anguelov/qui-veut-etre-mon-associe", label: "Qui veut être mon associé ?" },
   ];
 
   return (

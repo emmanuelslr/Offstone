@@ -20,6 +20,7 @@ const inter = Inter({
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.SITE_URL || 'https://offstone.fr'),
   title: "Offstone | Investissez aux côtés de Jonathan Anguelov",
   description: "Investissez dans l'immobilier professionnel avec Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert pour diversifier votre patrimoine.",
   icons: {

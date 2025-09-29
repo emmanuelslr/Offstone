@@ -1,5 +1,5 @@
 import Navbar from '@/components/shared/Navbar';
-import InvestirHero from "./investir/components/InvestirHero";
+import BenefitsChipsSection from "./investir/components/BenefitsChipsSection";
 import PeopleDoSection from "./home-page/components/PeopleDoSection";
 import TextReveal from "./home-page/components/TextReveal";
 import WorkProcessSection from "./home-page/components/WorkProcessSection";
@@ -26,9 +26,9 @@ export default function Home() {
       {/* Fixed Navbar */}
       <Navbar />
 
-      {/* Hero Section (uses former Investir hero) */}
+      {/* Hero Section (uses BenefitsChipsSection) */}
       <section className="Hero">
-        <InvestirHero />
+        <BenefitsChipsSection />
       </section>
 
       {/* People Do Section */}

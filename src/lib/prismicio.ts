@@ -22,7 +22,8 @@ const routes: Route[] = [
   { type: "webinar", path: "/ressources/webinars-videos/:uid" },
   { type: "press_item", path: "/ressources/jonathan-anguelov/presse/:uid" },
   { type: "interview_item", path: "/ressources/jonathan-anguelov/interviews-podcasts/:uid" },
-  { type: "qvema_episode", path: "/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/:uid" },
+  // TEMPORAIREMENT MASQUÉ - QVEMA
+  // { type: "qvema_episode", path: "/ressources/jonathan-anguelov/qui-veut-etre-mon-associe/episodes/:uid" },
 ];
 
 /**
