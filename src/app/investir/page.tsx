@@ -3,7 +3,7 @@
 import Navbar from "@/components/shared/Navbar";
 import AcquisitionHero from './components/AcquisitionHero';
 import { Suspense } from 'react';
-import BenefitsChipsSection from './components/BenefitsChipsSection';
+import InvestirHero from './components/InvestirHero';
 import ProcessusInvestissement from './components/ProcessusInvestissement';
 import OpportunitesClubDeals from './components/OpportunitesClubDeals';
 import PalantirAcquisitionSection from './components/PalantirAcquisitionSection';
@@ -14,9 +14,9 @@ import ProCTAFooter from '../home-page/components/ProCTAFooter';
 export default function InvestirPage() {
   return (
     <main>
-      <Navbar forceWhiteStyle />
+      <Navbar />
       <Suspense fallback={null}>
-        <BenefitsChipsSection />
+        <InvestirHero />
       </Suspense>
       <Suspense fallback={null}>
         <ProcessusInvestissement />

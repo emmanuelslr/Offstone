@@ -78,7 +78,7 @@ function ProcessusInvestissementInner(props: any) {
   }, []);
 
   return (
-    <section className="w-full pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-20" style={{ backgroundColor: '#F7F5F2' }}>
+    <section className="ProcessusInvestissement w-full pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-20" style={{ backgroundColor: '#F7F5F2' }}>
       <div className="container-responsive" ref={containerRef}>
         <div className="max-w-4xl mb-6 sm:mb-10 md:mb-16">
           <motion.div

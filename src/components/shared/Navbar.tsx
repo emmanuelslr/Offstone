@@ -31,10 +31,12 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
 
     const handleScroll = () => {
       const peopleDoSection = document.querySelector('.PeopleDoSection');
+      const processusSection = document.querySelector('.ProcessusInvestissement');
       const navbarOffset = 16; // top-4
       const navbarHeight = 80;
       let isOnWhite = false;
 
+      // Check for PeopleDoSection (home page)
       if (peopleDoSection) {
         const rect = peopleDoSection.getBoundingClientRect();
         // Change color a bit earlier (e.g. 40px before the section reaches the navbar)
@@ -43,6 +45,16 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
           isOnWhite = true;
         }
       }
+
+      // Check for ProcessusInvestissement section (investir page)
+      if (processusSection) {
+        const rect = processusSection.getBoundingClientRect();
+        const earlyOffset = 16;
+        if (rect.top <= navbarHeight + navbarOffset + earlyOffset) {
+          isOnWhite = true;
+        }
+      }
+      
       setIsOnWhiteSection(isOnWhite);
     };
 
