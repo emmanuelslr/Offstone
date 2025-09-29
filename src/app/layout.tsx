@@ -6,6 +6,7 @@ import HydrationFix from "@/components/shared/HydrationFix";
 import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
+import UTMTracker from "@/components/UTMTracker";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
@@ -19,7 +20,7 @@ const inter = Inter({
 
 
 export const metadata: Metadata = {
-  title: "Offstone | Investissement Immobilier Professionnel",
+  title: "Offstone | Investissez aux côtés de Jonathan Anguelov",
   description: "Investissez dans l'immobilier professionnel avec Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert pour diversifier votre patrimoine.",
   icons: {
     icon: [{ url: '/favicon.png', type: 'image/png' }],
@@ -108,12 +109,22 @@ export default function RootLayout({
       </head>
       <body className="bg-white text-black antialiased min-h-screen w-full">
         <HydrationFix />
+        <UTMTracker />
         {children}
         <WaitlistModal />
         <Footer />
         <PrismicPreview repositoryName={repositoryName} />
         <Analytics />
         <SpeedInsights />
+
+        {/* HubSpot Embed Code */}
+        <Script 
+          id="hs-script-loader" 
+          src="//js-eu1.hs-scripts.com/146846899.js" 
+          strategy="afterInteractive"
+          async 
+          defer
+        />
 
         {/* Tarteaucitron - Gestion des cookies RGPD */}
         <Script 
