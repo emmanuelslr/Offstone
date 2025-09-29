@@ -10,9 +10,50 @@ import { createClient } from "@/lib/prismicio";
 export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const title = "Jonathan Anguelov | Offstone";
+  const title = "Jonathan Anguelov | Fondateur Offstone - Expert Investissement Immobilier";
+  const description = "Découvrez Jonathan Anguelov, fondateur d'Offstone et expert en investissement immobilier professionnel. Interviews, podcasts, articles et actualités sur l'investissement immobilier en France.";
   const canonical = toCanonical("/ressources/jonathan-anguelov");
-  return { title, alternates: { canonical }, robots: { index: true, follow: true } };
+  
+  return { 
+    title,
+    description,
+    keywords: [
+      "Jonathan Anguelov",
+      "fondateur Offstone",
+      "expert investissement immobilier",
+      "investisseur immobilier professionnel",
+      "Jonathan Anguelov interviews",
+      "Jonathan Anguelov podcasts",
+      "investissement immobilier France",
+      "expert immobilier",
+      "conseil investissement immobilier",
+      "Jonathan Anguelov actualités"
+    ],
+    openGraph: {
+      title: "Jonathan Anguelov | Fondateur Offstone - Expert Investissement Immobilier",
+      description: "Découvrez Jonathan Anguelov, fondateur d'Offstone et expert en investissement immobilier professionnel.",
+      url: "https://offstone.fr/ressources/jonathan-anguelov",
+      siteName: "Offstone",
+      images: [
+        {
+          url: "/images/og-jonathan.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Jonathan Anguelov - Fondateur Offstone - Expert Investissement Immobilier",
+        },
+      ],
+      locale: "fr_FR",
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Jonathan Anguelov | Fondateur Offstone - Expert Investissement Immobilier",
+      description: "Découvrez Jonathan Anguelov, fondateur d'Offstone et expert en investissement immobilier professionnel.",
+      images: ["/images/og-jonathan.jpg"],
+    },
+    alternates: { canonical }, 
+    robots: { index: true, follow: true } 
+  };
 }
 
 
