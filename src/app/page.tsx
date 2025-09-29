@@ -14,6 +14,7 @@ import DigitalPlatformSection from "./home-page/components/DigitalPlatformSectio
 import FAQ from "./home-page/components/FAQ";
 import ProCTAFooter from "./home-page/components/ProCTAFooter";
 import PerformanceSection from "./home-page/components/PerformanceSection";
+import StructuredData, { homePageStructuredData, servicesStructuredData } from '@/components/seo/StructuredData';
 
 // import MontanaSection from '@/components/MontanaSection';
 // import InvestSimplement from '@/components/shared/InvestSimplement';
@@ -68,6 +69,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className="relative bg-white">
+      {/* Données structurées SEO */}
+      <StructuredData data={homePageStructuredData} />
+      <StructuredData data={servicesStructuredData} />
+      
       {/* Fixed Navbar */}
       <Navbar />
 

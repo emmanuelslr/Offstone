@@ -7,6 +7,7 @@ import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
 import UTMTracker from "@/components/UTMTracker";
+import PerformanceOptimizer from "@/components/seo/PerformanceOptimizer";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
@@ -261,6 +262,7 @@ export default function RootLayout({
       <body className="bg-white text-black antialiased min-h-screen w-full">
         <HydrationFix />
         <UTMTracker />
+        <PerformanceOptimizer />
         {children}
         <WaitlistModal />
         <Footer />
