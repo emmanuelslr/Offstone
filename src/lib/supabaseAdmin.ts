@@ -57,6 +57,34 @@ export async function supabaseUpdateLeadById(id: string, fields: Record<string, 
   return Array.isArray(data) ? data[0] : data;
 }
 
+export async function supabaseGetProspectByEmail(email: string) {
+  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
+  }
+
+  const endpoint = `${url}/rest/v1/leads_candidature?email=eq.${encodeURIComponent(email)}&order=created_at.desc&limit=1`;
+  const requestInit: RequestInit = {
+    method: "GET",
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  };
+  const res = await fetch(endpoint, requestInit);
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('?? Supabase leads_candidature get error:', { status: res.status, text, url: endpoint });
+    throw new Error(`Supabase leads_candidature get error: ${res.status} ${text}`);
+  }
+  const data = await res.json();
+  return Array.isArray(data) && data.length > 0 ? data[0] : null;
+}
+
 export async function supabaseUpsertProspect(record: Record<string, unknown>) {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;

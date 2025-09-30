@@ -8,7 +8,7 @@ import {
   truncate,
   validEmail,
 } from "@/lib/security";
-import { supabaseUpsertProspect } from "@/lib/supabaseAdmin";
+import { supabaseUpsertProspect, supabaseGetProspectByEmail } from "@/lib/supabaseAdmin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -357,20 +357,7 @@ export async function POST(req: Request) {
   // Check if contact already exists with higher priority
   let shouldUpdate = true;
   try {
-    const { data: existingContact } = await supabaseUpsertProspect({
-      email,
-      first_name: firstname,
-      last_name: lastname,
-      phone: phoneE164,
-      consent: body.consentement_marketing === true,
-      status: 'open',
-      asset_class: assetClass,
-      page_url: body.pageUri || null,
-      utm_source: utm.utm_source ?? null,
-      utm_medium: utm.utm_medium ?? null,
-      utm_campaign: utm.utm_campaign ?? null,
-      utm_content: utm.utm_content ?? null,
-    });
+    const existingContact = await supabaseGetProspectByEmail(email);
     
     // If contact exists, check priority
     if (existingContact) {
