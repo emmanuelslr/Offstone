@@ -482,6 +482,11 @@ export async function POST(req: Request) {
   });
 
   console.info("submit_lead.hubspot_payload", { email, payload: hubspotPayload, isNewContact });
+  console.info("submit_lead.hubspot_config", { 
+    portalId: process.env.HUBSPOT_PORTAL_ID,
+    formGuid: process.env.HUBSPOT_FORM_GUID,
+    endpoint: `${process.env.HUBSPOT_FORMS_API || 'https://api.hsforms.com/submissions/v3/integration/submit'}/${process.env.HUBSPOT_PORTAL_ID}/${process.env.HUBSPOT_FORM_GUID}`
+  });
   
   let hubspotOutcome: Awaited<ReturnType<typeof submitToHubspot>>;
   try {

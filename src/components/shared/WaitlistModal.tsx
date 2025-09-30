@@ -772,6 +772,7 @@ export default function WaitlistModal() {
         console.log('✅ Lead submission successful');
         console.log('📊 API Response:', responseData);
         console.log('🔍 HubSpot status:', responseData.hubspot);
+        console.log('📋 Full HubSpot response details:', JSON.stringify(responseData.hubspot, null, 2));
         setStepIndex(steps.findIndex(s => s === 'success'));
         track('lead_completed', { id: 'new-api-submit' });
       } else {
