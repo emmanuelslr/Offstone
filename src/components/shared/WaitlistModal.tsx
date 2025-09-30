@@ -798,10 +798,14 @@ export default function WaitlistModal() {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email,
-            firstname: formData.firstname || '',
-            lastname: formData.lastname || '',
-            phone: formData.phone || '',
-            capacite_investissement: formData.capacite_investissement || '100_500k',
+            firstname: data.first_name || '',
+            lastname: data.last_name || '',
+            phone: data.phone || '',
+            capacite_investissement: data.ticket_target === 'under_20k' ? 'lt_20k' : 
+                                     data.ticket_target === '20_50k' ? '20_50k' :
+                                     data.ticket_target === '50_100k' ? '50_100k' :
+                                     data.ticket_target === '100_500k' ? '100_500k' :
+                                     data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m',
             consentement_marketing: true,
             form_priority: 'waitinglist', // Highest priority
             page_url: meta?.page_url,
