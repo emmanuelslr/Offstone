@@ -256,6 +256,8 @@ export default function WaitlistModal() {
   const [flashKey, setFlashKey] = useState<string | null>(null);
   const [advancing, setAdvancing] = useState(false);
   const advancingRef = useRef(false);
+  const isSubmittingRef = useRef(false);
+  const isProcessingOkRef = useRef(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const countryMenuRef = useRef<HTMLDivElement | null>(null);
   const [isCalendarMobileOpen, setIsCalendarMobileOpen] = useState(false);
@@ -400,9 +402,53 @@ export default function WaitlistModal() {
     default:
       return true;
   }
-}, [current, data, email]);const reset = useCallback(() => {
+}, [current, data, email]);const reset = useCallback(async () => {
+    // If user is closing modal without completing, submit partial data to HubSpot
+    const currentStep = steps[stepIndex];
+    const hasStartedForm = email && email.trim().length > 0;
+    const hasNotCompleted = currentStep !== 'success';
+    
+    if (hasStartedForm && hasNotCompleted) {
+      console.log('⚠️ User abandoning form, submitting partial data to HubSpot');
+      try {
+        await fetch('/api/submit-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            firstname: data.first_name || '',
+            lastname: data.last_name || '',
+            phone: data.phone || '',
+            capacite_investissement: data.ticket_target ? 
+              (data.ticket_target === 'under_20k' ? 'lt_20k' : 
+               data.ticket_target === '20_50k' ? '20_50k' :
+               data.ticket_target === '50_100k' ? '50_100k' :
+               data.ticket_target === '100_500k' ? '100_500k' :
+               data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m') : '100_500k',
+            consentement_marketing: true,
+            form_priority: 'waitinglist',
+            pageUri: meta?.page_url,
+            ref: meta?.ref,
+            utm_source: meta?.utm_source,
+            utm_medium: meta?.utm_medium,
+            utm_campaign: meta?.utm_campaign,
+            utm_content: meta?.utm_content,
+            utm_term: meta?.utm_term,
+            asset_class: meta?.asset_class || 'retail',
+            ticket_target: data.ticket_target || null,
+            discovery: data.discovery || null,
+            wants_call: false, // User didn't complete, so no meeting
+          }),
+        });
+      } catch (e) {
+        console.error('Failed to submit partial data on abandonment', e);
+      }
+    }
+    
     setOpen(false);
     setSubmitting(false);
+    isSubmittingRef.current = false; // Reset submission flag
+    isProcessingOkRef.current = false; // Reset onOk processing flag
     setLeadId(null);
     setEmail('');
     setMeta(null);
@@ -417,7 +463,7 @@ export default function WaitlistModal() {
     // Nettoyer les données HubSpot stockées
     try { sessionStorage.removeItem('offstone_hubspot_data'); } catch {}
     try { window.dispatchEvent(new Event(CLOSED_EVENT)); } catch {}
-  }, []);
+  }, [email, data, meta, stepIndex, steps]);
 
   const onOpen = useCallback(async (detail: OpenEventDetail) => {
     const emailInput = (detail.email || '').trim();
@@ -428,7 +474,7 @@ export default function WaitlistModal() {
     setOpen(true);
     try { window.dispatchEvent(new Event(OPENED_EVENT)); } catch {}
 
-    // If email already provided, create the lead immediately; otherwise wait until user provides it on first step
+    // If email already provided, create lead in Supabase but skip HubSpot (will submit with complete data later)
     if (emailInput) {
       try {
         const res = await fetch('/api/submit-lead', {
@@ -440,8 +486,8 @@ export default function WaitlistModal() {
             phone: '',
             capacite_investissement: '100_500k',
             consentement_marketing: true,
-            form_priority: 'waitinglist', // Highest priority
-            page_url: detail.page_url,
+            form_priority: 'waitinglist',
+            pageUri: detail.page_url,
             ref: detail.ref,
             utm_source: detail.utm_source,
             utm_medium: detail.utm_medium,
@@ -449,40 +495,24 @@ export default function WaitlistModal() {
             utm_content: detail.utm_content,
             utm_term: detail.utm_term,
             asset_class: detail.asset_class || 'retail',
+            skipHubspot: true, // Don't submit to HubSpot yet - wait for completion or abandonment
           }),
         });
         
-        if (!res.ok) {
-          console.error('API error:', res.status, res.statusText);
-          // Continue without lead ID - the form will still work
-          return;
+        if (res.ok) {
+          track('lead_open', {
+            id: 'email-prefilled',
+            email: emailInput,
+            cta_id: detail.cta_id || detail.utm_content,
+            utm_source: detail.utm_source,
+            utm_medium: detail.utm_medium,
+            utm_campaign: detail.utm_campaign,
+            utm_content: detail.utm_content,
+            utm_term: detail.utm_term,
+          });
         }
-        
-        const json = await res.json();
-        if (!json?.supabaseStored) {
-          console.error('No lead stored in Supabase');
-          return;
-        }
-        
-        // Note: New API doesn't return lead ID/token, so we skip lead tracking
-        // setLeadId(json.id);
-        // if (json.token) {
-        //   setLeadToken(json.token);
-        // }
-        // Enrich analytics with CTA and UTM context
-        track('lead_open', {
-          id: 'new-api-submit', // Placeholder since new API doesn't return ID
-          email: emailInput,
-          cta_id: detail.cta_id || detail.utm_content,
-          utm_source: detail.utm_source,
-          utm_medium: detail.utm_medium,
-          utm_campaign: detail.utm_campaign,
-          utm_content: detail.utm_content,
-          utm_term: detail.utm_term,
-        });
       } catch (e) {
-        console.error('Lead insert failed', e);
-        // Continue without lead ID - the form will still work
+        console.error('Initial lead creation failed', e);
       }
     }
   }, []);
@@ -696,9 +726,17 @@ export default function WaitlistModal() {
   const prev = useCallback(() => { if (stepIndex > 0) setStepIndex(i => i - 1); }, [stepIndex]);
 
   const submit = useCallback(async () => {
-    // Simplified submission - just go to success page
+    // Prevent double submission with ref
+    if (isSubmittingRef.current) {
+      console.log('⚠️ Submission already in progress, ignoring duplicate call');
+      return;
+    }
+    
+    isSubmittingRef.current = true;
     setSubmitting(true);
+    
     try {
+      console.log('📤 Submitting lead to API...');
       // Submit final data to new API
       const res = await fetch('/api/submit-lead', {
         method: 'POST', 
@@ -715,27 +753,32 @@ export default function WaitlistModal() {
                                    data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m',
           consentement_marketing: true,
           form_priority: 'waitinglist', // Highest priority
-          page_url: meta?.page_url,
+          pageUri: meta?.page_url,
           ref: meta?.ref,
           utm_source: meta?.utm_source,
           utm_medium: meta?.utm_medium,
           utm_campaign: meta?.utm_campaign,
           utm_content: meta?.utm_content,
           utm_term: meta?.utm_term,
-          asset_class: meta?.asset_class || 'retail'
+          asset_class: meta?.asset_class || 'retail',
+          ticket_target: data.ticket_target || null,
+          discovery: data.discovery || null,
+          wants_call: !under20k && data.rdv_choice === 'now'
         })
       });
       
       if (res.ok) {
+        console.log('✅ Lead submission successful');
         setStepIndex(steps.findIndex(s => s === 'success'));
         track('lead_completed', { id: 'new-api-submit' });
       } else {
-        console.error('Final submission failed');
+        console.error('❌ Final submission failed:', res.status);
       }
     } catch (e) { 
-      console.error('Final submission failed', e); 
+      console.error('❌ Final submission failed', e); 
     } finally { 
-      setSubmitting(false); 
+      setSubmitting(false);
+      isSubmittingRef.current = false;
     }
   }, [data, meta, steps, under20k, email]);
 
@@ -748,9 +791,20 @@ export default function WaitlistModal() {
   }, []);
 
   const onOk = useCallback(async () => {
-    if (current === 'profile') {
-      // Validation des champs obligatoires
-      const errors: {first_name?: boolean, last_name?: boolean, phone?: boolean} = {};
+    // Prevent multiple simultaneous calls to onOk
+    if (isProcessingOkRef.current) {
+      console.log('⚠️ onOk already processing, ignoring duplicate call');
+      return;
+    }
+    
+    console.log('🔵 onOk called - current step:', current);
+    isProcessingOkRef.current = true;
+    
+    try {
+      if (current === 'profile') {
+        console.log('🟢 Profile step - validating and submitting');
+        // Validation des champs obligatoires
+        const errors: {first_name?: boolean, last_name?: boolean, phone?: boolean} = {};
       if (!data.first_name?.trim()) errors.first_name = true;
       if (!data.last_name?.trim()) errors.last_name = true;
       
@@ -792,66 +846,27 @@ export default function WaitlistModal() {
         delete newErrors.email;
         return newErrors;
       });
-      try {
-        setSubmitting(true);
-        const res = await fetch('/api/submit-lead', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            firstname: data.first_name || '',
-            lastname: data.last_name || '',
-            phone: data.phone || '',
-            capacite_investissement: data.ticket_target === 'under_20k' ? 'lt_20k' : 
-                                     data.ticket_target === '20_50k' ? '20_50k' :
-                                     data.ticket_target === '50_100k' ? '50_100k' :
-                                     data.ticket_target === '100_500k' ? '100_500k' :
-                                     data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m',
-            consentement_marketing: true,
-            form_priority: 'waitinglist', // Highest priority
-            page_url: meta?.page_url,
-            ref: meta?.ref,
-            utm_source: meta?.utm_source,
-            utm_medium: meta?.utm_medium,
-            utm_campaign: meta?.utm_campaign,
-            utm_content: meta?.utm_content,
-            utm_term: meta?.utm_term,
-            asset_class: meta?.asset_class || 'retail',
-          }),
-        });
-        
-        if (!res.ok) {
-          console.error('API error:', res.status, res.statusText);
-          // Continue without lead ID - the form will still work
-          return next();
-        }
-        
-        const json = await res.json();
-        if (!json?.supabaseStored) {
-          console.error('Lead not stored in Supabase');
-          return next();
-        }
-        
-        // Note: New API doesn't return lead ID, so we use a placeholder
-        // setLeadId(json.id);
-        track('lead_open', {
-          id: 'new-api-submit', // Placeholder since new API doesn't return ID
-          email,
-          cta_id: meta?.cta_id || meta?.utm_content,
-          utm_source: meta?.utm_source,
-          utm_medium: meta?.utm_medium,
-          utm_campaign: meta?.utm_campaign,
-          utm_content: meta?.utm_content,
-          utm_term: meta?.utm_term,
-        });
-      } catch (e) {
-        console.error('Lead insert failed', e);
-        // Continue without lead ID - the form will still work
-      } finally {
-        setSubmitting(false);
-      }
+      // Don't submit here - submission will happen at the end (profile step)
+      // Just track the email capture and move to next step
+      track('lead_open', {
+        id: 'email-captured',
+        email,
+        cta_id: meta?.cta_id || meta?.utm_content,
+        utm_source: meta?.utm_source,
+        utm_medium: meta?.utm_medium,
+        utm_campaign: meta?.utm_campaign,
+        utm_content: meta?.utm_content,
+        utm_term: meta?.utm_term,
+      });
       return next();
     }
     if (canNext) next();
+    } finally {
+      // Reset the processing flag after a small delay to allow async operations
+      setTimeout(() => {
+        isProcessingOkRef.current = false;
+      }, 100);
+    }
   }, [current, canNext, next, submit, email, meta]);
 
   useEffect(() => {
@@ -1232,7 +1247,7 @@ export default function WaitlistModal() {
             </div>
             <div className="flex items-center justify-end">
               {current !== 'success' && (
-                <button type="button" onClick={current === 'profile' ? onOk : next} disabled={!canNext || (current === 'calendly' && meetingBooked)} className={`px-3 py-2 rounded-full ${!canNext || (current === 'calendly' && meetingBooked) ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Suivant">
+                <button type="button" onClick={current === 'profile' ? onOk : next} disabled={!canNext || submitting || (current === 'calendly' && meetingBooked)} className={`px-3 py-2 rounded-full ${!canNext || submitting || (current === 'calendly' && meetingBooked) ? 'bg-white/10 text-white/40 cursor-not-allowed' : 'bg-white/10 hover:bg-white/20'}`} aria-label="Suivant">
                   <ArrowRight />
                 </button>
               )}

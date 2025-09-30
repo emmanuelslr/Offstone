@@ -92,27 +92,63 @@ export async function supabaseUpsertProspect(record: Record<string, unknown>) {
     throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
   }
 
-  const endpoint = `${url}/rest/v1/leads_candidature`;
-  const requestInit: RequestInit = {
-    method: "POST",
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify([record]),
-    cache: "no-store",
-  };
-  const res = await fetch(endpoint, requestInit);
-
-  if (!res.ok) {
-    const text = await res.text();
-    console.error('?? Supabase leads_candidature upsert error:', { status: res.status, text, url: endpoint });
-    throw new Error(`Supabase leads_candidature upsert error: ${res.status} ${text}`);
+  const email = record.email as string;
+  if (!email) {
+    throw new Error("Email is required for upsert");
   }
-  const data = await res.json();
-  return Array.isArray(data) ? data[0] : data;
+
+  // 1. Check if email already exists
+  const existing = await supabaseGetProspectByEmail(email);
+
+  if (existing) {
+    // 2. UPDATE existing record
+    console.log('📝 Email exists, updating record:', email);
+    const endpoint = `${url}/rest/v1/leads_candidature?email=eq.${encodeURIComponent(email)}`;
+    const requestInit: RequestInit = {
+      method: "PATCH",
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify(record),
+      cache: "no-store",
+    };
+    const res = await fetch(endpoint, requestInit);
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('❌ Supabase leads_candidature update error:', { status: res.status, text, url: endpoint });
+      throw new Error(`Supabase leads_candidature update error: ${res.status} ${text}`);
+    }
+    const data = await res.json();
+    return Array.isArray(data) ? data[0] : data;
+  } else {
+    // 3. INSERT new record
+    console.log('✨ New email, inserting record:', email);
+    const endpoint = `${url}/rest/v1/leads_candidature`;
+    const requestInit: RequestInit = {
+      method: "POST",
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify([record]),
+      cache: "no-store",
+    };
+    const res = await fetch(endpoint, requestInit);
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('❌ Supabase leads_candidature insert error:', { status: res.status, text, url: endpoint });
+      throw new Error(`Supabase leads_candidature insert error: ${res.status} ${text}`);
+    }
+    const data = await res.json();
+    return Array.isArray(data) ? data[0] : data;
+  }
 }
 
 
