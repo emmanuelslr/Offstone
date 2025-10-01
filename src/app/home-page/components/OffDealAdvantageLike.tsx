@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import SectionBadge from './SectionBadge';
 
@@ -78,26 +78,7 @@ const featuresFr: Feature[] = [
 export default function OffDealAdvantageLike() {
   const [active, setActive] = useState<string>(featuresFr[0].key);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isClickMode, setIsClickMode] = useState(false); // Nouvel état pour le mode clic
   const scrollerRef = useRef<HTMLDivElement | null>(null);
-  const smoothedRatioRef = useRef(0);
-  const boundsRef = useRef({ start: 0, end: 1 });
-
-  const activeIndex = useMemo(() => {
-    const idx = featuresFr.findIndex((f) => f.key === active);
-    return idx >= 0 ? idx : 0;
-  }, [active]);
-
-  // Mobile detection
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // Intersection observer for entrance animation
   useEffect(() => {
@@ -120,96 +101,17 @@ export default function OffDealAdvantageLike() {
     };
   }, [isVisible]);
 
-  useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-
-    // On mobile ou en mode clic, disable scroll-based animation and only use click
-    if (isMobile || isClickMode) {
-      return;
-    }
-
-    let ticking = false;
-
-    const measure = () => {
-      const rect = el.getBoundingClientRect();
-      const start = (window.scrollY || window.pageYOffset) + rect.top;
-      const end = start + el.offsetHeight - (window.innerHeight || 0);
-      boundsRef.current = { start, end: Math.max(end, start + 1) };
-    };
-
-    const computeAndSet = () => {
-      const { start, end } = boundsRef.current;
-      const y = window.scrollY || window.pageYOffset;
-
-      const total = Math.max(end - start, 1);
-      let targetRatio = 0;
-      if (y <= start) targetRatio = 0;
-      else if (y >= end) targetRatio = 1;
-      else targetRatio = (y - start) / total;
-
-      // Smooth to prevent skipping on fast scroll
-      const alpha = 0.4;
-      const prev = smoothedRatioRef.current;
-      const smoothed = prev + (targetRatio - prev) * alpha;
-      smoothedRatioRef.current = smoothed;
-
-      const idx = Math.max(0, Math.min(featuresFr.length - 1, Math.floor(smoothed * featuresFr.length)));
-      if (featuresFr[idx] && featuresFr[idx].key !== active) {
-        setActive(featuresFr[idx].key);
-      }
-
-      if (Math.abs(targetRatio - smoothed) > 0.002) {
-        window.requestAnimationFrame(computeAndSet);
-        ticking = true;
-      } else {
-        ticking = false;
-      }
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(computeAndSet);
-        ticking = true;
-      }
-    };
-
-    const onResize = () => {
-      measure();
-      onScroll();
-    };
-
-    // Observe size changes of the wrapper (accordion open/close)
-    const ro = new ResizeObserver(() => {
-      measure();
-      onScroll();
-    });
-    ro.observe(el);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
-    // Prime once on mount
-    measure();
-    computeAndSet();
-
-    return () => {
-      window.removeEventListener('scroll', onScroll as EventListener);
-      window.removeEventListener('resize', onResize as EventListener);
-      ro.disconnect();
-    };
-  }, [active, isMobile, isClickMode]);
-
   const current = featuresFr.find(f => f.key === active) ?? featuresFr[0];
 
   return (
     <section className="w-full pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={scrollerRef} className={`${isMobile ? 'relative h-auto' : 'lg:relative lg:h-[260vh]'}`}>
-          <div className={`${isMobile ? 'relative h-auto py-8' : 'lg:sticky lg:top-0 lg:h-screen'} flex items-center`}>
+        <div ref={scrollerRef} className="relative">
+          <div className="flex items-center">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
           {/* Left: Image stage (match 600x600 like cards above) */}
           <div className="w-full lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
-            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[510px] lg:h-[750px] lg:max-w-none rounded-xl overflow-hidden bg-gray-50 transition-all duration-1000 ease-out ${
+            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[447px] lg:h-[650px] lg:max-w-none rounded-lg overflow-hidden bg-gray-50 transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 transform translate-y-0' 
                 : 'opacity-0 transform translate-y-8'
@@ -251,7 +153,7 @@ export default function OffDealAdvantageLike() {
                 return (
                   <div
                     key={f.key}
-                    className={`group rounded-xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
+                    className={`group rounded-lg border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
                       selected 
                         ? (isEven 
                           ? 'border-[#F7B096] bg-white shadow-lg' 
@@ -268,10 +170,6 @@ export default function OffDealAdvantageLike() {
                     }}
                     onClick={() => {
                       setActive(f.key);
-                      // Activer le mode clic sur desktop
-                      if (!isMobile) {
-                        setIsClickMode(true);
-                      }
                     }}
                   >
                     <div className="px-6 py-3.5 flex items-center justify-center">

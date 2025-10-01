@@ -72,11 +72,11 @@ export default function KeyFiguresLiteSection() {
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   {/* Contour intérieur doux */}
-                  <div className="pointer-events-none absolute inset-3 rounded-xl ring-2 ring-white/40" />
+                  <div className="pointer-events-none absolute inset-3 rounded-lg ring-2 ring-white/40" />
 
                   {/* Titre en blurb pour lisibilité */}
                   <div className="absolute left-5 top-5">
-                    <div className="rounded-xl bg-black/55 backdrop-blur px-3.5 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,0.35)]">
+                    <div className="rounded-lg bg-black/55 backdrop-blur px-3.5 py-2.5 shadow-[0_6px_18px_rgba(0,0,0,0.35)]">
                       <div className="text-white text-sm sm:text-base font-semibold leading-tight">
                         {d.title}
                       </div>

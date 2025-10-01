@@ -426,7 +426,7 @@ export default function HorizontalDealsSection() {
                 <Link
                   key={deal.id || deal.title}
                   href={href}
-                  className={`group cursor-pointer shrink-0 bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 w-[86vw] sm:w-[72vw] md:w-[54vw] lg:w-[360px] relative ${isMobile ? 'scroll-snap-align-start' : ''}`}
+                  className={`group cursor-pointer shrink-0 bg-white rounded-lg overflow-hidden shadow-sm border border-gray-200 w-[86vw] sm:w-[72vw] md:w-[54vw] lg:w-[360px] relative ${isMobile ? 'scroll-snap-align-start' : ''}`}
                 >
                   <div className="relative w-full aspect-[4/3] bg-gray-200">
                     <Image

@@ -12,6 +12,7 @@ import KeyFiguresLiteSection from "./home-page/components/KeyFiguresLiteSection"
 import AdvantageOffstoneSection from "./home-page/components/AdvantageOffstoneSection";
 import DigitalPlatformSection from "./home-page/components/DigitalPlatformSection";
 import FAQ from "./home-page/components/FAQ";
+import RecognitionSection from "./home-page/components/RecognitionSection";
 import ProCTAFooter from "./home-page/components/ProCTAFooter";
 import PerformanceSection from "./home-page/components/PerformanceSection";
 // import StructuredData, { homePageStructuredData, servicesStructuredData } from '@/components/seo/StructuredData';
@@ -122,6 +123,11 @@ export default function Home() {
       {/* FAQ Section (same size/background as duplicate) */}
       <section className="bg-white">
         <FAQ />
+      </section>
+
+      {/* Recognition Section */}
+      <section className="bg-white">
+        <RecognitionSection />
       </section>
 
       {/* Pro CTA Footer Section */}

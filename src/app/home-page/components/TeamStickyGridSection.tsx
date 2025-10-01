@@ -63,7 +63,7 @@ export default function TeamStickyGridSection() {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="relative"
       >
-        <div className="relative rounded-xl overflow-hidden bg-gray-200 aspect-[3/4] md:aspect-[4/5] min-h-[320px] md:min-h-[380px] lg:min-h-[420px]">
+        <div className="relative rounded-lg overflow-hidden bg-gray-200 aspect-[3/4] md:aspect-[4/5] min-h-[320px] md:min-h-[380px] lg:min-h-[420px]">
           <Image src={src} alt="Team" fill className="object-cover" />
         </div>
         {children && <div className="mt-3">{children}</div>}

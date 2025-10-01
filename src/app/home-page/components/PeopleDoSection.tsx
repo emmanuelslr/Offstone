@@ -99,11 +99,11 @@ const PeopleDoSection: React.FC = () => {
               variants={imageVariants}
             >
               <Image
-                src="/images/personnalites/jo anguelov peopledo.webp"
-                alt="Portrait professionnel Offstone"
+                src="/images/Buildings/image hausmannien buildings.webp"
+                alt="Bâtiments haussmanniens Offstone"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                className="object-cover object-[center_10%]"
+                className="object-cover object-center"
                 priority
               />
             </motion.div>
