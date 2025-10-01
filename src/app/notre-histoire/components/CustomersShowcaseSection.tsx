@@ -18,7 +18,7 @@ const ctaCards: CtaCard[] = [
     ctaText: "Parler à notre équipe",
     href: "/contact",
     theme: "light",
-    imageSrc: "/images/Backgrounds/Mountain.jpg",
+    imageSrc: "/images/Backgrounds/Mountain.webp",
   },
   {
     title: "Rejoindre notre équipe",

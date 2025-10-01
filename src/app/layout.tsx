@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     description: 'Investissez dans l\'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert.',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/og-image.webp',
         width: 1200,
         height: 630,
         alt: 'Offstone - Jonathan Anguelov - Investissement Immobilier',
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Offstone | Investissez aux côtés de Jonathan Anguelov',
     description: 'Investissez dans l\'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées.',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/og-image.webp'],
     creator: '@offstone_fr',
   },
   alternates: {
@@ -178,7 +178,7 @@ export default function RootLayout({
               "jobTitle": "Fondateur & Investisseur Immobilier",
               "description": "Expert en investissement immobilier professionnel, fondateur d'Offstone",
               "url": "https://offstone.fr",
-              "image": "https://offstone.fr/images/personnalites/jonathan-anguelov.jpg",
+              "image": "https://offstone.fr/images/personnalites/jonathan-anguelov.webp",
               "worksFor": {
                 "@type": "Organization",
                 "name": "Offstone"

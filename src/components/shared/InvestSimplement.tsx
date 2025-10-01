@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 
 export default function LeMontana2({
-  image = "/Images/Confiance/LeMontanaVrai.jpg",
+  image = "/Images/Confiance/LeMontanaVrai.webp",
   // text = "Investissez simplement.",
   subtitle = <>Fonds ou club deals, accédez à nos opérations<br />selon vos objectifs.</>
 }) {

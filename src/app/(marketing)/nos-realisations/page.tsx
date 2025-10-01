@@ -48,10 +48,11 @@ export default async function NosRealisationsPage() {
         </FadeInOnView>
         {studies.length > 0 ? (
           <div className="case-studies-section" style={{
-            // Styles de secours pour iPhone SE
+            // Styles de secours pour tous les appareils mobiles
             opacity: 1,
             visibility: 'visible',
-            display: 'block'
+            display: 'block',
+            minHeight: '200px' // S'assurer qu'il y a de l'espace pour le contenu
           }}>
             <FadeInOnView delay={0.05}>
               <CaseStudiesGrid studies={studies} />

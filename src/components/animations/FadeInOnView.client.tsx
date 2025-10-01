@@ -15,20 +15,30 @@ export default function FadeInOnView({ children, className = "", delay = 0, y = 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    // Détecter si on est sur un petit écran
+    // Détecter si on est sur un écran mobile (inclut iPhone 14 Pro Max)
     const checkScreenSize = () => {
-      setIsSmallScreen(window.innerWidth <= 375);
+      const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsSmallScreen(isMobile);
     };
     
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
     
-    // Sur petit écran, forcer la visibilité immédiatement
-    if (window.innerWidth <= 375) {
+    // Sur mobile, forcer la visibilité immédiatement
+    const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile) {
       setIsVisible(true);
     }
     
-    return () => window.removeEventListener('resize', checkScreenSize);
+    // Timeout de sécurité pour forcer l'affichage après 2 secondes
+    const safetyTimeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 2000);
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+      clearTimeout(safetyTimeout);
+    };
   }, []);
 
   // Sur petit écran, afficher directement sans animation
@@ -47,6 +57,14 @@ export default function FadeInOnView({ children, className = "", delay = 0, y = 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1, margin: "-50px" }}
       transition={{ duration: 0.4, ease: 'easeOut', delay }}
+      // Fallback pour s'assurer que le contenu est visible même si l'animation échoue
+      onAnimationComplete={() => {
+        const element = document.querySelector(`.${className.split(' ')[0]}`);
+        if (element) {
+          (element as HTMLElement).style.opacity = '1';
+          (element as HTMLElement).style.transform = 'translateY(0)';
+        }
+      }}
     >
       {children}
     </motion.div>

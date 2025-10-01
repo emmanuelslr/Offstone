@@ -51,7 +51,7 @@ export default function CoInvestCTA() {
           <div className="absolute inset-0 blur-2xl rounded-full bg-black/5 scale-110" aria-hidden />
           <div className="relative w-20 h-20 mx-auto rounded-full overflow-hidden ring-1 ring-black/5 shadow-sm">
             <Image
-              src="/images/personnalites/JoPublic.JPG"
+              src="/images/personnalites/JoPublic.webp"
               alt="Jonathan Anguelov"
               fill
               sizes="80px"

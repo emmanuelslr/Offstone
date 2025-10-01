@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Offstone",
       images: [
         {
-          url: "/images/og-jonathan.jpg",
+          url: "/images/og-jonathan.webp",
           width: 1200,
           height: 630,
           alt: "Jonathan Anguelov - Fondateur Offstone - Expert Investissement Immobilier",
@@ -49,7 +49,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Jonathan Anguelov | Fondateur Offstone - Expert Investissement Immobilier",
       description: "Découvrez Jonathan Anguelov, fondateur d'Offstone et expert en investissement immobilier professionnel.",
-      images: ["/images/og-jonathan.jpg"],
+      images: ["/images/og-jonathan.webp"],
     },
     alternates: { canonical }, 
     robots: { index: true, follow: true } 

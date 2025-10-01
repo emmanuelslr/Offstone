@@ -13,29 +13,29 @@ const steps: Step[] = [
   {
     title: "Leadership",
     people: [
-      "/images/Team/Team_Photo_Cropped.jpg",
-      "/images/Team/Teamtest2.jpg",
+      "/images/Team/Team_Photo_Cropped.webp",
+      "/images/Team/Teamtest2.webp",
     ],
   },
   {
     title: "Investissement",
     people: [
-      "/images/Team/Teamtest2.jpg",
-      "/images/Team/TeamTest.jpg",
+      "/images/Team/Teamtest2.webp",
+      "/images/Team/TeamTest.webp",
     ],
   },
   {
     title: "Opérations",
     people: [
-      "/images/Team/TeamTest.jpg",
-      "/images/Team/Team_Photo_Cropped.jpg",
+      "/images/Team/TeamTest.webp",
+      "/images/Team/Team_Photo_Cropped.webp",
     ],
   },
   {
     title: "Conseil",
     people: [
-      "/images/Team/Team_Photo_Cropped.jpg",
-      "/images/Team/TeamTest.jpg",
+      "/images/Team/Team_Photo_Cropped.webp",
+      "/images/Team/TeamTest.webp",
     ],
   },
 ];

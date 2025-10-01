@@ -9,7 +9,7 @@ export default function PerformanceOptimizer() {
       // Preload des ressources critiques
       const preloadResources = [
         '/fonts/AllianceNo1-Regular.woff2',
-        '/images/og-image.jpg',
+        '/images/og-image.webp',
         '/favicon.png'
       ];
       

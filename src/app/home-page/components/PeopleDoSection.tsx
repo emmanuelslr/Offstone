@@ -99,7 +99,7 @@ const PeopleDoSection: React.FC = () => {
               variants={imageVariants}
             >
               <Image
-                src="/images/personnalites/jo anguelov peopledo.jpg"
+                src="/images/personnalites/jo anguelov peopledo.webp"
                 alt="Portrait professionnel Offstone"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"

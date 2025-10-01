@@ -18,7 +18,7 @@ const STEPS: Step[] = [
     title: "Jonathan, parti de rien, a bâti une licorne française*.",
     description:
       "Cofondateur d'Aircall, Jonathan Anguelov a bâti une entreprise technologique mondiale avec une obsession: exécuter vite, bien, et durablement.",
-    image: "/images/personnalites/67f78cf01d122756a6d6b632_jonathan-anguelov-s-quive-magazine.jpg",
+    image: "/images/personnalites/67f78cf01d122756a6d6b632_jonathan-anguelov-s-quive-magazine.webp",
   },
   {
     id: "y2018",
@@ -26,7 +26,7 @@ const STEPS: Step[] = [
     title: "De la tech à l'immobilier professionnel.",
     description:
       "Jonathan crée Aguesseau capital : sa foncière qui lui permet de bâtir un portefeuille immobilier professionnel avec un réseau d'intermédiaires éprouvé (notaires, marchands, family offices).",
-    image: "/images/Buildings/Logistics.jpg",
+    image: "/images/Buildings/Logistics.webp",
   },
   {
     id: "y2024",
@@ -34,7 +34,7 @@ const STEPS: Step[] = [
     title: "200M€ d'acquisitions, une méthode.",
     description:
       "Aguesseau capital acquiert près de 200 M€ d'immeubles avec discipline et alignement. La société applique une sélection stricte, et ne cesse de faire grandir son réseau pour trouver les meilleures opportunités immobilières.",
-    image: "/images/Buildings/Truchet.jpg",
+    image: "/images/Buildings/Truchet.webp",
   },
   {
     id: "y2025",
@@ -42,7 +42,7 @@ const STEPS: Step[] = [
     title: "Offstone: ouvrir l'accès.",
     description:
       "Offstone rend la qualité institutionnelle et professionnelle accessible à une communauté d'investisseurs. La plateforme industrialise le sourcing, la structuration et la gestion.",
-    image: "/images/Platform/offstone plateform mockup ordi.png",
+    image: "/images/Platform/offstone plateform mockup ordi.webp",
   },
 ];
 

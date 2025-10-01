@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 type Tile = { id: string; title: string; subtitle: string; image: string };
 
 const TILES: Tile[] = [
-  { id: "acces", title: "Accès qualifié", subtitle: "Dealflow sélectionné", image: "/images/Buildings/Truchet.jpg" },
-  { id: "alignement", title: "Alignement", subtitle: "Co‑investissement", image: "/images/notre-histoire/Jonathan Anguelov Balcon.jpg" },
-  { id: "communaute", title: "Communauté", subtitle: "Entrepreneurs & épargnants", image: "/images/notre-histoire/Jonathan Anguelov Communauté.JPG" },
-  { id: "plateforme", title: "Plateforme", subtitle: "Documentation & suivi", image: "/images/Platform/mockup telephon platform.png" },
+  { id: "acces", title: "Accès qualifié", subtitle: "Dealflow sélectionné", image: "/images/Buildings/Truchet.webp" },
+  { id: "alignement", title: "Alignement", subtitle: "Co‑investissement", image: "/images/notre-histoire/Jonathan Anguelov Balcon.webp" },
+  { id: "communaute", title: "Communauté", subtitle: "Entrepreneurs & épargnants", image: "/images/notre-histoire/Jonathan Anguelov Communauté.webp" },
+  { id: "plateforme", title: "Plateforme", subtitle: "Documentation & suivi", image: "/images/Platform/mockup telephon platform.webp" },
 ];
 
 export default function ImpactOffstoneSection() {

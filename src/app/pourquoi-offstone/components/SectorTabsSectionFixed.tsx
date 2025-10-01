@@ -31,28 +31,28 @@ const SECTORS: SectorConfig[] = [
     title: "R\u00e9sidentiel",
     subtitle:
       "Nous sourçons des actifs en centre-ville, révélons leur potentiel par un repositionnement soigné et les adressons aux clients qui les valorisent le mieux.",
-    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg",
+    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp",
   },
   {
     key: "hotels",
     title: "H\u00f4tels",
     subtitle:
       "Nous gérons toute la chaîne de valeur, du design\n      à la tarification dynamique, pour des hôtels\n      idéalement situés, à forte identité, offrant des revenus pérennes.",
-    image: "/images/Buildings/Ienaa.jpg",
+    image: "/images/Buildings/Ienaa.webp",
   },
   {
     key: "logistique",
     title: "Logistique",
     subtitle:
       "Nous faisons l'acquisition de sites urbains, adaptons l'outil aux besoins logistiques du dernier kilomètre, optimisons les flux et sécurisons des baux de longue durée.",
-    image: "/images/Buildings/Logistics.jpg",
+    image: "/images/Buildings/Logistics.webp",
   },
   {
     key: "bureaux",
     title: "Bureaux",
     subtitle:
       "Nous transformons des immeubles centraux en actifs de premier plan grâce à des travaux lourds et des conversions, puis les louons à des entreprises de référence.",
-    image: "/images/Buildings/Truchet.jpg",
+    image: "/images/Buildings/Truchet.webp",
   },
 ];
 

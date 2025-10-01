@@ -2,7 +2,7 @@
   "investir": [
     {"label": "Investir", "href": "/investir"},
     {"label": "Pourquoi Offstone", "href": "/pourquoi-offstone"},
-    {"label": "Candidatez", "href": "/#pro-cta-footer"}
+    {"label": "Candidatez", "href": "#", "action": "open-waitlist-modal"}
   ],
   "ressources": [
     {"label": "Stratégies & thèses", "href": "/ressources"},

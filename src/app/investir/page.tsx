@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Offstone",
     images: [
       {
-        url: "/images/og-deals.jpg",
+        url: "/images/og-deals.webp",
         width: 1200,
         height: 630,
         alt: "Club de Deals Immobiliers Offstone - Jonathan Anguelov",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Investir avec Jonathan Anguelov | Club de Deals Immobiliers",
     description: "Rejoignez le club de deals immobiliers exclusif d'Offstone avec Jonathan Anguelov.",
-    images: ["/images/og-deals.jpg"],
+    images: ["/images/og-deals.webp"],
   },
   alternates: {
     canonical: "https://offstone.fr/investir",

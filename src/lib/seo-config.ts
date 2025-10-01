@@ -11,7 +11,7 @@ export const seoConfig = {
     name: 'Jonathan Anguelov',
     title: 'Fondateur & Investisseur Immobilier',
     description: 'Expert en investissement immobilier professionnel et fondateur d\'Offstone',
-    image: '/images/personnalites/jonathan-anguelov.jpg'
+    image: '/images/personnalites/jonathan-anguelov.webp'
   },
   
   // Mots-clés principaux
@@ -40,10 +40,10 @@ export const seoConfig = {
   
   // Images Open Graph
   images: {
-    default: '/images/og-image.jpg',
-    home: '/images/og-home.jpg',
-    jonathan: '/images/og-jonathan.jpg',
-    deals: '/images/og-deals.jpg'
+    default: '/images/og-image.webp',
+    home: '/images/og-home.webp',
+    jonathan: '/images/og-jonathan.webp',
+    deals: '/images/og-deals.webp'
   },
   
   // Réseaux sociaux

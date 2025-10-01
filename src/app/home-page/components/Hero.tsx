@@ -16,7 +16,7 @@ export default function Hero() {
           muted
           loop
           playsInline
-          poster="/images/Backgrounds/ImageHero.png"
+          poster="/images/Backgrounds/ImageHero.webp"
           className="absolute w-full h-full object-cover"
           style={{ 
             filter: 'brightness(0.55) contrast(1.1)'
@@ -38,7 +38,7 @@ export default function Hero() {
           id="video-fallback"
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
+            backgroundImage: "url('/images/Backgrounds/ImageHero.webp')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -73,8 +73,8 @@ export default function Hero() {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="block mb-2"
               >
-                Investissez dans l&apos;immobilier,<br className="hidden xs:block" />
-                <span className="xs:hidden"> </span>aux côtés de ceux qui l&apos;opèrent.
+                On investit ensemble<br />
+                dans l&apos;immobilier
               </motion.span>
             </h1>
 

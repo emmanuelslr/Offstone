@@ -105,7 +105,7 @@ export default function HeroHistoire() {
           >
             <div className="flex justify-center w-full">
               <img
-                src="/images/notre-histoire/67a23312a3751_IMG_0965.jpeg"
+                src="/images/notre-histoire/67a23312a3751_IMG_0965.webp"
                 alt="Jonathan Anguelov"
                 className="w-full max-w-[760px] sm:max-w-[780px] md:max-w-[800px] h-[420px] sm:h-[520px] md:h-[640px] rounded-xl md:rounded-2xl shadow-lg object-cover object-center"
               />

@@ -34,25 +34,25 @@ export default function StickySidebarSection() {
     {
       title: "Projets exclusifs",
       description: "Accédez à un portefeuille de projets immobiliers premium : opérations de rénovation haut de gamme, développements résidentiels et acquisitions stratégiques en France et Europe.",
-      image: "/images/Backgrounds/Immeuble hausmannien I.jpeg",
+      image: "/images/Backgrounds/Immeuble hausmannien I.webp",
       number: "01"
     },
     {
       title: "Expertise Jonathan Anguelov",
       description: "Bénéficiez de 15 ans d'expérience en investissement immobilier et d'un réseau professionnel établi. Notre équipe co-investit ses propres fonds sur chaque projet.",
-      image: "/images/personnalites/JoPublic.JPG",
+      image: "/images/personnalites/JoPublic.webp",
       number: "02"
     },
     {
       title: "Un réseau qui crée la valeur",
       description: "Sessions de travail exclusives, soirées investisseurs, visites d'immeubles : nous organisons des rencontres privilégiées qui renforcent l'écosystème. Le réseau immobilier de Jonathan Anguelov ouvre des opportunités inaccessibles au grand public.",
-      image: "/images/personnalites/DSC03067.JPG",
+      image: "/images/personnalites/DSC03067.webp",
       number: "03"
     },
     {
       title: "Investir en toute sérénité",
       description: "Plateforme sécurisée, documentation complète, suivi en temps réel. Gérez vos participations immobilières depuis un tableau de bord unifié et transparent.",
-      image: "/images/Platform/offstone plateform mockup ordi.png",
+      image: "/images/Platform/offstone plateform mockup ordi.webp",
       number: "04"
     }
   ];

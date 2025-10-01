@@ -112,7 +112,7 @@ export default function ProCTAFooter({
               </motion.div>
             </motion.div>
           </div>
-          <div className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(/images/Backgrounds/ImageHero.png)', filter: 'brightness(0.55) contrast(1.1)' }} />
+          <div className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/images/Backgrounds/ImageHero.webp')", filter: 'brightness(0.55) contrast(1.1)' }} />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
         </motion.div>

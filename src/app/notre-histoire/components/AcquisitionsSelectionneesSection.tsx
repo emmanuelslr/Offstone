@@ -10,9 +10,9 @@ type Deal = {
 };
 
 const DEALS: Deal[] = [
-  { id: "truchet", title: "TRUCHET", subtitle: "Bureaux · Paris", image: "/images/Buildings/Truchet.jpg" },
-  { id: "ienaa", title: "Ienaa", subtitle: "Hôtel · Paris", image: "/images/Buildings/Ienaa.jpg" },
-  { id: "boetie", title: "La Boetie", subtitle: "Bureaux · Paris", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg" },
+  { id: "truchet", title: "TRUCHET", subtitle: "Bureaux · Paris", image: "/images/Buildings/Truchet.webp" },
+  { id: "ienaa", title: "Ienaa", subtitle: "Hôtel · Paris", image: "/images/Buildings/Ienaa.webp" },
+  { id: "boetie", title: "La Boetie", subtitle: "Bureaux · Paris", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp" },
 ];
 
 export default function AcquisitionsSelectionneesSection() {

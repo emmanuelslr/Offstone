@@ -35,7 +35,7 @@ const deals: Deal[] = [
     id: 'we-ef-lyon',
     title: 'WE-EF - Satolas-et-Bonce (38)',
     location: 'Lyon, France',
-    image: '/images/Buildings/rue-la-boetie-11-copie-scaled.jpg',
+    image: '/images/Buildings/rue-la-boetie-11-copie-scaled.webp',
     description:
       "Acquisition d’un actif logistique de 5 925 m² situé dans la zone logistique principale de Lyon et loué à l’un des leaders mondiaux des solutions d’éclairage.",
     tags: ['Core plus', 'Logistique', 'Auvergne-Rhône-Alpes', 'France'],
@@ -44,7 +44,7 @@ const deals: Deal[] = [
     id: 'exelmans-paris',
     title: 'Exelmans - Paris 16e',
     location: 'Paris, France',
-    image: '/images/Buildings/Truchet.jpg',
+    image: '/images/Buildings/Truchet.webp',
     description:
       "Situé au sein du quartier d’Auteuil dans le 16è arrondissement de Paris, cet immeuble emblématique est l’ancien siège des sociétés de production de Claude François. Il abrite aujourd’hui le siège social de Puressentiel, entreprise de renommée internationale produisant des huiles essentielles.",
     tags: ['Core plus', 'Bureaux', 'Île-de-France', 'France'],
@@ -53,7 +53,7 @@ const deals: Deal[] = [
     id: 'west-monoprix',
     title: 'West Monoprix - Saint-Cloud (92), Meudon (92), Saint-Maur (94) et Saint-Ouen (93)',
     location: 'Île-de-France',
-    image: '/images/Buildings/Ienaa.jpg',
+    image: '/images/Buildings/Ienaa.webp',
     description:
       "Acquisition d’un portefeuille de Monoprix idéalement situés en région parisienne, au cœur de villes bénéficiant d’une population à fort pouvoir d’achat comme Saint-Cloud, Meudon et Saint-Germain en Laye, ou en cours de renouvellement urbain comme Saint-Ouen et Saint-Maur.",
     tags: ['Core plus', 'Commerce', 'Île-de-France', 'France'],
@@ -96,7 +96,7 @@ const overridesByImage: Record<string, Partial<Deal>> = {
       'Résidence touristique issue de la restructuration de l’ex‑Hôtel de la Loire : 15 appartements meublés et jardin, rue du Moulin Vert (Paris 14e).',
     tags: ['Hôtellerie', 'Paris 14e'],
   },
-  '/images/Buildings/rue-la-boetie-11-copie-scaled.jpg': {
+  '/images/Buildings/rue-la-boetie-11-copie-scaled.webp': {
     id: 'maison-boetie',
     title: 'Maison Boétie',
     location: '75008 Paris',
@@ -104,7 +104,7 @@ const overridesByImage: Record<string, Partial<Deal>> = {
       'Transformation d’un hôtel particulier de la rue La Boétie en lieu événementiel premium au cœur du 8e arrondissement.',
     tags: ['Bureaux / Événementiel', 'Paris 8e'],
   },
-  '/images/Buildings/Truchet.jpg': {
+  '/images/Buildings/Truchet.webp': {
     id: 'truchet',
     title: 'Truchet',
     location: '75020 Paris',
@@ -112,7 +112,7 @@ const overridesByImage: Record<string, Partial<Deal>> = {
       'Immeuble de bureaux rue Abel‑Truchet à Paris, valorisation d’un actif emblématique.',
     tags: ['Bureaux', 'Île‑de‑France'],
   },
-  '/images/Buildings/Ienaa.jpg': {
+  '/images/Buildings/Ienaa.webp': {
     id: 'maison-iena',
     title: 'Maison Iéna',
     location: '75116 Paris',
@@ -175,13 +175,14 @@ export default function HorizontalDealsSection() {
   const textRevealRef = useRef<HTMLDivElement>(null); // Référence pour le TextReveal
   const [containerHeight, setContainerHeight] = useState<number>(0);
   const [translateX, setTranslateX] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
   const targetXRef = useRef(0);
   const currentXRef = useRef(0);
   const rafRef = useRef<number | null>(null);
   const basePadRef = useRef(0); // base left/right padding in px (˜ 8vw)
   const progressRef = useRef(0); // 0..1 vertical progress inside sticky
   const stickyTopRef = useRef(0); // px from viewport top where sticky pins
-  const bottomPadRef = useRef(24); // px bottom gap to next section
+  const [bottomPad, setBottomPad] = useState(24); // px bottom gap to next section
   const headerSpaceRef = useRef(0); // px space reserved for heading inside sticky
 
   const cardWidth = 360; // target desktop card width (tighter, like Matacapital)
@@ -191,6 +192,16 @@ export default function HorizontalDealsSection() {
   const totalTrackWidth = useMemo(() => {
     // approximate width for SSR safety; replaced on client after mount
     return viewDealsWithImages.length * (cardWidth + cardGap) + 100;
+  }, []);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
@@ -213,14 +224,17 @@ export default function HorizontalDealsSection() {
       );
       basePadRef.current = containerLeft;
 
-      // Small, consistent bottom gap to next section
-      bottomPadRef.current = Math.round(Math.max(12, Math.min(28, viewportH * 0.02)));
+      // Small, consistent bottom gap to next section - remove on mobile
+      // More space on smaller screens (14 inches) for better spacing with next section
+      const baseBottomPad = viewportW >= 1920 ? 40 : viewportW >= 1440 ? 70 : viewportW >= 1024 ? 120 : 0;
+      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile);
+      setBottomPad(isMobile ? 0 : baseBottomPad);
 
       // Reserve vertical space under the heading so cards never overlap it
       const textEl = textRevealRef.current as HTMLDivElement | null;
       const headingH = textEl ? Math.round(textEl.getBoundingClientRect().height) : 0;
-      // Reduce gap even more between heading and carousel
-      headerSpaceRef.current = Math.max(40, Math.min(220, headingH - 24));
+      // Reduce gap significantly between heading and carousel
+      headerSpaceRef.current = Math.max(200, Math.min(300, headingH + 120));
 
       // Compute track width from DOM if available
       const trackEl = trackRef.current;
@@ -229,6 +243,13 @@ export default function HorizontalDealsSection() {
       // Height needed so that vertical scroll maps to full horizontal distance
       const horizontalDistance = Math.max(0, trackW - viewportW);
       const visibleStickyH = Math.max(0, viewportH - stickyTop);
+      
+      // On mobile, use normal height since we disable sticky and scroll animation
+      if (isMobile) {
+        setContainerHeight('auto'); // Normal height for mobile
+        return;
+      }
+      
       // total scrollable inside sticky = containerHeight - visibleStickyH
       // we want: horizontal = vertical * speedFactor =>
       // containerHeight - visibleStickyH = horizontalDistance / speedFactor
@@ -249,9 +270,51 @@ export default function HorizontalDealsSection() {
     };
   }, [totalTrackWidth, speedFactor]);
 
+  // Force recompute when bottomPadRef changes
+  useEffect(() => {
+    const recompute = () => {
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+
+      // Fixed sticky offset so the text sits higher (more room for cards)
+      // Increase stickyTop to reduce visible gap between heading and cards
+      const stickyTop = viewportW >= 1280 ? 96 : viewportW >= 1024 ? 88 : viewportW >= 640 ? 72 : 56; // px
+      stickyTopRef.current = stickyTop;
+
+      // Align left padding with main container (max-w-7xl + responsive horizontal padding)
+      const CONTAINER_MAX = 1280; // Tailwind max-w-7xl
+      const containerPad = viewportW >= 1024 ? 32 : viewportW >= 640 ? 24 : 16; // px-8 / px-6 / px-4
+      const containerLeft = Math.max(
+        containerPad,
+        Math.floor((viewportW - CONTAINER_MAX) / 2 + containerPad)
+      );
+      basePadRef.current = containerLeft;
+
+      // Small, consistent bottom gap to next section - remove on mobile
+      // More space on smaller screens (14 inches) for better spacing with next section
+      const baseBottomPad = viewportW >= 1920 ? 40 : viewportW >= 1440 ? 70 : viewportW >= 1024 ? 120 : 0;
+      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile);
+      setBottomPad(isMobile ? 0 : baseBottomPad);
+
+      // Reserve vertical space under the heading so cards never overlap it
+      const textEl = textRevealRef.current as HTMLDivElement | null;
+      const headingH = textEl ? Math.round(textEl.getBoundingClientRect().height) : 0;
+      // Reduce gap significantly between heading and carousel
+      headerSpaceRef.current = Math.max(200, Math.min(300, headingH + 120));
+    };
+
+    recompute();
+  }, [isMobile]);
+
   useEffect(() => {
     const onScroll = () => {
       if (!containerRef.current || !stickyRef.current) return;
+      
+      // On mobile, disable scroll-based animation
+      if (isMobile) {
+        return;
+      }
+      
       const rect = containerRef.current.getBoundingClientRect();
       const viewportH = window.innerHeight;
       const stickyTop = stickyTopRef.current;
@@ -296,7 +359,7 @@ export default function HorizontalDealsSection() {
       window.removeEventListener('scroll', onScroll as any);
       window.removeEventListener('resize', onScroll as any);
     };
-  }, [containerHeight, totalTrackWidth]);
+  }, [containerHeight, totalTrackWidth, isMobile]);
 
   // Smooth animation using rAF lerp to make motion more fluid
   useEffect(() => {
@@ -317,34 +380,44 @@ export default function HorizontalDealsSection() {
 
   return (
     <>
-            <section className="w-[100vw] mx-[calc(50%-50vw)] bg-white">
-        <div ref={containerRef} style={{ height: containerHeight || undefined }}>
+            <section className={`w-[100vw] mx-[calc(50%-50vw)] bg-white ${isMobile ? 'pb-0' : ''}`}>
+        <div ref={containerRef} style={{ height: isMobile ? 'auto' : (containerHeight || undefined) }}>
           <div
             ref={stickyRef}
-            className="sticky overflow-hidden"
-            style={{ top: stickyTopRef.current }}
+            className={isMobile ? "relative overflow-hidden" : "sticky overflow-hidden"}
+            style={{ top: isMobile ? 'auto' : stickyTopRef.current }}
           >
             <div
-              className="relative w-[100vw] mx-[calc(50%-50vw)]"
-              style={{ height: `calc(100vh - ${stickyTopRef.current}px)` }}
+              className={`relative w-[100vw] mx-[calc(50%-50vw)] ${isMobile ? 'pb-0' : ''}`}
+              style={{ height: isMobile ? 'auto' : `calc(100vh - ${stickyTopRef.current}px)` }}
             >
-              <div ref={textRevealRef} className="absolute top-0 left-0 right-0 z-30">
+              <div ref={textRevealRef} className={isMobile ? "relative z-30" : "absolute top-0 left-0 right-0 z-30"}>
                 <TextReveal
                   text="Découvrir l'ensemble du patrimoine de Jonathan Anguelov et de ses associés"
                   multiline={false}
                   backgroundColor="bg-white"
                   className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] max-w-[1000px] text-black leading-tight"
-                  containerPaddingClass="pt-6 md:pt-8 lg:pt-10 pb-0 md:pb-1 lg:pb-2"
+                  containerPaddingClass="pt-8 md:pt-10 lg:pt-12 pb-0 md:pb-1 lg:pb-2"
                 />
               </div>
-              <div className="absolute inset-x-0 bottom-0 flex items-end z-10" style={{ top: headerSpaceRef.current }}>
+              <div className={isMobile ? "relative flex items-start z-10 mt-16 pb-20 mb-0" : "absolute inset-x-0 flex items-start z-10"} style={isMobile ? {} : { top: headerSpaceRef.current }}>
               <div
                 ref={trackRef}
-                className="flex will-change-transform"
+                className={`flex will-change-transform ${isMobile ? 'overflow-x-auto scrollbar-hide' : ''}`}
                 style={{
-                  transform: `translate3d(${translateX}px, 0, 0)`,
+                  transform: isMobile ? 'none' : `translate3d(${translateX}px, 0, 0)`,
                   gap: '20px',
-                  padding: `0 ${basePadRef.current}px ${bottomPadRef.current}px ${basePadRef.current}px`,
+                  padding: (() => {
+                    const paddingValue = isMobile 
+                      ? `0 ${basePadRef.current}px 0 ${basePadRef.current}px`
+                      : `0 ${basePadRef.current}px ${bottomPad}px ${basePadRef.current}px`;
+                    console.log('Applied padding:', paddingValue, 'bottomPad:', bottomPad);
+                    return paddingValue;
+                  })(),
+                  ...(isMobile && {
+                    scrollSnapType: 'x mandatory',
+                    scrollBehavior: 'smooth',
+                  })
                 }}
               >
                 {viewDealsWithImages.map((deal) => {
@@ -353,7 +426,7 @@ export default function HorizontalDealsSection() {
                 <Link
                   key={deal.id || deal.title}
                   href={href}
-                  className="group cursor-pointer shrink-0 bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 w-[86vw] sm:w-[72vw] md:w-[54vw] lg:w-[360px] relative"
+                  className={`group cursor-pointer shrink-0 bg-white rounded-xl overflow-hidden shadow-sm border border-gray-200 w-[86vw] sm:w-[72vw] md:w-[54vw] lg:w-[360px] relative ${isMobile ? 'scroll-snap-align-start' : ''}`}
                 >
                   <div className="relative w-full aspect-[4/3] bg-gray-200">
                     <Image

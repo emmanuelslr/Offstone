@@ -111,7 +111,7 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
                   color: (isOnWhiteSection || forceWhiteStyle) ? '#000000' : '#FFFFFF'
                 }}
               >
-                Offstone.
+                Offstone
               </span>
             </Link>
           </div>
@@ -244,18 +244,18 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
           
           <div className="flex flex-col gap-4 xs:gap-5 w-full max-w-[280px] xs:max-w-[320px] mt-6 xs:mt-8">
             <Link 
-              href="#expert" 
+              href="/espace-membre" 
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full px-6 xs:px-8 py-3 xs:py-3.5 text-[14px] xs:text-[16px] font-medium border border-white text-white shadow-sm rounded-full hover:bg-white hover:text-black transition-all text-center"
             >
-              Parler à un expert
+              Mon Espace
             </Link>
             <Link 
-              href="#membre" 
+              href="/investir" 
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full px-6 xs:px-8 py-3 xs:py-3.5 text-[14px] xs:text-[16px] font-medium bg-[#F7B096] text-black border border-[#F7B096] shadow-sm rounded-full hover:bg-white hover:text-[#F7B096] transition-all text-center"
             >
-              Devenir Membre
+              Investir à nos côtés
             </Link>
           </div>
           

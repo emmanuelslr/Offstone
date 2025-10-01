@@ -143,9 +143,9 @@ function HeroPourquoiOffstoneInner(props: any) {
                   gap={18}
                   intervalMs={2600}
                   cards={[
-                    { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
-                    { id: "2barbes", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg" },
-                    { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
+                    { id: "ienaa", image: "/images/Buildings/Ienaa.webp" },
+                    { id: "2barbes", image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp" },
+                    { id: "truchet", image: "/images/Buildings/Truchet.webp" },
                   ]}
                 />
               </div>

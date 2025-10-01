@@ -69,7 +69,7 @@ function AcquisitionHeroInner(props: any) {
             <div className="absolute inset-0 blur-2xl rounded-full bg-black/5 scale-110" aria-hidden />
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-1 ring-black/5 shadow-sm">
               <Image
-                src="/images/personnalites/JoPublic.JPG"
+                src="/images/personnalites/JoPublic.webp"
                 alt="Jonathan Anguelov"
                 fill
                 sizes="128px"

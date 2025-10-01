@@ -19,7 +19,7 @@ const features: Feature[] = [
     desc: undefined,
     details:
       "Estimate your company’s fair market value using comparable transactions and buyer demand signals gathered across our network.",
-    image: '/images/Backgrounds/Background2.jpg',
+    image: '/images/Backgrounds/Background2.webp',
   },
   {
     key: 'buyers',
@@ -27,7 +27,7 @@ const features: Feature[] = [
     desc: undefined,
     details:
       'Surface qualified buyers that match your criteria and see who is actively engaging with your materials to prioritize outreach.',
-    image: '/images/Backgrounds/Mountain.jpg',
+    image: '/images/Backgrounds/Mountain.webp',
   },
   {
     key: 'onboard',
@@ -35,7 +35,7 @@ const features: Feature[] = [
     desc: undefined,
     details:
       'Set up your confidential workspace, upload documents, and invite stakeholders with granular permissions in a few clicks.',
-    image: '/images/Buildings/Truchet.jpg',
+    image: '/images/Buildings/Truchet.webp',
   },
   {
     key: 'progress',
@@ -43,7 +43,7 @@ const features: Feature[] = [
     desc: 'Stay up-to-date on buyer activity in real-time through our centralized deal workspace.',
     details:
       'Monitor buyer views, Q&A, and milestones in real time to maintain momentum and keep your process organized from first contact to close.',
-    image: '/images/Buildings/Ienaa.jpg',
+    image: '/images/Buildings/Ienaa.webp',
   },
 ];
 
@@ -53,31 +53,33 @@ const featuresFr: Feature[] = [
     key: 'acces-prioritaire',
     title: 'Accès prioritaire aux deals',
     details: "Bénéficiez d’un accès en avant-première aux meilleures opportunités immobilières, avant leur ouverture au reste du marché.",
-    image: '/images/Backgrounds/Background2.jpg',
+    image: '/images/Backgrounds/Background2.webp',
   },
   {
     key: 'visites-privees',
     title: 'Visites privées d’immeubles',
     details: "Découvrez nos acquisitions et projets lors de visites exclusives, en immersion totale sur le terrain.",
-    image: '/images/Backgrounds/Mountain.jpg',
+    image: '/images/Backgrounds/Mountain.webp',
   },
   {
     key: 'sessions-jonathan',
     title: 'Sessions de travail avec Jonathan Anguelov',
     details: "Participez à des rencontres en petit comité avec Jonathan pour échanger sur l’investissement, l’immobilier et son expérience d’entrepreneur.",
-    image: '/images/Buildings/Truchet.jpg',
+    image: '/images/Buildings/Truchet.webp',
   },
   {
     key: 'soirees-networking',
     title: 'Soirées networking sélectives',
     details: "Rejoignez une communauté d’investisseurs et d’entrepreneurs lors d’événements privés, pensés pour créer des connexions durables.",
-    image: '/images/Buildings/Ienaa.jpg',
+    image: '/images/Buildings/Ienaa.webp',
   },
 ];
 
 export default function OffDealAdvantageLike() {
   const [active, setActive] = useState<string>(featuresFr[0].key);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClickMode, setIsClickMode] = useState(false); // Nouvel état pour le mode clic
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const smoothedRatioRef = useRef(0);
   const boundsRef = useRef({ start: 0, end: 1 });
@@ -86,6 +88,16 @@ export default function OffDealAdvantageLike() {
     const idx = featuresFr.findIndex((f) => f.key === active);
     return idx >= 0 ? idx : 0;
   }, [active]);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Intersection observer for entrance animation
   useEffect(() => {
@@ -112,6 +124,11 @@ export default function OffDealAdvantageLike() {
     const el = scrollerRef.current;
     if (!el) return;
 
+    // On mobile ou en mode clic, disable scroll-based animation and only use click
+    if (isMobile || isClickMode) {
+      return;
+    }
+
     let ticking = false;
 
     const measure = () => {
@@ -132,7 +149,7 @@ export default function OffDealAdvantageLike() {
       else targetRatio = (y - start) / total;
 
       // Smooth to prevent skipping on fast scroll
-      const alpha = 0.4; // lower = smoother, higher = faster
+      const alpha = 0.4;
       const prev = smoothedRatioRef.current;
       const smoothed = prev + (targetRatio - prev) * alpha;
       smoothedRatioRef.current = smoothed;
@@ -180,30 +197,30 @@ export default function OffDealAdvantageLike() {
       window.removeEventListener('resize', onResize as EventListener);
       ro.disconnect();
     };
-  }, [active]);
+  }, [active, isMobile, isClickMode]);
 
   const current = featuresFr.find(f => f.key === active) ?? featuresFr[0];
 
   return (
     <section className="w-full pt-16 pb-16 md:pt-20 md:pb-20 lg:pt-24 lg:pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={scrollerRef} className="lg:relative lg:h-[260vh]">
-          <div className="lg:sticky lg:top-0 lg:h-screen flex items-center">
+        <div ref={scrollerRef} className={`${isMobile ? 'relative h-auto' : 'lg:relative lg:h-[260vh]'}`}>
+          <div className={`${isMobile ? 'relative h-auto py-8' : 'lg:sticky lg:top-0 lg:h-screen'} flex items-center`}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
           {/* Left: Image stage (match 600x600 like cards above) */}
-          <div className="lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
-            <div className={`relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:w-[600px] lg:h-[600px] lg:max-w-none aspect-[4/5] lg:aspect-auto rounded-xl overflow-hidden bg-[#F6F4F0] transition-all duration-1000 ease-out ${
+          <div className="w-full lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
+            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[600px] lg:h-[600px] lg:max-w-none aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto rounded-xl overflow-hidden bg-[#F6F4F0] transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 transform translate-y-0' 
                 : 'opacity-0 transform translate-y-8'
             }`}>
   <Image
-    src="/images/personnalites/JoPublic.JPG"
+    src="/images/personnalites/JoPublic.webp"
     alt="JoPublic"
     fill
     priority
     sizes="(max-width: 1024px) 100vw, 58vw"
-    className="object-cover"
+    className="object-cover object-center transform rotate-90 scale-[1.4] sm:scale-[1.15]"
   />
 </div>
           </div>
@@ -234,12 +251,12 @@ export default function OffDealAdvantageLike() {
                 return (
                   <div
                     key={f.key}
-                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
+                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:shadow-md ${
                       selected 
                         ? (isEven 
                           ? 'border-[#F7B096] bg-white shadow-lg' 
                           : 'border-black bg-white shadow-lg')
-                        : 'border-gray-200 bg-white'
+                        : 'border-gray-200 bg-white hover:border-gray-300'
                     } ${
                       isVisible 
                         ? 'opacity-100 transform translate-y-0' 
@@ -251,8 +268,14 @@ export default function OffDealAdvantageLike() {
                     }}
                   >
                     <button
-                      onClick={() => setActive(f.key)}
-                      className={`w-full text-left px-6 transition-all duration-300 ${
+                      onClick={() => {
+                        setActive(f.key);
+                        // Activer le mode clic sur desktop
+                        if (!isMobile) {
+                          setIsClickMode(true);
+                        }
+                      }}
+                      className={`w-full text-left px-6 transition-all duration-300 hover:bg-gray-50 ${
                         selected ? 'py-3.5' : 'pt-3 pb-1 min-h-[42px] flex items-center justify-center'
                       }`}
                       aria-pressed={selected}
@@ -264,13 +287,13 @@ export default function OffDealAdvantageLike() {
                             ? (isEven 
                               ? 'bg-[#F7B096] text-white shadow-md' 
                               : 'bg-black text-white shadow-md')
-                            : 'bg-gray-100 text-gray-400'
+                            : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-gray-600'
                         }`}>
                           {idx + 1}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className={`text-lg font-semibold leading-tight transition-colors duration-500 ${
-                            selected ? 'text-[#111]' : 'text-gray-700'
+                            selected ? 'text-[#111]' : 'text-gray-700 group-hover:text-gray-900'
                           }`}>
                             {f.title}
                           </div>

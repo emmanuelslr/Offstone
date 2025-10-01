@@ -14,7 +14,7 @@ import { useState } from 'react';
 
 
 // Types
-type FooterNavLink = { label: string; href: string; disabled?: boolean };
+type FooterNavLink = { label: string; href: string; disabled?: boolean; action?: string };
 type FooterColProps = { title: string; links: FooterNavLink[]; section: string };
 
 // Fallback locale (à remplacer par context ou prop si besoin)
@@ -181,6 +181,41 @@ export default function Footer({ locale }: { locale?: string }) {
 
 
 function FooterCol({ title, links, section }: FooterColProps) {
+  // Fonction pour ouvrir le modal de liste d'attente avec les UTM parameters spécifiés
+  function openWaitlistModal() {
+    try {
+      const url = typeof window !== 'undefined' ? window.location.href : undefined;
+      const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+      
+      // UTM parameters spécifiés par l'utilisateur
+      const utmData = {
+        email: '',
+        page_url: url,
+        ref: typeof document !== 'undefined' ? document.referrer : undefined,
+        utm_source: params.get('utm_source') || 'site',
+        utm_medium: params.get('utm_medium') || 'internal_cta',
+        utm_campaign: params.get('utm_campaign') || 'candidatez-footer',
+        utm_content: params.get('utm_content') || 'footer',
+        utm_term: params.get('utm_term') || 'candidatez',
+        cta_id: params.get('cta_id') || 'footer_candidatez',
+        asset_class: 'retail'
+      };
+
+      // Déclencher l'ouverture du modal
+      if (typeof window !== 'undefined') {
+        const w: any = window as any;
+        if (w.offstoneOpenWaitlist) {
+          w.offstoneOpenWaitlist(utmData);
+        } else {
+          (w.__offstone_waitlist_queue ||= []).push(utmData);
+          w.dispatchEvent(new CustomEvent('waitlist:open', { detail: utmData }));
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'ouverture du modal:', error);
+    }
+  }
+
   return (
     <div className="flex-1 min-w-[140px]">
       <h3 className="text-sm font-semibold text-white mb-3 tracking-wide uppercase">{title}</h3>
@@ -189,6 +224,16 @@ function FooterCol({ title, links, section }: FooterColProps) {
           <li key={`${l.label}-${l.href}-${index}`}>
             {l.disabled ? (
               <span className="text-[#8F9193] cursor-not-allowed" aria-disabled="true">{l.label}</span>
+            ) : l.action === 'open-waitlist-modal' ? (
+              <button
+                onClick={() => {
+                  trackFooterLinkClick(section, l.label, l.href);
+                  openWaitlistModal();
+                }}
+                className="text-[#8F9193] hover:text-white transition-colors text-sm cursor-pointer bg-transparent border-none p-0 text-left"
+              >
+                {l.label}
+              </button>
             ) : (
               <Link
                 href={l.href}
@@ -211,6 +256,42 @@ function FooterCol({ title, links, section }: FooterColProps) {
 // Accordéon mobile pour chaque colonne
 function AccordionFooterCol({ title, links, section }: FooterColProps) {
   const [open, setOpen] = useState(false);
+
+  // Fonction pour ouvrir le modal de liste d'attente avec les UTM parameters spécifiés
+  function openWaitlistModal() {
+    try {
+      const url = typeof window !== 'undefined' ? window.location.href : undefined;
+      const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+      
+      // UTM parameters spécifiés par l'utilisateur
+      const utmData = {
+        email: '',
+        page_url: url,
+        ref: typeof document !== 'undefined' ? document.referrer : undefined,
+        utm_source: params.get('utm_source') || 'site',
+        utm_medium: params.get('utm_medium') || 'internal_cta',
+        utm_campaign: params.get('utm_campaign') || 'candidatez-footer',
+        utm_content: params.get('utm_content') || 'footer',
+        utm_term: params.get('utm_term') || 'candidatez',
+        cta_id: params.get('cta_id') || 'footer_candidatez',
+        asset_class: 'retail'
+      };
+
+      // Déclencher l'ouverture du modal
+      if (typeof window !== 'undefined') {
+        const w: any = window as any;
+        if (w.offstoneOpenWaitlist) {
+          w.offstoneOpenWaitlist(utmData);
+        } else {
+          (w.__offstone_waitlist_queue ||= []).push(utmData);
+          w.dispatchEvent(new CustomEvent('waitlist:open', { detail: utmData }));
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'ouverture du modal:', error);
+    }
+  }
+
   return (
     <div className="border border-[#23262A] rounded-lg overflow-hidden">
       <button
@@ -228,6 +309,16 @@ function AccordionFooterCol({ title, links, section }: FooterColProps) {
             <li key={`${l.label}-${l.href}-${index}`}>
               {l.disabled ? (
                 <span className="text-[#8F9193] cursor-not-allowed" aria-disabled="true">{l.label}</span>
+              ) : l.action === 'open-waitlist-modal' ? (
+                <button
+                  onClick={() => {
+                    trackFooterLinkClick(section, l.label, l.href);
+                    openWaitlistModal();
+                  }}
+                  className="text-[#8F9193] hover:text-white transition-colors text-sm cursor-pointer bg-transparent border-none p-0 text-left"
+                >
+                  {l.label}
+                </button>
               ) : (
                 <Link
                   href={l.href}

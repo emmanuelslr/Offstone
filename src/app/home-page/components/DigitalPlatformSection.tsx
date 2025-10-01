@@ -112,7 +112,7 @@ export default function DigitalPlatformSection() {
             >
               <div className="relative w-full aspect-[4/3] lg:translate-x-0">
                 <Image
-                  src="/images/Platform/New%20offstone%20platform.png"
+                  src="/images/Platform/New%20offstone%20platform.webp"
                   alt="New offstone platform"
                   fill
                   className="object-contain object-right-bottom"

@@ -29,9 +29,9 @@ export default function ParaformRightHeroCardsStep({
       (cards && cards.length
         ? cards
         : [
-            { id: "2barbes", image: "/images/Buildings/2barbes.PNG" },
-            { id: "truchet", image: "/images/Buildings/Truchet.jpg" },
-            { id: "ienaa", image: "/images/Buildings/Ienaa.jpg" },
+            { id: "2barbes", image: "/images/Buildings/2barbes.webp" },
+            { id: "truchet", image: "/images/Buildings/Truchet.webp" },
+            { id: "ienaa", image: "/images/Buildings/Ienaa.webp" },
           ]).slice(0, 3),
     [cards]
   );

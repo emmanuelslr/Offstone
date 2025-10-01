@@ -13,7 +13,7 @@ export default function InvestirHero() {
           muted
           loop
           playsInline
-          poster="/images/Backgrounds/ImageHero.png"
+          poster="/images/Backgrounds/ImageHero.webp"
           className="absolute w-full h-full object-cover"
           style={{ 
             filter: 'brightness(0.65) contrast(1.1)'
@@ -36,7 +36,7 @@ export default function InvestirHero() {
           id="investir-video-fallback"
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: 'url(/images/Backgrounds/ImageHero.png)',
+            backgroundImage: "url('/images/Backgrounds/ImageHero.webp')",
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',

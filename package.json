@@ -13,7 +13,10 @@
     "clean": "rm -rf .next && rm -rf node_modules/.cache",
     "dev:force": "pkill -f next-server && npm run clean && npm run dev",
     "deploy": "npm run build && git add . && git commit -m 'Deploy' && git push",
-    "slicemachine": "start-slicemachine"
+    "slicemachine": "start-slicemachine",
+    "images:webp": "node scripts/convert-to-webp.mjs",
+    "images:backup": "node scripts/backup-images.mjs",
+    "images:update-refs": "node scripts/update-image-references.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

@@ -69,11 +69,28 @@ const HeroEspaceMembre: React.FC = () => {
               en toute transparence
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+            <div className="flex justify-start mt-8">
               <button
+                onClick={() => {
+                  try {
+                    const url = typeof window !== 'undefined' ? window.location.href : undefined;
+                    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
+                    (function(d){ if (typeof window !== 'undefined') { try { const w:any = window as any; if (w.offstoneOpenWaitlist) { w.offstoneOpenWaitlist(d); } else { (w.__offstone_waitlist_queue ||= []).push(d); w.dispatchEvent(new CustomEvent('waitlist:open', { detail: d })); } } catch(e){} } })({
+                      page_url: url,
+                      ref: typeof document !== 'undefined' ? document.referrer : undefined,
+                      utm_source: params.get('utm_source') || undefined,
+                      utm_medium: 'internal_cta',
+                      utm_campaign: 'espace-membre',
+                      utm_content: 'HeroEspaceMembre',
+                      utm_term: 'candidatez',
+                      cta_id: params.get('cta_id') || 'espace_membre_hero',
+                      asset_class: 'retail'
+                    });
+                  } catch {}
+                }}
                 className="inline-flex items-center justify-center h-11 bg-[#F7B096] text-black font-normal rounded-full px-6 text-base shadow-sm border border-[#F7B096] transition hover:bg-black hover:text-white hover:border-black group"
               >
-                Être notifié
+                Candidatez
                 <svg
                   className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
                   fill="none"
@@ -84,22 +101,6 @@ const HeroEspaceMembre: React.FC = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
                 </svg>
               </button>
-              
-              <a
-                href="/investir"
-                className="inline-flex items-center justify-center h-11 bg-transparent text-black font-normal rounded-full px-6 text-base border border-gray-300 transition hover:bg-gray-50 group"
-              >
-                En savoir plus
-                <svg
-                  className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.1}
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </a>
             </div>
           </motion.div>
 
@@ -113,11 +114,11 @@ const HeroEspaceMembre: React.FC = () => {
           >
             <div className="relative w-full max-w-[500px] h-[400px] sm:h-[450px] md:h-[500px] lg:h-[550px] rounded-lg overflow-hidden bg-gray-100">
               <Image
-                src="/images/Platform/New%20offstone%20platform.png"
+                src="/images/Platform/New%20offstone%20platform.webp"
                 alt="New offstone platform - Bientôt disponible"
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                className="object-cover object-center"
+                className="object-contain object-center"
                 priority
               />
               {/* Overlay avec texte "Bientôt disponible" */}

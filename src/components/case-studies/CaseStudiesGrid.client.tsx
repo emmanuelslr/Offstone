@@ -53,12 +53,13 @@ export default function CaseStudiesGrid({ studies }: Props) {
     },
   } as const;
 
-  // Détecter si on est sur un petit écran pour désactiver les animations
+  // Détecter si on est sur un écran mobile pour désactiver les animations
   const [isSmallScreen, setIsSmallScreen] = React.useState(false);
   
   React.useEffect(() => {
     const checkScreenSize = () => {
-      setIsSmallScreen(window.innerWidth <= 375);
+      const isMobile = window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsSmallScreen(isMobile);
     };
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);

@@ -11,12 +11,12 @@ const pillars = [
     desc: 'Nous ciblons des actifs mal valorisés, portés par une conviction forte de repositionnement.'
   },
   {
-    image: '/Images/Pillars Cards Image/Photo 2.jpg',
+    image: '/Images/Pillars Cards Image/Photo 2.webp',
     label: 'Réinventer les usages',
     desc: 'Nous adaptons chaque actif aux nouveaux besoins : design, destination, exploitation.'
   },
   {
-    image: '/Images/Pillars Cards Image/Photo 3.png',
+    image: '/Images/Pillars Cards Image/Photo 3.webp',
     label: 'Maximiser la valeur',
     desc: 'Nous mettons notre expertise opérationnelle en oeuvre pour révéler le plein potentiel de chaque actif.'
   }

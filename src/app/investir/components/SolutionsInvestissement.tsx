@@ -14,7 +14,7 @@ const solutions = [
          fiscalite: "Fonds fiscal",
     equity: "20 M€ d'equity",
     minimum: "Accessible à partir de 25 k€",
-    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg",
+    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp",
     cta: "Fermé à la souscription"
   },
   {
@@ -28,7 +28,7 @@ const solutions = [
          fiscalite: "Fiscalité avantageuse : 150-O-B ter / Hors IFI",
     equity: "50 M€ d'equity",
     minimum: "Accessible à partir de 100 k€",
-    image: "/images/Buildings/Orange buildings.jpg",
+    image: "/images/Buildings/Orange buildings.webp",
     cta: "Découvrir ce fonds"
   },
   {
@@ -42,7 +42,7 @@ const solutions = [
          fiscalite: "",
     equity: "\nTaille cible de 200 M€",
   minimum: "Accessible à partir de 20k€",
-    image: "/images/Buildings/Ienaa.jpg",
+    image: "/images/Buildings/Ienaa.webp",
     cta: "Découvrir ce fonds"
   }
 ];

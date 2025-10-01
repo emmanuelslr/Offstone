@@ -22,14 +22,14 @@ const deals: DealCard[] = [
   {
     title: "LA BOÉTIE",
     subtitle: "Bureaux | Paris 8e",
-    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.jpg",
+    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp",
     acquisition: "12 M€",
     revente: "15,5 M€",
   },
   {
     title: "MAISON IENA",
     subtitle: "Hôtel | Value-Add | Paris 16e",
-    image: "/images/Buildings/Ienaa.jpg",
+    image: "/images/Buildings/Ienaa.webp",
     acquisition: "16 M€",
     revente: "22 M€",
   },

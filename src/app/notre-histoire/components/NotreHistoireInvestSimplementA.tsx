@@ -4,7 +4,7 @@ import { useRef, useEffect } from 'react';
 import Image from "next/image";
 
 export default function LeMontana2({
-  image = "/Images/Confiance/LeMontanaVrai.jpg",
+  image = "/Images/Confiance/LeMontanaVrai.webp",
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);

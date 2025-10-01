@@ -117,7 +117,7 @@ export function createOptimizedImport<T>(importFn: () => Promise<T>) {
 export const criticalResources = [
   '/fonts/AllianceNo1-Regular.woff2',
   '/favicon.png',
-  '/images/og-image.jpg',
+  '/images/og-image.webp',
 ];
 
 // Fonction pour optimiser les requêtes de base de données
