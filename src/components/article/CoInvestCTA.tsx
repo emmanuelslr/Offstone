@@ -56,6 +56,7 @@ export default function CoInvestCTA() {
               fill
               sizes="80px"
               className="object-cover scale-[1.15]"
+              style={{ transform: 'rotate(90deg)' }}
             />
           </div>
         </div>

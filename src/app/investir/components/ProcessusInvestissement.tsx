@@ -194,12 +194,12 @@ function ProcessusInvestissementInner(props: any) {
                   (function(d){ if (typeof window !== 'undefined') { try { const w:any = window as any; if (w.offstoneOpenWaitlist) { w.offstoneOpenWaitlist(d); } else { (w.__offstone_waitlist_queue ||= []).push(d); w.dispatchEvent(new CustomEvent('waitlist:open', { detail: d })); } } catch(e){} } })(detail);
                 } catch {}
               }}
-              className="bg-black text-white px-4 sm:px-8 py-2 sm:py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-lg text-base"
+              className="bg-black text-white px-4 sm:px-8 py-2 sm:py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-lg text-base flex items-center gap-2"
             >
               Commencer ma candidature
-            </button>
-            <button className="border border-black text-black px-4 sm:px-8 py-2 sm:py-4 rounded-full font-medium hover:bg-black hover:text-white transition-all duration-300 text-base">
-              Télécharger la brochure
+              <svg className="w-4 h-4 transform -rotate-45" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
             </button>
           </div>
         </motion.div>

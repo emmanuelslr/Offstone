@@ -70,6 +70,7 @@ export default function AcquisitionHeroInner(props: any) {
                 fill
                 sizes="128px"
                 className="object-cover scale-[1.15]"
+                style={{ transform: 'rotate(90deg)' }}
                 priority
               />
             </div>

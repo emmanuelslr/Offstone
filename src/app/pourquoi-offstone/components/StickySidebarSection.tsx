@@ -189,6 +189,7 @@ export default function StickySidebarSection() {
                           fill
                           sizes="(min-width: 1024px) 50vw, 100vw"
                           className="object-cover rounded-lg"
+                          style={step.image.includes('JoPublic.webp') ? { transform: 'rotate(90deg) scale(1.4)' } : {}}
                           priority={index === 0}
                         />
                         {/* Overlay carte animée */}
@@ -253,7 +254,7 @@ export default function StickySidebarSection() {
                         className="rounded-lg h-60 xs:h-72 sm:h-80 md:h-96 lg:h-[520px] w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl flex items-center justify-center overflow-hidden relative"
                         style={{
                           backgroundColor: '#EFEAE7',
-                          backgroundImage: `url("${fixLocalSrc(step.image)}")`,
+                          backgroundImage: step.image.includes('JoPublic.webp') ? 'none' : `url("${fixLocalSrc(step.image)}")`,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center'
                         }}
@@ -264,6 +265,7 @@ export default function StickySidebarSection() {
                           fill
                           sizes="(min-width: 1024px) 50vw, 100vw"
                           className="object-cover rounded-lg"
+                          style={step.image.includes('JoPublic.webp') ? { transform: 'rotate(90deg) scale(1.4)' } : {}}
                           priority={index === 0}
                         />
                       </div>

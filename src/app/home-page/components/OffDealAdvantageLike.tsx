@@ -220,7 +220,8 @@ export default function OffDealAdvantageLike() {
     fill
     priority
     sizes="(max-width: 1024px) 100vw, 58vw"
-    className="object-cover object-center transform rotate-90 scale-[1.4] sm:scale-[1.15]"
+    className="object-cover object-center scale-[1.4] sm:scale-[1.15]"
+    style={{ transform: 'rotate(90deg)' }}
   />
 </div>
           </div>

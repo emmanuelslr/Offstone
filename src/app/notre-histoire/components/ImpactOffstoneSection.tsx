@@ -54,15 +54,15 @@ export default function ImpactOffstoneSection() {
                 className="group relative rounded-xl overflow-hidden border border-[#E1D8D1] bg-white"
               >
                 <div className="relative w-full aspect-[4/5]">
-                  <img src={t.image} alt={t.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent opacity-90" />
-                  <div className="absolute left-3 top-3 flex items-center gap-2">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#96D5F7" }} />
-                    <span className="text-[11px] sm:text-xs text-white/90">{t.subtitle}</span>
-                  </div>
+                  <img 
+                    src={t.image} 
+                    alt={t.title} 
+                    className="w-full h-full object-cover" 
+                    style={t.image.includes('Jonathan Anguelov Communauté.webp') ? { transform: 'rotate(90deg) scale(1.4)' } : {}}
+                  />
                   <figcaption className="absolute left-3 bottom-3 right-3">
-                    <div className="inline-block rounded-md bg-white/85 backdrop-blur px-2.5 py-1.5 shadow-sm">
-                      <div className="text-[13px] sm:text-sm text-black font-medium leading-tight">{t.title}</div>
+                    <div className="inline-block rounded-md bg-white/90 backdrop-blur px-2.5 py-1.5 shadow-sm">
+                      <div className="text-[13px] sm:text-sm text-black font-medium leading-tight">{t.subtitle}</div>
                     </div>
                   </figcaption>
                 </div>

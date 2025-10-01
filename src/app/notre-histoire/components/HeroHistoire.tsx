@@ -44,18 +44,18 @@ export default function HeroHistoire() {
 </p>
 
             {/* Metrics */}
-            <div className="mt-10 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5">
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-                <div className="text-[18px] sm:text-[22px] leading-snug tracking-tight text-black font-semibold break-words min-h-[48px] sm:min-h-[52px]">200 M€+</div>
-                <div className="text-gray-600 text-xs sm:text-sm break-words">d’actifs acquis</div>
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              <div className="rounded-xl border border-gray-200 bg-white px-5 py-5 min-h-[100px] flex flex-col justify-center">
+                <div className="text-[20px] sm:text-[24px] lg:text-[26px] leading-tight tracking-tight text-black font-semibold">200 M€+</div>
+                <div className="text-gray-600 text-sm sm:text-base mt-1">d'actifs acquis</div>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-                <div className="text-[18px] sm:text-[22px] leading-snug tracking-tight text-black font-semibold break-words min-h-[48px] sm:min-h-[52px]">Cofondateur d’une licorne</div>
-                <div className="text-gray-600 text-xs sm:text-sm break-words">Aircall</div>
+              <div className="rounded-xl border border-gray-200 bg-white px-5 py-5 min-h-[100px] flex flex-col justify-center">
+                <div className="text-[16px] sm:text-[18px] lg:text-[20px] leading-tight tracking-tight text-black font-semibold">Cofondateur d'une licorne</div>
+                <div className="text-gray-600 text-sm sm:text-base mt-1">Aircall</div>
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white px-4 py-4">
-                <div className="text-[18px] sm:text-[22px] leading-snug tracking-tight text-black font-semibold break-words min-h-[48px] sm:min-h-[52px]">Investi à vos côtés</div>
-                <div className="text-gray-600 text-xs sm:text-sm break-words">Co‑investissement</div>
+              <div className="rounded-xl border border-gray-200 bg-white px-5 py-5 min-h-[100px] flex flex-col justify-center sm:col-span-2 lg:col-span-1">
+                <div className="text-[16px] sm:text-[18px] lg:text-[20px] leading-tight tracking-tight text-black font-semibold">Investi à vos côtés</div>
+                <div className="text-gray-600 text-sm sm:text-base mt-1">Co‑investissement</div>
               </div>
             </div>
 
