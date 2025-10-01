@@ -215,7 +215,7 @@ export default function OffDealAdvantageLike() {
                 : 'opacity-0 transform translate-y-8'
             }`}>
   <Image
-    src="/images/journal.webp"
+    src="/images/personnalites/journal.webp"
     alt="Journal Offstone"
     fill
     priority
