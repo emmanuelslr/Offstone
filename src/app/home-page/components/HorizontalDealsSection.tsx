@@ -226,8 +226,8 @@ export default function HorizontalDealsSection() {
 
       // Small, consistent bottom gap to next section - remove on mobile
       // More space on smaller screens (14 inches) for better spacing with next section
-      const baseBottomPad = viewportW >= 1920 ? 40 : viewportW >= 1440 ? 70 : viewportW >= 1024 ? 120 : 0;
-      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile);
+      const baseBottomPad = viewportW >= 1920 ? 0 : viewportW >= 1440 ? 0 : viewportW >= 1024 ? 60 : 0;
+      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile, 'updated');
       setBottomPad(isMobile ? 0 : baseBottomPad);
 
       // Reserve vertical space under the heading so cards never overlap it
@@ -292,8 +292,8 @@ export default function HorizontalDealsSection() {
 
       // Small, consistent bottom gap to next section - remove on mobile
       // More space on smaller screens (14 inches) for better spacing with next section
-      const baseBottomPad = viewportW >= 1920 ? 40 : viewportW >= 1440 ? 70 : viewportW >= 1024 ? 120 : 0;
-      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile);
+      const baseBottomPad = viewportW >= 1920 ? 0 : viewportW >= 1440 ? 0 : viewportW >= 1024 ? 60 : 0;
+      console.log('Setting bottomPad:', baseBottomPad, 'viewportW:', viewportW, 'isMobile:', isMobile, 'updated');
       setBottomPad(isMobile ? 0 : baseBottomPad);
 
       // Reserve vertical space under the heading so cards never overlap it
@@ -380,7 +380,7 @@ export default function HorizontalDealsSection() {
 
   return (
     <>
-            <section className={`w-[100vw] mx-[calc(50%-50vw)] bg-white ${isMobile ? 'pb-0' : ''}`}>
+            <section className={`w-[100vw] mx-[calc(50%-50vw)] bg-white`}>
         <div ref={containerRef} style={{ height: isMobile ? 'auto' : (containerHeight || undefined) }}>
           <div
             ref={stickyRef}
@@ -484,6 +484,8 @@ export default function HorizontalDealsSection() {
           </div>
         </div>
       </div>
+      {/* Padding en bas de la section */}
+      <div className="h-1 md:h-2 lg:h-0 xl:h-0 2xl:h-0"></div>
     </section>
     </>
   );

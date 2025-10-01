@@ -89,7 +89,7 @@ export default function Home() {
       </section>
 
       {/* Text Reveal Section */}
-      <section className="bg-white pt-6 md:pt-8">
+      <section className="bg-white pt-6 md:pt-8 pb-12 md:pb-16 lg:pb-20">
         <TextReveal className="leading-[1.06]" containerPaddingClass="pt-6 md:pt-8 lg:pt-10 pb-1 md:pb-2 lg:pb-2" />
       </section>
 
@@ -110,7 +110,7 @@ export default function Home() {
       </section>
 
       {/* Advantage Offstone Section (sans vidéo, vidéo déplacée vers /investir) */}
-      <section className="bg-white">
+      <section className="bg-white pb-12 md:pb-16 lg:pb-20">
         <AdvantageOffstoneSection showVideo={false} />
       </section>
 

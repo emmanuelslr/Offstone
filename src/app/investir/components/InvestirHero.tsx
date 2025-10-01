@@ -142,7 +142,7 @@ export default function InvestirHero() {
           </motion.div>
           
           {/* Key Figures */}
-          <div className="border-t border-white/20 pt-6 md:pt-8">
+          <div className="border-t border-white/20 pt-6 md:pt-8 pb-8 md:pb-12 lg:pb-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-20 xl:gap-24 2xl:gap-28">
               <div className="text-center min-w-[240px] lg:min-w-[280px]">
                 <div className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-4">

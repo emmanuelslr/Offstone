@@ -156,7 +156,7 @@ function BenefitsChipsSectionInner(props: any) {
               </form>
             </motion.div>
 
-            <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8 mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full">
+            <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8 mt-6 sm:mt-8 md:mt-10 lg:mt-12 pb-8 sm:pb-12 md:pb-16 w-full">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-16 xl:gap-20 2xl:gap-24">
                 <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
                   <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">200M€</div>
