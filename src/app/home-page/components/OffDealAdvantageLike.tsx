@@ -280,7 +280,7 @@ export default function OffDealAdvantageLike() {
                       }
                     }}
                   >
-                    <div className="px-6 py-3.5 flex items-center justify-center min-h-[60px]">
+                    <div className="px-6 py-6 flex items-center justify-center min-h-[80px]">
                       <div className="flex items-center gap-4 w-full">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${
                           selected 
