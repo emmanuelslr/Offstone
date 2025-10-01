@@ -209,7 +209,7 @@ export default function OffDealAdvantageLike() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
           {/* Left: Image stage (match 600x600 like cards above) */}
           <div className="w-full lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
-            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[600px] lg:h-[600px] lg:max-w-none aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto rounded-xl overflow-hidden bg-[#F6F4F0] transition-all duration-1000 ease-out ${
+            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[650px] lg:h-[650px] lg:max-w-none aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto rounded-xl overflow-hidden bg-[#F6F4F0] transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 transform translate-y-0' 
                 : 'opacity-0 transform translate-y-8'
@@ -220,8 +220,13 @@ export default function OffDealAdvantageLike() {
     fill
     priority
     sizes="(max-width: 1024px) 100vw, 58vw"
-    className="object-cover object-center scale-[1.4] sm:scale-[1.15]"
-    style={{ transform: 'rotate(90deg)' }}
+    className="object-cover object-center"
+    style={{ 
+      transform: 'rotate(90deg) scale(1.3)',
+      objectFit: 'cover',
+      height: '100%',
+      width: '100%'
+    }}
   />
 </div>
           </div>
@@ -252,12 +257,12 @@ export default function OffDealAdvantageLike() {
                 return (
                   <div
                     key={f.key}
-                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:shadow-md ${
+                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
                       selected 
                         ? (isEven 
                           ? 'border-[#F7B096] bg-white shadow-lg' 
                           : 'border-black bg-white shadow-lg')
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        : 'border-gray-200 bg-white'
                     } ${
                       isVisible 
                         ? 'opacity-100 transform translate-y-0' 
@@ -276,7 +281,7 @@ export default function OffDealAdvantageLike() {
                           setIsClickMode(true);
                         }
                       }}
-                      className={`w-full text-left px-6 transition-all duration-300 hover:bg-gray-50 ${
+                      className={`w-full text-left px-6 transition-all duration-300 hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
                         selected ? 'py-3.5' : 'pt-3 pb-1 min-h-[42px] flex items-center justify-center'
                       }`}
                       aria-pressed={selected}

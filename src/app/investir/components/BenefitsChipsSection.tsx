@@ -59,7 +59,7 @@ function BenefitsChipsSectionInner(props: any) {
   };
 
   return (
-    <section className="relative min-h-screen w-full flex justify-center overflow-hidden pt-[56px] xs:pt-[72px] sm:pt-[96px]">
+    <section className="relative min-h-screen w-full flex justify-center overflow-hidden">
       {/* Bande image centrée avec overlay, côtés blancs */}
       <div className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden>
         <div className="relative h-full w-full">
@@ -84,9 +84,9 @@ function BenefitsChipsSectionInner(props: any) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full flex flex-col items-center justify-start sm:items-center sm:justify-center min-h-[calc(100vh-56px)] xs:min-h-[calc(100vh-72px)] sm:min-h-[calc(100vh-96px)] py-6 sm:py-12 lg:py-14"
+          className="w-full flex flex-col items-center justify-start sm:items-center sm:justify-center min-h-screen pt-[56px] xs:pt-[72px] sm:pt-[96px] pb-6 sm:pb-12 lg:pb-14"
         >
-          <div className="flex flex-col items-center sm:items-start justify-start flex-1 px-4 pt-4 sm:pt-0">
+          <div className="flex flex-col items-center sm:items-start justify-start flex-1 px-4">
             <h1 className="text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-left max-w-6xl">
               <motion.span
                 initial={{ opacity: 0 }}
@@ -103,7 +103,7 @@ function BenefitsChipsSectionInner(props: any) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="text-xs xs:text-sm sm:text-lg md:text-xl lg:text-2xl text-white/90 text-center sm:text-left mt-40 xs:mt-44 sm:mt-8 font-light tracking-wide whitespace-normal max-w-4xl px-2"
+              className="text-xs xs:text-sm sm:text-lg md:text-xl lg:text-2xl text-white/90 text-center sm:text-left mt-6 sm:mt-8 font-light tracking-wide whitespace-normal max-w-4xl px-2"
             >
               <span className="block sm:hidden text-left">
                 Rejoignez une communauté<br />
@@ -120,7 +120,7 @@ function BenefitsChipsSectionInner(props: any) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="w-full flex justify-center sm:justify-start mt-10 xs:mt-12 sm:mt-8 px-2 sm:px-4"
+              className="w-full flex justify-center sm:justify-start mt-6 sm:mt-8 px-2 sm:px-4"
             >
               <form
                 className="flex flex-col sm:flex-row w-full max-w-xs xs:max-w-sm sm:max-w-md lg:max-w-lg bg-white/95 rounded-lg items-center px-2 xs:px-3 py-1 xs:py-1.5 sm:py-2"
@@ -156,7 +156,7 @@ function BenefitsChipsSectionInner(props: any) {
               </form>
             </motion.div>
 
-            <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8 mt-6 sm:mt-8 md:mt-10 lg:mt-12 pb-8 sm:pb-12 md:pb-16 w-full">
+            <div className="border-t border-white/20 pt-4 sm:pt-6 mt-6 sm:mt-8 pb-6 sm:pb-8 w-full">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-16 xl:gap-20 2xl:gap-24">
                 <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
                   <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">200M€</div>
