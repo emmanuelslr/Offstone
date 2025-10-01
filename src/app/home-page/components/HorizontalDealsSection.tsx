@@ -393,7 +393,7 @@ export default function HorizontalDealsSection() {
             >
               <div ref={textRevealRef} className={isMobile ? "relative z-30" : "absolute top-0 left-0 right-0 z-30"}>
                 <TextReveal
-                  text="Découvrir l'ensemble du patrimoine de Jonathan Anguelov et de ses associés"
+                  text="Découvrez l'ensemble du patrimoine de Jonathan Anguelov et de ses associés"
                   multiline={false}
                   backgroundColor="bg-white"
                   className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] max-w-[1000px] text-black leading-tight"

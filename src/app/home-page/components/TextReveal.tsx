@@ -114,7 +114,7 @@ export default function TextReveal({
           <div className="flex items-center gap-3 sm:gap-4">
             <Link href="/nos-realisations" className="flex items-center gap-3 sm:gap-4 group" style={{ textDecoration: 'none' }}>
               <span className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 font-normal text-center transition-colors duration-200 group-hover:text-[#F7B096]" style={{ textDecoration: 'none' }}>
-                Découvrir l'ensemble du patrimoine de Jonathan Anguelov et de ses associés
+                Parcourez l'ensemble des investissements immobiliers réalisés par nos associés
               </span>
               <span className="flex items-center justify-center bg-[#F7B096] hover:bg-[#f9c3b0] transition text-black w-6 h-6 sm:w-5 sm:h-5 rounded-[6px] shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="none" style={{ transform: "rotate(-180deg)" }}>
