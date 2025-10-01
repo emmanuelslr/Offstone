@@ -280,7 +280,7 @@ export default function OffDealAdvantageLike() {
                       }
                     }}
                   >
-                    <div className="px-6 py-3.5 flex items-center justify-center h-[60px]">
+                    <div className="px-6 py-3.5 flex items-center justify-center">
                       <div className="flex items-center gap-4 w-full">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${
                           selected 
@@ -291,7 +291,7 @@ export default function OffDealAdvantageLike() {
                         }`}>
                           {idx + 1}
                         </div>
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 flex items-center">
                           <div className={`text-lg font-semibold leading-tight transition-colors duration-500 ${
                             selected ? 'text-[#111]' : 'text-gray-700 group-hover:text-gray-900'
                           }`}>
