@@ -215,14 +215,13 @@ export default function OffDealAdvantageLike() {
                 : 'opacity-0 transform translate-y-8'
             }`}>
   <Image
-    src="/images/personnalites/JoPublic.webp"
-    alt="JoPublic"
+    src="/images/journal.webp"
+    alt="Journal Offstone"
     fill
     priority
     sizes="(max-width: 1024px) 100vw, 58vw"
     className="object-cover object-center"
     style={{ 
-      transform: 'rotate(90deg) scale(1.3)',
       objectFit: 'cover',
       height: '100%',
       width: '100%'
