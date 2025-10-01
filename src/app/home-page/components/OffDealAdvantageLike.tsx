@@ -282,7 +282,7 @@ export default function OffDealAdvantageLike() {
                         }
                       }}
                       className={`w-full text-left px-6 transition-all duration-300 hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
-                        selected ? 'py-3.5' : 'pt-3 pb-1 min-h-[42px] flex items-center justify-center'
+                        selected ? 'py-3.5' : 'py-3 min-h-[42px] flex items-center justify-center'
                       }`}
                       aria-pressed={selected}
                       aria-expanded={selected}
@@ -309,7 +309,7 @@ export default function OffDealAdvantageLike() {
                     <div
                       className={`px-6 pb-3.5 text-sm text-gray-600 transition-all duration-500 ease-out ${
                         selected ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
-                      } overflow-hidden`}
+                      } overflow-hidden hover:bg-gray-50`}
                     >
                       <div className={`transition-all duration-500 ease-out ${selected ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-2'} ml-14`}>
                         <p className="leading-relaxed text-gray-700">
