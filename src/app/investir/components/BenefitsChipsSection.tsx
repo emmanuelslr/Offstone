@@ -84,7 +84,7 @@ function BenefitsChipsSectionInner(props: any) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full flex flex-col items-center justify-center min-h-screen pt-[56px] xs:pt-[72px] sm:pt-[96px] pb-6 sm:pb-12 lg:pb-14"
+          className="w-full flex flex-col items-center justify-center min-h-screen pt-[56px] xs:pt-[72px] sm:pt-[96px] pb-6 sm:pb-12 lg:pb-14 xl:pt-[120px] 2xl:pt-[140px]"
         >
           <div className="flex flex-col items-center sm:items-start justify-center flex-1 px-4">
             <h1 className="text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-left max-w-6xl">
