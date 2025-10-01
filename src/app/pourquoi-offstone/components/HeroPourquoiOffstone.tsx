@@ -26,8 +26,15 @@ function HeroPourquoiOffstoneInner(props: any) {
         s = Math.max(300, Math.min(340, w - 32));
       } else if (w < 640) {
         s = Math.max(320, Math.min(380, w - 40));
+      } else if (w < 768) {
+        s = 480;
       } else if (w < 1024) {
         s = 520;
+      } else if (w < 1280) {
+        // Écrans 14 pouces et tablettes en mode paysage
+        s = 580;
+      } else if (w < 1440) {
+        s = 620;
       } else {
         s = 700;
       }
@@ -40,7 +47,7 @@ function HeroPourquoiOffstoneInner(props: any) {
 
   return (
     <>
-      <section className="relative bg-white pt-24 md:pt-[110px] pb-10 md:pb-[32px]">
+      <section className="hero-pourquoi-offstone relative bg-white pt-24 md:pt-[110px] pb-10 md:pb-[32px]">
         <div className="container mx-auto px-4 sm:px-8 lg:px-20 xl:px-32">
           <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-10 lg:gap-0">
             {/* Section gauche - Texte */}
@@ -53,14 +60,14 @@ function HeroPourquoiOffstoneInner(props: any) {
               </div>
 
               <h2
-                className={`text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-8 transition-all duration-[1200ms] ease-out ${
+                className={`hero-pourquoi-offstone hero-title text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-8 transition-all duration-[1200ms] ease-out ${
                   titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 Accédez à des opportunités <span style={{ color: '#9D9F9E' }}>exclusives.</span>
               </h2>
 
-              <p className="text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-6 md:mt-10">
+              <p className="hero-pourquoi-offstone hero-description text-[15px] md:text-[17px] text-gray-600 mb-8 max-w-xl mt-6 md:mt-10">
                 Nous analysons, sélectionnons<br />
                 et structurons des projets immobiliers<br />
                 de qualité, exclusivement pour nos membres.
