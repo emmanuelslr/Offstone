@@ -257,7 +257,7 @@ export default function OffDealAdvantageLike() {
                 return (
                   <div
                     key={f.key}
-                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
+                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
                       selected 
                         ? (isEven 
                           ? 'border-[#F7B096] bg-white shadow-lg' 
@@ -272,21 +272,15 @@ export default function OffDealAdvantageLike() {
                       transitionDelay: `${400 + idx * 150}ms`,
                       transition: 'all 500ms, opacity 800ms ease-out, transform 800ms ease-out'
                     }}
+                    onClick={() => {
+                      setActive(f.key);
+                      // Activer le mode clic sur desktop
+                      if (!isMobile) {
+                        setIsClickMode(true);
+                      }
+                    }}
                   >
-                    <button
-                      onClick={() => {
-                        setActive(f.key);
-                        // Activer le mode clic sur desktop
-                        if (!isMobile) {
-                          setIsClickMode(true);
-                        }
-                      }}
-                      className={`w-full text-left px-6 transition-all duration-300 hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
-                        selected ? 'py-3.5' : 'py-3 min-h-[42px] flex items-center justify-center'
-                      }`}
-                      aria-pressed={selected}
-                      aria-expanded={selected}
-                    >
+                    <div className="px-6 py-3.5">
                       <div className="flex items-center gap-4 w-full">
                         <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-500 ${
                           selected 
@@ -305,11 +299,11 @@ export default function OffDealAdvantageLike() {
                           </div>
                         </div>
                       </div>
-                    </button>
+                    </div>
                     <div
                       className={`px-6 pb-3.5 text-sm text-gray-600 transition-all duration-500 ease-out ${
                         selected ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
-                      } overflow-hidden hover:bg-gray-50`}
+                      } overflow-hidden`}
                     >
                       <div className={`transition-all duration-500 ease-out ${selected ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-2'} ml-14`}>
                         <p className="leading-relaxed text-gray-700">
