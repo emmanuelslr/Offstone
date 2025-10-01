@@ -209,7 +209,7 @@ export default function OffDealAdvantageLike() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
           {/* Left: Image stage (match 600x600 like cards above) */}
           <div className="w-full lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
-            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[750px] lg:h-[750px] lg:max-w-none rounded-lg transition-all duration-1000 ease-out ${
+            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[750px] lg:h-[750px] lg:max-w-none rounded-lg overflow-hidden transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 transform translate-y-0' 
                 : 'opacity-0 transform translate-y-8'
