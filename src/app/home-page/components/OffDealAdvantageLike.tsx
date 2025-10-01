@@ -209,7 +209,7 @@ export default function OffDealAdvantageLike() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center w-full">
           {/* Left: Image stage (match 600x600 like cards above) */}
           <div className="w-full lg:col-span-6 flex justify-center lg:justify-start lg:pt-16">
-            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[750px] lg:h-[750px] lg:max-w-none rounded-lg overflow-hidden transition-all duration-1000 ease-out ${
+            <div className={`relative w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:w-[510px] lg:h-[750px] lg:max-w-none rounded-xl overflow-hidden bg-gray-50 transition-all duration-1000 ease-out ${
               isVisible 
                 ? 'opacity-100 transform translate-y-0' 
                 : 'opacity-0 transform translate-y-8'
@@ -220,12 +220,7 @@ export default function OffDealAdvantageLike() {
     fill
     priority
     sizes="(max-width: 1024px) 100vw, 58vw"
-    className="object-contain object-center"
-    style={{ 
-      objectFit: 'contain',
-      height: '100%',
-      width: '100%'
-    }}
+    className="object-cover object-center"
   />
 </div>
           </div>
@@ -256,7 +251,7 @@ export default function OffDealAdvantageLike() {
                 return (
                   <div
                     key={f.key}
-                    className={`group rounded-2xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
+                    className={`group rounded-xl border-2 overflow-hidden transition-all duration-500 cursor-pointer hover:bg-gray-50 hover:shadow-md hover:border-gray-300 ${
                       selected 
                         ? (isEven 
                           ? 'border-[#F7B096] bg-white shadow-lg' 
