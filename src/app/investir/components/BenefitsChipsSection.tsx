@@ -64,12 +64,16 @@ function BenefitsChipsSectionInner(props: any) {
       <div className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden>
         <div className="relative h-full w-full">
           <Image
-            src="/images/personnalites/jonathan anguelov haussmannien.jpg"
+            src="/images/personnalites/jonathan anguelov haussmannien.webp"
             alt="Jonathan Anguelov"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center md:object-right"
+            className="object-cover object-top sm:object-center md:object-right"
+            style={{ 
+              objectPosition: '60% center',
+              transform: 'scale(1.1) translateX(5%)'
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80 sm:from-black/50 sm:via-black/40 sm:to-black/70" />
         </div>
@@ -80,9 +84,9 @@ function BenefitsChipsSectionInner(props: any) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full flex flex-col items-start justify-center min-h-[calc(100vh-56px)] xs:min-h-[calc(100vh-72px)] sm:min-h-[calc(100vh-96px)] py-10 sm:py-12 lg:py-14"
+          className="w-full flex flex-col items-center justify-start sm:items-center sm:justify-center min-h-[calc(100vh-56px)] xs:min-h-[calc(100vh-72px)] sm:min-h-[calc(100vh-96px)] py-6 sm:py-12 lg:py-14"
         >
-          <div className="flex flex-col items-start justify-center flex-1 px-4">
+          <div className="flex flex-col items-center sm:items-start justify-start flex-1 px-4 pt-4 sm:pt-0">
             <h1 className="text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-left max-w-6xl">
               <motion.span
                 initial={{ opacity: 0 }}
@@ -90,7 +94,8 @@ function BenefitsChipsSectionInner(props: any) {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="block mb-2"
               >
-                On investit ensemble dans l'immobilier.
+                On investit ensemble<br />
+                dans l'immobilier
               </motion.span>
             </h1>
 
@@ -98,16 +103,24 @@ function BenefitsChipsSectionInner(props: any) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 text-left mt-4 xs:mt-6 font-light tracking-wide whitespace-normal max-w-4xl px-2"
+              className="text-xs xs:text-sm sm:text-lg md:text-xl lg:text-2xl text-white/90 text-center sm:text-left mt-40 xs:mt-44 sm:mt-8 font-light tracking-wide whitespace-normal max-w-4xl px-2"
             >
-              Rejoignez une communauté d'investisseurs actifs, des événements privés et des sessions de travail.
+              <span className="block sm:hidden text-left">
+                Rejoignez une communauté<br />
+                d'investisseurs actifs et participez<br />
+                à des événements privés et des<br />
+                sessions de travail exclusifs
+              </span>
+              <span className="hidden sm:block">
+                Rejoignez une communauté d'investisseurs actifs, des événements privés et des sessions de travail.
+              </span>
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="w-full flex justify-start mt-6 xs:mt-8 sm:mt-10 px-4"
+              className="w-full flex justify-center sm:justify-start mt-10 xs:mt-12 sm:mt-8 px-2 sm:px-4"
             >
               <form
                 className="flex flex-col sm:flex-row w-full max-w-xs xs:max-w-sm sm:max-w-md lg:max-w-lg bg-white/95 rounded-lg items-center px-2 xs:px-3 py-1 xs:py-1.5 sm:py-2"
@@ -143,23 +156,23 @@ function BenefitsChipsSectionInner(props: any) {
               </form>
             </motion.div>
 
-            <div className="border-t border-white/20 pt-6 sm:pt-8 md:pt-10 mt-10 sm:mt-12 md:mt-14 lg:mt-16 w-full">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-20 xl:gap-24 2xl:gap-28">
-                <div className="text-center min-w-[240px] lg:min-w-[280px]">
-                  <div className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-4">200M€</div>
-                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">d'actifs pilotés</div>
+            <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8 mt-6 sm:mt-8 md:mt-10 lg:mt-12 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-16 xl:gap-20 2xl:gap-24">
+                <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
+                  <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">200M€</div>
+                  <div className="text-xs sm:text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">d'actifs pilotés</div>
                 </div>
-                <div className="text-center min-w-[240px] lg:min-w-[280px]">
-                  <div className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-4">41+</div>
-                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">opérations menées</div>
+                <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
+                  <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">41+</div>
+                  <div className="text-xs sm:text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">opérations menées</div>
                 </div>
-                <div className="text-center min-w-[240px] lg:min-w-[280px]">
-                  <div className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-4">10k m²</div>
-                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">de surface</div>
+                <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
+                  <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">10k m²</div>
+                  <div className="text-xs sm:text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">de surface</div>
                 </div>
-                <div className="text-center min-w-[240px] lg:min-w-[280px]">
-                  <div className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-4">15</div>
-                  <div className="text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">ans d'expérience</div>
+                <div className="text-center min-w-[120px] sm:min-w-[180px] lg:min-w-[240px]">
+                  <div className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-white mb-1 xs:mb-2 sm:mb-4">15</div>
+                  <div className="text-xs sm:text-sm md:text-base text-white/70 uppercase tracking-wider leading-tight">ans d'expérience</div>
                 </div>
               </div>
             </div>
@@ -175,7 +188,8 @@ function BenefitsChipsSectionInner(props: any) {
               </span>
             </div>
             <h3 className="text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[82px] font-normal tracking-tighter leading-[1.1] sm:leading-none text-white text-center mx-auto max-w-6xl mb-6 md:mb-8">
-              On investit ensemble dans l'immobilier.
+              On investit ensemble<br />
+              dans l'immobilier
             </h3>
             <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 text-center mt-4 xs:mt-6 font-light tracking-wide mx-auto whitespace-normal max-w-4xl px-2 mb-6 md:mb-8">
               Rejoignez une communauté d’investisseurs actifs, des événements privés et des
