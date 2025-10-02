@@ -379,17 +379,17 @@ export default function SpontaneousApplicationModal({
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-4 pt-20">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] p-2 pt-2">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.9 }}
-          className="bg-white rounded-2xl p-8 max-w-3xl w-full max-h-[80vh] overflow-y-auto"
+          className="bg-white rounded-2xl p-6 max-w-6xl w-full max-h-[98vh] overflow-y-auto"
         >
           {!formSubmitted ? (
             <>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-black">Candidature spontanée</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-black">Candidature spontanée</h2>
                 <button
                   onClick={onClose}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -411,8 +411,8 @@ export default function SpontaneousApplicationModal({
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                       Prénom *
@@ -454,7 +454,7 @@ export default function SpontaneousApplicationModal({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email *
@@ -541,7 +541,7 @@ export default function SpontaneousApplicationModal({
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="position" className="block text-sm font-medium text-gray-700 mb-2">
                       Poste recherché *
@@ -615,7 +615,7 @@ export default function SpontaneousApplicationModal({
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700 bg-white"
                     >
                       {formData.cv ? formData.cv.name : 'Choisir un fichier'}
                     </button>
@@ -643,7 +643,7 @@ export default function SpontaneousApplicationModal({
                   />
                 </div>
 
-                <div className="flex justify-end gap-4 pt-4">
+                <div className="flex justify-end gap-4 pt-2">
                   <button
                     type="button"
                     onClick={onClose}
