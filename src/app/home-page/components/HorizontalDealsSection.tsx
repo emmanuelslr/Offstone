@@ -397,7 +397,7 @@ export default function HorizontalDealsSection() {
                   multiline={false}
                   backgroundColor="bg-white"
                   className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.25rem] max-w-[1000px] text-black leading-tight"
-                  containerPaddingClass="pt-8 md:pt-10 lg:pt-12 pb-0 md:pb-1 lg:pb-2"
+                  containerPaddingClass="pt-16 md:pt-20 lg:pt-24 pb-0 md:pb-1 lg:pb-2"
                 />
               </div>
               <div className={isMobile ? "relative flex items-start z-10 mt-16 pb-20 mb-0" : "absolute inset-x-0 flex items-start z-10"} style={isMobile ? {} : { top: headerSpaceRef.current }}>
@@ -490,8 +490,4 @@ export default function HorizontalDealsSection() {
     </>
   );
 }
-
-
-
-
 
