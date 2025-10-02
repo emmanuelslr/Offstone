@@ -73,8 +73,8 @@ export default function PerformanceSection() {
               <div className="text-4xl sm:text-5xl md:text-6xl font-normal text-[#F7B096] whitespace-nowrap leading-none">
                 <CountUp value={2} suffix=" " durationMs={600} className="text-[#F7B096]" />
                 <span className="text-[#F7B096]"> à </span>
-                <CountUp value={5} suffix=" " durationMs={600} className="text-[#F7B096]" />
-                <span className="text-[#F7B096]">ans</span>
+                <CountUp value={5} durationMs={600} className="text-[#F7B096]" />
+                <span className="text-[#F7B096]"> ans</span>
               </div>
               <div className="mt-1 text-white/80 text-sm md:text-base">Horizon de sortie selon les projets</div>
             </div>
