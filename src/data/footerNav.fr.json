@@ -17,7 +17,8 @@
     {"label": "Nos réalisations", "href": "/nos-realisations"},
     {"label": "Jonathan Anguelov", "href": "/ressources"},
     {"label": "Presse", "href": "/ressources/jonathan-anguelov/presse"},
-    {"label": "Espace membre", "href": "/espace-membre"}
+    {"label": "Espace membre", "href": "/espace-membre"},
+    {"label": "Rejoignez notre équipe", "href": "#", "action": "open-spontaneous-application-modal"}
   ],
   "legal": [
     {"label": "Mentions légales", "href": "/legal/mentions-legales"},

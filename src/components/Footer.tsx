@@ -11,11 +11,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import SpontaneousApplicationModal from './forms/SpontaneousApplicationModal';
 
 
 // Types
 type FooterNavLink = { label: string; href: string; disabled?: boolean; action?: string };
-type FooterColProps = { title: string; links: FooterNavLink[]; section: string };
+type FooterColProps = { title: string; links: FooterNavLink[]; section: string; onOpenSpontaneousModal?: () => void };
 
 // Fallback locale (à remplacer par context ou prop si besoin)
 const fallbackLocale = typeof navigator !== 'undefined' && navigator.language?.startsWith('en') ? 'en' : 'fr';
@@ -24,6 +25,7 @@ export default function Footer({ locale }: { locale?: string }) {
   const router = useRouter();
   const lang = locale || fallbackLocale;
   const [currentLang, setCurrentLang] = useState(lang);
+  const [isSpontaneousModalOpen, setIsSpontaneousModalOpen] = useState(false);
   const dict = useFooterDictionary(currentLang);
   const nav = getFooterNav(currentLang);
 
@@ -48,17 +50,17 @@ export default function Footer({ locale }: { locale?: string }) {
             </Link>
           </div>
           {/* Colonnes navigation */}
-          <FooterCol title={dict['investir']} links={nav.investir} section="investir" />
-          <FooterCol title={dict['ressources']} links={nav.ressources} section="ressources" />
-          <FooterCol title={dict['offstone']} links={nav.offstone} section="offstone" />
-          <FooterCol title={dict['legal']} links={nav.legal} section="legal" />
+          <FooterCol title={dict['investir']} links={nav.investir} section="investir" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <FooterCol title={dict['ressources']} links={nav.ressources} section="ressources" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <FooterCol title={dict['offstone']} links={nav.offstone} section="offstone" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <FooterCol title={dict['legal']} links={nav.legal} section="legal" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
         </div>
         {/* Mobile/tablette : accordéons */}
         <div className="lg:hidden flex flex-col gap-4 mb-14">
-          <AccordionFooterCol title={dict['investir']} links={nav.investir} section="investir" />
-          <AccordionFooterCol title={dict['ressources']} links={nav.ressources} section="ressources" />
-          <AccordionFooterCol title={dict['offstone']} links={nav.offstone} section="offstone" />
-          <AccordionFooterCol title={dict['legal']} links={nav.legal} section="legal" />
+          <AccordionFooterCol title={dict['investir']} links={nav.investir} section="investir" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <AccordionFooterCol title={dict['ressources']} links={nav.ressources} section="ressources" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <AccordionFooterCol title={dict['offstone']} links={nav.offstone} section="offstone" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
+          <AccordionFooterCol title={dict['legal']} links={nav.legal} section="legal" onOpenSpontaneousModal={() => setIsSpontaneousModalOpen(true)} />
         </div>
         {/* Bloc CTA sous les colonnes, champ email + bouton Candidater + flèche diagonale */}
         <div className="w-full flex flex-col items-center justify-center bg-[#23262A] rounded-lg py-6 px-4 mb-8">
@@ -174,13 +176,19 @@ export default function Footer({ locale }: { locale?: string }) {
           </div>
         </div>
       </div>
+      
+      {/* Modal de candidature spontanée */}
+      <SpontaneousApplicationModal 
+        isOpen={isSpontaneousModalOpen}
+        onClose={() => setIsSpontaneousModalOpen(false)}
+      />
     </footer>
   );
 }
 
 
 
-function FooterCol({ title, links, section }: FooterColProps) {
+function FooterCol({ title, links, section, onOpenSpontaneousModal }: FooterColProps) {
   // Fonction pour ouvrir le modal de liste d'attente avec les UTM parameters spécifiés
   function openWaitlistModal() {
     try {
@@ -234,6 +242,16 @@ function FooterCol({ title, links, section }: FooterColProps) {
               >
                 {l.label}
               </button>
+            ) : l.action === 'open-spontaneous-application-modal' ? (
+              <button
+                onClick={() => {
+                  trackFooterLinkClick(section, l.label, l.href);
+                  onOpenSpontaneousModal?.();
+                }}
+                className="text-[#8F9193] hover:text-white transition-colors text-sm cursor-pointer bg-transparent border-none p-0 text-left"
+              >
+                {l.label}
+              </button>
             ) : (
               <Link
                 href={l.href}
@@ -254,7 +272,7 @@ function FooterCol({ title, links, section }: FooterColProps) {
 }
 
 // Accordéon mobile pour chaque colonne
-function AccordionFooterCol({ title, links, section }: FooterColProps) {
+function AccordionFooterCol({ title, links, section, onOpenSpontaneousModal }: FooterColProps) {
   const [open, setOpen] = useState(false);
 
   // Fonction pour ouvrir le modal de liste d'attente avec les UTM parameters spécifiés
@@ -314,6 +332,16 @@ function AccordionFooterCol({ title, links, section }: FooterColProps) {
                   onClick={() => {
                     trackFooterLinkClick(section, l.label, l.href);
                     openWaitlistModal();
+                  }}
+                  className="text-[#8F9193] hover:text-white transition-colors text-sm cursor-pointer bg-transparent border-none p-0 text-left"
+                >
+                  {l.label}
+                </button>
+              ) : l.action === 'open-spontaneous-application-modal' ? (
+                <button
+                  onClick={() => {
+                    trackFooterLinkClick(section, l.label, l.href);
+                    onOpenSpontaneousModal?.();
                   }}
                   className="text-[#8F9193] hover:text-white transition-colors text-sm cursor-pointer bg-transparent border-none p-0 text-left"
                 >
