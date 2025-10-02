@@ -17,23 +17,23 @@ const highlights: Highlight[] = [
     metric: "150-0 B ter",
     title: "Report d'imposition",
     description:
-      "Le reinvestissement d'une plus-value dans un club deal eligible permet de beneficier du remploi prevu par l'article 150-0 B ter.",
+      "Le réinvestissement d'une plus-value dans un club deal éligible permet de bénéficier du remploi prévu par l'article 150-0 B ter.",
     noteId: 1,
   },
   {
     id: "ifi",
     metric: "IFI",
-    title: "Exonere d'IFI",
+    title: "Exonéré d'IFI",
     description:
-      "Nos club deals peuvent etre structures pour rester hors assiette IFI selon la configuration retenue par l'investisseur.",
+      "Nos club deals peuvent être structurés pour rester hors assiette IFI selon la configuration retenue par l'investisseur.",
     noteId: 2,
   },
   {
     id: "mere-fille",
-    metric: "Regime mere-fille",
-    title: "Holding IS des 5 %",
+    metric: "Régime mère-fille",
+    title: "Holding IS dès 5 %",
     description:
-      "En investissant au moins 5 % du montant leve via votre holding soumise a l'IS, vous beneficiez du regime mere-fille (quote-part 5 %).",
+      "En investissant au moins 5 % du montant levé via votre holding soumise à l'IS, vous bénéficiez du régime mère-fille (quote-part 5 %).",
     noteId: 3,
   },
 ];
@@ -42,24 +42,24 @@ const notes = [
   {
     id: 1,
     text:
-      "Nos club deals eligibles au 150-0 B ter permettent de reporter l'impot sur la plus-value reinvestie.",
+      "Nos club deals éligibles au 150-0 B ter permettent de reporter l'impôt sur la plus-value réinvestie.",
   },
   {
     id: 2,
     text:
-      "L'impact IFI doit etre apprecie au cas par cas avec vos conseils : certaines structurations d'achat-revente peuvent permettre une exclusion de l'assiette.",
+      "L'impact IFI doit être apprécié au cas par cas avec vos conseils : certaines structurations d'achat-revente peuvent permettre une exclusion de l'assiette.",
   },
   {
     id: 3,
     text:
-      "Regime mere-fille : seule la quote-part de 5 % reste imposable si votre holding detient au moins 5 % des titres pendant 2 ans.",
+      "Régime mère-fille : seule la quote-part de 5 % reste imposable si votre holding détient au moins 5 % des titres pendant 2 ans.",
   },
 ];
 
 function openWaitlist(detail: Record<string, unknown>) {
   if (typeof window === "undefined") return;
   try {
-    const w: any = window as any;
+    const w = window;
     if (w.offstoneOpenWaitlist) {
       w.offstoneOpenWaitlist(detail);
     } else {
@@ -75,15 +75,15 @@ export default function FiscalitySection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-5 lg:items-start">
           <div className="lg:col-span-2">
-            <SectionBadge text="FISCALITE" colorClass="text-gray-600 text-[10px] sm:text-xs tracking-[0.18em]" />
+            <SectionBadge text="FISCALITÉ" colorClass="text-gray-600 text-[10px] sm:text-xs tracking-[0.18em]" />
             <div className="mt-8 flex flex-col gap-7 md:gap-8 lg:gap-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal text-[#0E1116] leading-tight">
-                Optimisez votre fiscalite immobiliere grace a Offstone
+                Optimisez votre fiscalité immobilière grâce à Offstone
               </h2>
               <p className="text-sm sm:text-base text-[#3F4450] leading-relaxed max-w-md">
                 <span className="block">Nos club deals concilient rendement</span>
                 <span className="block">immobilier et dispositifs fiscaux</span>
-                <span className="block">adaptes pour structurer</span>
+                <span className="block">adaptés pour structurer</span>
                 <span className="block">votre patrimoine.</span>
               </p>
               <button
@@ -159,11 +159,10 @@ export default function FiscalitySection() {
             </p>
           ))}
           <p className="text-xs text-[#7A8190] leading-relaxed italic">
-            Les informations ci-dessus sont fournies a titre indicatif et ne constituent pas un conseil fiscal ou juridique personnalise.
+            Les informations ci-dessus sont fournies à titre indicatif et ne constituent pas un conseil fiscal ou juridique personnalisé.
           </p>
         </div>
       </div>
     </section>
   );
 }
-
