@@ -86,11 +86,11 @@ export const metadata: Metadata = {
   classification: 'Investissement Immobilier',
   icons: {
     icon: [
-      { url: '/favicon.png', type: 'image/png', sizes: '32x32' },
-      { url: '/favicon.png', type: 'image/png', sizes: '192x192' }
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/favicon.webp', type: 'image/webp', sizes: '32x32' }
     ],
-    shortcut: '/favicon.png',
-    apple: '/favicon.png',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.webp',
   },
   manifest: '/manifest.json',
   };
@@ -104,10 +104,10 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192" />
-        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="/favicon.webp" type="image/webp" sizes="32x32" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="/favicon.webp" />
         
         {/* Données structurées JSON-LD pour le SEO */}
         <script
@@ -119,7 +119,7 @@ export default function RootLayout({
               "name": "Offstone",
               "alternateName": "Offstone Investissement",
               "url": "https://offstone.fr",
-              "logo": "https://offstone.fr/favicon.png",
+              "logo": "https://offstone.fr/favicon.webp",
               "description": "Investissez dans l'immobilier professionnel avec Jonathan Anguelov et Offstone. Accédez à des opérations sélectionnées et à un accompagnement expert.",
               "founder": {
                 "@type": "Person",

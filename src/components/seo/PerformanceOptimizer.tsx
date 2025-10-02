@@ -10,7 +10,8 @@ export default function PerformanceOptimizer() {
       const preloadResources = [
         '/fonts/AllianceNo1-Regular.woff2',
         '/images/og-image.webp',
-        '/favicon.png'
+        '/favicon.ico',
+        '/favicon.webp'
       ];
       
       preloadResources.forEach(resource => {

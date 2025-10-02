@@ -49,7 +49,7 @@ export default function StrategiePage() {
                 </div>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-[50px] lg:text-[66px] font-normal tracking-tighter leading-[1.15] md:leading-[1.18] lg:leading-[1.22] text-[#111] text-left mb-10" style={{ maxWidth: '1200px' }}>
-                Nous analysons des milliards d&apos;euros d&apos;investissement pour vous
+                Nous analysons des millions d&apos;euros d&apos;investissement pour vous
               </h2>
               <p className="text-[15px] md:text-[17px] text-gray-600 mb-12 max-w-4xl">
                 Avant qu&apos;un investissement n&apos;atteigne votre portefeuille, notre équipe d&apos;investissement<span className="hidden sm:inline"><br /></span>

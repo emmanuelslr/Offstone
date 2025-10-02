@@ -20,11 +20,11 @@ export default function NotreHistoirePage() {
       <PrincipesOffstoneSection />
       <ImpactOffstoneSection />
       <ChiffresClesSection />
+      <CustomersShowcaseSection />
       {/* À discuter: réactiver ou refondre ces sections pour la continuité */}
       {/* <StatsCardsSection /> */}
       {/* <TeamStickyGridSection /> */}
       {/* <ValuesMosaicSection /> */}
-      {/* <CustomersShowcaseSection /> */}
       {/* Pro CTA Footer Section */}
       <ProCTAFooter utm_campaign="notre-histoire" />
     </>

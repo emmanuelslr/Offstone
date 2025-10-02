@@ -1,4 +1,5 @@
 import Navbar from '@/components/shared/Navbar';
+import LogosBanner from '@/components/shared/LogosBanner';
 import BenefitsChipsSection from "./investir/components/BenefitsChipsSection";
 import PeopleDoSection from "./home-page/components/PeopleDoSection";
 import TextReveal from "./home-page/components/TextReveal";
@@ -83,6 +84,9 @@ export default function Home() {
       <section className="Hero">
         <BenefitsChipsSection />
       </section>
+
+      {/* Logos Banner */}
+      <LogosBanner />
 
       {/* People Do Section */}
       <section className="bg-white">

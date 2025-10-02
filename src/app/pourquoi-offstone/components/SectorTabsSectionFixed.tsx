@@ -31,7 +31,7 @@ const SECTORS: SectorConfig[] = [
     title: "R\u00e9sidentiel",
     subtitle:
       "Nous sourçons des actifs en centre-ville, révélons leur potentiel par un repositionnement soigné et les adressons aux clients qui les valorisent le mieux.",
-    image: "/images/Buildings/rue-la-boetie-11-copie-scaled.webp",
+    image: "/images/Buildings/hausman residentiel.jpg",
   },
   {
     key: "hotels",
