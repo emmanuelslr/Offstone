@@ -91,26 +91,8 @@ const nextConfig: NextConfig = {
         providedExports: true,
       };
       
-      // Optimisations de compression
-      config.optimization.minimizer = config.optimization.minimizer || [];
-      config.optimization.minimizer.push(
-        new (require('terser-webpack-plugin'))({
-          terserOptions: {
-            compress: {
-              drop_console: true,
-              drop_debugger: true,
-              pure_funcs: ['console.log', 'console.info', 'console.debug'],
-            },
-            mangle: {
-              safari10: true,
-            },
-            format: {
-              comments: false,
-            },
-          },
-          extractComments: false,
-        })
-      );
+      // Optimisations de compression (utilise le minimizer par défaut de Next.js)
+      // Les optimisations Terser sont déjà incluses dans Next.js
     }
     
     // Améliorer la gestion des chunks en développement
