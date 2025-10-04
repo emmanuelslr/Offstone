@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { motion } from 'framer-motion';
+import { motion, fadeInUp, smoothTransition } from '@/components/shared/OptimizedMotion';
 import React, { useState } from 'react';
 
 export default function Hero() {

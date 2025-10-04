@@ -32,7 +32,7 @@ export default function PerformanceMonitor() {
           list.getEntries().forEach((entry) => {
             if (entry.name === 'first-contentful-paint') {
               setMetrics(prev => ({ ...prev, fcp: entry.startTime }));
-              console.log('📊 FCP:', entry.startTime, 'ms');
+              // FCP mesuré
             }
           });
         });
@@ -40,7 +40,7 @@ export default function PerformanceMonitor() {
         try {
           fcpObserver.observe({ entryTypes: ['paint'] });
         } catch (e) {
-          console.warn('FCP Observer non supporté');
+          // FCP Observer non supporté
         }
       }
 
@@ -50,13 +50,13 @@ export default function PerformanceMonitor() {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
           setMetrics(prev => ({ ...prev, lcp: lastEntry.startTime }));
-          console.log('📊 LCP:', lastEntry.startTime, 'ms');
+          // LCP mesuré
         });
         
         try {
           lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
         } catch (e) {
-          console.warn('LCP Observer non supporté');
+          // LCP Observer non supporté
         }
       }
 
@@ -146,13 +146,7 @@ export default function PerformanceMonitor() {
     const measureNavigationMetrics = () => {
       const navigationEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
       if (navigationEntry) {
-        console.log('🚀 Navigation Metrics:');
-        console.log('  DNS Lookup:', navigationEntry.domainLookupEnd - navigationEntry.domainLookupStart, 'ms');
-        console.log('  TCP Connect:', navigationEntry.connectEnd - navigationEntry.connectStart, 'ms');
-        console.log('  Request:', navigationEntry.responseStart - navigationEntry.requestStart, 'ms');
-        console.log('  Response:', navigationEntry.responseEnd - navigationEntry.responseStart, 'ms');
-        console.log('  DOM Processing:', navigationEntry.domContentLoadedEventEnd - navigationEntry.responseEnd, 'ms');
-        console.log('  Load Complete:', navigationEntry.loadEventEnd - navigationEntry.loadEventStart, 'ms');
+        // Navigation metrics mesurées
       }
     };
 
@@ -160,10 +154,7 @@ export default function PerformanceMonitor() {
     const measureMemoryMetrics = () => {
       if ('memory' in performance) {
         const memory = (performance as any).memory;
-        console.log('💾 Memory Metrics:');
-        console.log('  Used:', Math.round(memory.usedJSHeapSize / 1024 / 1024), 'MB');
-        console.log('  Total:', Math.round(memory.totalJSHeapSize / 1024 / 1024), 'MB');
-        console.log('  Limit:', Math.round(memory.jsHeapSizeLimit / 1024 / 1024), 'MB');
+        // Memory metrics mesurées
       }
     };
 

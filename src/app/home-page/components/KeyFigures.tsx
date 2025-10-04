@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView, useSpring, fadeInUp, smoothTransition } from '@/components/shared/OptimizedMotion';
 import SectionTitle from '@/components/shared/SectionTitle';
 
 interface KeyFigure {

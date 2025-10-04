@@ -124,8 +124,7 @@ export default function MerciPage() {
       pageName: typeof document !== 'undefined' ? document.title : undefined
     };
 
-    console.log('🚀 SUBMIT-LEAD PAYLOAD:', submissionPayload);
-    console.log('🚀 API ENDPOINT: /api/submit-lead');
+    // Payload envoyé à l'API
 
     const response = await fetch('/api/submit-lead', {
       method: 'POST',
@@ -161,7 +160,7 @@ export default function MerciPage() {
       error: null
     });
   } catch (error) {
-    console.error('submit-lead ui error', error);
+    // Erreur lors de la soumission
     setSubmissionState({
       isSubmitting: false,
       isSuccess: false,

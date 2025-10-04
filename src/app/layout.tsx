@@ -11,7 +11,13 @@ import ServiceWorkerManager from "@/components/shared/ServiceWorkerManager";
 import PerformanceMonitor from "@/components/shared/PerformanceMonitor";
 import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
-import WaitlistModal from "@/components/shared/WaitlistModal";
+import dynamic from 'next/dynamic';
+
+// Composants lourds chargés de manière paresseuse
+const WaitlistModal = dynamic(() => import('@/components/shared/WaitlistModal'), {
+  ssr: false,
+  loading: () => null
+});
 import UTMTracker from "@/components/UTMTracker";
 // import LocalSEO, { offstoneLocalSEO } from "@/components/seo/LocalSEO";
 import { Analytics } from "@vercel/analytics/next";
@@ -253,10 +259,10 @@ export default function RootLayout({
                 script.async = true;
                 script.src = 'https://www.clarity.ms/tag/tcmdqy7kch';
                 script.onload = function() {
-                  console.log('✅ Microsoft Clarity loaded successfully');
+                  // Microsoft Clarity loaded successfully
                 };
                 script.onerror = function() {
-                  console.warn('⚠️ Microsoft Clarity failed to load');
+                  // Microsoft Clarity failed to load
                 };
                 document.head.appendChild(script);
               })();
