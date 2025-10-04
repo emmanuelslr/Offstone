@@ -3,11 +3,16 @@ import { Inter } from "next/font/google";
 import { PrismicPreview } from "@prismicio/next";
 import Footer from "@/components/Footer";
 import HydrationFix from "@/components/shared/HydrationFix";
+import FontOptimizer from "@/components/shared/FontOptimizer";
+import PerformanceOptimizer from "@/components/shared/PerformanceOptimizer";
+import AccessibilityOptimizer from "@/components/shared/AccessibilityOptimizer";
+import CriticalCSS from "@/components/shared/CriticalCSS";
+import ServiceWorkerManager from "@/components/shared/ServiceWorkerManager";
+import PerformanceMonitor from "@/components/shared/PerformanceMonitor";
 import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
 import WaitlistModal from "@/components/shared/WaitlistModal";
 import UTMTracker from "@/components/UTMTracker";
-// import PerformanceOptimizer from "@/components/seo/PerformanceOptimizer";
 // import LocalSEO, { offstoneLocalSEO } from "@/components/seo/LocalSEO";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -103,7 +108,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable}`}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="icon" href="/favicon.webp" type="image/webp" sizes="32x32" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
@@ -237,34 +242,38 @@ export default function RootLayout({
           }}
         />
         
-        {/* Microsoft Clarity - Behavioral Analytics */}
+        {/* Microsoft Clarity - Behavioral Analytics - Chargé de manière asynchrone */}
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
-              (function(c,l,a,r,i,t,y){
-                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-              })(window, document, "clarity", "script", "tcmdqy7kch");
-              
-              // Vérification que Clarity se charge correctement
-              setTimeout(function() {
-                if (typeof window.clarity === 'function') {
+              // Charger Clarity de manière non-bloquante
+              (function() {
+                var script = document.createElement('script');
+                script.async = true;
+                script.src = 'https://www.clarity.ms/tag/tcmdqy7kch';
+                script.onload = function() {
                   console.log('✅ Microsoft Clarity loaded successfully');
-                } else {
+                };
+                script.onerror = function() {
                   console.warn('⚠️ Microsoft Clarity failed to load');
-                }
-              }, 2000);
+                };
+                document.head.appendChild(script);
+              })();
             `
           }}
         />
       </head>
       <body className="bg-white text-black antialiased min-h-screen w-full">
+        <CriticalCSS />
         <HydrationFix />
+        <FontOptimizer />
+        <PerformanceOptimizer />
+        <AccessibilityOptimizer />
+        <ServiceWorkerManager />
+        <PerformanceMonitor />
         <UTMTracker />
-        {/* <PerformanceOptimizer />
-        <LocalSEO {...offstoneLocalSEO} /> */}
+        {/* <LocalSEO {...offstoneLocalSEO} /> */}
         {children}
         <WaitlistModal />
         <Footer />
@@ -272,11 +281,11 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
 
-        {/* HubSpot Embed Code */}
+        {/* HubSpot Embed Code - Chargé de manière optimisée */}
         <Script 
           id="hs-script-loader" 
           src="//js-eu1.hs-scripts.com/146846899.js" 
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           async 
           defer
         />

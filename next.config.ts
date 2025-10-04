@@ -9,8 +9,110 @@ const nextConfig: NextConfig = {
     // Preversion branch: allow builds despite TS errors
     ignoreBuildErrors: true,
   },
-  // Configuration pour éviter les ChunkLoadError
+  // Configuration pour éviter les ChunkLoadError et optimiser les performances
   webpack: (config, { isServer, dev }) => {
+    // Optimisations pour la production
+    if (!dev) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          minSize: 20000,
+          maxSize: 244000,
+          cacheGroups: {
+            ...config.optimization.splitChunks?.cacheGroups,
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              priority: -10,
+              chunks: 'all',
+              enforce: true,
+            },
+            // Optimisations avancées par bibliothèque
+            framerMotion: {
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              name: 'framer-motion',
+              chunks: 'all',
+              priority: 20,
+              enforce: true,
+            },
+            swiper: {
+              test: /[\\/]node_modules[\\/]swiper[\\/]/,
+              name: 'swiper',
+              chunks: 'all',
+              priority: 20,
+              enforce: true,
+            },
+            prismic: {
+              test: /[\\/]node_modules[\\/]@prismicio[\\/]/,
+              name: 'prismic',
+              chunks: 'all',
+              priority: 20,
+              enforce: true,
+            },
+            react: {
+              test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+              name: 'react',
+              chunks: 'all',
+              priority: 30,
+              enforce: true,
+            },
+            next: {
+              test: /[\\/]node_modules[\\/]next[\\/]/,
+              name: 'next',
+              chunks: 'all',
+              priority: 25,
+              enforce: true,
+            },
+            analytics: {
+              test: /[\\/]node_modules[\\/](@vercel|@microsoft)[\\/]/,
+              name: 'analytics',
+              chunks: 'all',
+              priority: 15,
+              enforce: true,
+            },
+            utils: {
+              test: /[\\/]node_modules[\\/](nanoid|libphonenumber-js)[\\/]/,
+              name: 'utils',
+              chunks: 'all',
+              priority: 10,
+              enforce: true,
+            },
+          },
+        },
+        // Optimisations avancées
+        usedExports: true,
+        sideEffects: false,
+        providedExports: true,
+      };
+      
+      // Optimisations de compression
+      config.optimization.minimizer = config.optimization.minimizer || [];
+      config.optimization.minimizer.push(
+        new (require('terser-webpack-plugin'))({
+          terserOptions: {
+            compress: {
+              drop_console: true,
+              drop_debugger: true,
+              pure_funcs: ['console.log', 'console.info', 'console.debug'],
+            },
+            mangle: {
+              safari10: true,
+            },
+            format: {
+              comments: false,
+            },
+          },
+          extractComments: false,
+        })
+      );
+    }
+    
     // Améliorer la gestion des chunks en développement
     if (dev && !isServer) {
       config.optimization = {
@@ -41,10 +143,16 @@ const nextConfig: NextConfig = {
   // Améliorer la stabilité en développement
   experimental: {
     // Optimiser le chunking
-    optimizePackageImports: ['framer-motion', 'swiper'],
+    optimizePackageImports: ['framer-motion', 'swiper', '@prismicio/react', '@prismicio/next'],
     // Optimiser les imports
     optimizeServerReact: true,
+    // Optimiser les images
+    optimizeCss: true,
   },
+  // Optimisations de performance
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: true,
   images: {
     dangerouslyAllowSVG: true,
     formats: ['image/webp', 'image/avif'],

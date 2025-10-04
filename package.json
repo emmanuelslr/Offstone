@@ -16,7 +16,12 @@
     "slicemachine": "start-slicemachine",
     "images:webp": "node scripts/convert-to-webp.mjs",
     "images:backup": "node scripts/backup-images.mjs",
-    "images:update-refs": "node scripts/update-image-references.mjs"
+    "images:update-refs": "node scripts/update-image-references.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "test:optimizations": "node scripts/test-optimizations.mjs",
+    "analyze:bundles": "node scripts/advanced-optimization.mjs",
+    "optimize": "npm run images:optimize && npm run build",
+    "optimize:advanced": "npm run analyze:bundles && npm run optimize"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
