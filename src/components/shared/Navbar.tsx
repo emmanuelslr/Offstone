@@ -117,35 +117,35 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
           </div>
           <ul className="hidden md:flex items-center space-x-5 lg:space-x-7 mx-auto flex-1 justify-center">
             <li>
-              <Link href="/pourquoi-offstone" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/pourquoi-offstone" className={`text-[15px] font-medium transition-all duration-300 no-underline hover:no-underline ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
                 Pourquoi Offstone ?
               </Link>
             </li>
             <li>
-              <Link href="/investir" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/investir" className={`text-[15px] font-medium transition-all duration-300 no-underline hover:no-underline ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
                 Investir
               </Link>
             </li>
             <li>
-              <Link href="/nos-realisations" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/nos-realisations" className={`text-[15px] font-medium transition-all duration-300 no-underline hover:no-underline ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
                 Nos Réalisations
               </Link>
             </li>
             <li>
-              <Link href="/notre-histoire" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/notre-histoire" className={`text-[15px] font-medium transition-all duration-300 no-underline hover:no-underline ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
                 Notre Histoire
               </Link>
             </li>
             <li>
-              <Link href="/ressources" className={`text-[15px] font-medium transition-all duration-300 ${
+              <Link href="/ressources" className={`text-[15px] font-medium transition-all duration-300 no-underline hover:no-underline ${
                 (isOnWhiteSection || forceWhiteStyle) ? 'text-black hover:text-[#F7B096]' : 'text-white hover:text-[#F7B096]'
               }`}>
                 Ressources
@@ -208,35 +208,35 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
             <Link 
               href="/pourquoi-offstone"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
+              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] no-underline hover:no-underline transition-colors py-2 text-center"
             >
               Pourquoi Offstone ?
             </Link>
             <Link 
               href="/investir"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
+              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] no-underline hover:no-underline transition-colors py-2 text-center"
             >
               Investir
             </Link>
             <Link 
               href="/nos-realisations"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
+              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] no-underline hover:no-underline transition-colors py-2 text-center"
             >
               Nos réalisations
             </Link>
             <Link 
               href="/notre-histoire" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
+              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] no-underline hover:no-underline transition-colors py-2 text-center"
             >
               Notre Histoire
             </Link>
             <Link 
               href="/ressources" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] transition-colors py-2 text-center"
+              className="text-[16px] xs:text-[18px] font-medium text-white hover:text-[#F7B096] no-underline hover:no-underline transition-colors py-2 text-center"
             >
               Ressources
             </Link>

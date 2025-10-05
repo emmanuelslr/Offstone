@@ -11,13 +11,7 @@ import ServiceWorkerManager from "@/components/shared/ServiceWorkerManager";
 import PerformanceMonitor from "@/components/shared/PerformanceMonitor";
 import { repositoryName } from "@/lib/prismicio";
 import "./globals.css";
-import dynamic from 'next/dynamic';
-
-// Composants lourds chargés de manière paresseuse
-const WaitlistModal = dynamic(() => import('@/components/shared/WaitlistModal'), {
-  ssr: false,
-  loading: () => null
-});
+import ClientWaitlistModal from "@/components/shared/ClientWaitlistModal";
 import UTMTracker from "@/components/UTMTracker";
 // import LocalSEO, { offstoneLocalSEO } from "@/components/seo/LocalSEO";
 import { Analytics } from "@vercel/analytics/next";
@@ -281,7 +275,7 @@ export default function RootLayout({
         <UTMTracker />
         {/* <LocalSEO {...offstoneLocalSEO} /> */}
         {children}
-        <WaitlistModal />
+        <ClientWaitlistModal />
         <Footer />
         <PrismicPreview repositoryName={repositoryName} />
         <Analytics />
@@ -317,7 +311,7 @@ export default function RootLayout({
                   console.log('?? Cookies supprimés, rechargement...');
                   window.location.reload();
                 } catch (e) {
-                  console.log('Erreur lors du reset:', e);
+                  console.log('Erreur lors du reset:', e instanceof Error ? e.message : String(e));
                 }
               }
 

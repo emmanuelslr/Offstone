@@ -219,7 +219,8 @@
     text-decoration: none;
   }
   
-  a:hover {
+  /* Soulignement par défaut pour les liens, sauf ceux avec hover:no-underline */
+  a:hover:not(.hover\:no-underline) {
     text-decoration: underline;
   }
   
