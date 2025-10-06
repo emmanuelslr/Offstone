@@ -79,7 +79,7 @@ function ProcessusInvestissementInner(props: any) {
 
   return (
     <section className="ProcessusInvestissement w-full pt-8 pb-16 sm:pt-10 sm:pb-20 lg:pt-12 lg:pb-20" style={{ backgroundColor: '#F7F5F2' }}>
-      <div className="container-responsive" ref={containerRef}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={containerRef}>
         <div className="max-w-4xl mb-6 sm:mb-10 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -98,21 +98,21 @@ function ProcessusInvestissementInner(props: any) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-5xl md:text-6xl font-normal text-black mb-8 leading-[1.1] max-w-4xl"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-black mb-6 sm:mb-8 leading-[1.1] max-w-4xl"
           >
-            De la candidature à l’accès exclusif
+            De la candidature à l'accès exclusif
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-gray-600 leading-relaxed max-w-3xl"
+            className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl"
           >
             Rejoignez un cercle restreint d'investisseurs et accédez à des opportunités immobilières premium avec Jonathan Anguelov. Chaque candidature est étudiée individuellement.
           </motion.p>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
           {steps.map((step, index) => (
             <motion.div
               key={index}
@@ -125,10 +125,10 @@ function ProcessusInvestissementInner(props: any) {
               transition={{ duration: 0.7, delay: index * 0.1 }}
               className="group"
             >
-              <div className="flex items-start gap-4 sm:gap-6 md:gap-8">
+              <div className="flex items-start gap-3 sm:gap-4 md:gap-6 lg:gap-8">
                 <div className="flex-shrink-0">
                   <span
-                    className={`text-5xl sm:text-6xl lg:text-7xl font-light transition-all duration-700 ease-out ${
+                    className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light transition-all duration-700 ease-out ${
                       activeStep >= index
                         ? (index === 0 || index === 3 ? 'text-[#F7B096] scale-110 drop-shadow-lg' : 'text-black scale-110')
                         : 'text-gray-300 scale-100'
@@ -141,13 +141,13 @@ function ProcessusInvestissementInner(props: any) {
                     {step.number}
                   </span>
                 </div>
-                <div className="pt-0 sm:pt-2">
-                  <h3 className={`text-lg sm:text-2xl font-normal mb-2 sm:mb-4 md:mb-6 transition-all duration-500 ${
+                <div className="pt-0 sm:pt-1 md:pt-2 flex-1">
+                  <h3 className={`text-base sm:text-lg md:text-xl lg:text-2xl font-normal mb-2 sm:mb-3 md:mb-4 lg:mb-6 transition-all duration-500 ${
                     activeStep >= index ? (index === 0 || index === 3 ? 'text-[#F7B096]' : 'text-black') : 'text-black'
                   }`}>
                     {step.title}
                   </h3>
-                  <p className="text-sm sm:text-lg text-gray-600 leading-relaxed mb-3 sm:mb-5 md:mb-6 max-w-md">
+                  <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-3 sm:mb-4 md:mb-5 lg:mb-6">
                     {step.description}
                   </p>
                   <div
@@ -167,9 +167,9 @@ function ProcessusInvestissementInner(props: any) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-6 sm:mt-12 md:mt-24 max-w-2xl"
+          className="mt-8 sm:mt-12 md:mt-16 lg:mt-24 max-w-2xl"
         >
-          <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-6 md:mb-8">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-6 md:mb-8">
             Prêt à rejoindre nos investissements exclusifs ? Commencez votre candidature dès maintenant.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -194,7 +194,7 @@ function ProcessusInvestissementInner(props: any) {
                   (function(d){ if (typeof window !== 'undefined') { try { const w:any = window as any; if (w.offstoneOpenWaitlist) { w.offstoneOpenWaitlist(d); } else { (w.__offstone_waitlist_queue ||= []).push(d); w.dispatchEvent(new CustomEvent('waitlist:open', { detail: d })); } } catch(e){} } })(detail);
                 } catch {}
               }}
-              className="bg-black text-white px-4 sm:px-8 py-2 sm:py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-lg text-base flex items-center gap-2"
+              className="bg-black text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-sm hover:shadow-lg text-sm sm:text-base flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               Commencer ma candidature
               <svg className="w-4 h-4 transform -rotate-45" fill="currentColor" viewBox="0 0 20 20">

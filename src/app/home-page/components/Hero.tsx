@@ -58,7 +58,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container-responsive relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
