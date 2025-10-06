@@ -98,3 +98,5 @@ COMMENT ON COLUMN prospects.consentement_marketing IS 'Marketing consent status'
 
 
 
+
+

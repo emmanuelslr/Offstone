@@ -45,6 +45,7 @@ interface SubmitLeadBody {
   ticket_target?: unknown; // 'under_20k' | '20_50k' | '50_100k' | '100_500k' | '500k_1m' | 'gt_1m'
   discovery?: unknown; // How the user discovered us
   wants_call?: unknown; // Boolean - does the user want a call?
+  source_formulaire?: unknown; // 'candidature_investisseur_offstone' | 'newsletter_jonathan' | 'rejoindre_equipe'
   skipHubspot?: unknown; // Skip HubSpot submission (only save to Supabase)
 }
 
@@ -209,6 +210,7 @@ export function buildHubspotPayload(input: {
   pageUri?: string;
   pageName?: string;
   ipAddress?: string | null;
+  source_formulaire?: string;
 }): HubspotPayload {
   const fields: HubspotField[] = [
     { name: "email", value: input.email },
@@ -226,6 +228,9 @@ export function buildHubspotPayload(input: {
   }
   if (input.capacity) {
     fields.push({ name: "capacite_investissement", value: input.capacity });
+  }
+  if (input.source_formulaire) {
+    fields.push({ name: "source_formulaire", value: input.source_formulaire });
   }
 
   // Consent field removed - not needed for HubSpot form
@@ -479,9 +484,15 @@ export async function POST(req: Request) {
     pageUri: truncate(body.pageUri, 2048),
     pageName: truncate(body.pageName, 512),
     ipAddress: ip,
+    source_formulaire: sanitize(body.source_formulaire, 64) ?? 'candidature_investisseur_offstone', // Default to 'candidature_investisseur_offstone' for waitinglist
   });
 
-  console.info("submit_lead.hubspot_payload", { email, payload: hubspotPayload, isNewContact });
+  console.info("submit_lead.hubspot_payload", { 
+    email, 
+    fields: hubspotPayload.fields.map(f => `${f.name}: ${f.value}`),
+    context: hubspotPayload.context,
+    isNewContact 
+  });
   console.info("submit_lead.hubspot_config", { 
     portalId: process.env.HUBSPOT_PORTAL_ID,
     formGuid: process.env.HUBSPOT_FORM_GUID,

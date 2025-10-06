@@ -16,6 +16,23 @@ export default function WaitlistMiniForm({ dict }: WaitlistMiniFormProps) {
     if (!email || !consent) return setMsg(dict['formError']);
     setLoading(true);
     setMsg(null);
+    
+    // Send source_formulaire to capture early abandonment
+    try {
+      await fetch('/api/lead/source', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          source_formulaire: 'newsletter_jonathan'
+        })
+      });
+      console.log('✅ Lead source sent for newsletter:', email);
+    } catch (error) {
+      console.error('❌ Failed to send lead source:', error);
+      // Continue even if this fails
+    }
+    
     try {
       const res = await fetch('/api/newsletter', {
         method: 'POST',

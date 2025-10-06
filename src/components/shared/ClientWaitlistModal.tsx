@@ -11,3 +11,5 @@ const WaitlistModal = dynamic(() => import('@/components/shared/WaitlistModal'),
 export default function ClientWaitlistModal() {
   return <WaitlistModal />;
 }
+
+

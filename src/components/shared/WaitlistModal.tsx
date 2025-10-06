@@ -258,6 +258,7 @@ export default function WaitlistModal() {
   const advancingRef = useRef(false);
   const isSubmittingRef = useRef(false);
   const isProcessingOkRef = useRef(false);
+  const isClosingRef = useRef(false);
   const [countryOpen, setCountryOpen] = useState(false);
   const countryMenuRef = useRef<HTMLDivElement | null>(null);
   const [isCalendarMobileOpen, setIsCalendarMobileOpen] = useState(false);
@@ -402,7 +403,20 @@ export default function WaitlistModal() {
     default:
       return true;
   }
-}, [current, data, email]);const reset = useCallback(async () => {
+}, [current, data, email]);
+
+const reset = useCallback(async () => {
+    // Prevent multiple simultaneous calls to reset
+    if (isClosingRef.current) {
+      console.log('⚠️ Modal already closing, ignoring duplicate close request');
+      return;
+    }
+    
+    isClosingRef.current = true;
+    
+    // Close modal immediately for better UX
+    setOpen(false);
+    
     // If user is closing modal without completing, submit partial data to HubSpot
     const currentStep = steps[stepIndex];
     const hasStartedForm = email && email.trim().length > 0;
@@ -445,7 +459,7 @@ export default function WaitlistModal() {
       }
     }
     
-    setOpen(false);
+    // Reset all state
     setSubmitting(false);
     isSubmittingRef.current = false; // Reset submission flag
     isProcessingOkRef.current = false; // Reset onOk processing flag
@@ -463,6 +477,11 @@ export default function WaitlistModal() {
     // Nettoyer les données HubSpot stockées
     try { sessionStorage.removeItem('offstone_hubspot_data'); } catch {}
     try { window.dispatchEvent(new Event(CLOSED_EVENT)); } catch {}
+    
+    // Reset closing flag after a short delay
+    setTimeout(() => {
+      isClosingRef.current = false;
+    }, 100);
   }, [email, data, meta, stepIndex, steps]);
 
   const onOpen = useCallback(async (detail: OpenEventDetail) => {
@@ -753,6 +772,7 @@ export default function WaitlistModal() {
                                    data.ticket_target === '500k_1m' ? '500k_1m' : 'gt_1m',
           consentement_marketing: true,
           form_priority: 'waitinglist', // Highest priority
+          source_formulaire: 'candidature_investisseur_offstone', // Source form for candidature
           pageUri: meta?.page_url,
           ref: meta?.ref,
           utm_source: meta?.utm_source,
@@ -850,6 +870,23 @@ export default function WaitlistModal() {
         delete newErrors.email;
         return newErrors;
       });
+      
+      // Send source_formulaire to capture early abandonment
+      try {
+        await fetch('/api/lead/source', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            source_formulaire: 'candidature_investisseur_offstone'
+          })
+        });
+        console.log('✅ Lead source sent for candidature:', email);
+      } catch (error) {
+        console.error('❌ Failed to send lead source:', error);
+        // Continue even if this fails
+      }
+      
       // Don't submit here - submission will happen at the end (profile step)
       // Just track the email capture and move to next step
       track('lead_open', {
@@ -927,7 +964,18 @@ export default function WaitlistModal() {
                 Offstone.
               </span>
             </div>
-            <button aria-label="Fermer" onClick={reset} className="text-white/70 hover:text-white text-2xl">×</button>
+            <button 
+              aria-label="Fermer" 
+              onClick={reset} 
+              disabled={isClosingRef.current}
+              className={`text-2xl transition-colors ${
+                isClosingRef.current 
+                  ? 'text-white/30 cursor-not-allowed' 
+                  : 'text-white/70 hover:text-white'
+              }`}
+            >
+              ×
+            </button>
           </div>
 
           <div className={`mt-6 mb-4 ${twoCols ? '' : 'max-w-2xl'}`}>
@@ -994,7 +1042,7 @@ export default function WaitlistModal() {
                         return (
                           <button key={o.k} type="button"
                             onClick={() => { track('lead_step_select', { id: leadId, step: 'ticket', value: o.k }); selectAndAutoAdvance(o.k, (d) => ({ ...d, ticket_target: o.k })); }}
-                            className={`w-full text-left px-4 py-3 rounded-xl border transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white/30 hover:border-white/60'} ${flashKey === o.k ? 'ring-2 ring-[#F7B096]/80' : ''}`}
+                            className={`w-full text-left px-4 py-3 rounded-xl border-2 transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white hover:border-[#F7B096]/60'} ${flashKey === o.k ? 'ring-2 ring-[#F7B096]/80' : ''}`}
                           >
                             <LetterBadge selected={selected} idx={idx} />
                             <span className="text-sm sm:text-base">{o.label}</span>
@@ -1016,7 +1064,7 @@ export default function WaitlistModal() {
                         return (
                           <button key={o.k} type="button"
                             onClick={() => { track('lead_step_select', { id: leadId, step: 'rdv', value: o.k }); selectAndAutoAdvance(o.k, (d) => ({ ...d, rdv_choice: o.k })); }}
-                            className={`w-full text-left px-4 py-3 rounded-xl border transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white/30 hover:border-white/60'} ${flashKey === o.k ? 'ring-2 ring-[#F7B096]/80' : ''}`}
+                            className={`w-full text-left px-4 py-3 rounded-xl border-2 transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white hover:border-[#F7B096]/60'} ${flashKey === o.k ? 'ring-2 ring-[#F7B096]/80' : ''}`}
                           >
                             <LetterBadge selected={selected} idx={idx} />
                             <span className="text-sm sm:text-base">{o.label}</span>
@@ -1074,7 +1122,7 @@ export default function WaitlistModal() {
                         return (
                           <button key={opt} type="button"
                             onClick={() => { track('lead_step_select', { id: leadId, step: 'discovery', value: opt }); selectAndAutoAdvance(String(idx), (d) => ({ ...d, discovery: opt })); }}
-                            className={`px-4 py-3 rounded-xl border text-left transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white/30 hover:border-white/60'} ${flashKey === String(idx) ? 'ring-2 ring-[#F7B096]/80' : ''}`}
+                            className={`px-4 py-3 rounded-xl border-2 text-left transition flex items-center gap-3 focus-visible:ring-2 ring-[#F7B096]/60 outline-none ${selected ? 'border-[#F7B096] bg-white/10' : 'border-white hover:border-[#F7B096]/60'} ${flashKey === String(idx) ? 'ring-2 ring-[#F7B096]/80' : ''}`}
                           >
                             <LetterBadge selected={selected} idx={idx} />
                             <span className="text-sm sm:text-base">{opt}</span>
@@ -1210,7 +1258,18 @@ export default function WaitlistModal() {
                       <div className="text-center">
                         <h4 className="text-2xl font-semibold mb-4">Merci !</h4>
                         <p className="text-white/80 text-lg mb-8">Votre demande a bien été enregistrée. Nous revenons vers vous très vite.</p>
-                        <button type="button" onClick={reset} className="px-6 py-3 rounded-lg bg-[#F7B096] text-black text-base font-medium hover:opacity-90">Fermer</button>
+                        <button 
+                          type="button" 
+                          onClick={reset} 
+                          disabled={isClosingRef.current}
+                          className={`px-6 py-3 rounded-lg text-base font-medium transition-opacity ${
+                            isClosingRef.current 
+                              ? 'bg-[#F7B096]/50 text-black/50 cursor-not-allowed' 
+                              : 'bg-[#F7B096] text-black hover:opacity-90'
+                          }`}
+                        >
+                          Fermer
+                        </button>
                       </div>
                     </div>
                   )}

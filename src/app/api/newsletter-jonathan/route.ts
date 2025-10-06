@@ -124,7 +124,8 @@ export async function POST(request: NextRequest) {
           { name: "utm_campaign", value: data.utm_campaign },
           { name: "utm_content", value: data.utm_content },
           { name: "utm_term", value: data.utm_term },
-          { name: "consentement_marketing", value: "true" }
+          { name: "consentement_marketing", value: "true" },
+          { name: "source_formulaire", value: "newsletter_jonathan" }
         ],
         context: {
           pageUri: data.page_url,
