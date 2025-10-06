@@ -9,7 +9,7 @@ const RecognitionSection: React.FC = () => {
   const recognitions = [
     {
       id: 1,
-      image: '/images/personnalites/ja-visuel-2-page-1.jpg',
+      image: '/images/personnalites/ja-visuel-2-page-1.webp',
       title: 'COUVERTURE FORBES'
     },
     {
@@ -109,7 +109,7 @@ const RecognitionSection: React.FC = () => {
                 {recognition.id === 1 && (
                   <div className="absolute top-4 right-4">
                     <Image
-                      src="/images/logos/Forbes-Logo-white.png"
+                      src="/images/logos/Forbes-Logo-white.webp"
                       alt="Forbes Logo"
                       width={75}
                       height={30}

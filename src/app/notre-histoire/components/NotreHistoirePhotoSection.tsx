@@ -8,7 +8,7 @@ export default function NotreHistoirePhotoSection() {
         <div className="w-full md:w-1/2 flex">
           <div className="w-full h-[700px] relative -ml-40">
               <Image
-                src="/Immeuble tour.avif"
+                src="/Immeuble tour.webp"
                 alt="Notre histoire"
                 fill
                 className="object-contain"

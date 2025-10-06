@@ -21,28 +21,28 @@ const ogConfig = {
 // Templates d'images OG
 const ogTemplates = [
   {
-    filename: 'og-image.jpg',
+    filename: 'og-image.webp',
     title: 'Offstone',
     subtitle: 'Investissez aux côtés de',
     name: 'Jonathan Anguelov',
     description: 'Club de deals immobiliers exclusifs'
   },
   {
-    filename: 'og-home.jpg',
+    filename: 'og-home.webp',
     title: 'Offstone',
     subtitle: 'Investissement Immobilier',
     name: 'avec Jonathan Anguelov',
     description: 'Accédez à des opérations sélectionnées'
   },
   {
-    filename: 'og-jonathan.jpg',
+    filename: 'og-jonathan.webp',
     title: 'Jonathan Anguelov',
     subtitle: 'Fondateur & Investisseur',
     name: 'Immobilier Professionnel',
     description: 'Expert en investissement immobilier'
   },
   {
-    filename: 'og-deals.jpg',
+    filename: 'og-deals.webp',
     title: 'Club de Deals',
     subtitle: 'Offstone',
     name: 'Opérations Sélectionnées',
@@ -94,7 +94,7 @@ function generateAllOGImages() {
   console.log('2. Dimensions: 1200x630 pixels');
   console.log('3. Format: JPG ou PNG');
   console.log('4. Placez les images dans /public/images/');
-  console.log('5. Noms des fichiers: og-image.jpg, og-home.jpg, og-jonathan.jpg, og-deals.jpg');
+  console.log('5. Noms des fichiers: og-image.webp, og-home.webp, og-jonathan.webp, og-deals.webp');
   
   console.log('\n🎯 Contenu recommandé pour chaque image:');
   ogTemplates.forEach(template => {

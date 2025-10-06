@@ -3,17 +3,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 const logos = [
-  { src: "/images/logos/bandeau-hero/Le_Monde.svg.png", alt: "Le Monde", size: "large" },
-  { src: "/images/logos/bandeau-hero/business insder logo.png", alt: "Business Insider", size: "normal" },
-  { src: "/images/logos/bandeau-hero/capital-logo-png-transparent.png", alt: "Capital", size: "large" },
-  { src: "/images/logos/bandeau-hero/Forbes-Logo-1999-present.png", alt: "Forbes", size: "normal" },
-  { src: "/images/logos/bandeau-hero/France.tv_-_logo_2022.svg.png", alt: "France TV", size: "normal" },
-  { src: "/images/logos/bandeau-hero/LeFigaro_Logo_Bleu_RVB.png", alt: "Le Figaro", size: "large" },
-  { src: "/images/logos/bandeau-hero/Les_echos_(logo).svg.png", alt: "Les Échos", size: "normal" },
-  { src: "/images/logos/bandeau-hero/Logo_BFM_TV_(2025).png", alt: "BFM TV", size: "normal" },
-  { src: "/images/logos/bandeau-hero/Logo_Challenges.png", alt: "Challenges", size: "normal" },
-  { src: "/images/logos/bandeau-hero/Logo_Maddyness_Black-1000.png", alt: "Maddyness", size: "large" },
-  { src: "/images/logos/bandeau-hero/TechCrunch-Logo-2011.png", alt: "TechCrunch", size: "large" },
+  { src: "/images/logos/bandeau-hero/Le_Monde.svg.webp", alt: "Le Monde", size: "large" },
+  { src: "/images/logos/bandeau-hero/business insder logo.webp", alt: "Business Insider", size: "normal" },
+  { src: "/images/logos/bandeau-hero/capital-logo-png-transparent.webp", alt: "Capital", size: "large" },
+  { src: "/images/logos/bandeau-hero/Forbes-Logo-1999-present.webp", alt: "Forbes", size: "normal" },
+  { src: "/images/logos/bandeau-hero/France.tv_-_logo_2022.svg.webp", alt: "France TV", size: "normal" },
+  { src: "/images/logos/bandeau-hero/LeFigaro_Logo_Bleu_RVB.webp", alt: "Le Figaro", size: "large" },
+  { src: "/images/logos/bandeau-hero/Les_echos_(logo).svg.webp", alt: "Les Échos", size: "normal" },
+  { src: "/images/logos/bandeau-hero/Logo_BFM_TV_(2025).webp", alt: "BFM TV", size: "normal" },
+  { src: "/images/logos/bandeau-hero/Logo_Challenges.webp", alt: "Challenges", size: "normal" },
+  { src: "/images/logos/bandeau-hero/Logo_Maddyness_Black-1000.webp", alt: "Maddyness", size: "large" },
+  { src: "/images/logos/bandeau-hero/TechCrunch-Logo-2011.webp", alt: "TechCrunch", size: "large" },
 ];
 
 export default function LogosBanner() {

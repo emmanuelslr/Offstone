@@ -45,8 +45,19 @@ export default function Footer({ locale }: { locale?: string }) {
         <div className="hidden lg:flex gap-x-8 mb-20">
           {/* Logo */}
           <div className="flex flex-col w-[220px] mr-8">
-            <Link href="/" className="mb-4 group">
-              <span className="block leading-none select-none antialiased text-white font-medium text-2xl tracking-wide" style={{fontFamily: "'Alliance No.1', Arial, sans-serif"}}>Offstone.</span>
+            <Link href="/" className="mb-4 group no-underline hover:no-underline">
+              <span 
+                className="block leading-none select-none antialiased text-white font-medium text-2xl tracking-wide transition-colors duration-200" 
+                style={{fontFamily: "'Alliance No.1', Arial, sans-serif"}}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#F1AC93';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#FFFFFF';
+                }}
+              >
+                Offstone.
+              </span>
             </Link>
           </div>
           {/* Colonnes navigation */}

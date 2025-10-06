@@ -100,15 +100,21 @@ export default function Navbar({ forceWhiteStyle = false }: { forceWhiteStyle?: 
         >
           <nav className="flex items-center justify-between h-12 xs:h-14 sm:h-16">
           <div className="flex items-center flex-shrink-0">
-            <Link href="/" className="group">
+            <Link href="/" className="group no-underline hover:no-underline">
               <span
-                className="block leading-none select-none antialiased"
+                className="block leading-none select-none antialiased transition-colors duration-200"
                 style={{
                   fontFamily: "'Alliance No.1', Arial, sans-serif",
                   fontWeight: 500,
                   fontSize: 'clamp(20px, 5vw, 28px)',
                   letterSpacing: '0.02em',
                   color: (isOnWhiteSection || forceWhiteStyle) ? '#000000' : '#FFFFFF'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#F1AC93';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = (isOnWhiteSection || forceWhiteStyle) ? '#000000' : '#FFFFFF';
                 }}
               >
                 Offstone

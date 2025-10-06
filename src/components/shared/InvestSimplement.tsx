@@ -88,7 +88,7 @@ export default function LeMontana2({
           </h1>
           <div className="flex flex-col items-center justify-center mt-20">
             <Image
-              src="/Images/Confiance/notre-histoire-jonathan.avif"
+              src="/Images/Confiance/notre-histoire-jonathan.webp"
               alt="Notre Histoire Jonathan"
               className="rounded-full w-20 h-20 object-cover"
               width={80}

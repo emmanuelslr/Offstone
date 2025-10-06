@@ -62,7 +62,7 @@ const deals: Deal[] = [
     id: 'green-oak',
     title: 'Green Oak - Arcueil (94)',
     location: 'Île-de-France',
-    image: '/images/Acquisitions/hotel barbes.avif',
+    image: '/images/Acquisitions/hotel barbes.webp',
     description:
       "Développement d’un immeuble de bureau idéalement localisé au cœur d’un pôle majeur de la périphérie sud de Paris (quartier de la Vache Noire) bénéficiant de perspectives de croissance forte suite à l’arrivée programmée du métro ligne 4 en 2020.",
     tags: ['Valeur ajoutée', 'Bureaux', 'Île-de-France', 'France'],
@@ -120,7 +120,7 @@ const overridesByImage: Record<string, Partial<Deal>> = {
       'Immeuble haussmannien du 16e, rénovation et repositionnement haut de gamme près de la place d’Iéna.',
     tags: ['Bureaux', 'Paris 16e'],
   },
-  '/images/Acquisitions/hotel barbes.avif': {
+  '/images/Acquisitions/hotel barbes.webp': {
     id: 'maison-barbes',
     title: 'Maison Barbès',
     location: '75018 Paris',
