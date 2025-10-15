@@ -99,7 +99,7 @@ export default function StickyTOC({
                 Investir avec Offstone
               </h4>
               <p className="text-xs text-gray-600 mb-3 leading-relaxed">
-                Découvrez nos opportunités d'investissement immobilier avec des tickets dès 20k€.
+                Découvrez nos opportunités d'investissement immobilier.
               </p>
               <a 
                 href="/investir" 

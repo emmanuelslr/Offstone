@@ -24,9 +24,9 @@ export function useFooterDictionary(locale: string) {
       status: 'Service status',
       langLabel: 'Language',
       linkedinTitle: 'Open LinkedIn in a new tab',
-      compliance1: 'Offstone acts as a tied agent for order reception-transmission (RTO) and marketing on behalf of Tylia, investment services provider (PSI) approved by',
+      compliance1: 'Offstone acts as a tied agent for order reception-transmission (RTO) and marketing on behalf of an approved investment services provider',
       compliance2: 'The information presented does not constitute investment advice or a personalized recommendation.',
-      compliance3: 'Indicative entry ticket: from €20,000. Platform membership fee: €1,200 incl. VAT. See fee schedule for details',
+      compliance3: 'See fee schedule for details',
       compliance4: 'No guaranteed performance; risk of capital loss; illiquid investment.',
       fees: 'fee schedule',
       acprTitle: 'Open ACPR in a new tab'

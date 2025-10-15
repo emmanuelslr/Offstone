@@ -39,7 +39,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
   ].reduce((a, b) => a + b, 0);
 
   const title = page > 1 ? `Ressources | Page ${page} | Offstone` : "Ressources | Offstone";
-  const description = "Guides, études et analyses pour investir dans l'immobilier. Horizon 4-7 ans, tickets dès 20k€. Qualité institutionnelle accessible.";
+  const description = "Guides, études et analyses pour investir dans l'immobilier. Horizon 4-7 ans. Qualité institutionnelle accessible.";
   
   // Construire l'URL canonique avec les paramètres
   const url = new URL("/ressources", "https://offstone.fr");

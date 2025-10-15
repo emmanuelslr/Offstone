@@ -160,7 +160,7 @@ Pour chaque article, créez un nouveau document dans SliceMachine avec les donn�
         },
         {
           "type": "paragraph",
-          "text": "Informations indicatives et non contractuelles. Rendements non garantis ; perte en capital possible ; investissement illiquide. Offstone agit comme agent lié de Tylia, PSI agréé par l'ACPR."
+          "text": "Informations indicatives et non contractuelles. Rendements non garantis ; perte en capital possible ; investissement illiquide. Offstone agit comme agent lié de une entreprise agréée, entreprise agréée agréé par l'ACPR."
         }
       ]
     },
@@ -305,7 +305,7 @@ Pour chaque article, créez un nouveau document dans SliceMachine avec les donn�
         },
         {
           "type": "paragraph",
-          "text": "Informations générales et non contractuelles. Offstone n'apporte pas de conseil fiscal personnalisé. L'accès aux offres se fait via Tylia, PSI agréé par l'ACPR."
+          "text": "Informations générales et non contractuelles. Offstone n'apporte pas de conseil fiscal personnalisé. L'accès aux offres se fait via une entreprise agréée, entreprise agréée agréé par l'ACPR."
         }
       ]
     },
@@ -430,7 +430,7 @@ Pour chaque article, créez un nouveau document dans SliceMachine avec les donn�
         },
         {
           "type": "paragraph",
-          "text": "La réception-transmission d'ordres et la commercialisation sont effectuées au nom d'un PSI via un agent lié. Les documents sont validés par le PSI."
+          "text": "La réception-transmission d'ordres et la commercialisation sont effectuées au nom d'un entreprise agréée via un agent lié. Les documents sont validés par le entreprise agréée."
         },
         {
           "type": "heading2",
@@ -438,7 +438,7 @@ Pour chaque article, créez un nouveau document dans SliceMachine avec les donn�
         },
         {
           "type": "paragraph",
-          "text": "Informations générales et non contractuelles. Ceci n'est ni une offre au public ni un conseil juridique. Services d'investissement via Tylia, PSI agréé par l'ACPR."
+          "text": "Informations générales et non contractuelles. Ceci n'est ni une offre au public ni un conseil juridique. Services d'investissement via une entreprise agréée, entreprise agréée agréé par l'ACPR."
         }
       ]
     },
@@ -571,7 +571,7 @@ Pour chaque article, créez un nouveau document dans SliceMachine avec les donn�
         },
         {
           "type": "paragraph",
-          "text": "Informations indicatives et non contractuelles. Rendements non garantis ; perte en capital possible ; investissement illiquide. Services d'investissement via Tylia, PSI agréé par l'ACPR."
+          "text": "Informations indicatives et non contractuelles. Rendements non garantis ; perte en capital possible ; investissement illiquide. Services d'investissement via une entreprise agréée, entreprise agréée agréé par l'ACPR."
         }
       ]
     },

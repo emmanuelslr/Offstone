@@ -108,99 +108,19 @@ export default function FraisPage() {
                     Frais d'adhésion à la plateforme
                   </h3>
                   <div className="space-y-3 text-gray-600 text-[15px] leading-relaxed">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="font-semibold text-black text-lg">1 200 € TTC</p>
-                      <p className="text-sm text-gray-500 mt-1">Frais uniques d'accès à la plateforme</p>
-                    </div>
-                    <p>Ces frais couvrent :</p>
+                    <p>Les frais d'adhésion couvrent :</p>
                     <ul className="list-disc list-inside space-y-1 ml-4">
                       <li>Accès à la plateforme d'investissement</li>
                       <li>Processus de qualification investisseur (KYC/LCB-FT)</li>
                       <li>Accès aux data rooms et documents d'investissement</li>
                       <li>Support client dédié</li>
                     </ul>
+                    <p className="text-sm text-gray-500 mt-2">Frais uniques d'accès à la plateforme</p>
                   </div>
                 </div>
               </div>
 
-              {/* Frais par opération */}
-              <div className="relative flex flex-row items-center w-full animate-on-scroll">
-                <div className="flex items-center justify-center w-16 h-16 rounded-full border border-gray-300 bg-transparent z-10 mr-8"
-                  style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.03)' }}>
-                  <span className="text-[28px] font-medium text-black"
-                    style={{ fontFamily: 'AllianceNo1-Regular,sans-serif', letterSpacing: '0.01em' }}>
-                    02
-                  </span>
-                </div>
-                <div className="flex-1 bg-transparent border border-gray-200 rounded-2xl px-6 sm:px-8 py-6 sm:py-8 text-left shadow-sm" style={{backdropFilter:'blur(2px)'}}>
-                  <h3 className="text-xl sm:text-2xl font-semibold mb-1.5 text-black"
-                    style={{fontFamily:'AllianceNo1-Regular,sans-serif',letterSpacing:'-0.01em'}}>
-                    Frais par opération d'investissement
-                  </h3>
-                  <div className="space-y-3 text-gray-600 text-[15px] leading-relaxed">
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm border-collapse">
-                        <thead>
-                          <tr className="border-b border-gray-200">
-                            <th className="text-left py-3 font-semibold text-black">Type de frais</th>
-                            <th className="text-left py-3 font-semibold text-black">Montant</th>
-                            <th className="text-left py-3 font-semibold text-black">Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr className="border-b border-gray-100">
-                            <td className="py-3 font-medium text-black">Frais de structuration</td>
-                            <td className="py-3">Variable selon l'opération</td>
-                            <td className="py-3">Création du SPV, montage juridique, due diligence</td>
-                          </tr>
-                          <tr className="border-b border-gray-100">
-                            <td className="py-3 font-medium text-black">Frais de gestion</td>
-                            <td className="py-3">1-2% annuel</td>
-                            <td className="py-3">Asset management, suivi opérationnel, reporting</td>
-                          </tr>
-                          <tr className="border-b border-gray-100">
-                            <td className="py-3 font-medium text-black">Frais de transaction</td>
-                            <td className="py-3">0,5-1%</td>
-                            <td className="py-3">Frais de sortie lors de la cession</td>
-                          </tr>
-                          <tr className="border-b border-gray-100">
-                            <td className="py-3 font-medium text-black">Promote (si applicable)</td>
-                            <td className="py-3">Conditionné à la performance</td>
-                            <td className="py-3">Partage des plus-values au-delà d'un seuil</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <p className="text-sm text-gray-500 mt-3">
-                      <strong>Note :</strong> Les frais exacts sont détaillés dans chaque memorandum d'investissement.
-                    </p>
-                  </div>
-                </div>
-              </div>
 
-              {/* Ticket d'entrée */}
-              <div className="relative flex flex-row items-center w-full animate-on-scroll">
-                <div className="flex items-center justify-center w-16 h-16 rounded-full border border-gray-300 bg-transparent z-10 mr-8"
-                  style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.03)' }}>
-                  <span className="text-[28px] font-medium text-black"
-                    style={{ fontFamily: 'AllianceNo1-Regular,sans-serif', letterSpacing: '0.01em' }}>
-                    03
-                  </span>
-                </div>
-                <div className="flex-1 bg-transparent border border-gray-200 rounded-2xl px-6 sm:px-8 py-6 sm:py-8 text-left shadow-sm" style={{backdropFilter:'blur(2px)'}}>
-                  <h3 className="text-xl sm:text-2xl font-semibold mb-1.5 text-black"
-                    style={{fontFamily:'AllianceNo1-Regular,sans-serif',letterSpacing:'-0.01em'}}>
-                    Ticket d'entrée minimum
-                  </h3>
-                  <div className="space-y-3 text-gray-600 text-[15px] leading-relaxed">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="font-semibold text-black text-lg">À partir de 20 000 €</p>
-                      <p className="text-sm text-gray-500 mt-1">Montant minimum par opération</p>
-                    </div>
-                    <p>Le ticket d'entrée peut varier selon l'opération et les conditions de marché.</p>
-                  </div>
-                </div>
-              </div>
 
               {/* Transparence */}
               <div className="relative flex flex-row items-center w-full animate-on-scroll">
@@ -208,7 +128,7 @@ export default function FraisPage() {
                   style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.03)' }}>
                   <span className="text-[28px] font-medium text-black"
                     style={{ fontFamily: 'AllianceNo1-Regular,sans-serif', letterSpacing: '0.01em' }}>
-                    04
+                    02
                   </span>
                 </div>
                 <div className="flex-1 bg-transparent border border-gray-200 rounded-2xl px-6 sm:px-8 py-6 sm:py-8 text-left shadow-sm" style={{backdropFilter:'blur(2px)'}}>
@@ -233,7 +153,7 @@ export default function FraisPage() {
                   style={{ boxShadow: '0 1px 4px 0 rgba(0,0,0,0.03)' }}>
                   <span className="text-[28px] font-medium text-black"
                     style={{ fontFamily: 'AllianceNo1-Regular,sans-serif', letterSpacing: '0.01em' }}>
-                    05
+                    03
                   </span>
                 </div>
                 <div className="flex-1 bg-transparent border border-gray-200 rounded-2xl px-6 sm:px-8 py-6 sm:py-8 text-left shadow-sm" style={{backdropFilter:'blur(2px)'}}>

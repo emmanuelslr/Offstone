@@ -38,14 +38,14 @@ const sections: Section[] = [
           "Plateforme de co-investissement immobilier portée par Jonathan Anguelov : nous sélectionnons, structurons et co-investissons dans chaque opération.",
       },
       {
-        q: "Qui peut investir et quel est le ticket d’entrée ?",
+        q: "Qui peut investir ?",
         a:
-          "Investisseurs professionnels et particuliers (avertis ou non, selon l’opération) via personne physique ou société/holding. Ticket indicatif : ≥ 20 k€, précisé dossier par dossier, sous réserve d’éligibilité (KYC/KYB, adéquation, capacités financières).",
+          "Investisseurs professionnels et particuliers (avertis ou non, selon l'opération) via personne physique ou société/holding, sous réserve d'éligibilité (KYC/KYB, adéquation, capacités financières).",
       },
       {
         q: "En quoi Offstone diffère du crowdfunding ?",
         a:
-          "Nous ne faisons pas de financement participatif. Opérations privées (club deals/co-investissement) via PSI en RTO, réservées à des investisseurs éligibles.",
+          "Nous ne faisons pas de financement participatif. Opérations privées (club deals/co-investissement) en RTO, réservées à des investisseurs éligibles.",
       },
       {
         q: "Quel est le processus pour investir ?",
@@ -63,12 +63,12 @@ const sections: Section[] = [
       {
         q: "Comment sont conservés les fonds et les titres ?",
         a:
-          "Fonds ségrégués via le PSI ; titres au porteur nominatif ou chez le teneur de registre désigné.",
+          "Fonds ségrégués ; titres au porteur nominatif ou chez le teneur de registre désigné.",
       },
       {
         q: "Quels sont les frais ?",
         a:
-          "Transparents et détaillés par dossier. Frais d’adhésion à l’accès plateforme : 1 200 € TTC. Selon les opérations : frais de structuration, frais de gestion/asset management, frais de transaction, éventuel promote conditionné à la performance. Aucun frais caché.",
+          "Transparents et détaillés par dossier. Aucun frais caché.",
       },
       {
         q: "Délais de traitement d’une candidature ?",
@@ -114,7 +114,7 @@ const sections: Section[] = [
       {
         q: "Quel est votre statut réglementaire ?",
         a:
-          "Offstone agit en qualité d’agent lié pour la réception-transmission d’ordres (RTO) et la commercialisation au nom de Tylia, entreprise d’investissement (PSI) agréée par l’ACPR — Autorité de contrôle prudentiel et de résolution. Les services d’investissement sont fournis par Tylia ; Offstone opère sous sa responsabilité pour les activités déléguées.",
+          "Offstone agit en qualité d'agent lié pour la réception-transmission d'ordres (RTO) et la commercialisation. Les services d'investissement sont fournis par une entreprise agréée.",
       },
       { q: "Pourquoi un KYC/KYB est-il requis ?", a: "Conformité LCB-FT et connaissance client/bénéficiaire effectif (réglementations UE/FR)." },
       {

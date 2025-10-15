@@ -41,7 +41,7 @@ const solutions = [
     description: "Actifs situés dans les quartiers centraux de grandes villes françaises",
          fiscalite: "",
     equity: "\nTaille cible de 200 M€",
-  minimum: "Accessible à partir de 20k€",
+  minimum: "Accessible selon éligibilité",
     image: "/images/Buildings/Ienaa.webp",
     cta: "Découvrir ce fonds"
   }
