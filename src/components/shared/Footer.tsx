@@ -35,7 +35,7 @@ export default function Footer() {
                   <Link href="#" className="footer-link">How to launch</Link>
                   <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Why Swan</Link>
                   <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Features</Link>
-                  <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Pricing</Link>
+                  <Link href="/legal/mentions-legales" className="text-[#8F9193] hover:text-white transition-colors text-sm">Légal</Link>
                 </div>
               </div>
 
@@ -83,7 +83,7 @@ export default function Footer() {
                 <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm whitespace-nowrap">How to launch</Link>
                 <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm whitespace-nowrap">Why Swan</Link>
                 <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Features</Link>
-                <Link href="#" className="text-[#8F9193] hover:text-white transition-colors text-sm">Pricing</Link>
+                <Link href="/legal/mentions-legales" className="text-[#8F9193] hover:text-white transition-colors text-sm">Légal</Link>
               </div>
             </div>
 

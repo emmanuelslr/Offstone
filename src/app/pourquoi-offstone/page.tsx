@@ -122,7 +122,7 @@ export default function StrategiePage() {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h2l1 7h12l1-7h2"></path>
                             </svg>
                           </div>
-                          <h3 className="text-base font-medium text-[#1E2124]">Ticket adapté</h3>
+                          <h3 className="text-base font-medium text-[#1E2124]">Montant adapté</h3>
                         </div>
                         <div className="w-full h-px mb-2" style={{ backgroundColor: '#E8E9EC' }}></div>
                         <p className="text-sm text-gray-600">Des montants d&apos;investissement ajustés à votre stratégie.</p>

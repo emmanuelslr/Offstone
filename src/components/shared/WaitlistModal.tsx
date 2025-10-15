@@ -996,7 +996,7 @@ const reset = useCallback(async () => {
                   style={{ willChange: 'transform, opacity' }}
                 >
                   <div className="mb-6">
-                    {current === 'ticket' && (<span className="text-2xl font-semibold leading-tight">Indiquez votre ticket d'investissement</span>)}
+                    {current === 'ticket' && (<span className="text-2xl font-semibold leading-tight">Indiquez votre capacité d'investissement</span>)}
                     {current === 'rdv' && (<span className="text-2xl font-semibold leading-tight">Souhaitez-vous programmer un RDV ?</span>)}
                     {current === 'calendly' && (<span className="text-2xl font-semibold leading-tight">Choisissez un créneau avec notre équipe</span>)}
                     {current === 'discovery' && (<span className="text-2xl font-semibold leading-tight">Comment nous avez-vous découvert ?</span>)}

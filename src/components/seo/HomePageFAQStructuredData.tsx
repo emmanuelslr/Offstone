@@ -9,8 +9,8 @@ const homePageFAQs = [
     answer: "Nous investissons notre capital dans les mêmes opérations et aux mêmes conditions que vous pour un alignement total."
   },
   {
-    question: "Qui peut investir et quel est le ticket d'entrée ?",
-    answer: "Particuliers avertis et investisseurs professionnels, en direct ou via votre société, avec ticket précisé pour chaque dossier."
+    question: "Qui peut investir ?",
+    answer: "Particuliers avertis et investisseurs professionnels, en direct ou via votre société, selon éligibilité pour chaque dossier."
   },
   {
     question: "Comment sélectionnez-vous les opportunités ?",

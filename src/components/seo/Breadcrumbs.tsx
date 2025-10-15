@@ -54,7 +54,7 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
         'cookies': 'Cookies',
         'mentions-legales': 'Mentions Légales',
         'reclamations': 'Réclamations',
-        'frais': 'Frais'
+        'mentions-legales': 'Mentions légales'
       };
       
       const name = segmentNames[segment] || segment.charAt(0).toUpperCase() + segment.slice(1);

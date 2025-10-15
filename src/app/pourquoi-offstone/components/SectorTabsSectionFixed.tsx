@@ -37,7 +37,7 @@ const SECTORS: SectorConfig[] = [
     key: "hotels",
     title: "H\u00f4tels",
     subtitle:
-      "Nous gérons toute la chaîne de valeur, du design\n      à la tarification dynamique, pour des hôtels\n      idéalement situés, à forte identité, offrant des revenus pérennes.",
+      "Nous gérons toute la chaîne de valeur, du design\n      à la gestion opérationnelle, pour des hôtels\n      idéalement situés, à forte identité, offrant des revenus pérennes.",
     image: "/images/Buildings/Ienaa.webp",
   },
   {

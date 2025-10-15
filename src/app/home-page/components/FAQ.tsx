@@ -85,12 +85,12 @@ export default function FAQ() {
               <AccordionItem value="faq-2" className="group hover:bg-[#EDE9E4] border border-[#DEDCD9] rounded-lg px-4 sm:px-6 overflow-hidden">
                 <AccordionTrigger data-item="faq-2" className="w-full text-left py-4 sm:py-5 hover:no-underline">
                   <div className="font-normal text-base sm:text-lg md:text-xl lg:text-[22px] text-[#111] pr-4" style={{ fontFamily: 'AllianceNo1-Regular, sans-serif' }}>
-                    Qui peut investir et quel est le ticket d&apos;entrée ?
+                    Qui peut investir ?
                   </div>
                 </AccordionTrigger>
                 <AccordionContent data-item="faq-2" className="pb-4 sm:pb-5">
                   <div className="text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
-                    Particuliers avertis et investisseurs professionnels, en direct ou via votre société, avec ticket précisé pour chaque dossier.
+                    Particuliers avertis et investisseurs professionnels, en direct ou via votre société, selon éligibilité pour chaque dossier.
                   </div>
                 </AccordionContent>
               </AccordionItem>

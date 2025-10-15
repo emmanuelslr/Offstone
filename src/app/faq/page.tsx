@@ -152,7 +152,7 @@ const sections: Section[] = [
       {
         q: "Comment fonctionne la distribution (“waterfall”) ?",
         a:
-          "Priorités contractuelles : remboursement du capital, rémunération préférentielle si prévue, puis partage des surperformances incluant éventuellement un promote.",
+          "Priorités contractuelles : remboursement du capital, rémunération préférentielle si prévue, puis partage des surperformances.",
       },
       {
         q: "Quels documents fournis avant d’investir ?",
@@ -172,7 +172,7 @@ const sections: Section[] = [
       {
         q: "Et en cas de sursouscription ?",
         a:
-          "Allocations proratisées ou priorité selon critères annoncés (ex. historique, rapidité, tickets cibles).",
+          "Allocations proratisées ou priorité selon critères annoncés (ex. historique, rapidité).",
       },
       {
         q: "Quels sont les principaux risques ?",

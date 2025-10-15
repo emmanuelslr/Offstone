@@ -26,9 +26,9 @@ export function useFooterDictionary(locale: string) {
       linkedinTitle: 'Open LinkedIn in a new tab',
       compliance1: 'Offstone acts as a tied agent for order reception-transmission (RTO) and marketing on behalf of an approved investment services provider',
       compliance2: 'The information presented does not constitute investment advice or a personalized recommendation.',
-      compliance3: 'See fee schedule for details',
+      compliance3: 'See legal information for details',
       compliance4: 'No guaranteed performance; risk of capital loss; illiquid investment.',
-      fees: 'fee schedule',
+      fees: 'legal information',
       acprTitle: 'Open ACPR in a new tab'
     };
   }
@@ -56,10 +56,10 @@ export function useFooterDictionary(locale: string) {
     langLabel: "Langue",
     linkedinTitle: "Ouvre LinkedIn dans un nouvel onglet",
     compliance1: "AVERTISSEMENT : Investir en immobilier non coté présente un risque de perte en capital et d'illiquidité. Investissez uniquement l'argent dont vous n'avez pas besoin immédiatement et diversifiez vos placements. Offstone opère dans le cadre d'un cercle privé et réserve ses opportunités d'investissement à un cercle restreint d'investisseurs (personnes physiques et morales).",
-    compliance2: "Offstone ne propose pas de conseils en investissement. Rien ici ne doit être considéré comme une recommandation d'investir dans un titre quel qu'il soit. Les documents relatifs à votre investissement via un SPV dédié, disponibles dans votre espace compte sécurisé, décrivent les risques potentiels, les frais et les dépenses. Veuillez lire attentivement ces avertissements de risques. La valeur des investissements peut varier dans le temps. Les investissements en immobilier via nos club-deals ont un horizon de sortie à moyen terme (2 à 5 ans) avec une liquidité limitée. Les performances passées ne garantissent pas les rendements futurs. Investir dans un club-deal immobilier n'est pas comparable à un dépôt bancaire.",
+    compliance2: "Offstone ne propose pas de conseils en investissement. Rien ici ne doit être considéré comme une recommandation d'investir dans un titre quel qu'il soit. Les documents relatifs à votre investissement via un SPV dédié, disponibles dans votre espace compte sécurisé, décrivent les risques potentiels. Veuillez lire attentivement ces avertissements de risques. La valeur des investissements peut varier dans le temps. Les investissements en immobilier via nos club-deals ont un horizon de sortie à moyen terme (2 à 5 ans) avec une liquidité limitée. Les performances passées ne garantissent pas les rendements futurs. Investir dans un club-deal immobilier n'est pas comparable à un dépôt bancaire.",
     compliance3: "",
     compliance4: "Performance non garantie ; risque de perte en capital ; investissement illiquide.",
-    fees: "barème des frais",
+    fees: "informations légales",
     acprTitle: "Ouvre l’ACPR dans un nouvel onglet"
   };
 }
