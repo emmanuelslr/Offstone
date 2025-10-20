@@ -223,7 +223,7 @@ export default function ReclamationsPage() {
                     Escalade interne
                   </h3>
                   <div className="space-y-2 text-gray-600 text-[15px] leading-relaxed">
-                    <p>Si la réponse ne vous satisfait pas, demande de réexamen auprès de la direction : <a href="mailto:direction@offstone.fr" className="text-black hover:text-gray-600 underline">direction@offstone.fr</a> en rappelant la référence de la réclamation.</p>
+                    <p>Si la réponse ne vous satisfait pas, demande de réexamen auprès de la direction : <a href="mailto:reclamations@offstone.fr" className="text-black hover:text-gray-600 underline">reclamations@offstone.fr</a> en rappelant la référence de la réclamation.</p>
                   </div>
                 </div>
               </div>
