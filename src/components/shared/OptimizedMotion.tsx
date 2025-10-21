@@ -1,15 +1,17 @@
 'use client';
 
-// Imports optimisés de framer-motion pour réduire la taille du bundle
-export { motion } from 'framer-motion';
-export { AnimatePresence } from 'framer-motion';
-export { useInView } from 'framer-motion';
-export { useScroll } from 'framer-motion';
-export { useTransform } from 'framer-motion';
-export { useSpring } from 'framer-motion';
+// Direct re-exports to avoid React Fast Refresh proxy conflicts
+export { 
+  motion, 
+  AnimatePresence, 
+  useInView, 
+  useScroll, 
+  useTransform, 
+  useSpring 
+} from 'framer-motion';
 
-// Composants d'animation optimisés
-import { motion as m, useInView as useInViewHook, useScroll as useScrollHook, useTransform as useTransformHook, useSpring as useSpringHook } from 'framer-motion';
+// Import motion separately for creating element shortcuts
+import { motion as m } from 'framer-motion';
 
 // Composant de base optimisé
 export const MotionDiv = m.div;
@@ -22,11 +24,7 @@ export const MotionSpan = m.span;
 export const MotionButton = m.button;
 export const MotionImg = m.img;
 
-// Hooks optimisés
-export const useInView = useInViewHook;
-export const useScroll = useScrollHook;
-export const useTransform = useTransformHook;
-export const useSpring = useSpringHook;
+// Hooks are re-exported directly above to avoid duplicate names
 
 // Variants d'animation prédéfinis pour éviter la duplication
 export const fadeInUp = {

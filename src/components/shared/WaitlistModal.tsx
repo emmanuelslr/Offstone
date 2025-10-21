@@ -1030,6 +1030,9 @@ const reset = useCallback(async () => {
 
                   {current === 'ticket' && (
                     <div className="space-y-4">
+                      <p className="text-white/70 text-sm leading-relaxed">
+                        Complétez le questionnaire pour finaliser votre inscription à la liste d'attente.
+                      </p>
                       {[
                         { k: 'under_20k', label: 'Moins de 20k€' },
                         { k: '20_50k', label: 'Entre 20k€ et 50k€' },
@@ -1056,6 +1059,9 @@ const reset = useCallback(async () => {
 
                   {current === 'rdv' && (
                     <div className="space-y-3">
+                      <p className="text-white/70 text-sm leading-relaxed">
+                        Ce court échange nous permet de comprendre précisément vos attentes, vous présenter notre vision, et vous garantir un accès prioritaire aux opportunités immobilières sélectionnées par Jonathan Anguelov.
+                      </p>
                       {[
                         { k: 'now' as const, label: 'Programmer un rdv maintenant' },
                         { k: 'later' as const, label: 'Programmer plus tard' },

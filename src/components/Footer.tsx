@@ -9,7 +9,7 @@ import { useFooterDictionary } from '../lib/useFooterDictionary';
 import { trackFooterLinkClick, trackOutboundClick } from '../lib/analytics';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import SpontaneousApplicationModal from './forms/SpontaneousApplicationModal';
 
@@ -22,6 +22,11 @@ type FooterColProps = { title: string; links: FooterNavLink[]; section: string; 
 const fallbackLocale = typeof navigator !== 'undefined' && navigator.language?.startsWith('en') ? 'en' : 'fr';
 
 export default function Footer({ locale }: { locale?: string }) {
+  const pathname = usePathname();
+  if (pathname === '/waitlist') {
+    return null;
+  }
+
   const router = useRouter();
   const lang = locale || fallbackLocale;
   const [currentLang, setCurrentLang] = useState(lang);
