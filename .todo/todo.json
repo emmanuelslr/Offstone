@@ -1,0 +1,32 @@
+[
+	{
+		"id": 1,
+		"title": "Reproduce build error context",
+		"description": "Run build and inspect stack trace for self/length error",
+			"status": "completed"
+	},
+	{
+		"id": 2,
+		"title": "Identify offending module",
+		"description": "Locate code requiring self/length causing failure in Document",
+			"status": "completed"
+	},
+	{
+		"id": 3,
+		"title": "Implement fix",
+		"description": "Adjust code to avoid accessing undefined length during SSR",
+			"status": "completed"
+	},
+	{
+		"id": 4,
+		"title": "Verify build",
+		"description": "Run pnpm build to ensure issue resolved",
+			"status": "blocked"
+	},
+	{
+		"id": 5,
+		"title": "Summarize outcome",
+		"description": "Report fix and verification to user",
+			"status": "completed"
+	}
+]

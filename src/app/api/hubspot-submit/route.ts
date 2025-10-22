@@ -26,12 +26,20 @@ export interface HubSpotSubmissionData {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: HubSpotSubmissionData = await request.json();
-    
+    // Defensive parsing: request.json() may throw or return undefined during static collection
+    let rawBody: unknown;
+    try {
+      rawBody = await request.json();
+    } catch (e) {
+      rawBody = undefined;
+    }
+
+    const body = (rawBody ?? {}) as Partial<HubSpotSubmissionData>;
+
     // Validate required fields
     const requiredFields = ['email', 'firstname', 'lastname', 'phone_e164', 'capacite_investissement'];
     const missingFields = requiredFields.filter(field => !body[field as keyof HubSpotSubmissionData]);
-    
+
     if (missingFields.length > 0) {
       return NextResponse.json(
         { error: `Missing required fields: ${missingFields.join(', ')}` },
@@ -40,8 +48,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate email format
+    const email = String(body.email ?? '');
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(body.email)) {
+    if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Invalid email format' },
         { status: 400 }
@@ -51,11 +60,11 @@ export async function POST(request: NextRequest) {
     // Prepare HubSpot form submission
     const hubspotPayload = {
       fields: [
-        { name: 'email', value: body.email.toLowerCase().trim() },
-        { name: 'firstname', value: body.firstname.trim() },
-        { name: 'lastname', value: body.lastname.trim() },
-        { name: 'phone', value: body.phone_e164 },
-        { name: 'capacite_investissement', value: body.capacite_investissement }
+        { name: 'email', value: email.toLowerCase().trim() },
+        { name: 'firstname', value: String(body.firstname ?? '').trim() },
+        { name: 'lastname', value: String(body.lastname ?? '').trim() },
+        { name: 'phone', value: String(body.phone_e164 ?? '') },
+        { name: 'capacite_investissement', value: String(body.capacite_investissement ?? '') }
       ],
       context: {
         hutk: body.hutk || null,
