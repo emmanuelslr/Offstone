@@ -28,5 +28,11 @@
 		"title": "Summarize outcome",
 		"description": "Report fix and verification to user",
 			"status": "completed"
+		},
+		{
+			"id": 6,
+			"title": "Update hero subheadline",
+			"description": "Replace opportunité immobilière copy with more mysterious teaser",
+				"status": "completed"
 	}
 ]
