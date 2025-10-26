@@ -10,9 +10,6 @@ const CRITICAL_RESOURCES = [
   '/favicon.webp',
   '/manifest.json',
   '/images/og-image.webp',
-  '/images/offstone-navbar-logo.svg',
-  '/fonts/inter-var.woff2',
-  '/fonts/inter-var.woff',
 ];
 
 // Ressources statiques à mettre en cache
