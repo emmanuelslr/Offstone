@@ -30,7 +30,9 @@ export default function WaitlistHero() {
             Lancement janvier 2026
           </span>
           <h1 className="mt-4 text-[28px] xs:text-[32px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[72px] font-normal tracking-tight leading-[1.05] text-white max-w-5xl">
-            Quelque chose de grand se prépare.
+            Quelque chose de grand
+            <br />
+            se prépare.
           </h1>
           <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-white/85 mt-4 xs:mt-6 font-light tracking-wide max-w-3xl">
             Rejoignez la liste d’attente pour être prévenu en premier de ma nouvelle aventure.
