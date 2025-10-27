@@ -420,6 +420,12 @@ export async function POST(req: Request) {
     userAgent,
   });
 
+  console.log('🔍 [submit-lead] Created Supabase record:', {
+    email,
+    recordKeys: Object.keys(supabaseRecord),
+    record: supabaseRecord,
+  });
+
   // Note: form_priority removed - column doesn't exist in leads_candidature table
   // (supabaseRecord as any).form_priority = formPriority;
 
@@ -428,12 +434,19 @@ export async function POST(req: Request) {
   
   if (shouldUpdate) {
     try {
+      console.log('🔍 [submit-lead] Calling supabaseUpsertProspect...');
       const stored = await supabaseUpsertProspect(supabaseRecord);
       supabaseStored = Boolean(stored);
       console.info("submit_lead.supabase_upsert_ok", { email, stored: supabaseStored, formPriority, isNewContact });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      console.error("submit_lead.supabase_upsert_failed", { email, error: message });
+      const stack = error instanceof Error ? error.stack : undefined;
+      console.error("submit_lead.supabase_upsert_failed", { 
+        email, 
+        error: message,
+        stack,
+        sentRecord: supabaseRecord,
+      });
       const res = NextResponse.json({ error: "Supabase upsert failed" }, { status: 500 });
       applyCorsHeaders(req, res);
       if (rateLimiter) applyRateLimitCookie(res, rateLimiter);
@@ -481,8 +494,8 @@ export async function POST(req: Request) {
     utm,
     consent: body.consentement_marketing === true,
     hutk: isValidHubspotCookie ? hutkValue : undefined,
-    pageUri: truncate(body.pageUri, 2048),
-    pageName: truncate(body.pageName, 512),
+    pageUri: truncate(sanitize(body.pageUri, 2048), 2048),
+    pageName: truncate(sanitize(body.pageName, 512), 512),
     ipAddress: ip,
     source_formulaire: sanitize(body.source_formulaire, 64) ?? 'candidature_investisseur_offstone', // Default to 'candidature_investisseur_offstone' for waitinglist
   });

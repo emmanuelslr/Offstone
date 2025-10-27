@@ -88,21 +88,42 @@ export async function supabaseGetProspectByEmail(email: string) {
 export async function supabaseUpsertProspect(record: Record<string, unknown>) {
   const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  
+  console.log('🔍 [supabaseUpsertProspect] Starting upsert', {
+    hasUrl: !!url,
+    hasKey: !!key,
+    urlPrefix: url?.substring(0, 30),
+    recordKeys: Object.keys(record),
+    recordSample: {
+      email: record.email,
+      first_name: record.first_name,
+      last_name: record.last_name,
+      phone: record.phone,
+      ticket_target: record.ticket_target,
+      discovery: record.discovery,
+      wants_call: record.wants_call,
+    }
+  });
+  
   if (!url || !key) {
+    console.error('❌ [supabaseUpsertProspect] Missing env vars', { hasUrl: !!url, hasKey: !!key });
     throw new Error("Missing SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL) or SUPABASE_SERVICE_ROLE_KEY env var");
   }
 
   const email = record.email as string;
   if (!email) {
+    console.error('❌ [supabaseUpsertProspect] Missing email in record');
     throw new Error("Email is required for upsert");
   }
 
   // 1. Check if email already exists
+  console.log('🔍 [supabaseUpsertProspect] Checking if email exists:', email);
   const existing = await supabaseGetProspectByEmail(email);
+  console.log('🔍 [supabaseUpsertProspect] Existing record:', existing ? 'FOUND' : 'NOT_FOUND');
 
   if (existing) {
     // 2. UPDATE existing record
-    console.log('📝 Email exists, updating record:', email);
+    console.log('📝 [supabaseUpsertProspect] Email exists, updating record:', email);
     const endpoint = `${url}/rest/v1/leads_candidature?email=eq.${encodeURIComponent(email)}`;
     const requestInit: RequestInit = {
       method: "PATCH",
@@ -115,18 +136,32 @@ export async function supabaseUpsertProspect(record: Record<string, unknown>) {
       body: JSON.stringify(record),
       cache: "no-store",
     };
+    
+    console.log('📤 [supabaseUpsertProspect] PATCH request', {
+      endpoint,
+      bodyKeys: Object.keys(record),
+      bodyString: JSON.stringify(record),
+    });
+    
     const res = await fetch(endpoint, requestInit);
 
     if (!res.ok) {
       const text = await res.text();
-      console.error('❌ Supabase leads_candidature update error:', { status: res.status, text, url: endpoint });
+      console.error('❌ [supabaseUpsertProspect] UPDATE failed:', { 
+        status: res.status, 
+        statusText: res.statusText,
+        responseBody: text, 
+        endpoint,
+        sentRecord: record,
+      });
       throw new Error(`Supabase leads_candidature update error: ${res.status} ${text}`);
     }
     const data = await res.json();
+    console.log('✅ [supabaseUpsertProspect] UPDATE success:', { email, returnedData: data });
     return Array.isArray(data) ? data[0] : data;
   } else {
     // 3. INSERT new record
-    console.log('✨ New email, inserting record:', email);
+    console.log('✨ [supabaseUpsertProspect] New email, inserting record:', email);
     const endpoint = `${url}/rest/v1/leads_candidature`;
     const requestInit: RequestInit = {
       method: "POST",
@@ -139,14 +174,28 @@ export async function supabaseUpsertProspect(record: Record<string, unknown>) {
       body: JSON.stringify([record]),
       cache: "no-store",
     };
+    
+    console.log('📤 [supabaseUpsertProspect] POST request', {
+      endpoint,
+      bodyKeys: Object.keys(record),
+      bodyString: JSON.stringify([record]),
+    });
+    
     const res = await fetch(endpoint, requestInit);
 
     if (!res.ok) {
       const text = await res.text();
-      console.error('❌ Supabase leads_candidature insert error:', { status: res.status, text, url: endpoint });
+      console.error('❌ [supabaseUpsertProspect] INSERT failed:', { 
+        status: res.status,
+        statusText: res.statusText,
+        responseBody: text, 
+        endpoint,
+        sentRecord: record,
+      });
       throw new Error(`Supabase leads_candidature insert error: ${res.status} ${text}`);
     }
     const data = await res.json();
+    console.log('✅ [supabaseUpsertProspect] INSERT success:', { email, returnedData: data });
     return Array.isArray(data) ? data[0] : data;
   }
 }
