@@ -45,6 +45,7 @@ interface SubmitLeadBody {
   discovery?: unknown; // How the user discovered us
   wants_call?: unknown; // Boolean - does the user want a call?
   source_formulaire?: unknown; // 'candidature_investisseur_offstone' | 'newsletter_jonathan' | 'rejoindre_equipe'
+  linkedin_url?: unknown;
 }
 
 type HubspotField = { name: string; value: string };
@@ -157,6 +158,7 @@ export function buildHubspotPayload(input: {
   source_formulaire?: string;
   discovery?: string | null;
   referrer?: string | null;
+  linkedinUrl?: string | null;
 }): HubspotPayload {
   const fields: HubspotField[] = [
     { name: "email", value: input.email },
@@ -183,6 +185,9 @@ export function buildHubspotPayload(input: {
   }
   if (input.referrer) {
     fields.push({ name: "ref", value: input.referrer });
+  }
+  if (input.linkedinUrl) {
+    fields.push({ name: "url_linkedin", value: input.linkedinUrl });
   }
 
   // Consent field removed - not needed for HubSpot form
@@ -316,6 +321,7 @@ export async function POST(req: Request) {
 
   const discovery = sanitize(body.discovery, 512) ?? null;
   const referrer = sanitize(body.ref, 512) ?? null;
+  const linkedinUrl = sanitize(body.linkedin_url, 512) ?? null;
 
   const ip = (() => {
     const value = getIP(req);
@@ -341,6 +347,7 @@ export async function POST(req: Request) {
     source_formulaire: sanitize(body.source_formulaire, 64) ?? 'candidature_investisseur_offstone', // Default to 'candidature_investisseur_offstone' for waitinglist
     discovery,
     referrer,
+    linkedinUrl,
   });
 
   console.info("submit_lead.hubspot_payload", { 

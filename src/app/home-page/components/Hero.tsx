@@ -73,8 +73,7 @@ export default function Hero() {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="block mb-2"
               >
-                On investit ensemble<br />
-                dans l&apos;immobilier
+                L&apos;immobilier institutionnel performant, enfin démocratisé
               </motion.span>
             </h1>
 
