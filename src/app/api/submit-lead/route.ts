@@ -8,7 +8,6 @@ import {
   truncate,
   validEmail,
 } from "@/lib/security";
-import { supabaseUpsertProspect, supabaseGetProspectByEmail } from "@/lib/supabaseAdmin";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -46,33 +45,12 @@ interface SubmitLeadBody {
   discovery?: unknown; // How the user discovered us
   wants_call?: unknown; // Boolean - does the user want a call?
   source_formulaire?: unknown; // 'candidature_investisseur_offstone' | 'newsletter_jonathan' | 'rejoindre_equipe'
-  skipHubspot?: unknown; // Skip HubSpot submission (only save to Supabase)
 }
 
 type HubspotField = { name: string; value: string };
 type HubspotPayload = {
   fields: HubspotField[];
   context: Record<string, string | undefined>;
-};
-
-type SupabaseRecord = {
-  email: string;
-  first_name: string | null;
-  last_name: string | null;
-  phone: string | null;
-  consent: boolean;
-  status: string;
-  asset_class: string | null;
-  page_url: string | null;
-  ref: string | null;
-  utm_source: string | null;
-  utm_medium: string | null;
-  utm_campaign: string | null;
-  utm_content: string | null;
-  utm_term: string | null;
-  ticket_target: string | null;
-  discovery: string | null;
-  wants_call: boolean;
 };
 
 function sanitize(value: unknown, max = 255): string | undefined {
@@ -164,40 +142,6 @@ function applyCorsHeaders(req: Request, res: NextResponse) {
   res.headers.append("Vary", "Origin");
 }
 
-function createSupabaseRecord(params: {
-  payload: SubmitLeadBody;
-  email: string;
-  firstname: string | null;
-  lastname: string | null;
-  phoneRaw: string | null;
-  phoneE164: string | null;
-  capacity: string | null;
-  utm: Record<string, string | undefined>;
-  submittedAt: string;
-  ip: string | null;
-  userAgent: string | null;
-}): SupabaseRecord {
-  return {
-    email: params.email,
-    first_name: params.firstname,
-    last_name: params.lastname,
-    phone: params.phoneE164, // Use E164 format for phone
-    consent: params.payload.consentement_marketing === true,
-    status: 'open', // Default status
-    asset_class: params.capacity === 'retail' ? 'retail' : 'other', // Map capacity to asset_class
-    page_url: sanitize(params.payload.pageUri, 2048) ?? null,
-    ref: sanitize(params.payload.ref) ?? null,
-    utm_source: params.utm.utm_source ?? null,
-    utm_medium: params.utm.utm_medium ?? null,
-    utm_campaign: params.utm.utm_campaign ?? null,
-    utm_content: params.utm.utm_content ?? null,
-    utm_term: params.utm.utm_term ?? null,
-    ticket_target: sanitize(params.payload.ticket_target) ?? null,
-    discovery: sanitize(params.payload.discovery) ?? null,
-    wants_call: params.payload.wants_call === true,
-  };
-}
-
 export function buildHubspotPayload(input: {
   email: string;
   firstname: string | null;
@@ -211,6 +155,8 @@ export function buildHubspotPayload(input: {
   pageName?: string;
   ipAddress?: string | null;
   source_formulaire?: string;
+  discovery?: string | null;
+  referrer?: string | null;
 }): HubspotPayload {
   const fields: HubspotField[] = [
     { name: "email", value: input.email },
@@ -231,6 +177,12 @@ export function buildHubspotPayload(input: {
   }
   if (input.source_formulaire) {
     fields.push({ name: "source_formulaire", value: input.source_formulaire });
+  }
+  if (input.discovery) {
+    fields.push({ name: "comment_la_personne_a_entendu_parler_de_nous", value: input.discovery });
+  }
+  if (input.referrer) {
+    fields.push({ name: "ref", value: input.referrer });
   }
 
   // Consent field removed - not needed for HubSpot form
@@ -324,10 +276,7 @@ export async function POST(req: Request) {
     return res;
   }
 
-  // Note: Cooldown protection removed to allow:
-  // 1. Initial submission when modal opens (skipHubspot: true)
-  // 2. Final submission when form completes (full data)
-  // OR abandonment submission when user closes without completing
+  // Note: Cooldown protection removed to support both final submission and abandonment fallbacks
 
   const firstname = sanitize(body.firstname, 128) ?? null;
   const lastname = sanitize(body.lastname, 128) ?? null;
@@ -357,8 +306,6 @@ export async function POST(req: Request) {
     capacity = capacityRaw;
   }
 
-  const assetClass = sanitize(body.asset_class) || 'retail';
-
   const utm = {
     utm_source: sanitize(body.utm_source),
     utm_medium: sanitize(body.utm_medium),
@@ -367,120 +314,14 @@ export async function POST(req: Request) {
     utm_content: sanitize(body.utm_content),
   };
 
-  const submittedAt = new Date().toISOString();
+  const discovery = sanitize(body.discovery, 512) ?? null;
+  const referrer = sanitize(body.ref, 512) ?? null;
+
   const ip = (() => {
     const value = getIP(req);
     return !value || value === "unknown" ? null : value;
   })();
   const userAgent = sanitize(req.headers.get("user-agent"), 1024) ?? null;
-
-  // Determine form priority
-  const formPriority = sanitize(body.form_priority) || 'waitinglist'; // Default to highest priority
-  const priorityLevels = { 'waitinglist': 3, 'opportunities': 2, 'newsletter': 1 };
-  const currentPriority = priorityLevels[formPriority as keyof typeof priorityLevels] || 1;
-
-  // Check if contact already exists with higher priority
-  let shouldUpdate = true;
-  let existingContact = null;
-  
-  try {
-    existingContact = await supabaseGetProspectByEmail(email);
-    
-    // If contact exists, check priority
-    if (existingContact) {
-      const existingPriority = existingContact.form_priority ? 
-        priorityLevels[existingContact.form_priority as keyof typeof priorityLevels] || 1 : 1;
-      
-      if (existingPriority > currentPriority) {
-        console.info("submit_lead.priority_skip", { 
-          email, 
-          currentPriority, 
-          existingPriority, 
-          formPriority 
-        });
-        shouldUpdate = false;
-      }
-    }
-  } catch (error) {
-    console.warn("submit_lead.priority_check_failed", { email, error });
-    // Continue with update if priority check fails
-  }
-
-  const supabaseRecord = createSupabaseRecord({
-    payload: body,
-    email,
-    firstname,
-    lastname,
-    phoneRaw,
-    phoneE164,
-    capacity,
-    utm,
-    submittedAt,
-    ip,
-    userAgent,
-  });
-
-  console.log('🔍 [submit-lead] Created Supabase record:', {
-    email,
-    recordKeys: Object.keys(supabaseRecord),
-    record: supabaseRecord,
-  });
-
-  // Note: form_priority removed - column doesn't exist in leads_candidature table
-  // (supabaseRecord as any).form_priority = formPriority;
-
-  let supabaseStored = false;
-  let isNewContact = !existingContact; // Track if this is a new contact
-  
-  if (shouldUpdate) {
-    try {
-      console.log('🔍 [submit-lead] Calling supabaseUpsertProspect...');
-      const stored = await supabaseUpsertProspect(supabaseRecord);
-      supabaseStored = Boolean(stored);
-      console.info("submit_lead.supabase_upsert_ok", { email, stored: supabaseStored, formPriority, isNewContact });
-    } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      const stack = error instanceof Error ? error.stack : undefined;
-      console.error("submit_lead.supabase_upsert_failed", { 
-        email, 
-        error: message,
-        stack,
-        sentRecord: supabaseRecord,
-      });
-      const res = NextResponse.json({ error: "Supabase upsert failed" }, { status: 500 });
-      applyCorsHeaders(req, res);
-      if (rateLimiter) applyRateLimitCookie(res, rateLimiter);
-      return res;
-    }
-  } else {
-    console.info("submit_lead.priority_skip_update", { email, formPriority });
-    supabaseStored = true; // Consider it "stored" even if we skipped
-  }
-
-  // Check if we should skip HubSpot submission
-  const skipHubspot = body.skipHubspot === true;
-  
-  if (skipHubspot) {
-    console.info("submit_lead.hubspot_skipped", { email, reason: "skipHubspot flag set to true" });
-    
-    const res = NextResponse.json({
-      status: 200,
-      hubspot: { skipped: true, reason: "skipHubspot_flag" },
-      supabaseStored,
-      phone: {
-        raw: phoneRaw,
-        e164: phoneE164,
-      },
-    });
-    applyCorsHeaders(req, res);
-    if (rateLimiter) applyRateLimitCookie(res, rateLimiter);
-    return res;
-  }
-
-  // Always submit to HubSpot (even for existing contacts)
-  // HubSpot will merge the contact on email, and update properties
-  // This creates multiple form submissions, but that's normal and allows property updates
-
   // Only include hutk if it's a valid HubSpot tracking cookie
   const hutkValue = sanitize(body.hutk, 256);
   const isValidHubspotCookie = hutkValue && hutkValue.length > 10 && /^[a-f0-9-]+$/i.test(hutkValue);
@@ -498,13 +339,14 @@ export async function POST(req: Request) {
     pageName: truncate(sanitize(body.pageName, 512), 512),
     ipAddress: ip,
     source_formulaire: sanitize(body.source_formulaire, 64) ?? 'candidature_investisseur_offstone', // Default to 'candidature_investisseur_offstone' for waitinglist
+    discovery,
+    referrer,
   });
 
   console.info("submit_lead.hubspot_payload", { 
     email, 
     fields: hubspotPayload.fields.map(f => `${f.name}: ${f.value}`),
     context: hubspotPayload.context,
-    isNewContact 
   });
   console.info("submit_lead.hubspot_config", { 
     portalId: process.env.HUBSPOT_PORTAL_ID,
@@ -518,7 +360,7 @@ export async function POST(req: Request) {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("submit_lead.hubspot_request_failed", { email, error: message });
-    const res = NextResponse.json({ error: "HubSpot request failed", supabaseStored }, { status: 502 });
+    const res = NextResponse.json({ error: "HubSpot request failed" }, { status: 502 });
     applyCorsHeaders(req, res);
     if (rateLimiter) applyRateLimitCookie(res, rateLimiter);
     return res;
@@ -534,7 +376,6 @@ export async function POST(req: Request) {
       error: "HubSpot rejected the submission",
       status: hubspotOutcome.response.status,
       body: hubspotOutcome.data,
-      supabaseStored,
     }, { status: 502 });
     applyCorsHeaders(req, res);
     if (rateLimiter) applyRateLimitCookie(res, rateLimiter);
@@ -544,13 +385,12 @@ export async function POST(req: Request) {
   console.info("submit_lead.hubspot_success", {
     email,
     status: hubspotOutcome.response.status,
-    isNewContact,
+    userAgent,
   });
 
   const res = NextResponse.json({
     status: hubspotOutcome.response.status,
     hubspot: hubspotOutcome.data,
-    supabaseStored,
     phone: {
       raw: phoneRaw,
       e164: phoneE164,

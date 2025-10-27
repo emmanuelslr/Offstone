@@ -488,46 +488,17 @@ const reset = useCallback(async () => {
     setOpen(true);
     try { window.dispatchEvent(new Event(OPENED_EVENT)); } catch {}
 
-    // If email already provided, create lead in Supabase but skip HubSpot (will submit with complete data later)
     if (emailInput) {
-      try {
-        const res = await fetch('/api/submit-lead', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: emailInput,
-            firstname: '',
-            lastname: '',
-            phone: '',
-            capacite_investissement: '100_500k',
-            consentement_marketing: true,
-            form_priority: 'waitinglist',
-            pageUri: detail.page_url,
-            ref: detail.ref,
-            utm_source: detail.utm_source,
-            utm_medium: detail.utm_medium,
-            utm_campaign: detail.utm_campaign,
-            utm_content: detail.utm_content,
-            utm_term: detail.utm_term,
-            asset_class: detail.asset_class || 'retail',
-            skipHubspot: true, // Don't submit to HubSpot yet - wait for completion or abandonment
-          }),
-        });
-        
-        if (res.ok) {
-          track('lead_open', {
-            id: 'email-prefilled',
-            email: emailInput,
-            cta_id: detail.cta_id || detail.utm_content,
-            utm_source: detail.utm_source,
-            utm_medium: detail.utm_medium,
-            utm_campaign: detail.utm_campaign,
-            utm_content: detail.utm_content,
-            utm_term: detail.utm_term,
-          });
-        }
-      } catch (e) {
-        console.error('Initial lead creation failed', e);
-      }
+      track('lead_open', {
+        id: 'email-prefilled',
+        email: emailInput,
+        cta_id: detail.cta_id || detail.utm_content,
+        utm_source: detail.utm_source,
+        utm_medium: detail.utm_medium,
+        utm_campaign: detail.utm_campaign,
+        utm_content: detail.utm_content,
+        utm_term: detail.utm_term,
+      });
     }
   }, []);
 
