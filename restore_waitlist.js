@@ -10,7 +10,7 @@ if (!text.includes('HUBSPOT_MEETING_URL')) {
     "const OPENED_EVENT = 'waitlist:opened';",
     "const CLOSED_EVENT = 'waitlist:closed';",
     '',
-    "const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website?embed=true';",
+  "const HUBSPOT_MEETING_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi?embed=true';",
     "const HUBSPOT_MEETINGS_SCRIPT_SRC = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';"
   ].join('\r\n');
   text = text.replace(constantsPattern, constantsReplacement);

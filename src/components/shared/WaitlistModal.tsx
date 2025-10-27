@@ -3,14 +3,11 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState, startTransition } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { track } from '@/lib/analytics';
+import { buildHubspotMeetingUrl } from '@/lib/hubspot';
 
 const OPEN_EVENT = 'waitlist:open';
 const OPENED_EVENT = 'waitlist:opened';
 const CLOSED_EVENT = 'waitlist:closed';
-
-// URL HubSpot de base - sera modifiée dynamiquement avec les paramètres
-const HUBSPOT_MEETING_BASE_URL = 'https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website';
-const HUBSPOT_MEETINGS_SCRIPT_SRC = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
 
 type OpenEventDetail = {
   email?: string;
@@ -27,7 +24,6 @@ type OpenEventDetail = {
 };
 
 type HubspotMeetingsEmbedProps = {
-  url: string;
   title: string;
   active: boolean;
   variant?: 'mobile' | 'desktop';
@@ -47,24 +43,23 @@ declare global {
   }
 }
 
-function HubspotMeetingsEmbed({ url, title, active, variant = 'desktop', className, email, firstname, lastname }: HubspotMeetingsEmbedProps) {
+function HubspotMeetingsEmbed({ title, active, variant = 'desktop', className, email, firstname, lastname }: HubspotMeetingsEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Construire l'URL avec les paramètres pré-remplis
   const hubspotUrl = useMemo(() => {
-    const params = new URLSearchParams({ embed: 'true' });
-    if (email) params.set('email', email);
-    if (firstname) params.set('firstname', firstname);
-    if (lastname) params.set('lastname', lastname);
-    
+    const params: Record<string, string | undefined> = {
+      email,
+      firstname,
+      lastname,
+    };
+
     if (variant === 'mobile') {
-      params.set('hideEventTypeDetails', 'true');
-      params.set('hideLandingPageDetails', 'true');
+      params.hideEventTypeDetails = 'true';
+      params.hideLandingPageDetails = 'true';
     }
-    
-    const finalUrl = `${HUBSPOT_MEETING_BASE_URL}?${params.toString()}`;
-    console.log('🔗 URL HubSpot générée:', finalUrl);
-    return finalUrl;
+
+    return buildHubspotMeetingUrl(params);
   }, [email, firstname, lastname, variant]);
 
   const containerStyle = useMemo(() => {
@@ -1288,7 +1283,6 @@ const reset = useCallback(async () => {
             {twoCols && (
               <div className="hidden lg:block">
                 <HubspotMeetingsEmbed 
-                  url={HUBSPOT_MEETING_BASE_URL}
                   title="Choisissez un créneau avec notre équipe"
                   active={current === 'calendly'}
                   variant="desktop"
@@ -1357,7 +1351,6 @@ const reset = useCallback(async () => {
               <div className="flex-1 p-2">
                 <div className="h-[65vh]">
                   <HubspotMeetingsEmbed 
-                    url={HUBSPOT_MEETING_BASE_URL}
                     title="Choisissez un créneau avec notre équipe"
                     active={true}
                     variant="mobile"

@@ -38,7 +38,7 @@ export default function HubSpotMeeting({ email, firstname, lastname, className =
       p.set('hideLandingPageDetails', 'true');
     }
 
-    return `https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website?${p.toString()}`;
+    return `https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi?${p.toString()}`;
   }, [email, firstname, lastname, isMobile]);
 
   // Gérer le chargement du script HubSpot

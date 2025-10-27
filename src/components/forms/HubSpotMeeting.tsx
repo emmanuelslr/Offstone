@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { buildHubspotMeetingUrl } from '@/lib/hubspot';
 
 type Props = {
   email?: string;
@@ -29,17 +30,18 @@ export default function HubSpotMeeting({ email, firstname, lastname, className =
   }, []);
 
   const src = useMemo(() => {
-    const params = new URLSearchParams({ embed: 'true' });
-    if (email) params.set('email', email);
-    if (firstname) params.set('firstname', firstname);
-    if (lastname) params.set('lastname', lastname);
+    const params: Record<string, string | undefined> = {
+      email,
+      firstname,
+      lastname,
+    };
 
     if (isMobile) {
-      params.set('hideEventTypeDetails', 'true');
-      params.set('hideLandingPageDetails', 'true');
+      params.hideEventTypeDetails = 'true';
+      params.hideLandingPageDetails = 'true';
     }
 
-    return `https://meetings-eu1.hubspot.com/emmanuel-schmidt-le-roi/prospect-formulaire-website?${params.toString()}`;
+    return buildHubspotMeetingUrl(params);
   }, [email, firstname, lastname, isMobile]);
 
   const containerStyle = useMemo<CSSProperties>(() => {
